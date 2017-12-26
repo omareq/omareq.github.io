@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   Author:   Omar Essilfie-Quaye
-*   Email:    omareq@hotmail.co.uk
+*   Email:    omareq08@gmail.com
 *   Date:     24-Dec-2017
 *   Program:  Making Snowmen from snowflakes as an expansion to the challenge on
 *             the coding train
