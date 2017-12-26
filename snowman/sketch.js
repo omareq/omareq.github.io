@@ -20,7 +20,8 @@ let gravity;
 let frosty;
 
 function setup () {
-  createCanvas(600, 600);
+  var canvas = createCanvas(600, 600);
+  canvas.parent('sketch');
   ellipseMode(RADIUS);
 
   gravity = createVector(0, 0.5);
