@@ -1,0 +1,11 @@
+y=mx+c:y = mx + c
+E=mc^2:E = mc²
+E^2=m^2c^4+p^2c^2:E² = m²c⁴ + p²c²
+Ke=\frac{1}{2}mv^2:Ke = 1/2mv²
+Ke=\frac{p^2}{2m}:Ke = p²/2m 
+E=\int{F.dl}:E=∫F.dl
+\oiint{E.dA}=\frac{Q}/{epsilon}:∯ E.dA = Q/ε
+\oiint{B.dA}=0:∯ B.dA = 0
+\oint{E.ds}=-frac{d\phi}{dt}:∮ E.ds = - dϕ/dt
+\oint{B.ds}=\muI+\mu\epsilon\frac{d\phi}{dt}:∮ B.ds = μI + με dϕ/dt
+\gamma=\frac{1}{\sqrt{1-\frac{v}{c}^2}}:γ = 1/√(1-(v/c)²)

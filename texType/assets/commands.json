@@ -1,0 +1,1863 @@
+[
+ {
+   "Command": "\\"
+ },
+ {
+   "Command": "\\!"
+ },
+ {
+   "Command": "\\\""
+ },
+ {
+   "Command": "\\#"
+ },
+ {
+   "Command": "\\$"
+ },
+ {
+   "Command": "\\%"
+ },
+ {
+   "Command": "\\&"
+ },
+ {
+   "Command": "\\("
+ },
+ {
+   "Command": "\\)"
+ },
+ {
+   "Command": "\\*"
+ },
+ {
+   "Command": "\\+"
+ },
+ {
+   "Command": "\\-"
+ },
+ {
+   "Command": "\\."
+ },
+ {
+   "Command": "\\/"
+ },
+ {
+   "Command": "\\:"
+ },
+ {
+   "Command": "\\;"
+ },
+ {
+   "Command": "\\<"
+ },
+ {
+   "Command": "\\="
+ },
+ {
+   "Command": "\\>"
+ },
+ {
+   "Command": "\\@"
+ },
+ {
+   "Command": "\\Box"
+ },
+ {
+   "Command": "\\H"
+ },
+ {
+   "Command": "\\Im"
+ },
+ {
+   "Command": "\\Join"
+ },
+ {
+   "Command": "\\LaTeX"
+ },
+ {
+   "Command": "\\Longleftrightarrow"
+ },
+ {
+   "Command": "\\P"
+ },
+ {
+   "Command": "\\Pr"
+ },
+ {
+   "Command": "\\Re"
+ },
+ {
+   "Command": "\\S"
+ },
+ {
+   "Command": "\\TeX"
+ },
+ {
+   "Command": "\\["
+ },
+ {
+   "Command": "\\\\"
+ },
+ {
+   "Command": "\\\\"
+ },
+ {
+   "Command": "\\\\*"
+ },
+ {
+   "Command": "\\\\."
+ },
+ {
+   "Command": "\\\\."
+ },
+ {
+   "Command": "\\]"
+ },
+ {
+   "Command": "\\^"
+ },
+ {
+   "Command": "\\_"
+ },
+ {
+   "Command": "\\a="
+ },
+ {
+   "Command": "\\aa"
+ },
+ {
+   "Command": "\\acute"
+ },
+ {
+   "Command": "\\addcontentsline{toc}{section}{name}"
+ },
+ {
+   "Command": "\\address{text}"
+ },
+ {
+   "Command": "\\addtocontents{toc}{text}"
+ },
+ {
+   "Command": "\\addtocounter{name}{amount}"
+ },
+ {
+   "Command": "\\addtolength"
+ },
+ {
+   "Command": "\\addtolength{\\nl}{length}"
+ },
+ {
+   "Command": "\\ae"
+ },
+ {
+   "Command": "\\aleph"
+ },
+ {
+   "Command": "\\alpha"
+ },
+ {
+   "Command": "\\alph{counter}"
+ },
+ {
+   "Command": "\\amalg"
+ },
+ {
+   "Command": "\\and"
+ },
+ {
+   "Command": "\\angle"
+ },
+ {
+   "Command": "\\appendix"
+ },
+ {
+   "Command": "\\approx"
+ },
+ {
+   "Command": "\\arabic{counter}"
+ },
+ {
+   "Command": "\\arccos"
+ },
+ {
+   "Command": "\\arcsin"
+ },
+ {
+   "Command": "\\arctan"
+ },
+ {
+   "Command": "\\arg"
+ },
+ {
+   "Command": "\\arraycolsep"
+ },
+ {
+   "Command": "\\arrayrulewidth"
+ },
+ {
+   "Command": "\\arraystretch"
+ },
+ {
+   "Command": "\\ast"
+ },
+ {
+   "Command": "\\asymp"
+ },
+ {
+   "Command": "\\author"
+ },
+ {
+   "Command": "\\author{names}"
+ },
+ {
+   "Command": "\\a‘"
+ },
+ {
+   "Command": "\\a’"
+ },
+ {
+   "Command": "\\b"
+ },
+ {
+   "Command": "\\backslash"
+ },
+ {
+   "Command": "\\bar"
+ },
+ {
+   "Command": "\\baselineskip"
+ },
+ {
+   "Command": "\\baselineskip"
+ },
+ {
+   "Command": "\\baselinestretch"
+ },
+ {
+   "Command": "\\begin{abstract}"
+ },
+ {
+   "Command": "\\begin{array}{lrc}"
+ },
+ {
+   "Command": "\\begin{center}"
+ },
+ {
+   "Command": "\\begin{description}"
+ },
+ {
+   "Command": "\\begin{displaymath}"
+ },
+ {
+   "Command": "\\begin{document}"
+ },
+ {
+   "Command": "\\begin{enumerate}"
+ },
+ {
+   "Command": "\\begin{environment}"
+ },
+ {
+   "Command": "\\begin{eqnarray*}"
+ },
+ {
+   "Command": "\\begin{eqnarray}"
+ },
+ {
+   "Command": "\\begin{equation}"
+ },
+ {
+   "Command": "\\begin{figure*}[pos]"
+ },
+ {
+   "Command": "\\begin{figure}[pos]"
+ },
+ {
+   "Command": "\\begin{flushleft}"
+ },
+ {
+   "Command": "\\begin{flushleft}"
+ },
+ {
+   "Command": "\\begin{flushright}"
+ },
+ {
+   "Command": "\\begin{flushright}"
+ },
+ {
+   "Command": "\\begin{itemize}"
+ },
+ {
+   "Command": "\\begin{list}{labeling}{spacing}"
+ },
+ {
+   "Command": "\\begin{math}"
+ },
+ {
+   "Command": "\\begin{minipage}[pos]{vsize}"
+ },
+ {
+   "Command": "\\begin{picture}"
+ },
+ {
+   "Command": "\\begin{quotation}"
+ },
+ {
+   "Command": "\\begin{quote}"
+ },
+ {
+   "Command": "\\begin{tabbing}"
+ },
+ {
+   "Command": "\\begin{table*}[pos]"
+ },
+ {
+   "Command": "\\begin{table}[pos]"
+ },
+ {
+   "Command": "\\begin{tabular}{arg}"
+ },
+ {
+   "Command": "\\begin{theorem}"
+ },
+ {
+   "Command": "\\begin{titlepage}"
+ },
+ {
+   "Command": "\\begin{verbatim}"
+ },
+ {
+   "Command": "\\begin{verse}"
+ },
+ {
+   "Command": "\\beta"
+ },
+ {
+   "Command": "\\bf"
+ },
+ {
+   "Command": "\\bibitem{ref}"
+ },
+ {
+   "Command": "\\bibliographystyle{style}"
+ },
+ {
+   "Command": "\\bibliography{file}"
+ },
+ {
+   "Command": "\\bigcap"
+ },
+ {
+   "Command": "\\bigcirc"
+ },
+ {
+   "Command": "\\bigcup"
+ },
+ {
+   "Command": "\\bigodot"
+ },
+ {
+   "Command": "\\bigoplus"
+ },
+ {
+   "Command": "\\bigotimes"
+ },
+ {
+   "Command": "\\bigskip"
+ },
+ {
+   "Command": "\\bigskipamount"
+ },
+ {
+   "Command": "\\bigsqcup"
+ },
+ {
+   "Command": "\\bigtriangledown"
+ },
+ {
+   "Command": "\\bigtriangleup"
+ },
+ {
+   "Command": "\\biguplus"
+ },
+ {
+   "Command": "\\bigvee"
+ },
+ {
+   "Command": "\\bigwedge"
+ },
+ {
+   "Command": "\\binname"
+ },
+ {
+   "Command": "\\bmod"
+ },
+ {
+   "Command": "\\boldmath"
+ },
+ {
+   "Command": "\\bot"
+ },
+ {
+   "Command": "\\bottomfraction"
+ },
+ {
+   "Command": "\\bowtie"
+ },
+ {
+   "Command": "\\breve"
+ },
+ {
+   "Command": "\\bullet"
+ },
+ {
+   "Command": "\\c"
+ },
+ {
+   "Command": "\\cal"
+ },
+ {
+   "Command": "\\cap"
+ },
+ {
+   "Command": "\\caption[loftitle]{text}"
+ },
+ {
+   "Command": "\\cc{text}"
+ },
+ {
+   "Command": "\\cdot"
+ },
+ {
+   "Command": "\\cdots"
+ },
+ {
+   "Command": "\\centering"
+ },
+ {
+   "Command": "\\chapter*{title}"
+ },
+ {
+   "Command": "\\chapter[toctitle]{text}"
+ },
+ {
+   "Command": "\\check"
+ },
+ {
+   "Command": "\\chi"
+ },
+ {
+   "Command": "\\circ"
+ },
+ {
+   "Command": "\\circle*{diameter}"
+ },
+ {
+   "Command": "\\circle{diameter}"
+ },
+ {
+   "Command": "\\cite[subcit]{ref}"
+ },
+ {
+   "Command": "\\cleardoublepage"
+ },
+ {
+   "Command": "\\clearpage"
+ },
+ {
+   "Command": "\\clearpage"
+ },
+ {
+   "Command": "\\cline{i-j}"
+ },
+ {
+   "Command": "\\closing{text}"
+ },
+ {
+   "Command": "\\clubsuit"
+ },
+ {
+   "Command": "\\columnsep"
+ },
+ {
+   "Command": "\\columnseprule"
+ },
+ {
+   "Command": "\\columnwidth"
+ },
+ {
+   "Command": "\\cong"
+ },
+ {
+   "Command": "\\coprod"
+ },
+ {
+   "Command": "\\copyright"
+ },
+ {
+   "Command": "\\cos"
+ },
+ {
+   "Command": "\\cosh"
+ },
+ {
+   "Command": "\\cot"
+ },
+ {
+   "Command": "\\coth"
+ },
+ {
+   "Command": "\\cs"
+ },
+ {
+   "Command": "\\csc"
+ },
+ {
+   "Command": "\\cup"
+ },
+ {
+   "Command": "\\d"
+ },
+ {
+   "Command": "\\dag"
+ },
+ {
+   "Command": "\\dagger"
+ },
+ {
+   "Command": "\\dashbox{dwid}(width",
+   "FIELD2": "height)[pos]{text}"
+ },
+ {
+   "Command": "\\dashv"
+ },
+ {
+   "Command": "\\date{adate}"
+ },
+ {
+   "Command": "\\day"
+ },
+ {
+   "Command": "\\dblfloatpagefraction"
+ },
+ {
+   "Command": "\\dblfloatsep"
+ },
+ {
+   "Command": "\\dbltextfloatsep"
+ },
+ {
+   "Command": "\\dbltopfraction"
+ },
+ {
+   "Command": "\\ddag"
+ },
+ {
+   "Command": "\\ddagger"
+ },
+ {
+   "Command": "\\ddot"
+ },
+ {
+   "Command": "\\ddots"
+ },
+ {
+   "Command": "\\deg"
+ },
+ {
+   "Command": "\\delta"
+ },
+ {
+   "Command": "\\det"
+ },
+ {
+   "Command": "\\diamond"
+ },
+ {
+   "Command": "\\diamondsuit"
+ },
+ {
+   "Command": "\\dim"
+ },
+ {
+   "Command": "\\displaystyle"
+ },
+ {
+   "Command": "\\div"
+ },
+ {
+   "Command": "\\documentstyle[substy]{sty}"
+ },
+ {
+   "Command": "\\dot"
+ },
+ {
+   "Command": "\\doteq"
+ },
+ {
+   "Command": "\\dotfill"
+ },
+ {
+   "Command": "\\doublerulesep"
+ },
+ {
+   "Command": "\\downarrow"
+ },
+ {
+   "Command": "\\ell"
+ },
+ {
+   "Command": "\\em"
+ },
+ {
+   "Command": "\\emptyset"
+ },
+ {
+   "Command": "\\encl{text}"
+ },
+ {
+   "Command": "\\end{environment}"
+ },
+ {
+   "Command": "\\end{environment}."
+ },
+ {
+   "Command": "\\epsilon"
+ },
+ {
+   "Command": "\\equiv"
+ },
+ {
+   "Command": "\\eta"
+ },
+ {
+   "Command": "\\evensidemargin"
+ },
+ {
+   "Command": "\\exists"
+ },
+ {
+   "Command": "\\exp"
+ },
+ {
+   "Command": "\\fbox"
+ },
+ {
+   "Command": "\\fboxrule"
+ },
+ {
+   "Command": "\\fboxsep"
+ },
+ {
+   "Command": "\\fbox{text}"
+ },
+ {
+   "Command": "\\fill"
+ },
+ {
+   "Command": "\\flat"
+ },
+ {
+   "Command": "\\floatpagefraction"
+ },
+ {
+   "Command": "\\floatsep"
+ },
+ {
+   "Command": "\\flushbottom"
+ },
+ {
+   "Command": "\\fnsymbol{counter}"
+ },
+ {
+   "Command": "\\footheight"
+ },
+ {
+   "Command": "\\footnotemark"
+ },
+ {
+   "Command": "\\footnotemark"
+ },
+ {
+   "Command": "\\footnotesep"
+ },
+ {
+   "Command": "\\footnotesize"
+ },
+ {
+   "Command": "\\footnotetext{text}"
+ },
+ {
+   "Command": "\\footnote{text}"
+ },
+ {
+   "Command": "\\footskip"
+ },
+ {
+   "Command": "\\forall"
+ },
+ {
+   "Command": "\\frac{numerator}{denominator}"
+ },
+ {
+   "Command": "\\framebox(width",
+   "FIELD2": "height)[pos]{text}"
+ },
+ {
+   "Command": "\\framebox[size][pos]{text}"
+ },
+ {
+   "Command": "\\frame{text}"
+ },
+ {
+   "Command": "\\frown"
+ },
+ {
+   "Command": "\\fussy"
+ },
+ {
+   "Command": "\\gamma"
+ },
+ {
+   "Command": "\\gcd"
+ },
+ {
+   "Command": "\\ge"
+ },
+ {
+   "Command": "\\geq"
+ },
+ {
+   "Command": "\\gets"
+ },
+ {
+   "Command": "\\gg"
+ },
+ {
+   "Command": "\\glossaryentry"
+ },
+ {
+   "Command": "\\glossaryentry{text}{ref}"
+ },
+ {
+   "Command": "\\glossary{text}"
+ },
+ {
+   "Command": "\\grave"
+ },
+ {
+   "Command": "\\hat"
+ },
+ {
+   "Command": "\\hbar"
+ },
+ {
+   "Command": "\\headheight"
+ },
+ {
+   "Command": "\\headsep"
+ },
+ {
+   "Command": "\\heartsuit"
+ },
+ {
+   "Command": "\\hfill"
+ },
+ {
+   "Command": "\\hline"
+ },
+ {
+   "Command": "\\hom"
+ },
+ {
+   "Command": "\\hookleftarrow"
+ },
+ {
+   "Command": "\\hookrightarrow"
+ },
+ {
+   "Command": "\\hrulefill"
+ },
+ {
+   "Command": "\\hspace*{len}"
+ },
+ {
+   "Command": "\\hspace{len}"
+ },
+ {
+   "Command": "\\huge"
+ },
+ {
+   "Command": "\\hyphenation{wordlist}"
+ },
+ {
+   "Command": "\\i"
+ },
+ {
+   "Command": "\\iff"
+ },
+ {
+   "Command": "\\imath"
+ },
+ {
+   "Command": "\\in"
+ },
+ {
+   "Command": "\\includeonly{file1",
+   "FIELD2": "file2",
+   "FIELD3": "...}"
+ },
+ {
+   "Command": "\\include{filename}"
+ },
+ {
+   "Command": "\\indexentry{text}{ref}"
+ },
+ {
+   "Command": "\\indexspace"
+ },
+ {
+   "Command": "\\index{text}"
+ },
+ {
+   "Command": "\\inf"
+ },
+ {
+   "Command": "\\infty"
+ },
+ {
+   "Command": "\\input{file}"
+ },
+ {
+   "Command": "\\int"
+ },
+ {
+   "Command": "\\intextsep"
+ },
+ {
+   "Command": "\\iota"
+ },
+ {
+   "Command": "\\it"
+ },
+ {
+   "Command": "\\item[text]"
+ },
+ {
+   "Command": "\\itemindent"
+ },
+ {
+   "Command": "\\itemsep"
+ },
+ {
+   "Command": "\\j"
+ },
+ {
+   "Command": "\\jmath"
+ },
+ {
+   "Command": "\\kappa"
+ },
+ {
+   "Command": "\\ker"
+ },
+ {
+   "Command": "\\kill"
+ },
+ {
+   "Command": "\\l"
+ },
+ {
+   "Command": "\\labelsep"
+ },
+ {
+   "Command": "\\labelwidth"
+ },
+ {
+   "Command": "\\label{text}"
+ },
+ {
+   "Command": "\\label{text}"
+ },
+ {
+   "Command": "\\label{text}"
+ },
+ {
+   "Command": "\\lambda"
+ },
+ {
+   "Command": "\\land"
+ },
+ {
+   "Command": "\\langle"
+ },
+ {
+   "Command": "\\large"
+ },
+ {
+   "Command": "\\lbrace"
+ },
+ {
+   "Command": "\\lbrack"
+ },
+ {
+   "Command": "\\lceil"
+ },
+ {
+   "Command": "\\ldots"
+ },
+ {
+   "Command": "\\le"
+ },
+ {
+   "Command": "\\leadsto"
+ },
+ {
+   "Command": "\\left"
+ },
+ {
+   "Command": "\\leftarrow"
+ },
+ {
+   "Command": "\\lefteqn{formula}"
+ },
+ {
+   "Command": "\\leftharpoondown"
+ },
+ {
+   "Command": "\\leftharpoonup"
+ },
+ {
+   "Command": "\\leftmargin"
+ },
+ {
+   "Command": "\\leftrightarrow"
+ },
+ {
+   "Command": "\\leq"
+ },
+ {
+   "Command": "\\lfloor"
+ },
+ {
+   "Command": "\\lg"
+ },
+ {
+   "Command": "\\lhd"
+ },
+ {
+   "Command": "\\lim"
+ },
+ {
+   "Command": "\\liminf"
+ },
+ {
+   "Command": "\\limsup"
+ },
+ {
+   "Command": "\\line(x",
+   "FIELD2": "y){len}"
+ },
+ {
+   "Command": "\\linebreak[n]"
+ },
+ {
+   "Command": "\\linethickness{dimen}"
+ },
+ {
+   "Command": "\\linewidth"
+ },
+ {
+   "Command": "\\listoffigures"
+ },
+ {
+   "Command": "\\listoftables"
+ },
+ {
+   "Command": "\\listparindent"
+ },
+ {
+   "Command": "\\ll"
+ },
+ {
+   "Command": "\\ln"
+ },
+ {
+   "Command": "\\lnot"
+ },
+ {
+   "Command": "\\log"
+ },
+ {
+   "Command": "\\longleftarrow"
+ },
+ {
+   "Command": "\\longleftrightarrow"
+ },
+ {
+   "Command": "\\longmapsto"
+ },
+ {
+   "Command": "\\longrightarrow"
+ },
+ {
+   "Command": "\\lor"
+ },
+ {
+   "Command": "\\lq"
+ },
+ {
+   "Command": "\\makebox[size][pos]{text}"
+ },
+ {
+   "Command": "\\makeglossary"
+ },
+ {
+   "Command": "\\makeindex"
+ },
+ {
+   "Command": "\\maketitle"
+ },
+ {
+   "Command": "\\maketitle"
+ },
+ {
+   "Command": "\\maketitle"
+ },
+ {
+   "Command": "\\maketitle"
+ },
+ {
+   "Command": "\\maketitle"
+ },
+ {
+   "Command": "\\maketitle"
+ },
+ {
+   "Command": "\\mapsto"
+ },
+ {
+   "Command": "\\marginparpush"
+ },
+ {
+   "Command": "\\marginparsep"
+ },
+ {
+   "Command": "\\marginparwidth"
+ },
+ {
+   "Command": "\\marginpar{text}"
+ },
+ {
+   "Command": "\\markboth{lhd}{rhd}"
+ },
+ {
+   "Command": "\\markright{rhd}"
+ },
+ {
+   "Command": "\\max"
+ },
+ {
+   "Command": "\\mbox{text}"
+ },
+ {
+   "Command": "\\medskip"
+ },
+ {
+   "Command": "\\medskipamount"
+ },
+ {
+   "Command": "\\mho"
+ },
+ {
+   "Command": "\\mid"
+ },
+ {
+   "Command": "\\min"
+ },
+ {
+   "Command": "\\mit"
+ },
+ {
+   "Command": "\\models"
+ },
+ {
+   "Command": "\\month"
+ },
+ {
+   "Command": "\\mp"
+ },
+ {
+   "Command": "\\mu"
+ },
+ {
+   "Command": "\\multicolumn{noc}{fmt}{text}"
+ },
+ {
+   "Command": "\\multiput"
+ },
+ {
+   "Command": "\\nabla"
+ },
+ {
+   "Command": "\\natural"
+ },
+ {
+   "Command": "\\ne"
+ },
+ {
+   "Command": "\\nearrow"
+ },
+ {
+   "Command": "\\neg"
+ },
+ {
+   "Command": "\\neq"
+ },
+ {
+   "Command": "\\newcommand{\\cs}[narg]{def}"
+ },
+ {
+   "Command": "\\newcounter{counter}[name]"
+ },
+ {
+   "Command": "\\newenvironment"
+ },
+ {
+   "Command": "\\newenvironment{envname}[narg]{def1}{def2}"
+ },
+ {
+   "Command": "\\newfont{cs}{name}"
+ },
+ {
+   "Command": "\\newlength"
+ },
+ {
+   "Command": "\\newlength{\\nl}"
+ },
+ {
+   "Command": "\\newline"
+ },
+ {
+   "Command": "\\newpage"
+ },
+ {
+   "Command": "\\newsavebox{\\binname}"
+ },
+ {
+   "Command": "\\newtheorem{env}[env2]{label}[sectyp]"
+ },
+ {
+   "Command": "\\ni"
+ },
+ {
+   "Command": "\\nofiles"
+ },
+ {
+   "Command": "\\noindent"
+ },
+ {
+   "Command": "\\nolinebreak[n]"
+ },
+ {
+   "Command": "\\nonumber"
+ },
+ {
+   "Command": "\\nopagebreak[n]"
+ },
+ {
+   "Command": "\\normalmarginpar"
+ },
+ {
+   "Command": "\\normalsize"
+ },
+ {
+   "Command": "\\not"
+ },
+ {
+   "Command": "\\notin"
+ },
+ {
+   "Command": "\\nu"
+ },
+ {
+   "Command": "\\nwarrow"
+ },
+ {
+   "Command": "\\o"
+ },
+ {
+   "Command": "\\obeycr"
+ },
+ {
+   "Command": "\\oddsidemargin"
+ },
+ {
+   "Command": "\\odot"
+ },
+ {
+   "Command": "\\oe"
+ },
+ {
+   "Command": "\\oint"
+ },
+ {
+   "Command": "\\omega"
+ },
+ {
+   "Command": "\\ominus"
+ },
+ {
+   "Command": "\\onecolumn"
+ },
+ {
+   "Command": "\\opening{text}"
+ },
+ {
+   "Command": "\\oplus"
+ },
+ {
+   "Command": "\\oslash"
+ },
+ {
+   "Command": "\\otimes"
+ },
+ {
+   "Command": "\\oval(x",
+   "FIELD2": "y)"
+ },
+ {
+   "Command": "\\overbrace{text}"
+ },
+ {
+   "Command": "\\overline{text}"
+ },
+ {
+   "Command": "\\owns"
+ },
+ {
+   "Command": "\\pagebreak[n]"
+ },
+ {
+   "Command": "\\pagenumbering{style}"
+ },
+ {
+   "Command": "\\pageref{text}"
+ },
+ {
+   "Command": "\\pagestyle{sty}"
+ },
+ {
+   "Command": "\\paragraph*{text}"
+ },
+ {
+   "Command": "\\paragraph[toctitle]{text}"
+ },
+ {
+   "Command": "\\parallel"
+ },
+ {
+   "Command": "\\parbox[pos]{size}{text}"
+ },
+ {
+   "Command": "\\parindent"
+ },
+ {
+   "Command": "\\parsep"
+ },
+ {
+   "Command": "\\parskip"
+ },
+ {
+   "Command": "\\part*{text}"
+ },
+ {
+   "Command": "\\part[toctitle]{text}"
+ },
+ {
+   "Command": "\\partial"
+ },
+ {
+   "Command": "\\partopsep"
+ },
+ {
+   "Command": "\\perp"
+ },
+ {
+   "Command": "\\phi"
+ },
+ {
+   "Command": "\\pi"
+ },
+ {
+   "Command": "\\pm"
+ },
+ {
+   "Command": "\\pmod{modulus}"
+ },
+ {
+   "Command": "\\poptabs"
+ },
+ {
+   "Command": "\\pounds"
+ },
+ {
+   "Command": "\\prec"
+ },
+ {
+   "Command": "\\preceq"
+ },
+ {
+   "Command": "\\prime"
+ },
+ {
+   "Command": "\\prod"
+ },
+ {
+   "Command": "\\propto"
+ },
+ {
+   "Command": "\\protect"
+ },
+ {
+   "Command": "\\ps"
+ },
+ {
+   "Command": "\\psi"
+ },
+ {
+   "Command": "\\pushtabs"
+ },
+ {
+   "Command": "\\put"
+ },
+ {
+   "Command": "\\put"
+ },
+ {
+   "Command": "\\put"
+ },
+ {
+   "Command": "\\put"
+ },
+ {
+   "Command": "\\put"
+ },
+ {
+   "Command": "\\put(x",
+   "FIELD2": "y){stuff}"
+ },
+ {
+   "Command": "\\raggedbottom"
+ },
+ {
+   "Command": "\\raggedleft"
+ },
+ {
+   "Command": "\\raggedright"
+ },
+ {
+   "Command": "\\raisebox{dim}[d2][d3]{text}"
+ },
+ {
+   "Command": "\\rangle"
+ },
+ {
+   "Command": "\\rbrace"
+ },
+ {
+   "Command": "\\rbrack"
+ },
+ {
+   "Command": "\\rceil"
+ },
+ {
+   "Command": "\\ref{text}"
+ },
+ {
+   "Command": "\\renewcommand{\\cs}[narg]{def}"
+ },
+ {
+   "Command": "\\renewenvironment{envname}[narg]{def1}{def2}"
+ },
+ {
+   "Command": "\\restorecr"
+ },
+ {
+   "Command": "\\reversemarginpar"
+ },
+ {
+   "Command": "\\reversemarginpar"
+ },
+ {
+   "Command": "\\rfloor"
+ },
+ {
+   "Command": "\\rhd"
+ },
+ {
+   "Command": "\\rho"
+ },
+ {
+   "Command": "\\right"
+ },
+ {
+   "Command": "\\rightarrow"
+ },
+ {
+   "Command": "\\rightharpoondown"
+ },
+ {
+   "Command": "\\rightharpoonup"
+ },
+ {
+   "Command": "\\rightleftharpoons"
+ },
+ {
+   "Command": "\\rightmargin"
+ },
+ {
+   "Command": "\\rm"
+ },
+ {
+   "Command": "\\roman{counter}"
+ },
+ {
+   "Command": "\\rq"
+ },
+ {
+   "Command": "\\rule[height]{length}{width}"
+ },
+ {
+   "Command": "\\savebox{\\binname}[width][pos]{text}"
+ },
+ {
+   "Command": "\\sbox{\\binname}{text}"
+ },
+ {
+   "Command": "\\sc"
+ },
+ {
+   "Command": "\\scriptscriptstyle"
+ },
+ {
+   "Command": "\\scriptsize"
+ },
+ {
+   "Command": "\\scriptstyle"
+ },
+ {
+   "Command": "\\searrow"
+ },
+ {
+   "Command": "\\sec"
+ },
+ {
+   "Command": "\\section*{text}"
+ },
+ {
+   "Command": "\\section[toctitle]{text}"
+ },
+ {
+   "Command": "\\setcounter{counter}{value}"
+ },
+ {
+   "Command": "\\setlength"
+ },
+ {
+   "Command": "\\setlength{\\nl}{length}"
+ },
+ {
+   "Command": "\\setminus"
+ },
+ {
+   "Command": "\\settowidth"
+ },
+ {
+   "Command": "\\settowidth{\\nl}{text}"
+ },
+ {
+   "Command": "\\sf"
+ },
+ {
+   "Command": "\\sharp"
+ },
+ {
+   "Command": "\\shortstack[pos]{x\\\\yy\\\\zzz}"
+ },
+ {
+   "Command": "\\sigma"
+ },
+ {
+   "Command": "\\signature{text}"
+ },
+ {
+   "Command": "\\sim"
+ },
+ {
+   "Command": "\\simeq"
+ },
+ {
+   "Command": "\\sin"
+ },
+ {
+   "Command": "\\sinh"
+ },
+ {
+   "Command": "\\sl"
+ },
+ {
+   "Command": "\\sloppy"
+ },
+ {
+   "Command": "\\small"
+ },
+ {
+   "Command": "\\smallint"
+ },
+ {
+   "Command": "\\smallskip"
+ },
+ {
+   "Command": "\\smallskip"
+ },
+ {
+   "Command": "\\smallskipamount"
+ },
+ {
+   "Command": "\\smile"
+ },
+ {
+   "Command": "\\spadesuit"
+ },
+ {
+   "Command": "\\sqcap"
+ },
+ {
+   "Command": "\\sqcup"
+ },
+ {
+   "Command": "\\sqrt[3]{arg}"
+ },
+ {
+   "Command": "\\sqsubset"
+ },
+ {
+   "Command": "\\sqsubseteq"
+ },
+ {
+   "Command": "\\sqsupset"
+ },
+ {
+   "Command": "\\sqsupseteq"
+ },
+ {
+   "Command": "\\ss"
+ },
+ {
+   "Command": "\\stackrel{stuff}{delim}"
+ },
+ {
+   "Command": "\\star"
+ },
+ {
+   "Command": "\\stop"
+ },
+ {
+   "Command": "\\subparagraph*{text}"
+ },
+ {
+   "Command": "\\subparagraph[toctitle]{text}"
+ },
+ {
+   "Command": "\\subsection*{text}"
+ },
+ {
+   "Command": "\\subsection[toctitle]{text}"
+ },
+ {
+   "Command": "\\subset"
+ },
+ {
+   "Command": "\\subseteq"
+ },
+ {
+   "Command": "\\subsubsection[toctitle]{text}"
+ },
+ {
+   "Command": "\\succ"
+ },
+ {
+   "Command": "\\succeq"
+ },
+ {
+   "Command": "\\sum"
+ },
+ {
+   "Command": "\\sup"
+ },
+ {
+   "Command": "\\supset"
+ },
+ {
+   "Command": "\\supseteq"
+ },
+ {
+   "Command": "\\surd"
+ },
+ {
+   "Command": "\\swarrow"
+ },
+ {
+   "Command": "\\symbol{cc}"
+ },
+ {
+   "Command": "\\t"
+ },
+ {
+   "Command": "\\tabbingsep"
+ },
+ {
+   "Command": "\\tabcolsep"
+ },
+ {
+   "Command": "\\tableofcontents"
+ },
+ {
+   "Command": "\\tan"
+ },
+ {
+   "Command": "\\tanh"
+ },
+ {
+   "Command": "\\tau"
+ },
+ {
+   "Command": "\\textfloatsep"
+ },
+ {
+   "Command": "\\textfraction"
+ },
+ {
+   "Command": "\\textheight"
+ },
+ {
+   "Command": "\\textheight."
+ },
+ {
+   "Command": "\\textstyle"
+ },
+ {
+   "Command": "\\textwidth"
+ },
+ {
+   "Command": "\\thanks{footnote}"
+ },
+ {
+   "Command": "\\theta"
+ },
+ {
+   "Command": "\\thicklines"
+ },
+ {
+   "Command": "\\thicklines"
+ },
+ {
+   "Command": "\\thinlines"
+ },
+ {
+   "Command": "\\thinspace"
+ },
+ {
+   "Command": "\\thispagestyle{sty}"
+ },
+ {
+   "Command": "\\tilde"
+ },
+ {
+   "Command": "\\times"
+ },
+ {
+   "Command": "\\tiny"
+ },
+ {
+   "Command": "\\title{text}"
+ },
+ {
+   "Command": "\\to"
+ },
+ {
+   "Command": "\\today"
+ },
+ {
+   "Command": "\\top"
+ },
+ {
+   "Command": "\\topfraction"
+ },
+ {
+   "Command": "\\topmargin"
+ },
+ {
+   "Command": "\\topsep"
+ },
+ {
+   "Command": "\\topskip"
+ },
+ {
+   "Command": "\\triangle"
+ },
+ {
+   "Command": "\\triangleleft"
+ },
+ {
+   "Command": "\\triangleright"
+ },
+ {
+   "Command": "\\tt"
+ },
+ {
+   "Command": "\\twocolumn[text]"
+ },
+ {
+   "Command": "\\typein[\\cs]{text}"
+ },
+ {
+   "Command": "\\typeout{text}"
+ },
+ {
+   "Command": "\\u"
+ },
+ {
+   "Command": "\\unboldmath"
+ },
+ {
+   "Command": "\\underbrace{text}"
+ },
+ {
+   "Command": "\\underline{text}"
+ },
+ {
+   "Command": "\\unitlength"
+ },
+ {
+   "Command": "\\unlhd"
+ },
+ {
+   "Command": "\\unrhd"
+ },
+ {
+   "Command": "\\uparrow"
+ },
+ {
+   "Command": "\\updownarrow"
+ },
+ {
+   "Command": "\\uplus"
+ },
+ {
+   "Command": "\\upsilon"
+ },
+ {
+   "Command": "\\usebox{\\binname}"
+ },
+ {
+   "Command": "\\usebox{\\binname}"
+ },
+ {
+   "Command": "\\usecounter{counter}"
+ },
+ {
+   "Command": "\\v"
+ },
+ {
+   "Command": "\\value{counter}"
+ },
+ {
+   "Command": "\\varepsilon"
+ },
+ {
+   "Command": "\\varphi"
+ },
+ {
+   "Command": "\\varpi"
+ },
+ {
+   "Command": "\\varrho"
+ },
+ {
+   "Command": "\\varsigma"
+ },
+ {
+   "Command": "\\vartheta"
+ },
+ {
+   "Command": "\\vdash"
+ },
+ {
+   "Command": "\\vdots"
+ },
+ {
+   "Command": "\\vec"
+ },
+ {
+   "Command": "\\vector(x,y){len}"
+ },
+ {
+   "Command": "\\vee"
+ },
+ {
+   "Command": "\\verb"
+ },
+ {
+   "Command": "\\vert"
+ },
+ {
+   "Command": "\\vfill"
+ },
+ {
+   "Command": "\\vspace{len}"
+ },
+ {
+   "Command": "\\wedge"
+ },
+ {
+   "Command": "\\widehat{arg}"
+ },
+ {
+   "Command": "\\widetilde{arg}"
+ },
+ {
+   "Command": "\\wp"
+ },
+ {
+   "Command": "\\wr"
+ },
+ {
+   "Command": "\\xi"
+ },
+ {
+   "Command": "\\year"
+ },
+ {
+   "Command": "\\zeta"
+ },
+ {
+   "Command": "\\{"
+ },
+ {
+   "Command": "\\|"
+ },
+ {
+   "Command": "\\}"
+ },
+ {
+   "Command": "\\~"
+ },
+ {
+   "Command": "\\‘"
+ },
+ {
+   "Command": "\\’"
+ }
+]

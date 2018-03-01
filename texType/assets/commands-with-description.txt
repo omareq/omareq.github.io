@@ -1,0 +1,622 @@
+\ — ordinary space after period.
+\! — negative thin space = −1
+\" makes an umlaut, as ¨o.
+\# prints a pound sign: #.
+\$ prints a dollar sign: $.
+\% prints a percent sign: %.
+\& prints an ampersand: &.
+\’ in tabbing environment moves current column
+\( — start math mode. Same as \begin{math}
+\) — end math mode. Same as \end{math} or $.
+\* is a discretionary multiplication sign, at which
+\+ moves left margin to the right by one tab stop.
+\, — thin space = 1
+\- in tabbing environment, moves left margin to
+\. puts a dot accent over a letter, as ˙o.
+\/ inserts italics adjustment space.
+\: — medium space = 2
+\; — thick space = 5
+\< in tabbing environment, puts text to left of
+\= in tabbing environment, sets a tab stop.
+\> in tabbing environment is a forward tab.
+\@ declares the period that follows is to be a
+\[ — same as \begin{displaymath} or $$.
+\\ terminates a line.
+\\* terminates a line, but disallows a pagebreak.
+\] — same as \end{displaymath} or $$.
+\^ makes a circumflex, as ˆo.
+\_ is an underscore, as in hours worked.
+\‘ in tabbing environment moves all text which
+\{ prints a curly left brace: {.
+\| is k (math mode).
+\} prints a curly right brace: }.
+\~ makes a tilde, as ˜n.
+\a’ makes an acute accent in tabbing
+\a‘ makes a grave accent in tabbing
+\a= makes a macron accent in tabbing
+\aa is ˚a. \AA is ˚A.
+\acute makes an acute accent: ´a (math mode).
+\addcontentsline{toc}{section}{name} adds
+\address{text} declares the return address in
+\addtocontents{toc}{text} writes text to the
+\addtocounter{name}{amount} adds amount to
+\addtolength{\nl}{length} adds length to
+\newlength, \settowidth.
+\ae is æ. \AE is Æ.
+\aleph is ℵ (math mode).
+\alph{counter} prints counter as lower-case
+\alpha is α (math mode).
+\amalg is q (math mode).
+\and separates multiple authors for the
+\maketitle command.
+\angle is 6 (math mode).
+\appendix starts appendices.
+\approx is ≈ (math mode).
+\arabic{counter} prints counter as arabic
+\arccos is arccos (math mode).
+\arcsin is arcsin (math mode).
+\arctan is arctan (math mode).
+\arg is arg (math mode).
+\arraycolsep — width of the space between
+\arrayrulewidth — width of the rule created in
+\arraystretch — scale factor for interrow
+\ast is ∗ (math mode).
+\asymp is  (math mode).
+\author{names} declares author(s) for the
+\maketitle command.
+\b is a “bar-under” accent, as o¯
+\backslash is \ (math mode).
+\bar puts a macron over a letter: ¯a (math mode).
+\baselineskip — distance from bottom of one
+\baselinestretch — factor by which
+\baselineskip is multiplied each time a type
+\begin{environment} — always paired with
+\end{environment}. Following are the assorted
+\begin{abstract} starts an environment for
+\begin{array}{lrc} starts array environment
+\begin{center} starts an environment in which
+\begin{description} starts a labeled list. Items
+\begin{displaymath} sets mathematics on lines
+\begin{document} starts the actual text of a
+\begin{enumerate} starts a numbered list.
+\begin{eqnarray} starts a displaymath
+\\ or \\*; use \nonumber to suppress
+\begin{eqnarray*} begins an environment like
+\begin{equation} starts a displaymath
+\begin{figure}[pos] begins a floating
+\begin{figure*}[pos] begins a
+\begin{flushleft} starts environment with
+\\. See \raggedright.
+\begin{flushright} starts environment with
+\\. See \raggedleft.
+\begin{itemize} starts a “bulleted” (•) list.
+\begin{list}{labeling}{spacing} starts a
+\begin{math} starts a math display like this:
+\begin{minipage}[pos]{vsize} starts a box of
+\begin{picture}(x, y)(xl, yl) starts a picture
+\begin{quotation} starts an environment with
+\begin{quote} starts an environment with wider
+\begin{tabbing} starts a columnar environment.
+\begin{table}[pos] begins a floating
+\begin{table*}[pos] begins a two-column-wide
+\begin{tabular}{arg} starts an array
+\begin{theorem} — see \newtheorem.
+\begin{titlepage} is an environment with no
+\begin{verbatim} starts an environment which
+\begin{verse} starts an environment for poetry
+\beta is β (math mode).
+\bf switches to bold face type.
+\bibitem{ref} text creates a bibliography entry
+\bibliography{file} — insert bibliography
+\bibliographystyle{style} — a format
+\bigcap is T (math mode).
+\bigcirc is  (math mode).
+\bigcup is S (math mode).
+\bigodot is J (math mode).
+\bigoplus is L (math mode).
+\bigotimes is N (math mode).
+\bigtriangledown is 5 (math mode).
+\bigtriangleup is 4 (math mode).
+\bigskip — standard “big” vertical skip.
+\bigskipamount — default length for \bigskip.
+\bigsqcup is F (math mode).
+\biguplus is U (math mode).
+\bigvee is W (math mode).
+\bigwedge is V (math mode).
+\bmod is binary modulo expression u mod m
+\boldmath changes math italics and math
+\bot is ⊥ (math mode).
+\bottomfraction — maximum fraction of page
+\bowtie is ./ (math mode).
+\Box is ✷ (math mode).
+\breve makes a breve accent: ˘a (math mode).
+\bullet is • (math mode).
+\c is a cedilla, as ¸c.
+\cal produces calligraphic letters, as B (math
+\cap is ∩ (math mode).
+\caption[loftitle]{text} creates a numbered
+\cc{text} declares list of copy recipients for
+\cdot is · (math mode).
+\cdots makes three dots centered on the line: ···
+\centering declares that all text following is to
+\chapter[toctitle]{text} begins a new
+\chapter*{title} is like \chapter{title}, but
+\check makes a h´aˇcek, as ˇa (math mode).
+\chi is χ (math mode).
+\circ is ◦ (math mode).
+\circle{diameter} as a valid argument for \put
+\circle*{diameter} is like \circle, but draws
+\cite[subcit]{ref} produces a reference, in
+\cleardoublepage forces next page to be a
+\clearpage ends a page where it is, and puts
+\cline{i-j} draws a horizontal line across
+\closing{text} declares the closing in letter
+\clubsuit is ♣ (math mode).
+\columnsep — distance between columns in
+\columnseprule — width of the rule between
+\columnwidth — width of the current column.
+\cong is ∼= (math mode).
+\coprod is ` (math mode).
+\copyright is c .
+\cos is cos (math mode).
+\cosh is cosh (math mode).
+\cot is cot (math mode).
+\coth is coth (math mode).
+\csc is csc (math mode).
+\cup is ∪ (math mode).
+\d is a “dot under” accent, as o..
+\dag is †.
+\dagger is † (math mode).
+\dashbox{dwid}(width,height)[pos]{text}
+\dashv is a (math mode).
+\date{adate} declares the date for the
+\maketitle command. The default is \today.
+\day — current day of the month.
+\dblfloatpagefraction — minimum fraction of
+\dblfloatsep — distance between floats at the
+\dbltextfloatsep — distance between
+\dbltopfraction — maximum fraction at the
+\ddag is ‡.
+\ddagger is ‡ (math mode).
+\ddot makes a dieresis over a letter: ¨a (math
+\ddots produces a diagonal ellipsis ... (math
+\deg is deg (math mode).
+\delta is δ. \Delta is ∆ (math mode).
+\det is det (math mode).
+\diamond is . \Diamond is ✸ (both math mode).
+\diamondsuit is ♦ (math mode).
+\dim is dim (math mode).
+\displaystyle switches to displaymath or
+\div is ÷ (math mode).
+\documentstyle[substy]{sty} determines
+\dot makes a dot over a letter: ˙a (math mode).
+\doteq is .
+\dotfill expands to fill horizontal space with
+\doublerulesep — horizontal distance between
+\downarrow is ↓. \Downarrow is ⇓ (math mode).
+\ell is ` (math mode).
+\em toggles between roman and italic fonts for
+\emptyset is ∅ (math mode).
+\encl{text} declares a list of enclosures for
+\end{environment} ends an environment begun
+\epsilon is  (math mode).
+\equiv is ≡ (math mode).
+\eta is η (math mode).
+\evensidemargin — distance between left side of
+\exists is ∃ (math mode).
+\exp is exp (math mode).
+\fbox{text} makes a framed box around text.
+\fboxrule — thickness of ruled frame for \fbox
+\fboxsep — space between frame and text for
+\fbox and \framebox.
+\fill — rubber length (glue) that can stretch to
+\flat is [ (math mode).
+\floatpagefraction — minimum fraction of a
+\floatsep — distance between floats that appear
+\flushbottom causes pages to be stretched to
+\textheight.
+\fnsymbol{counter} prints counter as one of
+\footheight — height of box at bottom of page
+\footnote{text} creates a footnote of text.
+\footnotemark puts a footnote number into the
+\footnotesep — height of strut placed at
+\footnotesize switches to footnote-sized type.
+\footskip — vertical distance between bottom of
+\footnotetext{text} specifies the text for a
+\footnotemark.
+\forall is ∀ (math mode).
+\frac{numerator}{denominator} produces a
+\frame{text} makes a framed (outlined) box
+\framebox[size][pos]{text} produces a
+\framebox(width,height)[pos]{text}
+\frown is _ (math mode).
+\fussy is the default declaration for the
+\gamma is γ. \Gamma is Γ (math mode).
+\gcd is gcd (math mode).
+\ge is ≥ (math mode).
+\geq is ≥ (math mode).
+\gets is ← (math mode).
+\gg is  (math mode).
+\glossary{text} appends text to the .glo file
+\glossaryentry{text}{ref} is written to the
+\grave makes a grave accent: `a (math mode).
+\H prints a long Hungarian umlaut, as ˝o.
+\hat makes a circumflex: ˆa (math mode).
+\hbar is ¯h (math mode).
+\headheight — height of box at top of page that
+\headsep — vertical distance between bottom of
+\heartsuit is ♥ (math mode).
+\hfill is \hspace{\fill} (cf. \fill).
+\hline draws a horizontal line across all columns
+\hom is hom (math mode).
+\hookleftarrow is ←- (math mode).
+\hookrightarrow is ,→ (math mode).
+\hrulefill expands to fill horizontal space with
+\hspace{len} leaves a horizontal space of
+\hspace*{len} is like \hspace{len} but space is
+\huge switches to a very large typeface. \Huge is
+\hyphenation{wordlist} declares hyphenation
+\i is ı.
+\iff is ⇐⇒ (math mode).
+\Im is = (math mode).
+\imath is ı (math mode).
+\in is ∈ (math mode).
+\include{filename} brings in filename text at
+\includeonly{file1,file2,...} limits
+\index{text} appends text to the .idx file by
+\indexentry{text}{ref} is written to the .idx
+\indexspace puts blank space before first index
+\inf is inf (math mode).
+\infty is ∞ (math mode).
+\input{file} brings in text from file.tex at
+\int is R (math mode).
+\intextsep — vertical space placed above and
+\iota is ι (math mode).
+\it switches to Italic type.
+\item[text] indicates a list entry. text is
+\itemindent — extra indentation before label in
+\itemsep — vertical space between successive list
+\j is .
+\jmath is  (math mode).
+\Join is ✶ (math mode).
+\kappa is κ (math mode).
+\ker is ker (math mode).
+\kill — in a \tabbing environment, deletes
+\l is l. \L is L.
+\label{text} provides a reference point that is
+\labelwidth — width of box containing list item
+\labelsep — space between box containing list
+\lambda is λ. \Lambda is Λ (math mode).
+\land is ∧ (math mode).
+\langle is h (math mode).
+\large, \Large, and \LARGE switch to
+\LaTeX produces the LATEX logo.
+\lbrace is { (math mode).
+\lbrack is [ (math mode).
+\lceil is d (math mode).
+\ldots makes three dots at the base of the line:
+\le is ≤ (math mode).
+\leadsto is ❀ (math mode).
+\left* (where * is a delimiter) must be paired
+\leftarrow is ←. \Leftarrow is ⇐ (math
+\lefteqn{formula} is used in the eqnarray
+\leftharpoondown is ) (math mode).
+\leftharpoonup is ( (math mode).
+\leftmargin, in list environment, horizontal
+\leftrightarrow is ↔. \Leftrightarrow is ⇔
+\leq is ≤ (math mode).
+\lfloor is b (math mode).
+\lg is lg (math mode).
+\lhd is < (math mode).
+\lim is lim (math mode).
+\liminf is liminf (math mode).
+\limsup is limsup (math mode).
+\line(x,y){len} in picture environment, in
+\put command, draws line from \put argument
+\linebreak[n] forces a line to break exactly at
+\linethickness{dimen} sets the thickness for all
+\linewidth is the width of the current line in a
+\listoffigures begins a list of figures with
+\listoftables begins a list of tables with
+\listparindent — extra indentation added to
+\ll is  (math mode).
+\ln is ln (math mode).
+\lnot is ¬ (math mode).
+\log is log (math mode).
+\longleftarrow is ←−. \Longleftarrow is ⇐=
+\longleftrightarrow is ←→.
+\Longleftrightarrow is ⇐⇒ (math mode).
+\longmapsto is 7−→ (math mode).
+\longrightarrow is −→. \Longrightarrow is
+\lor is ∨ (math mode).
+\lq is a left-quote: ‘.
+\makebox[size][pos]{text} creates a box of
+\makeglossary enables writing of
+\glossaryentry commands to a .glo file.
+\makeindex enables writing of \indexentry
+\maketitle produces a title with \title,
+\author, and, optionally, \date.
+\mapsto is 7→ (math mode).
+\marginpar{text} puts text in the margin as a
+\marginparpush — minimum amount of vertical
+\marginparsep — horizontal space between
+\marginparwidth — width of a marginal note.
+\markboth{lhd}{rhd} defines the left-hand
+\markright{rhd} defines the right-hand heading
+\max is max (math mode).
+\mbox{text} places text into a horizontal box.
+\medskip — standard “medium” vertical skip.
+\medskipamount — default length for \medskip.
+\mho is ✵ (math mode).
+\mid is | (math mode).
+\min is min (math mode).
+\mit is “math italic” as in Π (math mode).
+\models is |= (math mode).
+\month — current month of the year.
+\mp is ∓ (math mode).
+\mu is µ (math mode).
+\multicolumn{noc}{fmt}{text} in tabular
+\multiput(x, y)(∆x, ∆y){n}{obj} is
+\put(x, y){obj}
+\put(x + ∆x, y + ∆y){obj}
+\put(x + (n − 1)∆x, y + (n − 1)∆y){obj}.
+\nabla is ∇ (math mode).
+\natural is \ (math mode).
+\ne is 6= (math mode).
+\nearrow is % (math mode).
+\neg is ¬ (math mode).
+\neq is 6= (math mode).
+\newcommand{\cs}[narg]{def} defines a new
+\newcounter{counter}[name] defines a counter
+\newenvironment{envname}[narg]{def1}{def2}
+\newfont{cs}{name} defines a control sequence
+\cs that chooses the font name.
+\newlength{\nl} sets up \nl as a length of 0in.
+\settowidth.
+\newline breaks a line right where it is, with no
+\newpage ends a page where it appears. (cf.
+\clearpage).
+\newsavebox{\binname} declares a new bin to
+\newtheorem{env}[env2]{label}[sectyp]
+\ni is 3 (math mode).
+\nofiles suppresses writing of auxiliary files
+\noindent suppresses indentation of first line of
+\nolinebreak[n] prevents a line break at that
+\nonumber is used in an eqnarray environment to
+\nopagebreak[n] prevents a page break at that
+\normalmarginpar is default declaration for
+\reversemarginpar).
+\normalsize is the default type size for the
+\not puts a slash through a relational operator:
+\not= is 6= (math mode).
+\notin is ∈/ (math mode).
+\nu is ν (math mode).
+\nwarrow is - (math mode).
+\o is ø. \O is Ø.
+\obeycr makes embedded carriage returns act
+\oddsidemargin — distance between left side of
+\odot is  (math mode).
+\oe is œ. \OE is Œ.
+\oint is H (math mode).
+\omega is ω. \Omega is Ω (math mode).
+\ominus is 	 (math mode).
+\onecolumn sets text in single column (default)
+\opening{text} declares an opening for letter
+\oplus is ⊕ (math mode).
+\oslash is  (math mode).
+\otimes is ⊗ (math mode).
+\oval(x,y) as an argument to \put draws an
+\overbrace{text} gives
+\overline{text} gives text (math mode).
+\owns is 3 (math mode).
+\P is ¶.
+\pagebreak[n] forces a page break at that point
+\pagenumbering{style} determines page
+\pageref{text} is the page number on which
+\label{text} occurs.
+\pagestyle{sty} determines characteristics of a
+\paragraph[toctitle]{text} begins a new
+\paragraph*{text} begins a paragraph and
+\parallel is k (math mode).
+\parbox[pos]{size}{text} is a box created in
+\parindent — horizontal indentation added at
+\parsep — extra vertical space between
+\parskip — extra vertical space between
+\part[toctitle]{text} begins a new part,
+\part*{text} begins a part and prints a title,
+\partial is ∂ (math mode).
+\partopsep — extra vertical space added before
+\perp is ⊥ (math mode).
+\phi is φ. \Phi is Φ (math mode).
+\pi is π. \Pi is Π (math mode).
+\pm is ± (math mode).
+\pmod{modulus} is “parenthesized” modulo
+\poptabs undoes the previous \pushtabs
+\pounds is £.
+\Pr is Pr (math mode).
+\prec is ≺ (math mode).
+\preceq is  (math mode).
+\prime is 0 (math mode).
+\prod is Q (math mode).
+\propto is ∝ (math mode).
+\protect permits the use of “dangerous”
+\ps in letter document style permits additional
+\psi is ψ. \Psi is Ψ (math mode).
+\pushtabs in tabbing environment lets you stack
+\put(x,y){stuff} is the basic picture-drawing
+\raggedbottom causes pages to assume natural
+\raggedleft declares all text that follows is to be
+\begin{flushright}).
+\raggedright declares all text that follows is to
+\begin{flushleft}).
+\raisebox{dim}[d2][d3]{text} moves text up
+\rangle is i (math mode).
+\rbrace is } (math mode).
+\rbrack is ] (math mode).
+\rceil is e (math mode).
+\Re is < (math mode).
+\ref{text} is the section number in which
+\label{text} occurs.
+\renewcommand{\cs}[narg]{def} redefines an
+\renewenvironment{envname}[narg]{def1}{def2}
+\newenvironment.
+\restorecr undoes the \obeycr command
+\reversemarginpar causes opposite margin to be
+\rfloor is c (math mode).
+\rhd is > (math mode).
+\rho is ρ (math mode).
+\right* (where * is a delimiter) must be paired
+\rightarrow is →. \Rightarrow is ⇒ (math
+\rightharpoondown is + (math mode).
+\rightharpoonup is * (math mode).
+\rightleftharpoons is *) (math mode).
+\rightmargin — in list environment, horizontal
+\rm switches to Roman type.
+\roman{counter} prints counter in lower-case
+\rq is a right-quote: ’.
+\rule[height]{length}{width} makes a
+\S is §.
+\savebox{\binname}[width][pos]{text} is
+\usebox{\binname}.
+\sbox{\binname}{text} saves text in box
+\binname (see \savebox, above).
+\sc switches to caps and small caps font.
+\scriptsize switches subscript size type.
+\scriptstyle switches to sub- or
+\scriptscriptstyle switches to second-level
+\searrow is & (math mode).
+\sec is sec (math mode).
+\section[toctitle]{text} begins a new
+\section*{text} begins a section, prints a title,
+\setcounter{counter}{value} resets the value
+\setlength{\nl}{length} sets value of length
+\addtolength, \newlength, \settowidth.
+\setminus is \ (math mode).
+\settowidth{\nl}{text} sets value of length
+\setlength, \newlength, \addtolength.
+\sf switches to sans serif font.
+\sharp is ] (math mode).
+\shortstack[pos]{x\\yy\\zzz} yields
+\sigma is σ. \Sigma is Σ (math mode).
+\signature{text} declares a signature for
+\sim is ∼ (math mode).
+\simeq is ' (math mode).
+\sin is sin (math mode).
+\sinh is sinh (math mode).
+\sl switches to slanted typeface.
+\sloppy relaxes the line-breaking algorithm to
+\small switches to smaller than normalsize
+\smallint is ∫ (math mode).
+\smallskip — standard “small” vertical skip.
+\smallskipamount — default length for
+\smallskip.
+\smile is ^ (math mode).
+\spadesuit is ♠ (math mode).
+\sqcap is u (math mode).
+\sqcup is t (math mode).
+\sqrt[3]{arg} is √3 arg. 3 (root) is optional.
+\sqsubset is ❁ (math mode).
+\sqsubseteq is v (math mode).
+\sqsupset is ❂ (math mode).
+\sqsupseteq is w (math mode).
+\ss is ß.
+\stackrel{stuff}{delim} puts stuff above the
+\star is ? (math mode).
+\stop — type this if TEX stops with a * and no
+\subparagraph[toctitle]{text} begins a
+\subparagraph*{text} begins a subparagraph
+\subsection[toctitle]{text},
+\subsubsection[toctitle]{text} begin new
+\subsection*{text}, \subsubsection*{text}
+\subset is ⊂ (math mode).
+\subseteq is ⊆ (math mode).
+\succ is  (math mode).
+\succeq is  (math mode).
+\sum is P (math mode).
+\sup is sup (math mode).
+\supset is ⊃ (math mode).
+\supseteq is ⊇ (math mode).
+\surd is √ (math mode).
+\swarrow is . (math mode).
+\symbol{cc} produces the symbol (glyph)
+\t prints a “tie-after” accent, as oo.
+\tabbingsep — distance to left of a tab stop
+\tabcolsep — half the width of the space
+\tableofcontents produces a table of contents.
+\tan is tan (math mode).
+\tanh is tanh (math mode).
+\tau is τ (math mode).
+\TeX produces the TEX logo.
+\textfloatsep — distance between floats at the
+\textfraction — minimum fraction of a text
+\textheight is the normal vertical dimension of
+\textstyle switches to math environment
+\textwidth is the normal horizontal dimension of
+\thanks{footnote} adds an acknowledgement
+\maketitle command.
+\theta is θ. \Theta is Θ (math mode).
+\thicklines is an alternate line thickness for
+\thinlines is the default declaration for line
+\thicklines.
+\thinspace is the proper space between single
+\thispagestyle{sty} determines characteristics
+\tilde makes a tilde, as: ˜a (math mode).
+\times is × (math mode).
+\tiny switches to a very small typeface.
+\title{text} declares a document title for the
+\maketitle command.
+\to is → (math mode).
+\today generates today’s date.
+\top is > (math mode).
+\topfraction — maximum fraction at the top of
+\topmargin — space between top of TEX page (1
+\topsep — extra vertical space added before first
+\topskip — minimum distance between top of
+\triangle is 4 (math mode).
+\triangleleft is / (math mode).
+\triangleright is . (math mode).
+\tt switches to typewriter type.
+\twocolumn[text] declares a two-column page,
+\typein[\cs]{text} displays text on the screen
+\typeout{text} displays text on the screen and
+\u prints a breve accent, as ˘o.
+\unboldmath unemboldens math italics and math
+\underbrace{text} gives text
+\underline{text} gives text (math mode or
+\unitlength — length of coordinate units for
+\unlhd is ≤ (math mode).
+\unrhd is ≥ (math mode).
+\uparrow is ↑. \Uparrow is ⇑ (math mode).
+\updownarrow is l. \Updownarrow is m (math
+\uplus is ] (math mode).
+\upsilon is υ. \Upsilon is Υ (math mode).
+\usebox{\binname} recalls box definition saved
+\usecounter{counter} is used in a list
+\v prints a h´aˇcek, as ˇo.
+\value{counter} produces the numeric value of
+\varepsilon is ε (math mode).
+\varphi is ϕ (math mode).
+\varpi is $ (math mode).
+\varrho is % (math mode).
+\varsigma is ς (math mode).
+\vartheta is ϑ (math mode).
+\vdash is ` (math mode).
+\vdots is .
+\vec puts a vector over a letter: ~a (math mode).
+\vector(x,y){len} in picture environment, in
+\put command, draws vector from \put
+\vee is ∨ (math mode).
+\verb/text/ creates a local verbatim
+\verb*/text/ is like \verb/text/, but spaces
+\vert is |. \Vert is k (math mode).
+\vfill is \vspace{\fill} (cf. \fill).
+\vspace{len} leaves a vertical space of
+\vspace*{len} is like \vspace{len} but space is
+\wedge is ∧ (math mode).
+\widehat{arg} is arg d (math mode).
+\widetilde{arg} is arg g (math mode).
+\wp is ℘ (math mode).
+\wr is o (math mode).
+\xi is ξ. \Xi is Ξ (math mode).
+\year — current year (A.D.).
+\zeta is ζ (math mode).
