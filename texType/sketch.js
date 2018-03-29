@@ -38,22 +38,17 @@ function preload() {
     //masterCommandsList = loadJSON('assets/commands.json', pickCommands);
     masterCommandsList = [
     "sin",
-    "theta",
+    "that",
+    "super",
+    "raven",
     "omega",
     "will",
     "rule",
     "coding",
     "name",
+    "names",
     "here",
     "nerd",
-    "the",
-    "looks",
-    "lass",
-    "something",
-    "there",
-    "and",
-    "lad",
-    "like",
     "party",
     "time",
     "hell",
@@ -68,6 +63,7 @@ function preload() {
 }
 
 function pickCommands() {
+	commands = [];
   for(let i = 0; i < masterCommandsList.length; i++) {
     let selectingY = true;
     let ypos;
@@ -136,18 +132,36 @@ function keyPressed() {
   }
 }
 
+function intersectsOtherWord(word) {
+	for(var i = 0; i < commands.length; i++) {
+		if(word.intersects(commands[i])) {
+			console.log("Intersection: ", word.val, " : ", commands[i].val);
+			return true
+		}
+	}
+	return false
+}
+
 function activateNewCommand() { 
   i = 0; 
+  console.log("Activate new command");
   while(true) {
-  let rand = random(commands);
+  	let rand = random(commands);
+  	if(intersectsOtherWord(rand)) {
+  		console.log("Getting next random word");
+  		continue;
+  	}
     if(!rand.run) {
       rand.holdOff();
+      console.log("new command succesfully activated: ", rand);
       break;
     }
     if(i > commands.length) {
+      console.log("Infinite loop break out");
       break;
     }
-    i++;
+    i = i + 1;
+    console.log("watchdog: ", i)
   }
 }
 
@@ -155,6 +169,11 @@ function stopAllCommands() {
   for(let i = 0; i < commands.length; i++) {
     commands[i].holdOn();
   }
+}
+
+function resetGame() {
+  pickCommands();
+  activateNewCommand();
 }
 
 function setup() {
@@ -166,9 +185,8 @@ function setup() {
 
   background(0);
 
-  numCommands = floor(1.1 * maxWordsOnScreen);
-  pickCommands();
-  activateNewCommand();
+	numCommands = floor(1.1 * maxWordsOnScreen);
+	resetGame();
 
   blue = color(110, 65, 240);
   red = color(255, 0, 0);
@@ -189,7 +207,8 @@ function draw() {
       activateNewCommand();
       misses++;
 
-      if(misses >= missLimit) {
+      cheatMode = true
+      if(misses >= missLimit && !cheatMode) {
         console.log("Final score:" + score);
         console.log("Final WPM:" + wpm);
         console.log("Error: " + floor(100*errorCharsTyped/totalCharsTyped) + "%");

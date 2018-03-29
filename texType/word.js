@@ -11,12 +11,12 @@ function Word(val, ypos) {
 
   this.holdOn = function() {
     this.x = 0;
+    this.y = floor(random(1, 22)) * textHeight;
     this.run = false;
   }
 
   this.holdOff = function() {
     this.run = true;
-    this.y = floor(random(1, 22)) * textHeight;
   }
 
   this.setSpeed = function(increment) {
@@ -27,14 +27,18 @@ function Word(val, ypos) {
     return (this.x + this.width) > width;
   }
 
-  // this.intersects = function(word) {
-  //   if(word.y == this.y) {
-  //     if(word.x + word.width > this.x) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
+  this.intersects = function(word) {
+  	if(!word.run || word === this) {
+  		return false;
+  	}
+
+    if(word.y == this.y) {
+      if(this.x + this.width > word.x && this.x + this.width < word.x + word.width) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   this.show = function() {
     if(this.run){
