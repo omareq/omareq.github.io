@@ -8,6 +8,8 @@
 *******************************************************************************/
 
 new p5();
+
+let t = 0;
 let got_data = false;
 let points_per_turn;
 
@@ -78,13 +80,12 @@ function setup() {
   	calculate();
 }
 
-let t = 0;
-
 function draw() {
 	if(got_data) {
 		background(255);
-		r = width / (nturns * TWO_PI);
-		translate(width/4, height/2, -0.5*r*TWO_PI*nturns);
+		let h = width / (nturns * TWO_PI);
+		let r = 0.2 * height;
+		translate(width/4, height/2, -0.5*h*TWO_PI*nturns);
 		rotateY(t);
 		t += 0.01;
 
@@ -95,7 +96,7 @@ function draw() {
 		for(let theta = start; theta <= end; theta += itt) {
 			x = r * cos(theta);
 			y = r * sin(theta);
-			z = r * theta;
+			z = h * theta;
 			vertex(x, y, z);
 		}
 		endShape();

@@ -10,6 +10,8 @@ Animations created using [p5.js](https://p5js.org/)
 
 [x]	Add slider to adjust helix resolution
 
+[ ]	Add switch polarisation state by adding pi
+
 [ ]	Add HPBW (Half Power Beam Width)
 
 [ ]	Update animations to show dimensions of antenna
