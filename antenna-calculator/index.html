@@ -1,0 +1,69 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="libraries/p5.dom.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+
+  <title>Antenna Calculator</title>
+
+</head>
+
+<body style="width:100%; text-align:center">
+	<h3>
+		Antenna Calculator
+	</h3>
+	<div class="container">
+  		<div class="row">
+  			<div class="col-sm-4">
+				<form id="antenna_input_params">
+					Frequency (MHz):<br>
+					<input type="number" name="frequency" value="2400" min="1" max="100000">
+					<br>
+					Number of turns:<br>
+					<input type="number" name="nturns" value="5" min="1" max="1000">
+					<br>
+				<!-- <input type="submit" value="Submit"> -->
+				</form> 
+				<button type="button" onclick="calculate()">Submit</button>
+
+				<form id="output">
+					Wavelength (m):<br>
+					<input name="wavelength" readonly style="background: grey; padding-bottom: 0px; margin: 0px">
+					<br>
+					Gain (dBi):<br>
+					<input name="gain" readonly style="background: grey">
+					<br>
+					Impedance (&#8486):<br>
+					<input name="impedance" readonly style="background: grey">
+					<br>
+					Helix Diameter (m):<br>
+					<input name="h_diameter" readonly style="background: grey">
+					<br>
+					Helix Spacing (m):<br>
+					<input name="h_spacing" readonly style="background: grey">
+					<br>
+					Helix Pitch (&#176):<br>
+					<input name="h_pitch" readonly style="background: grey">
+					<br>
+					Helix Length (m):<br>
+					<input name="h_length" readonly style="background: grey">
+					<br>
+					Helix Wire Length (m):<br>
+					<input name="h_wire_length" readonly style="background: grey">
+					<br>
+					Reflector Diameter (m):<br>
+					<input name="reflector_diameter" readonly style="background: grey">
+					<br>
+				</form>
+			</div>
+		<div class="col-sm-4">
+			<div id="sketch"></div>
+		</div></div>
+	</div>
+</body>
+</html>
