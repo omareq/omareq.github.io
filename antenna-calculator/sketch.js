@@ -8,6 +8,7 @@
 *******************************************************************************/
 
 new p5();
+let got_data = false;
 
 // input values from form
 let frequency, nturns;
@@ -32,9 +33,8 @@ function calculate() {
 	let c = 2.99792458e8;
 	lambda = c / frequency;
 
-	let pi = 3.1415926535;
 	h_circumference = lambda;
-	h_diameter = h_circumference / pi;
+	h_diameter = h_circumference / PI;
 	h_spacing = 0.25 * lambda;
 	h_length = nturns * h_spacing;
 	h_pitch = degrees(atan2(h_spacing, h_circumference));
@@ -58,14 +58,41 @@ function calculate() {
 	form_out.h_wire_length.value = h_wire_length.toFixed(5);
 	form_out.reflector_diameter.value = reflector_diameter.toFixed(5);
   	document.getElementById("output").style.display = "block"
+
+  	got_data = true;
 }
 
 function setup() {
 	let canvas = createCanvas(600, 400, WEBGL);
   	canvas.parent('sketch');
   	document.getElementById("output").style.display = "none"
+  	stroke(0);
+  	strokeWeight(20);
+  	fill(0, 0);
 }
 
+let t = 0;
+
 function draw() {
-	background(255);
+	if(got_data) {
+		background(255);
+		r = 0.2 * width;
+		// rotateY(3 * HALF_PI);
+		push();
+		translate(width/2, height/2, -0.5*r*TWO_PI*nturns);
+		rotateY(t);
+		t += 0.01;
+
+		let start = - 0.5 * nturns * TWO_PI;
+		let end = -1 * start;
+		beginShape();
+		for(let theta = start; theta <= end; theta += 0.01) {
+			x = r * cos(theta);
+			y = r * sin(theta);
+			z = r * theta;
+			vertex(x, y, z);
+		}
+		endShape(CLOSE);
+		pop();
+	}
 }
