@@ -14,10 +14,7 @@
 </head>
 
 <body style="width:100%; text-align:center">
-	<h3>
-		Antenna Calculator
-	</h3>
-	<div class="container">
+	<div class="container" style="padding-top: 30px">
   		<div class="row">
   			<div class="col-sm-4">
 				<form id="antenna_input_params">
@@ -33,37 +30,44 @@
 
 				<form id="output">
 					Wavelength (m):<br>
-					<input name="wavelength" readonly style="background: grey; padding-bottom: 0px; margin: 0px">
+					<input name="wavelength" onfocus="this.blur()" readonly style="background: #b5b5b5; padding-bottom: 0px; margin: 0px">
 					<br>
 					Gain (dBi):<br>
-					<input name="gain" readonly style="background: grey">
+					<input name="gain" onfocus="this.blur()" readonly style="background: #b5b5b5">
 					<br>
 					Impedance (&#8486):<br>
-					<input name="impedance" readonly style="background: grey">
+					<input name="impedance" onfocus="this.blur()" readonly style="background: #b5b5b5">
 					<br>
 					Helix Diameter (m):<br>
-					<input name="h_diameter" readonly style="background: grey">
+					<input name="h_diameter" onfocus="this.blur()" readonly style="background: #b5b5b5">
 					<br>
 					Helix Spacing (m):<br>
-					<input name="h_spacing" readonly style="background: grey">
+					<input name="h_spacing" onfocus="this.blur()" readonly style="background: #b5b5b5">
 					<br>
 					Helix Pitch (&#176):<br>
-					<input name="h_pitch" readonly style="background: grey">
+					<input name="h_pitch" onfocus="this.blur()" readonly style="background: #b5b5b5">
 					<br>
 					Helix Length (m):<br>
-					<input name="h_length" readonly style="background: grey">
+					<input name="h_length" onfocus="this.blur()" readonly style="background: #b5b5b5">
 					<br>
 					Helix Wire Length (m):<br>
-					<input name="h_wire_length" readonly style="background: grey">
+					<input name="h_wire_length" onfocus="this.blur()" readonly style="background: #b5b5b5">
 					<br>
 					Reflector Diameter (m):<br>
-					<input name="reflector_diameter" readonly style="background: grey">
+					<input name="reflector_diameter" onfocus="this.blur()" readonly style="background: #b5b5b5">
 					<br>
 				</form>
 			</div>
-		<div class="col-sm-4">
+		<div class="col-sm-8">
+			<h3>
+				Antenna Calculator
+			</h3>
 			<div id="sketch"></div>
-		</div></div>
+			<div>
+				<h5>Helix Resolution</h5>
+			  <input type="range" min="10" max="200" value="50" id="helix_res" oninput="change_res()" style="width: 100%">
+			</div>
+		</div>
 	</div>
 </body>
 </html>

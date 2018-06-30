@@ -9,6 +9,7 @@
 
 new p5();
 let got_data = false;
+let points_per_turn;
 
 // input values from form
 let frequency, nturns;
@@ -24,6 +25,10 @@ let h_spacing, h_pitch;
 let h_length, h_wire_length;
 
 let val = 255;
+
+function change_res() {
+	points_per_turn = document.getElementById("helix_res").value;
+}
 
 function calculate() {
 	form_in = document.getElementById("antenna_input_params");
@@ -67,8 +72,10 @@ function setup() {
   	canvas.parent('sketch');
   	document.getElementById("output").style.display = "none"
   	stroke(0);
-  	strokeWeight(20);
+  	strokeWeight(10);
   	fill(0, 0);
+  	change_res();
+  	calculate();
 }
 
 let t = 0;
@@ -76,23 +83,21 @@ let t = 0;
 function draw() {
 	if(got_data) {
 		background(255);
-		r = 0.2 * width;
-		// rotateY(3 * HALF_PI);
-		push();
-		translate(width/2, height/2, -0.5*r*TWO_PI*nturns);
+		r = width / (nturns * TWO_PI);
+		translate(width/4, height/2, -0.5*r*TWO_PI*nturns);
 		rotateY(t);
 		t += 0.01;
 
 		let start = - 0.5 * nturns * TWO_PI;
 		let end = -1 * start;
+		let itt = TWO_PI / points_per_turn;
 		beginShape();
-		for(let theta = start; theta <= end; theta += 0.01) {
+		for(let theta = start; theta <= end; theta += itt) {
 			x = r * cos(theta);
 			y = r * sin(theta);
 			z = r * theta;
 			vertex(x, y, z);
 		}
-		endShape(CLOSE);
-		pop();
+		endShape();
 	}
 }

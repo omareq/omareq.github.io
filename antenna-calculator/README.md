@@ -6,6 +6,12 @@ Animations created using [p5.js](https://p5js.org/)
 
 ## To do list
 
+[ ] Figure out why the first and last vertex of the helix are connected
+
+[x]	Add slider to adjust helix resolution
+
+[ ]	Add HPBW (Half Power Beam Width)
+
 [ ]	Update animations to show dimensions of antenna
 
 [ ]	Create stop animation option that displays static image with dimensions
