@@ -14,6 +14,8 @@ Animations created using [p5.js](https://p5js.org/)
 
 [ ]	Add HPBW (Half Power Beam Width)
 
+[ ]	Draw reflector dish
+
 [ ]	Update animations to show dimensions of antenna
 
 [ ]	Create stop animation option that displays static image with dimensions
