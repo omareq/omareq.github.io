@@ -72,7 +72,7 @@ function calculate_helix() {
   	
   	document.getElementById("helix_output").style.display = "block"
   	document.getElementById("helix_slider_div").style.display = "block"
-
+  	loop();
   	got_data = true;
 }
 
@@ -93,6 +93,7 @@ function setup() {
   	strokeWeight(10);
   	fill(0, 0);
   	change_helix_res();
+  	noLoop();
   	//calculate_helix();
 }
 
