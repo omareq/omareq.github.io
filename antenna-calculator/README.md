@@ -10,7 +10,7 @@ Animations created using [p5.js](https://p5js.org/)
 
 [x]	Add slider to adjust helix resolution
 
-[ ]	Add switch polarisation state by adding pi
+[x]	Add switch polarisation state by adding pi
 
 [ ]	Add HPBW (Half Power Beam Width)
 
@@ -23,3 +23,5 @@ Animations created using [p5.js](https://p5js.org/)
 [ ]	Create schematic export to pdf or some other format
 
 [ ]	Add different antenna types
+
+[ ]	Add inverse calculation, ie antenna frequency from dimensions

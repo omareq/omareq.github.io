@@ -12,6 +12,7 @@ new p5();
 let t = 0;
 let got_data = false;
 let points_per_turn;
+let lhp = true;
 
 // input values from form
 let frequency, nturns;
@@ -28,12 +29,16 @@ let h_length, h_wire_length;
 
 let val = 255;
 
-function change_res() {
+function change_helix_polarisation() {
+	lhp = !lhp;
+}
+
+function change_helix_res() {
 	points_per_turn = document.getElementById("helix_res").value;
 }
 
-function calculate() {
-	form_in = document.getElementById("antenna_input_params");
+function calculate_helix() {
+	form_in = document.getElementById("helix_input_params");
 	frequency = form_in.frequency.value * 1e6;
 	nturns = form_in.nturns.value;
 
@@ -54,7 +59,7 @@ function calculate() {
 	impedance = 140 * h_circumference * r_lambda;
 	reflector_diameter = 1.1 * lambda;
 
-	form_out = document.getElementById("output");
+	form_out = document.getElementById("helix_output");
 	form_out.wavelength.value = lambda.toFixed(5);
 	form_out.gain.value = gain_dbi.toFixed(5);
 	form_out.impedance.value = impedance.toFixed(1);
@@ -65,27 +70,36 @@ function calculate() {
 	form_out.h_wire_length.value = h_wire_length.toFixed(5);
 	form_out.reflector_diameter.value = reflector_diameter.toFixed(5);
   	
-  	document.getElementById("output").style.display = "block"
+  	document.getElementById("helix_output").style.display = "block"
   	document.getElementById("helix_slider_div").style.display = "block"
 
   	got_data = true;
 }
 
+function calculate_dipole() {
+	form_in = document.getElementById("dipole_input_params");
+	frequency = form_in.frequency.value * 1e6;
+
+	let c = 2.99792458e8;
+	lambda = c / frequency;
+}
+
 function setup() {
 	let canvas = createCanvas(600, 400, WEBGL);
   	canvas.parent('sketch');
-  	document.getElementById("output").style.display = "none"
+  	document.getElementById("helix_output").style.display = "none"
   	document.getElementById("helix_slider_div").style.display = "none"
   	stroke(0);
   	strokeWeight(10);
   	fill(0, 0);
-  	change_res();
-  	//calculate();
+  	change_helix_res();
+  	//calculate_helix();
 }
 
 let c = 1;
 
 function draw_dimensions(count, h, r) {
+	//draw spacing
 	if(count < 100) {
 		push();
 		stroke(255, 0, 0);
@@ -129,11 +143,15 @@ function draw() {
 		let end = -1 * start;
 		let itt = TWO_PI / points_per_turn;
 		stroke(0);
+		let x, y, z;
 		beginShape();
 		for(let theta = start; theta <= end; theta += itt) {
 			x = r * cos(theta);
 			y = r * sin(theta);
 			z = h * theta;
+			if(lhp) {
+				y = -y
+			}
 			vertex(x, y, z);
 		}
 		endShape();
