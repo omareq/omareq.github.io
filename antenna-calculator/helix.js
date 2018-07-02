@@ -85,7 +85,7 @@ let helix_sketch = function(p5) {
 
 	p5.setup = function() {
 		let canvas = p5.createCanvas(600, 400, p5.WEBGL);
-	  	canvas.parent('sketch');
+	  	canvas.parent('helix_canvas');
 	  	document.getElementById("helix_output").style.display = "none"
 	  	document.getElementById("helix_slider_div").style.display = "none"
 	  	p5.stroke(0);
