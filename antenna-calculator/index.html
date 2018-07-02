@@ -34,7 +34,7 @@
 							<br>
 						<!-- <input type="submit" value="Submit"> -->
 						</form> 
-						<button style="border-radius: 0.25rem" type="button" onclick="calculate_helix()">Submit</button>
+						<button style="border-radius: 0.25rem" type="button" onclick="helix_canvas.calculate_helix()">Submit</button>
 
 						<form id="helix_output">
 							Wavelength (m):<br>
@@ -73,8 +73,8 @@
 						<div id="sketch"></div>
 						<div id="helix_slider_div">
 							<h5>Helix Resolution</h5>
-						  <input type="range" min="10" max="200" value="50" id="helix_res" oninput="change_helix_res()" style="width: 70%">
-						  <button style="border-radius: 0.25rem" type="button" onclick="change_helix_polarisation()">Switch Polarisation</button>
+						  <input type="range" min="10" max="200" value="50" id="helix_res" oninput="helix_canvas.change_helix_res()" style="width: 70%">
+						  <button style="border-radius: 0.25rem" type="button" onclick="helix_canvas.change_helix_polarisation()">Switch Polarisation</button>
 						</div>
 					</div>
 				</div>
