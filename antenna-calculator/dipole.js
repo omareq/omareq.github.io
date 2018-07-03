@@ -10,7 +10,7 @@
 let dipole_sketch = function(p5) {
 	let t = 0;
 	let got_data = false;
-	let hp = true;
+	let vp = true;
 
 	// input values from form
 	let frequency;
@@ -24,8 +24,16 @@ let dipole_sketch = function(p5) {
 
 	let val = 255;
 
+	p5.pause_animation = function() {
+		p5.noLoop();
+	}
+
+	p5.continue_animation = function() {
+		p5.loop();
+	}
+
 	p5.change_dipole_polarisation = function() {
-		hp = !hp;
+		vp = !vp;
 	}
 
 	p5.calculate_dipole = function() {
@@ -58,7 +66,7 @@ let dipole_sketch = function(p5) {
 	  	document.getElementById("dipole_output").style.display = "none"
 	  	//document.getElementById("helix_slider_div").style.display = "none"
 	  	p5.stroke(0);
-	  	p5.strokeWeight(10);
+	  	p5.strokeWeight(5);
 	  	p5.fill(0, 0);
 	  	p5.noLoop();
 	  	//calculate_helix();
@@ -72,8 +80,38 @@ let dipole_sketch = function(p5) {
 
 	p5.draw = function() {
 		if(got_data) {
-			p5.background(0);
-			
+			p5.background(255);
+
+			if(vp) {
+				let h = .30 * p5.height;
+				p5.stroke(225, 50, 50);
+				let start = .25 * p5.width;
+				let end = p5.width;
+				let itt = 0.2;
+
+				let x, y;
+				p5.beginShape()
+				for(let theta = start; theta <= end; theta += itt) {
+					x = theta;//lambda * theta/p5.TWO_PI;
+					y = h * p5.sin(lambda * theta/p5.TWO_PI + t) + .5 * p5.height;
+
+					p5.vertex(x, y);
+				}
+				p5.endShape();
+
+				p5.stroke(0);
+				p5.line(.25 * p5.width, .20 * p5.height, .25 * p5.width, .46 * p5.height);
+				p5.line(.20 * p5.width, .46 * p5.height, .25 * p5.width, .46 * p5.height);
+				
+				p5.line(.25 * p5.width, .54 * p5.height, .25 * p5.width, .80 * p5.height);
+				p5.line(.20 * p5.width, .54 * p5.height, .25 * p5.width, .54 * p5.height);	
+
+				
+
+				t -= 0.1;
+			} else {
+
+			}
 		}
 	}
 };

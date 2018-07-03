@@ -8,6 +8,8 @@ Animations created using [p5.js](https://p5js.org/)
 
 [ ] Figure out why the first and last vertex of the helix are connected
 
+[ ]	Figure out how to pause animation when active tab is changed
+
 [x]	Add slider to adjust helix resolution
 
 [x]	Add switch polarisation state by adding pi
