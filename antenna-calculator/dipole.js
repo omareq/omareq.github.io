@@ -11,6 +11,7 @@ let dipole_sketch = function(p5) {
 	let t = 0;
 	let got_data = false;
 	let vp = true;
+	let points_per_wave = 25;
 
 	// input values from form
 	let frequency;
@@ -34,6 +35,10 @@ let dipole_sketch = function(p5) {
 
 	p5.change_dipole_polarisation = function() {
 		vp = !vp;
+	}
+
+	p5.change_helix_res = function() {
+		points_per_turn = document.getElementById("dipole_res").value;
 	}
 
 	p5.calculate_dipole = function() {
@@ -83,8 +88,43 @@ let dipole_sketch = function(p5) {
 			p5.background(255);
 
 			if(vp) {
+				p5.stroke(50, 50, 225);
+				p5.line(.25 * p5.width, .50 * p5.height, p5.width, .50 * p5.height);	
+				
 				let h = .30 * p5.height;
 				p5.stroke(225, 50, 50);
+				let start = .25 * p5.width;
+				let end = p5.width;
+				let itt = p5.TWO_PI / (points_per_wave);
+
+				let x, y;
+				p5.beginShape()
+				for(let theta = start; theta <= end; theta += itt) {
+					x = theta;//lambda * theta/p5.TWO_PI;
+					y = h * p5.sin(0.05* theta + t) + .5 * p5.height;
+
+					p5.vertex(x, y);
+				}
+				p5.endShape();
+
+				p5.stroke(0);
+				p5.strokeWeight(8);
+				p5.line(.25 * p5.width, .20 * p5.height, .25 * p5.width, .46 * p5.height);
+				p5.line(.25 * p5.width, .54 * p5.height, .25 * p5.width, .80 * p5.height);
+				
+				p5.strokeWeight(5);
+				p5.line(.20 * p5.width, .46 * p5.height, .25 * p5.width, .46 * p5.height);
+				p5.line(.20 * p5.width, .54 * p5.height, .25 * p5.width, .54 * p5.height);	
+
+				
+
+				t -= 0.1;
+			} else {
+				p5.stroke(225, 20, 20);
+				p5.line(.25 * p5.width, .50 * p5.height, p5.width, .50 * p5.height);	
+				
+				let h = .30 * p5.height;
+				p5.stroke(50, 50, 225);
 				let start = .25 * p5.width;
 				let end = p5.width;
 				let itt = 0.2;
@@ -100,17 +140,11 @@ let dipole_sketch = function(p5) {
 				p5.endShape();
 
 				p5.stroke(0);
-				p5.line(.25 * p5.width, .20 * p5.height, .25 * p5.width, .46 * p5.height);
-				p5.line(.20 * p5.width, .46 * p5.height, .25 * p5.width, .46 * p5.height);
-				
-				p5.line(.25 * p5.width, .54 * p5.height, .25 * p5.width, .80 * p5.height);
-				p5.line(.20 * p5.width, .54 * p5.height, .25 * p5.width, .54 * p5.height);	
-
-				
-
+				p5.line(.20 * p5.width, .50 * p5.height, .25 * p5.width, .50 * p5.height);	
+				p5.fill(0);
+				p5.ellipse(.25 * p5.width, .50 * p5.height, 8, 8);
+				p5.noFill();
 				t -= 0.1;
-			} else {
-
 			}
 		}
 	}
