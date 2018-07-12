@@ -127,13 +127,13 @@ let dipole_sketch = function(p5) {
 				p5.stroke(50, 50, 225);
 				let start = .25 * p5.width;
 				let end = p5.width;
-				let itt = 0.2;
+				let itt = p5.TWO_PI / (points_per_wave);
 
 				let x, y;
 				p5.beginShape()
 				for(let theta = start; theta <= end; theta += itt) {
 					x = theta;//lambda * theta/p5.TWO_PI;
-					y = h * p5.sin(lambda * theta/p5.TWO_PI + t) + .5 * p5.height;
+					y = h * p5.sin(0.05* theta + t) + .5 * p5.height;
 
 					p5.vertex(x, y);
 				}
