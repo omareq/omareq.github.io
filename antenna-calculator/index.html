@@ -16,14 +16,73 @@
 <body style="width:100%; text-align:center">
 	<div class="container">
 		<ul class="nav navbar nav-tabs" style="padding-bottom: 0px">
-		  <li><a class="active nav-item nav-link" data-toggle="tab" href="#helical">Helical</a></li>
+		  <li><a class="active nav-item nav-link" data-toggle="tab" href="#bi-quad">Bi-Quad</a></li>
 		  <li><a class="nav-item nav-link" data-toggle="tab" href="#dipole">Dipole</a></li>
+		  <li><a class="nav-item nav-link" data-toggle="tab" href="#folded-dipole">Folded Dipole</a></li>
+		  <li><a class="nav-item nav-link" data-toggle="tab" href="#helical">Helical</a></li>
+		  <li><a class="nav-item nav-link" data-toggle="tab" href="#turnstile">Turnstile</a></li>
 		  <li><a class="nav-item nav-link" data-toggle="tab" href="#yagi-uda">Yagi-Uda</a></li>
-		  <li><a class="nav-item nav-link" data-toggle="tab" href="#bi-quad">Bi-Quad</a></li>
 		</ul>
 
 		<div class="tab-content">
-	  	<div id="helical" class="tab-pane fade-in active">
+			<div id="bi-quad" class="tab-pane fade-in active">
+	  		<div class="row">
+	  			<div class="col-sm-4">
+	  			</div>
+	  			<div class="col-sm-8">	  				
+	  				<h3>Bi-Quad Antenna</h3>
+	  			</div>
+	  		</div>
+	  	</div>
+
+	  	<div id="dipole" class="tab-pane fade">
+	  		<div class="row">
+	  			<div class="col-sm-4">
+	  				<form id="dipole_input_params">
+							Frequency (MHz):<br>
+							<input type="number" name="frequency" value="2400" min="1" max="100000">
+							<br>
+						<!-- <input type="submit" value="Submit"> -->
+						</form> 
+						<button style="border-radius: 0.25rem" type="button" onclick="dipole_canvas.calculate_dipole()">Submit</button>
+						
+						<form id="dipole_output">
+							Wavelength (m):<br>
+							<input name="wavelength" onfocus="this.blur()" readonly style="background: #b5b5b5; padding-bottom: 0px; margin: 0px">
+							<br>
+							Gain (dBi):<br>
+							<input name="gain" onfocus="this.blur()" readonly style="background: #b5b5b5">
+							<br>
+							Impedance (&#8486):<br>
+							<input name="impedance" onfocus="this.blur()" readonly style="background: #b5b5b5">
+							<br>
+							Dipole Total Length (m):<br>
+							<input name="d_length" onfocus="this.blur()" readonly style="background: #b5b5b5">
+							<br><br>
+							<button style="border-radius: 0.25rem" type="button" onclick="dipole_canvas.change_dipole_polarisation()">Switch Polarisation</button>
+						</form>
+
+
+	  			</div>
+
+	  			<div class="col-sm-8">	  				
+	  				<h3>Dipole Antenna</h3>
+	  				<div id="dipole_canvas"></div>
+	  			</div>
+	  		</div>
+	  	</div>
+
+	  	<div id="folded-dipole" class="tab-pane fade">
+	  		<div class="row">
+	  			<div class="col-sm-4">
+	  			</div>
+	  			<div class="col-sm-8">	  				
+	  				<h3>Folded-Dipole Antenna</h3>
+	  			</div>
+	  		</div>
+	  	</div>
+
+	  	<div id="helical" class="tab-pane">
 		  	<div class="row">
 		  		<div class="col-sm-4">
 						<form id="helix_input_params">
@@ -81,39 +140,12 @@
 				</div>
 			</div>
 
-	  	<div id="dipole" class="tab-pane fade">
+			<div id="turnstile" class="tab-pane fade">
 	  		<div class="row">
 	  			<div class="col-sm-4">
-	  				<form id="dipole_input_params">
-							Frequency (MHz):<br>
-							<input type="number" name="frequency" value="2400" min="1" max="100000">
-							<br>
-						<!-- <input type="submit" value="Submit"> -->
-						</form> 
-						<button style="border-radius: 0.25rem" type="button" onclick="dipole_canvas.calculate_dipole()">Submit</button>
-						
-						<form id="dipole_output">
-							Wavelength (m):<br>
-							<input name="wavelength" onfocus="this.blur()" readonly style="background: #b5b5b5; padding-bottom: 0px; margin: 0px">
-							<br>
-							Gain (dBi):<br>
-							<input name="gain" onfocus="this.blur()" readonly style="background: #b5b5b5">
-							<br>
-							Impedance (&#8486):<br>
-							<input name="impedance" onfocus="this.blur()" readonly style="background: #b5b5b5">
-							<br>
-							Dipole Total Length (m):<br>
-							<input name="d_length" onfocus="this.blur()" readonly style="background: #b5b5b5">
-							<br><br>
-							<button style="border-radius: 0.25rem" type="button" onclick="dipole_canvas.change_dipole_polarisation()">Switch Polarisation</button>
-						</form>
-
-
 	  			</div>
-
 	  			<div class="col-sm-8">	  				
-	  				<h3>Dipole Antenna</h3>
-	  				<div id="dipole_canvas"></div>
+	  				<h3>Turnstile Antenna</h3>
 	  			</div>
 	  		</div>
 	  	</div>
@@ -128,15 +160,7 @@
 	  		</div>
 	  	</div>
 
-	  	<div id="bi-quad" class="tab-pane fade">
-	  		<div class="row">
-	  			<div class="col-sm-4">
-	  			</div>
-	  			<div class="col-sm-8">	  				
-	  				<h3>Bi-Quad Antenna</h3>
-	  			</div>
-	  		</div>
-	  	</div>
+	  	
 
 	  </div>
 	</div>
