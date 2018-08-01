@@ -7,8 +7,12 @@
 	<script src="libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script> 
   <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
   <script language="javascript" type="text/javascript" src="libraries/p5.dom.js"></script>
-  <script language="javascript" type="text/javascript" src="helix.js"></script>
+  <script language="javascript" type="text/javascript" src="bi-quad.js"></script>
   <script language="javascript" type="text/javascript" src="dipole.js"></script>
+  <script language="javascript" type="text/javascript" src="folded-dipole.js"></script>
+  <script language="javascript" type="text/javascript" src="helix.js"></script>
+  <script language="javascript" type="text/javascript" src="turnstile.js"></script>
+  <script language="javascript" type="text/javascript" src="yagi-uda.js"></script>
 
   <title>Antenna Calculator</title>
 </head>
@@ -28,9 +32,23 @@
 			<div id="bi-quad" class="tab-pane fade-in active">
 	  		<div class="row">
 	  			<div class="col-sm-4">
+	  				<form id="bi_quad_input_params">
+							Frequency (MHz):<br>
+							<input type="number" name="frequency" value="2400" min="1" max="100000">
+							<br>
+						<!-- <input type="submit" value="Submit"> -->
+						</form> 
+						<button style="border-radius: 0.25rem" type="button" onclick="bi_quad_canvas.calculate_bi_quad()">Submit</button>
+						
+						<form id="bi_quad_output">
+							Wavelength (m):<br>
+							<input name="wavelength" onfocus="this.blur()" readonly style="background: #b5b5b5; padding-bottom: 0px; margin: 0px">
+							<br><br>
+						</form>
 	  			</div>
 	  			<div class="col-sm-8">	  				
 	  				<h3>Bi-Quad Antenna</h3>
+	  				<div id="bi_quad_canvas"></div>
 	  			</div>
 	  		</div>
 	  	</div>
