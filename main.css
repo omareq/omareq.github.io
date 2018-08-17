@@ -1,0 +1,51 @@
+
+.jumbotron h1, h2, h3, h4 {
+	color: white;
+}
+
+.github-profile {
+	background: #e23838;
+}
+
+.githubio {
+	background: #188e45;
+}
+
+.iamoquaye {
+	background: #345d9b;
+}
+
+footer .links a:hover span{
+	text-decoration: none;
+	color: white;
+	transform:scale(1.2)
+}
+
+footer .links {
+	display:flex
+}
+
+@media (max-width: 620px) {
+	footer .links {
+		flex-wrap:wrap
+	}
+}
+
+footer .links a {
+	padding:20px;
+	flex-basis:100%;
+	text-align:center;
+	font-family:"cubanoregular";
+	letter-spacing:.4;
+	text-decoration:none;
+	color:#FFF;
+	margin:0
+}
+
+footer .links a span {
+	font-color: white;
+	display:inline-block;
+	font-size:1.5em;
+	transition:all 150ms cubic-bezier(.4, 0, .2, 1);
+	transform:scale(1)
+}
