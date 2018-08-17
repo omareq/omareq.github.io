@@ -1,6 +1,77 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	color: black;
+}
+
+.jumbotron {
+	background: #875199;
+	display: block;
+}
 
 .jumbotron h1, h2, h3, h4 {
 	color: white;
+}
+
+#profile-box {
+	text-align: center;
+	font-size: 1.3rem;
+	border-color: white;
+}
+
+#profile-box img {
+	max-width: 70%;
+	max-height: 70%;
+	border-color: white;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.flip-container img {
+  	max-width: 80%;
+}
+
+.flip-container {
+	max-width: 100%;
+	margin: 4px;
+	perspective: 1000;
+	display: inline-block;
+}
+
+.flip-container:hover .card {
+  	transform: rotateY(180deg);
+}
+
+.card, .front, .back {
+	border: none;
+	width: 256px;
+	height: 256px;
+}
+
+.card {
+	transition: 0.75s;
+	transform-style: preserve-3d;
+	position: relative;
+}
+
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+}
+
+.front {
+	z-index: 1;
+	transform: rotateY(180deg);
+	border-radius: 0px;
+}
+
+.back {
+	z-index: 2; /* back side, placed above front */
+	transform: rotateY(0deg);
+}
+
+.back img {
+	border-radius: 50%;
 }
 
 .github-profile {
