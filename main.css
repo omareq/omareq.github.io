@@ -139,6 +139,17 @@ body {
 	font-size: 1.4rem;
 }
 
+.project-card a {
+	color: #cccccc;
+	background: #cccccc;
+	font-size: 1.1rem;
+}
+
+.project-card p {	
+	color: #cccccc;
+	background: #cccccc;
+}
+
 .project-card img {
 	background-image:url('imgs/p_default.jpg');
 	max-width: 95%;

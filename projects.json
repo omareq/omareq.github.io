@@ -8,7 +8,8 @@
 		"gif-url":"imgs/p_000.gif",
 		"vid-url":"vids/p_000.mp4",
 		"prev-id":"p_006",
-		"next-id":"p_001"
+		"next-id":"p_001",
+		"brief":"Making a snowman from falling snowflakes."
 	},
 	"p_001":{
 		"id":"p_001",
@@ -19,7 +20,8 @@
 		"gif-url":"imgs/p_001.gif",
 		"vid-url":"vids/p_001.mp4",
 		"prev-id":"p_000",
-		"next-id":"p_002"
+		"next-id":"p_002",
+		"brief":"Exploring the complexities of Langton's ant."
 	},
 	"p_002":{
 		"id":"p_002",
@@ -30,7 +32,8 @@
 		"gif-url":"imgs/p_002.gif",
 		"vid-url":"vids/p_002.mp4",
 		"prev-id":"p_001",
-		"next-id":"p_003"
+		"next-id":"p_003",
+		"brief":"A quick game to practice typing."
 	},
 	"p_003":{
 		"id":"p_003",
@@ -41,7 +44,8 @@
 		"gif-url":"imgs/p_003.gif",
 		"vid-url":"vids/p_003.mp4",
 		"prev-id":"p_002",
-		"next-id":"p_004"
+		"next-id":"p_004",
+		"brief":"Matrix rain but with hearts."
 	},
 	"p_004":{
 		"id":"p_004",
@@ -52,7 +56,8 @@
 		"gif-url":"imgs/p_004.gif",
 		"vid-url":"vids/p_004.mp4",
 		"prev-id":"p_003",
-		"next-id":"p_005"
+		"next-id":"p_005",
+		"brief":"A simple tool to help when designing various antenna."
 	},
 	"p_005":{
 		"id":"p_005",
@@ -63,7 +68,8 @@
 		"gif-url":"imgs/p_005.gif",
 		"vid-url":"vids/p_005.mp4",
 		"prev-id":"p_004",
-		"next-id":"p_006"
+		"next-id":"p_006",
+		"brief":"Figuring out how to place two canvases on the same webpage."
 	},
 	"p_006":{
 		"id":"p_006",
@@ -74,6 +80,7 @@
 		"gif-url":"imgs/p_006.gif",
 		"vid-url":"vids/p_006.mp4",
 		"prev-id":"p_005",
-		"next-id":"p_000"
+		"next-id":"p_000",
+		"brief":"A quick side scroll ninja game."
 	}
 }}

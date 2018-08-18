@@ -1,18 +1,25 @@
 let projects;
 
 create_card = function(card_id, project) {
-	console.log(card_id);
 	let card = $(card_id);//.css( "border", "3px solid red");
-	$(card_id + ' p').text(card_id);
 	$(card_id + ' img').attr("src", project["pic-url"]);
+	$(card_id + ' .project-docs').attr("href", project["docs-url"]);
+	$(card_id + ' .project-docs').attr("style", "color: blue; background: white");
+	$(card_id + ' .project-demo').attr("href", project["demo-url"]);
+	$(card_id + ' .project-demo').attr("style", "color: blue; background: white");
 	$(card_id + ' h4').text(project.name);
-	$(card_id + ' h4').attr("style", "color: black; background: white");
+	$(card_id + ' h4, p').attr("style", "color: black; background: white");
+
+	if(project["brief"]) { 
+		$(card_id + ' p').text(project["brief"]);
+	} else {
+		$(card_id + ' p').text("");
+	}
 }
 
 $(document).ready(function(){
 	let response = $.getJSON('projects.json', function(data) {
 		projects = data.projects;
-		console.log(projects);
 
 		let obj_keys = Object.keys(projects);
 		let rand_key, rand_project, card_id;
