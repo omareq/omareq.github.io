@@ -123,6 +123,28 @@ body {
 	font-color: white;
 }
 
+.project-card {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 1px black;
+	border-radius: 4px;
+	max-width: 100%;
+	height: auto;
+	/*overflow: hidden;*/
+}
+
+.project-card h4 {
+	color: #cccccc;
+	background: #cccccc;
+	font-size: 1.4rem;
+}
+
+.project-card img {
+	background-image:url('imgs/p_default.jpg');
+	max-width: 95%;
+	height: auto;
+}
+
 footer .links a:hover span{
 	text-decoration: none;
 	color: white;
