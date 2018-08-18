@@ -13,6 +13,40 @@ body {
 	color: white;
 }
 
+#intro {
+	font-size: 1.2em;
+}
+
+.link-div {
+	width: 75%;
+	display:flex;
+	text-align: center;
+	align-content: center;
+}
+
+.link-div a {
+	flex-basis:100%;
+	color: white;
+	font-size: 1.25em;
+	width: 85%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 10px;
+}
+
+.link-div a span {
+	display: inline-block;
+	transform:scale(1); 
+}
+
+.link-div a:hover span {
+	/*font-size: 1.35em;*/
+	text-decoration: none;
+	transform: scale(1.2);
+}
+
 #profile-box {
 	text-align: center;
 	font-size: 1.3rem;
@@ -76,14 +110,17 @@ body {
 
 .github-profile {
 	background: #e23838;
+	font-color: white;
 }
 
 .githubio {
 	background: #188e45;
+	font-color: white;
 }
 
 .iamoquaye {
 	background: #345d9b;
+	font-color: white;
 }
 
 footer .links a:hover span{
