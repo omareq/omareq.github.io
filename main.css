@@ -152,8 +152,13 @@ body {
 
 .project-card img {
 	background-image:url('imgs/p_default.jpg');
-	max-width: 95%;
+	max-width: 75%;
 	height: auto;
+}
+
+.project-card:hover img{
+	max-width: 100%;
+	transition: 0.3s all;
 }
 
 footer .links a:hover span{
