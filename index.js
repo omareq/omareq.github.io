@@ -32,7 +32,5 @@ $(document).ready(function(){
 	        card_id = "#project-card-" + i;
 	        create_card(card_id, rand_project); 
     	}
-
-
     });
 });
