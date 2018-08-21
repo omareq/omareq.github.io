@@ -59,4 +59,14 @@ function mousePressed() {
 function draw() {
 	background(255);
 	field.draw(50, 1000);
+
+	textSize(50);
+	textAlign(LEFT, TOP);
+	if(chargeIsNegative) {
+		fill(0, 0, 255);
+		text("-", 0, 0);
+	} else {
+		fill(255, 0, 0);
+		text("+", 0, 0);
+	}
 }
