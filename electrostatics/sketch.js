@@ -17,11 +17,30 @@ function setup() {
 	background(0);
 
 	field = new Field(width, height);
-	//noLoop();
+	noLoop();
 }
 
 function keyPressed() {
-	chargeIsNegative = !chargeIsNegative;
+	if(keyCode == BACKSPACE) {
+		field.popParticle();
+	}
+
+	if(key == 'f' || key == 'F') {
+		chargeIsNegative = !chargeIsNegative;
+		chargeFlipped = true;
+	} else if(key == 'n' || key == 'N') {
+		if(!chargeIsNegative) {
+			chargeIsNegative = true;
+		}
+	} else if(key == 'p' || key == 'P') {
+		if(chargeIsNegative) {
+			chargeIsNegative = false;
+		}
+	} else if(key == 'c' || key == 'C') {
+		field.clear();
+	}
+
+	redraw();
 }
 
 function mousePressed() {
@@ -33,6 +52,8 @@ function mousePressed() {
 	}
 	let part = new Particle(radius, pos, charge);
 	field.addParticle(part);
+
+	redraw();
 }
 
 function draw() {
