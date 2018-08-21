@@ -86,8 +86,34 @@
 		"gif-url":"imgs/p_006.gif",
 		"vid-url":"vids/p_006.mp4",
 		"prev-id":"p_005",
-		"next-id":"p_000",
+		"next-id":"p_007",
 		"brief":"A quick side scroll ninja game.",
 		"tags":["game"]
+	},
+	"p_007":{
+		"id":"p_007",
+		"name":"bouncing-ball",
+		"demo-url":"https://omareq.github.io/bouncing-ball",
+		"docs-url":"https://omareq.github.io/bouncing-ball/docs",
+		"pic-url":"imgs/p_007.jpg",
+		"gif-url":"imgs/p_007.gif",
+		"vid-url":"vids/p_007.mp4",
+		"prev-id":"p_006",
+		"next-id":"p_007",
+		"brief":"A quick bouncing ball physics simulation.",
+		"tags":["science"]
+	},
+	"p_008":{
+		"id":"p_008",
+		"name":"electrostatics",
+		"demo-url":"https://omareq.github.io/electrostatics",
+		"docs-url":"https://omareq.github.io/electrostatics/docs",
+		"pic-url":"imgs/p_008.jpg",
+		"gif-url":"imgs/p_008.gif",
+		"vid-url":"vids/p_008.mp4",
+		"prev-id":"p_007",
+		"next-id":"p_000",
+		"brief":"A quick electrostatics physics simulation.",
+		"tags":["science"]
 	}
 }}
