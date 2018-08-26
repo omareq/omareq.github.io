@@ -1,3 +1,13 @@
+/*******************************************************************************
+*   @file ball.js
+*   @brief File containing the Ball class
+*   
+*   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
+*   @version 1.0
+*   @date 02-Aug-2018
+*
+*******************************************************************************/
+
 /**
 *	Class representing a Ball
 */
