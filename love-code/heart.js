@@ -93,7 +93,7 @@ class Heart {
 	/**
 	*	Set the color of the Heart
 	*
-	* @param {string|p5.Color} c - The string can either have the values of
+	* 	@param {string|p5.Color} c - The string can either have the values of
 	*		"pink" or "red".  The p5.Color can be any valid p5.Color value.
 	*/
 	setColor(newColor) {
@@ -106,16 +106,18 @@ class Heart {
 		}
 	}
 
-	/*
+	/**
 	*	Stops the pulsing of the Heart, this only has an effect if the Heart
 	*	has it's isPulsing flag set.  Set's the pulseTime and the pulseSize
 	*	back to 0.
 	*/
 	stopPulse() {
-		this.isPulsing = false;
-		this.setRadius(this.startRadius);
-		this.pulseTime = 0;
-		this.pulseSize = 0;
+		if(this.isPulsing) {
+			this.isPulsing = false;
+			this.setRadius(this.startRadius);
+			this.pulseTime = 0;
+			this.pulseSize = 0;
+		}
 	}
 
 	/**
