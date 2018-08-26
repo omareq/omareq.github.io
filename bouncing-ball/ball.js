@@ -22,19 +22,19 @@ class Ball {
 	checkEdges() {
 		if(this.x + this.r > width) {
 			this.x = width - this.r;
-			this.vx *= -1;
+			this.vx *= -0.9;
 		}
 		if(this.y + this.r > height) {
 			this.y = height - this.r;
-			this.vy *= -1;
+			this.vy *= -0.9;
 		}
 		if(this.x - this.r < 0) {
 			this.x = this.r;
-			this.vx *= -1;
+			this.vx *= -0.9;
 		}
 		if(this.y - this.r < 0) {
 			this.y = this.r;
-			this.vy *= -1;
+			this.vy *= -0.9;
 		}
 	}
 
