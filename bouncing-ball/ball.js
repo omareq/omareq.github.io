@@ -1,5 +1,17 @@
-
+/**
+*	Class representing a Ball
+*/
 class Ball {
+	/**
+	*	Create a Ball
+	*
+	*	@param {number} x  - The initial x location of the Ball.
+	*	@param {number} y  - The initial y location of the Ball.
+	*	@param {number} vx - The initial x velocity of the Ball.
+	*	@param {number} vy - The initial y velocity of the Ball.
+	*	@param {number} r  - The radius of the Ball.
+	*	@param {number} m  - The mass of the Ball.
+	*/
 	constructor(x, y, vx, vy, r, m) {
 		this.x = x;
 		this.y = y;
@@ -9,6 +21,9 @@ class Ball {
 		this.m = m;	
 	}
 
+	/**
+	*	Applies a single force to the Ball.
+	*/
 	applyForce(fx, fy, dt) {
 		let ax = fx/this.m;
 		this.vx += ax * dt;
@@ -19,6 +34,10 @@ class Ball {
 		this.y += this.vy * dt;
 	}
 
+	/**
+	*	Checks to see if the Ball has left the boundaries of the canvas. If
+	*	they have the ball will bounce back with 90% of it's original speed.
+	*/
 	checkEdges() {
 		if(this.x + this.r > width) {
 			this.x = width - this.r;
@@ -38,6 +57,9 @@ class Ball {
 		}
 	}
 
+	/**
+	*	Draws a white ellipse at the Balls position on the canvas
+	*/
 	show() {
 		fill(225);
 		ellipse(this.x, height - this.y, 2 * this.r, 2 * this.r);
