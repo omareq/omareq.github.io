@@ -23,10 +23,12 @@ let keyStack = [];
 let typedChars = 0;
 let cps = 0;
 let score = 0;
+let finalScore = 0;
 let speed = minSpeed;
 let adjustSpeed = false;
 let misses = 0;
 let wpm = 0;
+let finalwpm = 0;
 let totalCharsTyped = 0;
 let errorCharsTyped = 0;
 
@@ -207,12 +209,21 @@ function draw() {
       activateNewCommand();
       misses++;
 
-      cheatMode = true
+      cheatMode = false;
       if(misses >= missLimit && !cheatMode) {
+        finalScore = score;
+        finalwpm = wpm;
         console.log("Final score:" + score);
         console.log("Final WPM:" + wpm);
         console.log("Error: " + floor(100*errorCharsTyped/totalCharsTyped) + "%");
         stopAllCommands();
+
+        background(0);
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        fill(0, 0, 255);
+        text(finalScore, width/2, height/2, 0);
+        noLoop();
         break;
       }
     }
@@ -223,6 +234,10 @@ function draw() {
   }
   adjustSpeed = false;
 
+  textAlign(LEFT, TOP);
+  textSize(textHeight);
+  textFont('Consolas');
+  
   stroke(blue);
   line(0, height - textHeight, width, height - textHeight);
   stroke(0);
