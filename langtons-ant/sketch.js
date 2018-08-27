@@ -6,16 +6,95 @@
 *   @version 1.0
 *   @date 09-Jan-2018
 *
+*   @todo Enumerate bearing values
+*   @todo Refactor ant variables and methods into a class
+*
 *******************************************************************************/
 
+/**
+*   The grid variable stores the state of the world that the turmite is moving
+*   through in the global namespace.
+*
+*   @type {Array<Array<boolean>>}
+*/
 let grid = [];
-let scale = 5;
-let antx, anty, bearing;
-let antState;
-let up = 0, right = 1, down = 2, left = 3;
 
 /**
-  turn left changing the ants bearing
+*   Scale is a global variable that determines how many pixels will take up one
+*   grid square.
+*
+*   @type {number}
+*/
+let scale = 5;
+
+/**
+*   A global variable storing the ant's x position.
+*
+*   @type {number}
+*/
+let antx;
+
+/**
+*   A global variable storing the ant's y position.
+*
+*   @type {number}
+*/
+let anty;
+
+/**
+*   A global variable storing the direction that the ant is facing.
+*   Can take the value of {@link up}, {@link right}, {@link down} or
+*   {@link left}.
+*
+*   @type {number}
+*/
+let bearing;
+
+/**
+*   A global boolean storing the current ant state.
+*
+*   @type {boolean}
+*/
+let antState;
+
+/**
+*   A global constant that denotes one of the four possible ant directions in
+*   this case it is the upwards direction.
+*   Have a look at {@link bearing}
+*
+*   @type {number}
+*/
+const up    = 0;
+
+/**
+*   A global constant that denotes one of the four possible ant directions in
+*   this case it is the right direction.
+*   Have a look at {@link bearing}
+*
+*   @type {number}
+*/
+const right = 1;
+
+/**
+*   A global constant that denotes one of the four possible ant directions in
+*   this case it is the downwards direction.
+*   Have a look at {@link bearing}
+*
+*   @type {number}
+*/
+const down  = 2;
+
+/**
+*   A global constant that denotes one of the four possible ant directions in
+*   this case it is the left direction.
+*   Have a look at {@link bearing}
+*
+*   @type {number}
+*/
+const left  = 3;
+
+/**
+*   Turn left changing the ants bearing.
 */
 function turnLeft() {
   bearing--;
@@ -25,7 +104,7 @@ function turnLeft() {
 }
 
 /**
-  turn right changing the ants bearing
+*   Turn right changing the ants bearing.
 */
 function turnRight() {
   bearing ++;
@@ -35,7 +114,7 @@ function turnRight() {
 }
 
 /**
-  change the ants position depending on which direction it is facing
+*   Change the ants position depending on which direction it is facing.
 */
 function moveForward() {
   if(bearing == up) {
@@ -62,7 +141,11 @@ function moveForward() {
 }
 
 /**
-  p5.js setup function
+*   p5.js setup function.
+*   Creates a html canvas and adds a white background.
+*   Set all values in the {@link grid} to 1.
+*   Initialise the {@link antx}, {@link anty} and {@link bearing} variables.
+*   Set the {@link antState} to false.
 */
 function setup() {
   let canvas = createCanvas(floor(0.8*displayWidth), floor(0.8*displayHeight));
@@ -88,7 +171,8 @@ function setup() {
 }
 
 /**
-  p5.js draw function
+*   p5.js draw function.
+*   Draws the ant and calculates it's next movement.
 */
 function draw() {
 

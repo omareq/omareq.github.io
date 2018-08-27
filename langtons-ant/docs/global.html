@@ -94,34 +94,469 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id="antState"><span class="type-signature"></span>antState<span class="type-signature"> :boolean</span></h4>
 
-    
-
-    
-    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
 
 
 
 <div class="description">
-    p5.js draw function
+    A global boolean storing the current ant state.
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
 
 
 
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="antx"><span class="type-signature"></span>antx<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A global variable storing the ant's x position.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="anty"><span class="type-signature"></span>anty<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A global variable storing the ant's y position.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line41">line 41</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="bearing"><span class="type-signature"></span>bearing<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A global variable storing the direction that the ant is facing.
+  Can take the value of <a href="global.html#up">up</a>, <a href="global.html#right">right</a>, <a href="global.html#down">down</a> or
+  <a href="global.html#left">left</a>.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="down"><span class="type-signature">(constant) </span>down<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A global constant that denotes one of the four possible ant directions in
+  this case it is the downwards direction.
+  Have a look at <a href="global.html#bearing">bearing</a>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line84">line 84</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="grid"><span class="type-signature"></span>grid<span class="type-signature"> :Array.&lt;Array.&lt;boolean>></span></h4>
+
+
+
+
+<div class="description">
+    The grid variable stores the state of the world that the turmite is moving
+  through in the global namespace.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;Array.&lt;boolean>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="left"><span class="type-signature">(constant) </span>left<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A global constant that denotes one of the four possible ant directions in
+  this case it is the left direction.
+  Have a look at <a href="global.html#bearing">bearing</a>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
 
 
 
@@ -172,12 +607,74 @@
 
 
 
+        
+            
+<h4 class="name" id="right"><span class="type-signature">(constant) </span>right<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A global constant that denotes one of the four possible ant directions in
+  this case it is the right direction.
+  Have a look at <a href="global.html#bearing">bearing</a>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
 
 
 
 
 
+<dl class="details">
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line75">line 75</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
 
@@ -186,11 +683,164 @@
 
         
             
+<h4 class="name" id="scale"><span class="type-signature"></span>scale<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Scale is a global variable that determines how many pixels will take up one
+  grid square.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
 
     
 
     
-    <h4 class="name" id="moveForward"><span class="type-signature"></span>moveForward<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="up"><span class="type-signature">(constant) </span>up<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A global constant that denotes one of the four possible ant directions in
+  this case it is the upwards direction.
+  Have a look at <a href="global.html#bearing">bearing</a>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -198,7 +848,8 @@
 
 
 <div class="description">
-    change the ants position depending on which direction it is facing
+    p5.js draw function.
+  Draws the ant and calculates it's next movement.
 </div>
 
 
@@ -242,7 +893,93 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line40">line 40</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line176">line 176</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="moveForward"><span class="type-signature"></span>moveForward<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Change the ants position depending on which direction it is facing.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -284,7 +1021,11 @@
 
 
 <div class="description">
-    p5.js setup function
+    p5.js setup function.
+  Creates a html canvas and adds a white background.
+  Set all values in the <a href="global.html#grid">grid</a> to 1.
+  Initialise the <a href="global.html#antx">antx</a>, <a href="global.html#anty">anty</a> and <a href="global.html#bearing">bearing</a> variables.
+  Set the <a href="global.html#antState">antState</a> to false.
 </div>
 
 
@@ -328,7 +1069,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line67">line 67</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -370,7 +1111,7 @@
 
 
 <div class="description">
-    turn left changing the ants bearing
+    Turn left changing the ants bearing.
 </div>
 
 
@@ -414,7 +1155,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line20">line 20</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -456,7 +1197,7 @@
 
 
 <div class="description">
-    turn right changing the ants bearing
+    Turn right changing the ants bearing.
 </div>
 
 
@@ -500,7 +1241,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line30">line 30</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line108">line 108</a>
     </li></ul></dd>
     
 
@@ -544,13 +1285,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#moveForward">moveForward</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#turnLeft">turnLeft</a></li><li><a href="global.html#turnRight">turnRight</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#antState">antState</a></li><li><a href="global.html#antx">antx</a></li><li><a href="global.html#anty">anty</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#down">down</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#grid">grid</a></li><li><a href="global.html#left">left</a></li><li><a href="global.html#moveForward">moveForward</a></li><li><a href="global.html#right">right</a></li><li><a href="global.html#scale">scale</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#turnLeft">turnLeft</a></li><li><a href="global.html#turnRight">turnRight</a></li><li><a href="global.html#up">up</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Aug 17 2018 10:08:31 GMT+0100 (GMT Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Aug 27 2018 18:58:28 GMT+0100 (GMT Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
