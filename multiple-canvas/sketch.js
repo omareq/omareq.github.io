@@ -1,17 +1,20 @@
 /*******************************************************************************
-*   Author:   Omar Essilfie-Quaye
-*   Email:    omareq08@gmail.com
-*   Date:     30-Jun-2018
-*   Program:  Figuring out how todraw multiple canvases to one webpage
+*   @file sketch.js - Figuring out how todraw multiple canvases to one webpage
+*   
+*   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
+*   @version 1.0
+*   @date 30-Jun-2018
 *
 *******************************************************************************/
 
+/**
+*   Function for the first instance of the p5js object.
+*/
+let sketch1 = function(p) {
 
-var sketch1 = function( p ) {
-
-  var x = 325; 
-  var y = 100;
-  var vx = -10;
+  let x = 325; 
+  let y = 100;
+  let vx = -10;
 
   p.setup = function() {
   	let canvas = p.createCanvas(600, 200);//, p.WEBGL);
@@ -21,9 +24,9 @@ var sketch1 = function( p ) {
 
   p.draw = function() {
     p.background(0);
-    p.translate(0,0,-p.width/2);
+    p.translate(0, 0, -p.width/2);
     p.fill(255);
-    p.rect(x,y,50,50);
+    p.rect(x, y, 50, 50);
 
     x += vx;
     if(x + 50 > p.width) {
@@ -37,11 +40,15 @@ var sketch1 = function( p ) {
   };
 };
 
-var sketch2 = function( p ) {
 
-  var x = 325; 
-  var y = 100;
-  var vx = 10;
+/**
+*   Function for the second instance of the p5js object.
+*/
+let sketch2 = function(p) {
+
+  let x = 325; 
+  let y = 100;
+  let vx = 10;
 
   p.setup = function() {
   	let canvas = p.createCanvas(600, 200);//, p.WEBGL);
@@ -51,9 +58,9 @@ var sketch2 = function( p ) {
 
   p.draw = function() {
     p.background(255);
-    p.translate(0,0,-p.width/2);
+    p.translate(0, 0, -p.width/2);
     p.fill(0);
-    p.rect(x,y,50,50);
+    p.rect(x, y, 50, 50);
 
     x += vx;
     if(x + 50 > p.width) {
@@ -66,5 +73,12 @@ var sketch2 = function( p ) {
   };
 };
 
-var mcanvas1 = new p5(sketch1);
-var mcanvas2 = new p5(sketch2);
+/**
+*   Handler for first p5 object
+*/
+let mcanvas1 = new p5(sketch1);
+
+/**
+*   Handler for second p5 object
+*/
+let mcanvas2 = new p5(sketch2);
