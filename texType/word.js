@@ -28,9 +28,9 @@ function Word(val, ypos) {
   }
 
   this.intersects = function(word) {
-  	if(!word.run || word === this) {
-  		return false;
-  	}
+  	if(word === this) {
+      return false;
+    }
 
     if(word.y == this.y) {
       if(this.x + this.width > word.x && this.x + this.width < word.x + word.width) {
