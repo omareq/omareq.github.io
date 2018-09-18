@@ -1,9 +1,10 @@
 /*******************************************************************************
-*   Author:   Omar Essilfie-Quaye
-*   Email:    omareq08@gmail.com
-*   Date:     24-Dec-2017
-*   Program:  Making Snowmen from snowflakes as an expansion to the challenge on
-*             the coding train
+*   @file sketch.js - Making Snowmen from snowflakes as an expansion to the
+*     challenge on the coding train.
+*   
+*   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
+*   @version 1.0
+*   @date 24-Dec-2017
 *
 *******************************************************************************/
 

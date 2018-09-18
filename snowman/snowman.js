@@ -65,7 +65,7 @@ function snowman(pos, numBalls, ballRadius) {
   this.balls = [];
   // size of the largest ball
   this.ballRadius = ballRadius;
-  // how much eash ball get smaller by from bottom to top
+  // how much each ball get smaller by from bottom to top
   this.shrinkFactor = 0.8;
   // check to see if all the balls have been set up
   this.gotSize = false;
