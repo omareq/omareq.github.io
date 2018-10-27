@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sketch.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sketch.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+*   @file sketch.js - Creating my own version of the lissajous patterns
+*   
+*   @author &lt;a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye &lt;/a>
+*   @version 1.0
+*   @date 27-Oct-2018
+*
+*******************************************************************************/
+
+/**
+*   A gloabl vairable that scales the amount of time that has passed so that it
+*   is more suitable for the lissajous pattern to be visible
+*
+*   @type{number}
+*/
+let time = 0;
+
+/**
+*   A gloabl vairable which stores the time step per frame
+*
+*   @type{number}
+*/
+let dt;
+
+/**
+*   A gloabl vairable that stores all the previous positions of the "electron"
+*
+*   @type{array}
+*/
+let posArray = [];
+
+/**
+*   A gloabl vairable that dictates how many previous values of the electrons
+*   position shall be saved.
+*
+*   @type{number}
+*/
+let posArrayLen = 250;
+
+/**
+*   A gloabl vairable that changes the frequency of the lissajous pattern in
+*   the x direction
+*
+*   @type{number}
+*/
+let kx;
+
+/**
+*   A gloabl vairable that changes the frequency of the lissajous pattern in
+*   the y direction
+*
+*   @type{number}
+*/
+let ky;
+
+/**
+*   A gloabl vairable that stores the relative phaxe of the x component of the
+*   wave with respect to zero
+*
+*   @type{number}
+*/
+let phaseX;
+
+/**
+*   A gloabl vairable that stores the relative phaxe of the y component of the
+*   wave with respect to zero
+*
+*   @type{number}
+*/
+let phaseY;
+
+/**
+*  A p5.js function the is used to setup the canvas
+*
+*/
+function setup() {
+  createCanvas(700, 700);
+  for (let i = 0; i &lt; posArrayLen; ++i) {
+    posArray.push(createVector(-1, -1));
+  }
+
+  dt = radians(0.25);
+  phaseX = 3*PI/13;
+  phaseY = 13*PI/3;
+  kx = 10;
+  ky = 13;
+}
+
+/**
+*   A p5.js function that passes mouse click information to the progeram.  In
+*   this case it is being used to adjust the x and y frequency of the wave if
+*   the mouse is over the sliders.
+*/
+function mouseClicked() {
+  if(mouseY > height - 50 &amp;&amp; mouseY &lt; height) {
+    kx = map(mouseX, 0, width, 1, 50);    
+  }
+
+  if(mouseX > 0 &amp;&amp; mouseX &lt; 50) {
+    ky = map(mouseY, 0, height, 1, 50);
+  }
+}
+
+/**
+*   Draws the x frequency slider on the bottom of the canvas
+*/
+function xslider() {
+  x = map(kx, 1, 50, 0, width);
+
+  stroke(255, 0, 0);
+  strokeWeight(4);
+  line(x, height - 25, x, height);
+}
+
+/**
+*   Draws the y frequency slider on the side of the canvas
+*/
+function yslider() {
+  y = map(ky, 1, 50, 0, height);
+
+  stroke(255, 0, 0);
+  strokeWeight(4);
+  line(0, y, 25, y);
+}
+
+/**
+*   A p5.js function that renders the changes to the canvas.
+*/
+function draw() {
+  background(0);
+  ellipseMode(CENTER);
+
+  let electronRadius = 2;
+  let electronGreen = color(25, 255, 0);
+  stroke(electronGreen);
+
+  
+  let x = 0.5 * width * sin(kx * time + phaseX) + 0.5 * width;
+  let y = 0.5 * height* sin(ky * time + phaseY) + 0.5 * height;
+  fill(electronGreen);
+  ellipse(x, y, electronRadius, electronRadius);
+  posArray[0] = createVector(x, y);
+  
+  for (let i = posArray.length - 1; i > 0; --i) {
+    let alpha = 100 * (posArray.length - i)/posArray.length;
+    let currentX = posArray[i].x;
+    let currentY = posArray[i].y;
+    
+    fill(electronGreen, alpha);
+    //ellipse(currentX, currentY, electronRadius, electronRadius);
+    stroke(electronGreen, alpha);
+    strokeWeight(alpha*0.05*electronRadius);
+    line(currentX, currentY, posArray[i - 1].x, posArray[i - 1].y);
+    
+    posArray[i].x = posArray[i - 1].x;
+    posArray[i].y = posArray[i - 1].y;  
+    
+  }
+  time += dt;
+
+  xslider();
+  yslider();
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#dt">dt</a></li><li><a href="global.html#kx">kx</a></li><li><a href="global.html#ky">ky</a></li><li><a href="global.html#mouseClicked">mouseClicked</a></li><li><a href="global.html#phaseX">phaseX</a></li><li><a href="global.html#phaseY">phaseY</a></li><li><a href="global.html#posArray">posArray</a></li><li><a href="global.html#posArrayLen">posArrayLen</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#xslider">xslider</a></li><li><a href="global.html#yslider">yslider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 27 2018 22:18:24 GMT+0100 (GMT Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

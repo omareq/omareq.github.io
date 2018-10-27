@@ -23,7 +23,7 @@
 		"prev-id":"p_000",
 		"next-id":"p_002",
 		"brief":"Exploring the complexities of Langton's ant.",
-		"tags":["cellular automata"]
+		"tags":["science","cellular automata"]
 	},
 	"p_002":{
 		"id":"p_002",
@@ -61,7 +61,7 @@
 		"vid-url":"vids/p_004.mp4",
 		"prev-id":"p_003",
 		"next-id":"p_005",
-		"brief":"A simple tool to help when designing various antenna.",
+		"brief":"A simple tool to help when designing various antenna. (INCOMPLETE)",
 		"tags":["science"]
 	},
 	"p_005":{
@@ -87,7 +87,7 @@
 		"vid-url":"vids/p_006.mp4",
 		"prev-id":"p_005",
 		"next-id":"p_007",
-		"brief":"A quick side scroll ninja game.",
+		"brief":"A quick side scroll ninja game. (INCOMPLETE)",
 		"tags":["game"]
 	},
 	"p_007":{
@@ -117,7 +117,7 @@
 		"tags":["science"]
 	},
 	"p_009":{
-		"id":"p_098",
+		"id":"p_009",
 		"name":"drwho",
 		"demo-url":"https://omareq.github.io/drwho",
 		"docs-url":"https://omareq.github.io/drwho/docs",
@@ -125,8 +125,21 @@
 		"gif-url":"imgs/p_009.gif",
 		"vid-url":"vids/p_009.mp4",
 		"prev-id":"p_008",
-		"next-id":"p_000",
-		"brief":"My concept of the time vortex in Dr Who",
+		"next-id":"p_010",
+		"brief":"My concept of the time vortex in Dr Who.",
 		"tags":[]
+	},
+	"p_010":{
+		"id":"p_010",
+		"name":"lissajous",
+		"demo-url":"https://omareq.github.io/lissajous",
+		"docs-url":"https://omareq.github.io/lissajous/docs",
+		"pic-url":"imgs/p_010.jpg",
+		"gif-url":"imgs/p_010.gif",
+		"vid-url":"vids/p_010.mp4",
+		"prev-id":"p_009",
+		"next-id":"p_000",
+		"brief":"My concept of the classic Lissajous patterns",
+		"tags":["science"]
 	}
 }}
