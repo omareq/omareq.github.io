@@ -70,6 +70,14 @@ let phaseX;
 let phaseY;
 
 /**
+*   A global variable that checks if the frequency of the wave has been changed
+*   by the user
+*
+*   @type{boolean}
+*/
+let frequencyChanged = false;
+
+/**
 *  A p5.js function the is used to setup the canvas
 *
 */
@@ -94,10 +102,12 @@ function setup() {
 function mouseClicked() {
   if(mouseY > height - 50 && mouseY < height) {
     kx = map(mouseX, 0, width, 1, 50);    
+    frequencyChanged = true;
   }
 
   if(mouseX > 0 && mouseX < 50) {
     ky = map(mouseY, 0, height, 1, 50);
+    frequencyChanged = true;
   }
 }
 
@@ -134,9 +144,18 @@ function draw() {
   let electronGreen = color(25, 255, 0);
   stroke(electronGreen);
 
-  
   let x = 0.5 * width * sin(kx * time + phaseX) + 0.5 * width;
   let y = 0.5 * height* sin(ky * time + phaseY) + 0.5 * height;
+
+  if(frequencyChanged) {
+    for(let i = posArray.length - 1; i > 0; --i) {
+      posArray[i].x = x;
+      posArray[i].y = y;  
+    }
+    frequencyChanged = false;
+  }
+
+
   fill(electronGreen);
   ellipse(x, y, electronRadius, electronRadius);
   posArray[0] = createVector(x, y);
