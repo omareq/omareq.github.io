@@ -89,27 +89,49 @@ let bi_quad_sketch = function(p5) {
 	}
 
 	p5.draw = function() {
+		p5.background(255);
 		if(got_data) {
 			p5.translate(p5.width/2, p5.height/2);
 			let u = 0.25 * p5.height;
 
 			p5.strokeWeight(5);
+			p5.stroke(0);
+			//right square
 			p5.line(0, 10, u, u);
 			p5.line(u, u, 2*u, 0);
 			p5.line(2*u, 0, u, -u);
 			p5.line(u, -u, 0, -10);
 
+			//left square
 			p5.line(0, 10, -u, u);
 			p5.line(-u, u, -2*u, 0);
 			p5.line(-2*u, 0, -u, -u);
 			p5.line(-u, -u, 0, -10);
 
+			//reflector
 			let n = 1.4;
 			p5.rect(-2 * n *u, -n * u, 4 * n *u, 2 * n * u);
 			
+			//coaxial connector
 			p5.strokeWeight(3);
 			p5.ellipse(0, 4, 30, 30);
 			p5.ellipse(0, 4, 10, 10);
+
+			//dimensions
+			p5.stroke(0, 155, 0);
+
+			p5.textSize(20);
+			p5.textAlign(p5.CENTER);	
+			//l1
+			p5.strokeWeight(2);
+			p5.line(2*u + 20, -20, u + 20, -u -20);
+			p5.strokeWeight(1);
+			p5.text("L1: " + l1.toFixed(4) + " m", 1.95 * u + 20, - 0.7 * u - 20);
+			//l2
+			p5.strokeWeight(2);
+			p5.line(-2*u, u + 20 ,2*u, u + 20);
+			p5.strokeWeight(1);
+			p5.text("L2: " + l2.toFixed(4) + " m", 0, 0.95* u);
 		}
 	}
 };
