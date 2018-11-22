@@ -16,10 +16,11 @@ let bi_quad_sketch = function(p5) {
 
 	// calculated values
 	let lambda;
-	let gain, gain_dbi, impedance;
+	// let gain, gain_dbi, impedance;
+	let l1, l2, wire_diam, wire_length;
 
 	// bi-quad dimensions
-	let d_length;
+	let d_length, w_length, h_length;
 
 	let val = 255;
 
@@ -44,14 +45,24 @@ let bi_quad_sketch = function(p5) {
 
 		d_length = lambda / 2;
 
-		//gain_dbi = 2.15;
-		//impedance = 73.1;
+		l1 = 0.025 * 9.7 * lambda;
+		l2 = 0.7   * 9.7 * lambda;
+		wire_diam = 0.6 * Math.pow(frequency / 1e6, -0.8);
+		wire_length = ( 20 * lambda*1e6 + 40 * 3.141592653 * wire_diam )/10000000;
+
+		w_length = 0.5 * lambda;
+		h_length = 2 * w_length;
+		d_length = lambda / 8;
 
 		form_out = document.getElementById("bi_quad_output");
 		form_out.wavelength.value = lambda.toFixed(5);
-		//form_out.gain.value = gain_dbi.toFixed(5);
-		//form_out.impedance.value = impedance.toFixed(1);
-		//form_out.d_length.value = d_length.toFixed(5);
+		form_out.l1.value = l1.toFixed(5);
+		form_out.l2.value = l2.toFixed(5);
+		form_out.wire_diam.value = wire_diam.toFixed(5);
+		form_out.wire_length.value = wire_length.toFixed(5);
+		form_out.w_length.value = w_length.toFixed(5);
+		form_out.h_length.value = h_length.toFixed(5);
+		form_out.d_length.value = d_length.toFixed(5);
 	  	
 	  	document.getElementById("bi_quad_output").style.display = "block"
 	  	//document.getElementById("helix_slider_div").style.display = "block"
@@ -79,7 +90,26 @@ let bi_quad_sketch = function(p5) {
 
 	p5.draw = function() {
 		if(got_data) {
+			p5.translate(p5.width/2, p5.height/2);
+			let u = 0.25 * p5.height;
 
+			p5.strokeWeight(5);
+			p5.line(0, 10, u, u);
+			p5.line(u, u, 2*u, 0);
+			p5.line(2*u, 0, u, -u);
+			p5.line(u, -u, 0, -10);
+
+			p5.line(0, 10, -u, u);
+			p5.line(-u, u, -2*u, 0);
+			p5.line(-2*u, 0, -u, -u);
+			p5.line(-u, -u, 0, -10);
+
+			let n = 1.4;
+			p5.rect(-2 * n *u, -n * u, 4 * n *u, 2 * n * u);
+			
+			p5.strokeWeight(3);
+			p5.ellipse(0, 4, 30, 30);
+			p5.ellipse(0, 4, 10, 10);
 		}
 	}
 };
