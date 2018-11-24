@@ -110,7 +110,7 @@ let bi_quad_sketch = function(p5) {
 
 			//reflector
 			let n = 1.4;
-			p5.rect(-2 * n *u, -n * u, 4 * n *u, 2 * n * u);
+			p5.rect(-2 * n * u, -n * u, 4 * n *u, 2 * n * u);
 			
 			//coaxial connector
 			p5.strokeWeight(3);
@@ -121,17 +121,33 @@ let bi_quad_sketch = function(p5) {
 			p5.stroke(0, 155, 0);
 
 			p5.textSize(20);
-			p5.textAlign(p5.CENTER);	
+			p5.textAlign(p5.CENTER);
+
 			//l1
 			p5.strokeWeight(2);
 			p5.line(2*u + 20, -20, u + 20, -u -20);
 			p5.strokeWeight(1);
 			p5.text("L1: " + l1.toFixed(4) + " m", 1.95 * u + 20, - 0.7 * u - 20);
+			
 			//l2
 			p5.strokeWeight(2);
 			p5.line(-2*u, u + 20 ,2*u, u + 20);
 			p5.strokeWeight(1);
 			p5.text("L2: " + l2.toFixed(4) + " m", 0, 0.95* u);
+			
+			//base reflector length
+			p5.strokeWeight(2);
+			p5.line(-2 * n * u, 1.2 * n * u + 20, 2 * n * u, 1.2 * n * u + 20);
+			p5.strokeWeight(1);
+			p5.text("BRL: " + h_length.toFixed(4) + " m", 0, 1.2 * n * u);
+			
+			//base reflector width
+			p5.textAlign(p5.LEFT);
+			p5.strokeWeight(2);
+			p5.line(-2 * n * u + 20, -n * u, -2 * n * u + 20, n * u);
+			p5.strokeWeight(1);
+			p5.text("BRW: " + w_length.toFixed(4) + " m", -2 * n * u + 30, - 0.8 * n * u);
+
 		}
 	}
 };
