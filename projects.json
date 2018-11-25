@@ -138,8 +138,21 @@
 		"gif-url":"imgs/p_010.gif",
 		"vid-url":"vids/p_010.mp4",
 		"prev-id":"p_009",
-		"next-id":"p_000",
+		"next-id":"p_010",
 		"brief":"My concept of the classic Lissajous patterns",
+		"tags":["science"]
+	},
+	"p_010":{
+		"id":"p_010",
+		"name":"particle swarm optimiser",
+		"demo-url":"https://omareq.github.io/particle-swarm-optimer",
+		"docs-url":"https://omareq.github.io/particle-swarm-optimer/docs",
+		"pic-url":"imgs/p_011.jpg",
+		"gif-url":"imgs/p_011.gif",
+		"vid-url":"vids/p_011.mp4",
+		"prev-id":"p_010",
+		"next-id":"p_000",
+		"brief":"A quick and dirty swarm optimiser",
 		"tags":["science"]
 	}
 }}
