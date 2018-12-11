@@ -145,8 +145,8 @@
 	"p_010":{
 		"id":"p_010",
 		"name":"particle swarm optimiser",
-		"demo-url":"https://omareq.github.io/particle-swarm-optismer",
-		"docs-url":"https://omareq.github.io/particle-swarm-optismer/docs",
+		"demo-url":"https://omareq.github.io/particle-swarm-optimiser",
+		"docs-url":"https://omareq.github.io/particle-swarm-optimiser/docs",
 		"pic-url":"imgs/p_011.jpg",
 		"gif-url":"imgs/p_011.gif",
 		"vid-url":"vids/p_011.mp4",
