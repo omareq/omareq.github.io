@@ -179,7 +179,8 @@ function resetGame() {
 }
 
 function setup() {
-  let canvas = createCanvas(80*10, 24 * textHeight);
+  // let canvas = createCanvas(80*10, 24 * textHeight);
+  let canvas = createCanvas(0.8*windowWidth, 24 * textHeight);
   canvas.parent('sketch');
   textAlign(LEFT, TOP);
   textSize(textHeight);

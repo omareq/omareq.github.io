@@ -17,14 +17,14 @@ create_card = function(card_id, project) {
 	}
 }
 
-$(document).ready(function(){
+insert_cards = function(start_card, end_card) {
 	let response = $.getJSON('projects.json', function(data) {
 		projects = data.projects;
 
 		let obj_keys = Object.keys(projects);
 		let rand_key, rand_project, card_id;
 
-		for(let i = 0; i < 6; i++) {
+		for(let i = start_card; i < end_card; i++) {
 	        rand_key = obj_keys[Math.floor(Math.random() * obj_keys.length)];
 	        obj_keys = obj_keys.filter( el => el !== rand_key);
 	        rand_project = projects[rand_key];
@@ -33,4 +33,63 @@ $(document).ready(function(){
 	        create_card(card_id, rand_project); 
     	}
     });
+}
+
+append_card_layout = function(end_card) {
+	let card_layout_start = "<div class=\"col-sm-4\">\
+                        \n<div class=\"project-card\" id=\"project-card-";
+    let card_layout_end = ">\
+        \n<h4>Code Title</h4>\
+        \n<a href=\"#\" class=\"project-demo\">\
+        \n<img src=\"imgs/p_default.jpg\">\
+        \n</a>\
+        \n<p class=\"project-brief\">A Brief Description of this project</p>\
+        \n<a href=\"#\" class=\"project-docs\"> Docs </a>\
+    \n</div>\
+\n</div>";
+
+	let section_start = "<section class=\"container\">\n<div class=\"row\">\n";
+	let section_end = "\n</div>\n</section>";
+
+	let row_index = -1;
+	for(let i = 0; i < end_card; i++) {
+		card_id = "#project-card-" + i;
+		let col_index = i % 3;
+		row_index = Math.floor(i / 3);
+		
+		console.log("Row " + row_index + " Col " + col_index);
+
+		if(	$(card_id).length) {
+			console.log("Card " + card_id + " alrady exists");
+			continue;
+		}
+
+		console.log("Creating Project Card " + i);
+
+		let prev_card  = "#project-card-" + (i-1);
+		if(i == 0) {
+			prev_card = card_id;
+		}
+
+		console.log($(prev_card));
+
+		if(col_index == 0) {
+			let card_layout = card_layout_start + i + card_layout_end;
+			card_layout = section_start + card_layout + section_end;
+
+			$(card_layout).insertAfter($(prev_card).parent());
+
+			console.log(card_layout);
+		} else {
+			let card_layout = card_layout_start + i + card_layout_end;
+			$(card_layout).insertAfter($(prev_card).parent());
+			console.log(card_layout);
+		}
+	}
+}
+
+$(document).ready(function(){
+	insert_cards(0, 6);
+
+	// append_card_layout(8);
 });
