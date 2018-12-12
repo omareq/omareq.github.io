@@ -64,7 +64,10 @@ let radius;
 * p5.js setup function, used to create a canvas and instantiate WEBGL renderer
 */
 function setup() {
-  createCanvas(512, 512, WEBGL);
+  let somex = 512;
+  let somey = 512;
+  let canvas = createCanvas(somex, somey, WEBGL);
+  canvas.parent('sketch');
   ellipseMode(CENTER);
   camera(0,0,1,0,0,0, 0,-1,0 );
   radius = width;

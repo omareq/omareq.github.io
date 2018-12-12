@@ -168,7 +168,7 @@ footer .links a:hover span{
 }
 
 footer .links {
-	display:flex
+	display:flex;
 }
 
 @media (max-width: 620px) {

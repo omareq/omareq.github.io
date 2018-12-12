@@ -142,8 +142,8 @@
 		"brief":"My concept of the classic Lissajous patterns",
 		"tags":["science"]
 	},
-	"p_010":{
-		"id":"p_010",
+	"p_011":{
+		"id":"p_011",
 		"name":"particle swarm optimiser",
 		"demo-url":"https://omareq.github.io/particle-swarm-optimiser",
 		"docs-url":"https://omareq.github.io/particle-swarm-optimiser/docs",

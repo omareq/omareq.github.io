@@ -82,7 +82,10 @@ let frequencyChanged = false;
 *
 */
 function setup() {
-  createCanvas(700, 700);
+  let somex = floor(0.75 * windowWidth);
+  let somey = 700;
+  let canvas = createCanvas(somex, somey);
+  canvas.parent('sketch');
   for (let i = 0; i < posArrayLen; ++i) {
     posArray.push(createVector(-1, -1));
   }
