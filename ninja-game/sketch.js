@@ -9,13 +9,33 @@
 let floorHeight;
 let ninja;
 let obstacle;
+let fgScrollSpeed = -7;
+let fgx = 0;
 let physicsHandler;
 let idle = [];
 let run = [];
 let jump = [];
 let loading = true;
-let loadCounter = 0;
-let img;
+let totalNinjaAssets = 30;
+let ninjaLoadCounter = 0;
+
+let spikeImgs = [];
+let totalSpikeAssets = 1;
+let spikeLoadCounter = 0;
+
+let bgx = 0;
+let bgScrollSpeed = -2;
+let BGLoaded = false;
+let tileImgs = [];
+let tilesLoaded = false;
+let totalTileAssets = 19;
+let tileLoadCounter = 0;
+let totalAssets = totalNinjaAssets + totalSpikeAssets + totalTileAssets;
+
+let startMode = 1;
+let playMode = 2;
+let endMode = 3;
+let gameMode = startMode;
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
@@ -23,15 +43,23 @@ function windowResized() {
 }
 
 function keyPressed() {
-	if(key.toLowerCase() == "w") {
-		ninja.jump();
-	} if(key.toLowerCase() == "s") {
-		ninja.drop();
-	} 
+	if(gameMode == startMode) {
+		physicsHandler = setInterval(physicsUpdate, 20);
+		gameMode = playMode;
+	} else if(gameMode == playMode) {
+		if(key.toLowerCase() == "w") {
+			ninja.jump();
+		} if(key.toLowerCase() == "s") {
+			ninja.drop();
+		} 
+	} else if(gameMode == endMode) {
+		gameMode = startMode;
+	}
 }
 
 function endGame() {
 	clearInterval(physicsHandler);
+	gameMode = endMode;
 }
 
 function physicsUpdate() {
@@ -41,6 +69,63 @@ function physicsUpdate() {
   if(ninja.collideWith(obstacle)) {
   	endGame();
   }
+}
+
+function loadSpikes() {
+	loadImage("assets/spikes/double-wood-spike-block.png",
+	  loadComplete,
+	  error);
+
+	function loadComplete(img) {
+		spikeImgs[0] = img;
+		spikeLoadCounter++;	
+		obstacle.setSprite(img);
+	}
+
+	function error(err) {
+		console.log(err);
+	}
+}
+
+function loadTileSprite(folder, index) {
+	let file = folder + index + ".png";
+	loadImage(file, loadComplete, errorLoading);
+
+
+	function loadComplete(img) {
+		tileImgs[index] = img;
+		tileLoadCounter++;
+
+		if(tileLoadCounter == totalTileAssets) {
+			tilesLoaded = true;
+		}
+	}
+
+	function errorLoading(error) {
+		console.log("Error whilst loading " + file);
+		console.log(error);
+	}
+}
+
+function loadTiles() {
+	function bgLoadComplete(img) {
+		bgTile = img;
+		tileLoadCounter++;	
+		BGLoaded = true;
+	}
+
+	function error(err) {
+		console.log(err);
+	}
+
+	loadImage("assets/tileset/BG/BG.png",
+	  bgLoadComplete,
+	  error);
+
+	let folder = "assets/tileset/Tiles/";
+	for(let i = 1; i < totalTileAssets; i++) {
+		loadTileSprite(folder, i);
+	}
 }
 
 function loadSprite(folder, fileStart, index) {
@@ -55,12 +140,10 @@ function loadSprite(folder, fileStart, index) {
 		} else if(fileStart == "Jump") {
 			jump[index] = img;
 		}
-		loadCounter++;
+		ninjaLoadCounter++;
 
-		if(loadCounter == 30) {
+		if(ninjaLoadCounter == totalNinjaAssets) {
 			ninja.setSprites(idle, run, jump);
-			loading = false;
-			physicsHandler = setInterval(physicsUpdate, 20);
 		}
 	}
 
@@ -70,14 +153,86 @@ function loadSprite(folder, fileStart, index) {
 	}
 }
 
-function loadNinjaSprites(callback) {
+function loadNinjaSprites() {
 	let folder = "assets/ninja-sprite/";
 	for(let i = 0; i < 10; i++) {
 		loadSprite(folder, "Idle", i);
 		loadSprite(folder, "Run", i);
 		loadSprite(folder, "Jump", i);
 	}
-	callback();
+}
+
+function loadingAnimation() {
+	background(155);
+	stroke(255);
+	let rh = 20;
+	let gap = 50;
+	let rw = width - 2*gap;
+	noFill();
+	rect(gap, height/2 - rh/2, rw, rh);
+	
+	fill(255);
+	noStroke();
+	let counter = ninjaLoadCounter + spikeLoadCounter + tileLoadCounter;
+	let loadPercent = map(counter, 0, totalAssets, 0, rw);
+	rect(gap, height/2 - rh/2, loadPercent, rh);
+
+	textSize(floor(0.1*height))
+	textAlign(CENTER);
+	text("Loading Assets", width/2, height/4);
+}
+
+function startScreen() {
+	background(155);
+
+	textAlign(CENTER);
+	textSize(0.06 * width);
+	text("Press Any Key To Start Game", 0.5 * width, 0.5 * height);
+
+	textSize(0.03 * width);
+	text("W - Jump   S - Drop", 0.5 * width, 0.75 * height);
+
+}
+
+function gameLoop() {
+	if(BGLoaded) {
+		bgx += bgScrollSpeed;
+		bgx %= width;
+
+		image(bgTile, bgx, 0, width, height);
+		image(bgTile, bgx + width, 0, width, height);
+	} else {
+		background(255);
+	}
+
+	if(tilesLoaded) {
+		let tileWidth = tileImgs[2].width;
+		fgx += fgScrollSpeed;
+		fgx %= tileWidth;
+
+		for(let x = fgx; x < width; x+= tileWidth) {
+			image(tileImgs[2], x, floorHeight);
+		}
+			
+	} else {
+		stroke(0);
+		strokeWeight(3);
+		line(0, floorHeight, width, floorHeight);
+	}
+
+	obstacle.draw();
+	ninja.draw();
+}
+
+function endScreen() {
+	background(155);
+
+	fill(255);
+	stroke(255);
+	strokeWeight(1);
+	textAlign(CENTER);
+	textSize(0.12*width);
+	text("Game Over", width/2, height/2);
 }
 
 function setup () {
@@ -85,8 +240,8 @@ function setup () {
   	canvas.parent('sketch');
 
 	floorHeight = 0.8 * height;
-    let ninjaWidth = 72.6;
-    let ninjaHeight = 91.6;
+    let ninjaWidth = 75;
+    let ninjaHeight = 90;
     let gravity = 0.8;
   	ninja = new Ninja(width * 0.2,
 	  0,
@@ -95,44 +250,51 @@ function setup () {
 	  floorHeight,
 	  gravity);
 
-  	let obstacleSpeed = -6;
-  	let obstacleWidth = 0.4 * ninjaWidth;
+  	let obstacleSpeed = fgScrollSpeed;
+  	let obstacleWidth = 0.9 * ninjaWidth;
   	let obstacleHeight = 0.8 * ninjaHeight;
   	obstacle = new Obstacle(width,
 	  floorHeight - obstacleHeight,
 	  obstacleSpeed,
 	  obstacleWidth,
 	  obstacleHeight);
-	
-  	// come up with a way to use a callback instead of settig ninja sprites in 
-  	// the load functino
-	function loadComplete() {
-		return 0;
+
+	loadNinjaSprites();
+	loadSpikes();
+	loadTiles();
+
+	let loadWatchdogHandler;
+	let loadWatchdogInterval = 5;
+	let loadWatchdogTimer = 0;
+
+	function watchdog() {
+		loadWatchdogTimer += loadWatchdogInterval;
+
+		if(loadWatchdogTimer > 60000) {
+			console.log("Loading of Assets is taking too long reloading page");
+			window.location.reload(true);
+			clearInterval(loadWatchdogHandler);
+			return;
+		}
+
+		let loadCounter = ninjaLoadCounter + spikeLoadCounter + tileLoadCounter;
+		if(loadCounter == totalAssets) {
+			loading = false;
+			clearInterval(loadWatchdogHandler);
+		}
 	}
 
-	loadNinjaSprites(loadComplete);
+	loadWatchdogHandler = setInterval(watchdog, loadWatchdogInterval);
 }
 
 function draw () {
 	if(loading) {
-		background(155);
-		stroke(255);
-		let rh = 20;
-		let gap = 50;
-		let rw = width - 2*gap;
-		noFill();
-		rect(gap, height/2 - rh/2, rw, rh);
-		
-		fill(255);
-		noStroke();
-		let loadPercent = map(loadCounter, 0, 30, 0, rw);
-		rect(gap, height/2 - rh/2, loadPercent, rh);
-	} else {
-		background(0);
-		noFill();
-		stroke(255);
-		line(0, floorHeight, width, floorHeight);
-		obstacle.draw();
-		ninja.draw();
+		loadingAnimation();
+	} else if(gameMode == startMode) {
+		startScreen();
+	} else if(gameMode == playMode) {
+		gameLoop();
+	} else if(gameMode == endMode) {
+		endScreen();
 	}
 }

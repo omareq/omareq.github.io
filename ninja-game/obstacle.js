@@ -6,6 +6,8 @@ class Obstacle {
 		this.vx = vx;
 		this.w = w;
 		this.h = h;
+		this.img;
+		this.spriteLoaded = false;
 	}
 
 	setPos(x) {
@@ -24,9 +26,18 @@ class Obstacle {
 		}
 	}
 
+	setSprite(img) {
+		this.sprite = img;
+		this.spriteLoaded = true;
+	}
+
 	draw() {
-		stroke(255, 0, 0);
-		fill(0);
-		rect(this.x, this.y, this.w, this.h);
+		if(this.spriteLoaded) {
+			image(this.sprite, this.x, this.y, this.w, this.h);
+		} else {
+			stroke(255, 0, 0);
+			fill(0);
+			rect(this.x, this.y, this.w, this.h);
+		}
 	}
 }
