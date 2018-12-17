@@ -6,10 +6,12 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 
 ## Todo
 
-[ ]	Finish Antenna Calculator
-[ ]	Finish Ninja Game
-[ ] Add Ceasar Cipher
-[ ] Add Simon Memory Game
-[ ]	Add Sliding Puzzle Game
-[ ]	Add Towers of Hanoi
-[ ]	Turtle Draw Program
+- [ ]	Finish Antenna Calculator
+- [ ]	Finish Ninja Game
+- [ ] 	Add Ceasar Cipher
+- [ ] 	Add Simon Memory Game
+- [ ]	Add Sliding Puzzle Game
+- [ ]	Add Towers of Hanoi
+- [ ]	Turtle Draw Program
+- [ ]	Super Hexagon
+- [ ]	Brick Breaker
