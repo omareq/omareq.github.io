@@ -18,6 +18,9 @@ class Ninja {
 		this.jumpMode = 2;
 		this.moveMode = this.idleMode; // 0 = idle, 1 = run, 2 = jump
 		this.moveCounter = 0;
+
+		this.omega = 0;
+		this.theta = 0;
 	}
 
 	setSprites(spriteIdle, spriteRun, spriteJump) {
@@ -32,6 +35,12 @@ class Ninja {
 			this.vy += this.g;
 			this.y += this.vy;
 
+			this.theta += this.omega;
+			if(this.theta > TWO_PI) {
+				this.theta = 0;
+				this.omega = 0;
+			}
+
 			// on final move of the jump stay in with that position
 			if(this.moveCounter == 9) {
 				this.moveCounter = 8;
@@ -42,10 +51,13 @@ class Ninja {
 				this.vy = 0;
 				this.y = this.floorHeight - this.h;
 				this.moveMode = this.runMode;
+
+				this.theta = 0;
+				this.omega = 0;
 			}
 		}	
 
-		this.moveCounter ++;
+		this.moveCounter += 0.5;
 		this.moveCounter %= 10;	
 	}
 
@@ -77,6 +89,11 @@ class Ninja {
 			this.jumpNum++;
 			this.moveMode = this.jumpMode;
 			this.moveCounter = 0;
+
+			if(this.jumpNum == 2) {
+				this.omega = 0.2;
+				this.theta = 0;
+			}
 		}
 	}
 
@@ -90,13 +107,19 @@ class Ninja {
 			fill(0);
 			rect(this.x, this.y, this.w, this.h);
 		} else {
+			let moveCounter = floor(this.moveCounter);
+
+			push();
+			translate(this.x + 0.5 * this.w, this.y + 0.5 * this.h);
+			rotate(this.theta);
 			if(this.moveMode == this.runMode) {
-				image(this.spriteRun[this.moveCounter], this.x, this.y, this.w, this.h);
+				image(this.spriteRun[moveCounter], -0.5 * this.w, -0.5 * this.h, this.w, this.h);
 			} else if(this.moveMode == this.jumpMode) {
-				image(this.spriteJump[this.moveCounter], this.x, this.y, this.w, this.h);
+				image(this.spriteJump[moveCounter], -0.5 * this.w, -0.5 * this.h, this.w, this.h);
 			} else {
-				image(this.spriteIdle[this.moveCounter], this.x, this.y, this.w, this.h);
+				image(this.spriteIdle[moveCounter], -0.5 * this.w, -0.5 * this.h, this.w, this.h);
 			}
+			pop();
 		}
 	}
 }

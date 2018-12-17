@@ -43,16 +43,16 @@ function windowResized() {
 }
 
 function keyPressed() {
-	if(gameMode == startMode) {
+	if(gameMode == startMode && keyCode == ENTER) {
 		physicsHandler = setInterval(physicsUpdate, 20);
 		gameMode = playMode;
 	} else if(gameMode == playMode) {
-		if(key.toLowerCase() == "w") {
+		if(key.toLowerCase() == "w" || keyCode == UP_ARROW) {
 			ninja.jump();
-		} if(key.toLowerCase() == "s") {
+		} if(key.toLowerCase() == "s"  || keyCode == DOWN_ARROW) {
 			ninja.drop();
 		} 
-	} else if(gameMode == endMode) {
+	} else if(gameMode == endMode && keyCode == ENTER) {
 		gameMode = startMode;
 	}
 }
@@ -187,7 +187,7 @@ function startScreen() {
 
 	textAlign(CENTER);
 	textSize(0.06 * width);
-	text("Press Any Key To Start Game", 0.5 * width, 0.5 * height);
+	text("Press Enter To Start Game", 0.5 * width, 0.5 * height);
 
 	textSize(0.03 * width);
 	text("W - Jump   S - Drop", 0.5 * width, 0.75 * height);
@@ -231,8 +231,11 @@ function endScreen() {
 	stroke(255);
 	strokeWeight(1);
 	textAlign(CENTER);
-	textSize(0.12*width);
-	text("Game Over", width/2, height/2);
+	textSize(0.12 * width);
+	text("Game Over", 0.5 * width, 0.5 * height);
+
+	textSize(0.06 * width);
+	text("Press Enter To Continue", 0.5 * width, 0.75 * height);
 }
 
 function setup () {
