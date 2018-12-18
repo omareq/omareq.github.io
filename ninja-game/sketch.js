@@ -30,7 +30,13 @@ let tileImgs = [];
 let tilesLoaded = false;
 let totalTileAssets = 19;
 let tileLoadCounter = 0;
-let totalAssets = totalNinjaAssets + totalSpikeAssets + totalTileAssets;
+
+let sounds = [];
+let soundsLoaded = false;
+let totalSoundAssets = 1;
+let soundLoadCounter = 0;
+
+let totalAssets = totalNinjaAssets + totalSpikeAssets + totalTileAssets + totalSoundAssets;
 
 let startMode = 1;
 let playMode = 2;
@@ -162,6 +168,23 @@ function loadNinjaSprites() {
 	}
 }
 
+function loadSounds() {
+	soundFormats('mp3', 'ogg');
+	loadSound("assets/sound/spin-jump.mp3", loadComplete, errorLoading);
+
+	function loadComplete(sound) {
+		let sounds = [];
+		sounds.push(sound);
+		ninja.setSounds(sounds);
+		soundLoadCounter++;
+	}
+
+	function errorLoading(error) {
+		console.log(error);
+		return;
+	}
+}
+
 function loadingAnimation() {
 	background(155);
 	stroke(255);
@@ -173,7 +196,7 @@ function loadingAnimation() {
 	
 	fill(255);
 	noStroke();
-	let counter = ninjaLoadCounter + spikeLoadCounter + tileLoadCounter;
+	let counter = ninjaLoadCounter + spikeLoadCounter + tileLoadCounter + soundLoadCounter;
 	let loadPercent = map(counter, 0, totalAssets, 0, rw);
 	rect(gap, height/2 - rh/2, loadPercent, rh);
 
@@ -265,6 +288,7 @@ function setup () {
 	loadNinjaSprites();
 	loadSpikes();
 	loadTiles();
+	loadSounds();
 
 	let loadWatchdogHandler;
 	let loadWatchdogInterval = 5;
@@ -280,7 +304,7 @@ function setup () {
 			return;
 		}
 
-		let loadCounter = ninjaLoadCounter + spikeLoadCounter + tileLoadCounter;
+		let loadCounter = ninjaLoadCounter + spikeLoadCounter + tileLoadCounter + soundLoadCounter;
 		if(loadCounter == totalAssets) {
 			loading = false;
 			clearInterval(loadWatchdogHandler);

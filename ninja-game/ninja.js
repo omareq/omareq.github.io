@@ -30,6 +30,12 @@ class Ninja {
 		this.spritesLoaded = true;
 	}
 
+	setSounds(sounds) {
+		this.sounds = sounds;
+		this.jumpSoundIndex = 0;
+		this.loadedSounds = true;
+	}
+
 	update() {
 		if(this.jumpNum) {
 			this.vy += this.g;
@@ -93,6 +99,10 @@ class Ninja {
 			if(this.jumpNum == 2) {
 				this.omega = 0.2;
 				this.theta = 0;
+			}
+
+			if(this.loadedSounds) {
+				this.sounds[this.jumpSoundIndex].play();
 			}
 		}
 	}
