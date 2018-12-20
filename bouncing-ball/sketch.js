@@ -57,4 +57,42 @@ function draw() {
 		ball.applyForce(0, -10, dt);
 	}
 	//console.log(ball.y)
+	push();
+	fill(255, 155);
+	textSize(0.05 * height);
+	textAlign(LEFT, TOP);
+	text("Click To Add Ball", 5, 5);
+	pop();
+
+	let wallWidth = 4;
+	// Ceilling	
+	push();
+	stroke(0, 255, 0);
+	strokeWeight(wallWidth);
+	line(0, 0, width, 0);
+	pop();
+
+	// Floor
+	push();
+	stroke(255, 255, 255);
+	strokeWeight(wallWidth);
+	line(0, height, width, height);
+	strokeWeight(2);
+	stroke(0);
+	line(0, height, width, height);
+	pop();
+
+	// Right Wall
+	push();
+	stroke(255, 0, 0);
+	strokeWeight(wallWidth);
+	line(width, 0, width, height);
+	pop();	
+
+	// Left Wall
+	push();
+	stroke(0, 0, 255);
+	strokeWeight(wallWidth);
+	line(0, 0, 0, height);
+	pop();
 }

@@ -29,6 +29,7 @@ class Ball {
 		this.vy = vy;
 		this.r = r;
 		this.m = m;	
+		this.colour = color(255, 255, 255);
 	}
 
 	/**
@@ -52,18 +53,26 @@ class Ball {
 		if(this.x + this.r > width) {
 			this.x = width - this.r;
 			this.vx *= -0.9;
+			this.colour = color(255, 0, 0);
 		}
 		if(this.y + this.r > height) {
 			this.y = height - this.r;
 			this.vy *= -0.9;
+			this.colour = color(0, 255, 0);
 		}
 		if(this.x - this.r < 0) {
 			this.x = this.r;
 			this.vx *= -0.9;
+			this.colour = color(0, 0, 255);
 		}
 		if(this.y - this.r < 0) {
 			this.y = this.r;
 			this.vy *= -0.9;
+			if(random() <= 0.25) {
+				this.vy += 3.0;
+				this.vy *= 1.2;
+			}
+			this.colour = color(255, 255, 255);
 		}
 	}
 
@@ -71,7 +80,9 @@ class Ball {
 	*	Draws a white ellipse at the Balls position on the canvas
 	*/
 	show() {
-		fill(225);
+		push();
+		fill(this.colour);
 		ellipse(this.x, height - this.y, 2 * this.r, 2 * this.r);
+		pop();
 	}
 }
