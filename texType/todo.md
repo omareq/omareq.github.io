@@ -3,5 +3,5 @@
 [] refactor control functions
 [] game class
 [] menu screen
-[] final score screen
-[] error is NaN if it is zero
+[x] final score screen
+[x] error is NaN if it is zero

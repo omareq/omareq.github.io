@@ -32,6 +32,8 @@ let finalwpm = 0;
 let totalCharsTyped = 0;
 let errorCharsTyped = 0;
 
+let cheatMode = false;
+let logging = false;
 let blue, red;
 
 let loading = true;
@@ -94,50 +96,59 @@ const isAlphaNumeric = ch => {
 }
 
 function keyPressed() {
-  if(isAlphaNumeric(key || key == "\\")) {
-    keyStack.push(key);
-  } else if(keyCode == BACKSPACE) {
-    keyStack.pop();
+  if(misses >= missLimit && keyCode == ENTER) {
+    resetGame();
+    if(logging) {
+      console.log("Reseting The Game");
+    }
   } else {
-    let stack = join(keyStack, '').toLowerCase();
-    totalCharsTyped+=keyStack.length;
-    
-    let foundWord = false;
-    for(let i = 0; i < commands.length; i++) {
-      if(commands[i].run && stack == commands[i].val.toLowerCase()) {
-        foundWord = true;
-        commands[i].holdOn();
-        activateNewCommand();
-
-        typedChars += keyStack.length;
-
-        prevScore = score;
-        score += keyStack.length * ceil(speed);
-
-        if(score%50 < prevScore%50) {
+    if(isAlphaNumeric(key || key == "\\")) {
+      keyStack.push(key);
+    } else if(keyCode == BACKSPACE) {
+      keyStack.pop();
+    } else {
+      let stack = join(keyStack, '').toLowerCase();
+      totalCharsTyped+=keyStack.length;
+      
+      let foundWord = false;
+      for(let i = 0; i < commands.length; i++) {
+        if(commands[i].run && stack == commands[i].val.toLowerCase()) {
+          foundWord = true;
+          commands[i].holdOn();
           activateNewCommand();
-          if(score%150 < prevScore%150) {
-            speed += speedStep;
-            adjustSpeed = true;
-            if(speed > maxSpeed) {
-              speed = maxSpeed;
-            }
-          } 
+
+          typedChars += keyStack.length;
+
+          prevScore = score;
+          score += keyStack.length * ceil(speed);
+
+          if(score%50 < prevScore%50) {
+            activateNewCommand();
+            if(score%150 < prevScore%150) {
+              speed += speedStep;
+              adjustSpeed = true;
+              if(speed > maxSpeed) {
+                speed = maxSpeed;
+              }
+            } 
+          }
+          break;
         }
-        break;
       }
+      if(!foundWord) {
+        errorCharsTyped+= keyStack.length;
+      }
+      keyStack = [];
     }
-    if(!foundWord) {
-      errorCharsTyped+= keyStack.length;
-    }
-    keyStack = [];
   }
 }
 
 function intersectsOtherWord(word) {
 	for(var i = 0; i < commands.length; i++) {
 		if(word.intersects(commands[i])) {
-			console.log("Intersection: ", word.val, " : ", commands[i].val);
+      if(logging) {
+			 console.log("Intersection: ", word.val, " : ", commands[i].val);
+      }
 			return true
 		}
 	}
@@ -146,24 +157,34 @@ function intersectsOtherWord(word) {
 
 function activateNewCommand() { 
   i = 0; 
-  console.log("Activate new command");
+  if(logging) {
+    console.log("Activate new command");
+  }
   while(true) {
   	let rand = random(commands);
   	if(intersectsOtherWord(rand)) {
-  		console.log("Getting next random word");
+  		if(logging) {
+        console.log("Getting next random word");
+      }
   		continue;
   	}
     if(!rand.run) {
       rand.holdOff();
-      console.log("new command succesfully activated: ", rand);
+      if(logging) {
+        console.log("new command succesfully activated: ", rand);
+      }
       break;
     }
     if(i > commands.length) {
-      console.log("Infinite loop break out");
+      if(logging) {
+        console.log("Infinite loop break out");
+      }
       break;
     }
     i = i + 1;
-    console.log("watchdog: ", i)
+    if(logging) {
+      console.log("watchdog: ", i)
+    }
   }
 }
 
@@ -176,6 +197,18 @@ function stopAllCommands() {
 function resetGame() {
   pickCommands();
   activateNewCommand();
+  keyStack = [];
+  typedChars = 0;
+  cps = 0;
+  score = 0;
+  finalScore = 0;
+  speed = minSpeed;
+  adjustSpeed = false;
+  misses = 0;
+  wpm = 0;
+  finalwpm = 0;
+  totalCharsTyped = 0;
+  errorCharsTyped = 0;
 }
 
 function setup() {
@@ -209,24 +242,6 @@ function draw() {
       commands[i].holdOn();
       activateNewCommand();
       misses++;
-
-      cheatMode = false;
-      if(misses >= missLimit && !cheatMode) {
-        finalScore = score;
-        finalwpm = wpm;
-        console.log("Final score:" + score);
-        console.log("Final WPM:" + wpm);
-        console.log("Error: " + floor(100*errorCharsTyped/totalCharsTyped) + "%");
-        stopAllCommands();
-
-        background(0);
-        textSize(50);
-        textAlign(CENTER, CENTER);
-        fill(0, 0, 255);
-        text(finalScore, width/2, height/2, 0);
-        noLoop();
-        break;
-      }
     }
 
     if(adjustSpeed) {
@@ -234,6 +249,28 @@ function draw() {
     } 
   }
   adjustSpeed = false;
+
+  if(misses >= missLimit && !cheatMode) {
+    finalScore = score;
+    finalwpm = wpm;
+    
+    if(logging) {
+      console.log("Final score:" + score);
+      console.log("Final WPM:" + wpm);
+      console.log("Error: " + floor(100*errorCharsTyped/totalCharsTyped) + "%");
+    }
+
+    stopAllCommands();
+
+    background(0);
+    textSize(50);
+    textAlign(CENTER, CENTER);
+    fill(0, 0, 255);
+    text(finalScore, width/2, height/2, 0);
+
+    textSize(20);
+    text("Press Enter To Continue", width/2, 0.75*height);
+  }
 
   textAlign(LEFT, TOP);
   textSize(textHeight);
