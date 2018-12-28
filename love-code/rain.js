@@ -75,7 +75,18 @@ class Rain {
 	*/
 	draw() {
 		for (let i = this.len - 1; i >= 0; i--) {
-			this.symbols[i].draw();
+			// for some reason that i am not yet aware of this loops  begins
+			// out of bounds therefore a try catch is included to catch these
+			// exceptions.  If they are not caused by this problem the exception
+			// is thrown anyway.
+			try {
+				this.symbols[i].draw();
+			} catch (e) {
+				if(i >= this.len) {
+					continue;
+				}
+				throw(e);
+			}
 			let pos = this.symbols[i].getPos();
 			this.symbols[i].setPos(pos.x, pos.y + this.speed);
 
