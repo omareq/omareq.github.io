@@ -7,7 +7,7 @@
 		"pic-url":"imgs/p_000.jpg",
 		"gif-url":"imgs/p_000.gif",
 		"vid-url":"vids/p_000.mp4",
-		"prev-id":"p_006",
+		"prev-id":"p_012",
 		"next-id":"p_001",
 		"brief":"Making a snowman from falling snowflakes.",
 		"tags":[]
@@ -151,8 +151,21 @@
 		"gif-url":"imgs/p_011.gif",
 		"vid-url":"vids/p_011.mp4",
 		"prev-id":"p_010",
-		"next-id":"p_000",
+		"next-id":"p_012",
 		"brief":"A quick and dirty swarm optimiser",
 		"tags":["science"]
+	},
+	"p_012":{
+		"id":"p_012",
+		"name":"Towers of Hanoi",
+		"demo-url":"https://omareq.github.io/towers-of-hanoi",
+		"docs-url":"https://omareq.github.io/towers-of-hanoi/docs",
+		"pic-url":"imgs/p_012.jpg",
+		"gif-url":"imgs/p_012.gif",
+		"vid-url":"vids/p_012.mp4",
+		"prev-id":"p_011",
+		"next-id":"p_000",
+		"brief":"A recreation of the Towers of Hanoi brain teaser.",
+		"tags":[""]
 	}
 }}
