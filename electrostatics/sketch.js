@@ -93,6 +93,7 @@ function mousePressed() {
 */
 function draw() {
 	background(255);
+	strokeWeight(1);
 	field.draw(50, 1000);
 
 	textSize(50);
@@ -104,4 +105,15 @@ function draw() {
 		fill(255, 0, 0);
 		text("+", 0, 0);
 	}
+
+	noStroke();
+	textAlign(LEFT, CENTER);
+	textSize(13);
+	fill(0);
+	text("N - (-ve) Charge,\
+	 P - (+ve) Charge,\
+	 F - Flip Charge Sign,\
+	 Backspace - Remove Last,\
+	 C - Clear", 50, 25);
+
 }
