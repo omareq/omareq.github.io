@@ -15,3 +15,5 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Turtle Draw Program
 - [ ]	Super Hexagon
 - [ ]	Brick Breaker
+- [ ]	Minesweeper
+- [ ]	Checkers
