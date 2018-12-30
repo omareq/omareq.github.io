@@ -91,9 +91,13 @@ function setup() {
 	let towerH = 0.5 * height;
 	let stackSize = 5;
 
-	tower1 = new Tower(5, 0.20 * width, yPos, towerW, towerH, true );
-	tower2 = new Tower(5, 0.50 * width, yPos, towerW, towerH, false);
-	tower3 = new Tower(5, 0.80 * width, yPos, towerW, towerH, false);
+	let r = "#ff0000";
+	let g = "#00ff00";
+	let b = "#0000ff";
+
+	tower1 = new Tower(5, 0.20 * width, yPos, towerW, towerH, r, true );
+	tower2 = new Tower(5, 0.50 * width, yPos, towerW, towerH, g, false);
+	tower3 = new Tower(5, 0.80 * width, yPos, towerW, towerH, b, false);
 }
 
 /**

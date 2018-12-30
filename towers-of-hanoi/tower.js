@@ -22,10 +22,11 @@ class Tower {
 	*		tower.
 	*	@param {number} width - The width of the tower.
 	*	@param {number} height - The height of the tower.
+	*	@param {color} color - hex value for the color of the plates.
 	*	@param {boolean} full - If the tower has the macimum number of plates
 	*		on it when it is instantiated.
 	*/
-	constructor(stackSize, xPos, yPos, width, height, full=false) {
+	constructor(stackSize, xPos, yPos, width, height, color="#ffffff", full=false) {
 		this.stackSize = stackSize;
 		this.stack = [];
 		this.stackTop = -1;
@@ -41,6 +42,7 @@ class Tower {
 		this.y = yPos;
 		this.w = width;
 		this.h = height;
+		this.c = color;
 
 		this.rh = this.h / this.stackSize;
 		this.rw = this.w / (2 * this.stackSize);
@@ -120,15 +122,17 @@ class Tower {
 		line(-0.5 * this.w, this.rh/2, 0.5 * this.w, this.rh/2);
 		line(0, this.rh/2, 0, -this.h);
 
-		strokeWeight(1);
 		if(this.stackTop != -1) {
+			strokeWeight(1);
+			fill(this.c);
 			for(let i = 0; i <= this.stackTop; ++i) {
 				if(i != 0) {
 					translate(0, -this.rh);
 				}
 
 				if(this.isPressed && i == this.stackTop) {
-					stroke(0, 255, 0);
+					strokeWeight(3);
+					stroke(0, 255, 255);
 				} else {
 					stroke(0);
 				}
