@@ -60,6 +60,8 @@ function keyPressed() {
 		} 
 	} else if(gameMode == endMode && keyCode == ENTER) {
 		gameMode = startMode;
+		ninja.reset();
+		obstacle.reset();
 	}
 }
 
@@ -230,11 +232,12 @@ function gameLoop() {
 
 	if(tilesLoaded) {
 		let tileWidth = tileImgs[2].width;
+		let tileHeight = height - floorHeight;
 		fgx += fgScrollSpeed;
 		fgx %= tileWidth;
 
 		for(let x = fgx; x < width; x+= tileWidth) {
-			image(tileImgs[2], x, floorHeight);
+			image(tileImgs[2], x, floorHeight, tileWidth, tileHeight);
 		}
 			
 	} else {

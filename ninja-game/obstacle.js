@@ -10,6 +10,11 @@ class Obstacle {
 		this.spriteLoaded = false;
 	}
 
+	reset() {
+		this.setPos(width);
+		this.setVel(fgScrollSpeed);
+	}
+
 	setPos(x) {
 		this.x = x;
 	}
@@ -40,4 +45,4 @@ class Obstacle {
 			rect(this.x, this.y, this.w, this.h);
 		}
 	}
-}
+} 

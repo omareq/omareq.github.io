@@ -23,6 +23,20 @@ class Ninja {
 		this.theta = 0;
 	}
 
+	reset() {		
+		this.idleMode = 0;
+		this.runMode = 1;
+		this.jumpMode = 2;
+		this.moveMode = this.runMode; // 0 = idle, 1 = run, 2 = jump
+		this.moveCounter = 0;
+
+		this.omega = 0;
+		this.theta = 0;
+
+		this.jumpNum = 1;
+		this.vy = 0;
+	}
+
 	setSprites(spriteIdle, spriteRun, spriteJump) {
 		this.spriteRun  = spriteRun;
 		this.spriteJump = spriteJump;
