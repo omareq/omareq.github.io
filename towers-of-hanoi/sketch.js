@@ -223,6 +223,7 @@ function draw() {
 				solveIndex = 0;
 			} else {
 				autoSolve = false;
+				solveIndex--;
 			}
 		}
 		tower1.setStack(solution[solveIndex].state[0]);
