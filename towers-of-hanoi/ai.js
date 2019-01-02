@@ -142,21 +142,15 @@ function solveBFS(startPos) {
 
 			for(let i = 0; i < neighbours.length; ++i) {
 				let neighbour = neighbours[i];
-				let neighbourExplored = false;
-				let neighbourFrontier = false;
-				let neighbourTempFrontier = false;
+				let notChecked = true;
 
 				if(contains(exploredNodes, neighbour)) {
-					neighbourExplored = true;
+					notChecked = false;
+				} else if(contains(frontierNodes, neighbour)) {
+					notChecked = false;
+				} else if(contains(tempFrontiers, neighbour)) {
+					notChecked = false;
 				}
-				if(contains(frontierNodes, neighbour)) {
-					neighbourFrontier = true;
-				}
-				if(contains(tempFrontiers, neighbour)) {
-					neighbourTempFrontier = true;
-				}
-
-				let notChecked = !neighbourExplored && !neighbourFrontier && !neighbourTempFrontier;
 
 				if(notChecked) {
 					neighbour.parent = currentNode;
