@@ -50,25 +50,24 @@ class Tower {
 	*		tower.
 	*	@param {number} width - The width of the tower.
 	*	@param {number} height - The height of the tower.
+	*	@param {color} color - hex value for the color of the plates.
 	*	@param {boolean} full - If the tower has the macimum number of plates
 	*		on it when it is instantiated.
 	*/
-	constructor(stackSize, xPos, yPos, width, height, full=false) {
+	constructor(stackSize, xPos, yPos, width, height, color="#ffffff", full=false) {
 		this.stackSize = stackSize;
 		this.stack = [];
 		this.stackTop = -1;
 
 		if(full) {
-			for(let i = this.stackSize; i >= 1; --i) {
-				this.stack.push(i);
-			}
-			this.stackTop = this.stackSize - 1;
+			this.setAsFull();
 		}
 
 		this.x = xPos;
 		this.y = yPos;
 		this.w = width;
 		this.h = height;
+		this.c = color;
 
 		this.rh = this.h / this.stackSize;
 		this.rw = this.w / (2 * this.stackSize);
@@ -95,7 +94,8 @@ class Tower {
 	/**
 	*	Function to look at the plate at the top of the tower
 	*
-	*	@returns {number} The size of the plate at the top of the tower.
+	*	@returns {number} The size of the plate at the top of the tower. If
+	*	the tower stack is empty 0 is returned.
 	*/
 	peek() {
 		if(this.stackTop != -1) {
@@ -108,11 +108,22 @@ class Tower {
 	/**
 	*	Function to add plate to the tower
 	*
-	*	@returns {boolean} Value determining wether or not the opetation was a
+	*	@param {number} plate - The size of the plate to push onto the stack. 
+	*
+	*	@returns {boolean} Value determining wether or not the operation was a
 	*	success.
 	*/
 	push(plate) {
-		if(this.stackTop &lt; this.stackSize) {
+	//TODO omar(omareq08@gmail.com): type checking on plate
+		// if(plate == NaN) {
+		// 	return false;
+		// }
+
+		if(plate == undefined) {
+			return false;
+		}
+
+		if(this.stackTop &lt; this.stackSize - 1) {
 			if(plate &lt; this.stack[this.stackTop] || this.stackTop == -1) {
 				this.stack.push(plate);
 				this.stackTop++;
@@ -120,6 +131,65 @@ class Tower {
 			}
 		}
 		return false;
+	}
+
+	/**
+	*	Function to coppy the values of an array into the tower.  If the array
+	*	is empty then the tower stack shall be empty.  If the array has plates
+	*	which are large on top of smaller plates the function will restore the
+	*	original value of the stack and return false.  If the input array is
+	*	larger than the maximum stack size the function will return false.
+	*
+	*	@param {array} arr - The new value of the stack
+	*	
+	*	@returns {boolean} Value determining wether or not the opertion was a
+	*	success.
+	*/
+	setStack(arr) {
+		let backup = this.stack;
+		this.stack = [];
+
+		if(arr.length > this.stackSize) {
+			return false;
+		} else if (arr.length == 0) {
+			return true;
+		}
+
+		this.stackTop = -1;
+		for(let i = 0; arr[i] != 0 &amp;&amp; i &lt; arr.length; i++) {
+			if(arr[i] == undefined) {
+				continue;
+			}
+
+			if(i > 0 &amp;&amp; arr[i] > arr[i - 1]) {
+				this.stack = backup;
+				return  false;
+			}
+			this.stack.push(arr[i]);
+			this.stackTop ++;
+		}
+		// console.log("Setting Stack");
+		// console.log("Input: ", arr, " Output: ", this.stack);
+		return true;
+	}
+
+	/**
+	*	Function to fill the tower with plates.
+	*/
+	setAsFull() {
+		this.stack = [];
+		for(let i = this.stackSize; i >= 1; --i) {
+			this.stack.push(i);
+		}
+		this.stackTop = this.stackSize - 1;
+	}
+
+	/**
+	*	Function to empty the tower of plates.
+	*/
+	empty() {
+		this.stack = [];
+		this.stackTop = -1;
 	}
 
 	/**
@@ -148,15 +218,17 @@ class Tower {
 		line(-0.5 * this.w, this.rh/2, 0.5 * this.w, this.rh/2);
 		line(0, this.rh/2, 0, -this.h);
 
-		strokeWeight(1);
 		if(this.stackTop != -1) {
+			strokeWeight(1);
+			fill(this.c);
 			for(let i = 0; i &lt;= this.stackTop; ++i) {
 				if(i != 0) {
 					translate(0, -this.rh);
 				}
 
 				if(this.isPressed &amp;&amp; i == this.stackTop) {
-					stroke(0, 255, 0);
+					strokeWeight(3);
+					stroke(0, 255, 255);
 				} else {
 					stroke(0);
 				}
@@ -165,7 +237,6 @@ class Tower {
 				rect(0,0, rectW, this.rh);
 			}
 		}
-
 		pop();
 	}
 }</code></pre>
@@ -178,13 +249,13 @@ class Tower {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Pos.html">Pos</a></li><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#autoSolve">autoSolve</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#currentPos">currentPos</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getNeighbours">getNeighbours</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loopSolve">loopSolve</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#plates">plates</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#solution">solution</a></li><li><a href="global.html#solveAStar">solveAStar</a></li><li><a href="global.html#solveBFS">solveBFS</a></li><li><a href="global.html#solveIndex">solveIndex</a></li><li><a href="global.html#topPlate">topPlate</a></li><li><a href="global.html#tower1">tower1</a></li><li><a href="global.html#tower2">tower2</a></li><li><a href="global.html#tower3">tower3</a></li><li><a href="global.html#towerSelected">towerSelected</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Dec 29 2018 18:40:13 GMT+0000 (GMT Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 02 2019 14:23:15 GMT+0000 (GMT Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

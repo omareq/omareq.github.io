@@ -94,9 +94,987 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="autoSolve"><span class="type-signature"></span>autoSolve<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    A variable that dictates if the AI is solving the puzzle or if the user is.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="loopSolve"><span class="type-signature"></span>loopSolve<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Flag to see if the AI resets and continues to solve the puzzle once it has	reached to goal state.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="plates"><span class="type-signature"></span>plates<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A variable that dictates how many plates will be in the puzzle
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="solution"><span class="type-signature"></span>solution<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    An array that stores a list of Pos objects which make up the solution of	the puzzle from a given state.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line82">line 82</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="solveIndex"><span class="type-signature"></span>solveIndex<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="topPlate"><span class="type-signature"></span>topPlate<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A variable that stores the highest value plate of the last clicked tower.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line52">line 52</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="tower1"><span class="type-signature"></span>tower1<span class="type-signature"> :<a href="Tower.html">Tower</a></span></h4>
+
+
+
+
+<div class="description">
+    A global vairable that holds the information for the first Tower object.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Tower.html">Tower</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="tower2"><span class="type-signature"></span>tower2<span class="type-signature"> :<a href="Tower.html">Tower</a></span></h4>
+
+
+
+
+<div class="description">
+    A global vairable that holds the information for the second Tower object.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Tower.html">Tower</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="tower3"><span class="type-signature"></span>tower3<span class="type-signature"> :<a href="Tower.html">Tower</a></span></h4>
+
+
+
+
+<div class="description">
+    A global vairable that holds the information for the third Tower object.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Tower.html">Tower</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line31">line 31</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="towerSelected"><span class="type-signature"></span>towerSelected<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    A variable that holds which tower was last clicked
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="contains"><span class="type-signature"></span>contains<span class="signature">(list, pos)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to check if a pos object is in a list
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">list to search through</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pos</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Pos.html">Pos</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pos object to locate</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Value indicating if the object is in the list or not
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="currentPos"><span class="type-signature"></span>currentPos<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="Pos.html">Pos</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to get the current state of the towers.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line185">line 185</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Pos state of the towers
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Pos.html">Pos</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
 
         
             
@@ -156,7 +1134,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line102">line 102</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line213">line 213</a>
     </li></ul></dd>
     
 
@@ -190,7 +1168,7 @@
     
 
     
-    <h4 class="name" id="mousePressed"><span class="type-signature"></span>mousePressed<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="find"><span class="type-signature"></span>find<span class="signature">(list, pos)</span><span class="type-signature"> &rarr; {number}</span></h4>
     
 
     
@@ -198,7 +1176,344 @@
 
 
 <div class="description">
-    Function that determines if a mouse has been pressed or not
+    Function to find the index of a pos object in a list
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">list to search through</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pos</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Pos.html">Pos</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pos object to locate</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Index value of the object in the array. If the value is	not in the array false will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getNeighbours"><span class="type-signature"></span>getNeighbours<span class="signature">(node)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Pos.html">Pos</a>>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to get the neighbouring states of a given pos.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Pos.html">Pos</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The game state whose neighbours are to be found.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - An array of all the neighbouring states.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="Pos.html">Pos</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="keyPressed"><span class="type-signature"></span>keyPressed<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to handle key presses.  Will toggle autosolve or reset towers.
 </div>
 
 
@@ -242,7 +1557,93 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line20">line 20</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line154">line 154</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="mousePressed"><span class="type-signature"></span>mousePressed<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function that determines if a mouse has been pressed or not and handles the	movement of the plates between the towers.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line88">line 88</a>
     </li></ul></dd>
     
 
@@ -328,7 +1729,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line85">line 85</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line193">line 193</a>
     </li></ul></dd>
     
 
@@ -357,6 +1758,222 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="solveAStar"><span class="type-signature"></span>solveAStar<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Pos.html">Pos</a>>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to solve the puzzle depending on the given starting state using	the A* Algortihm.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line195">line 195</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    An array of all the states between the starting state	and the goal state.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="Pos.html">Pos</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="solveBFS"><span class="type-signature"></span>solveBFS<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Pos.html">Pos</a>>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to solve the puzzle depending on the given starting state using	the Breadth First Search (BFS) Algortihm.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line102">line 102</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    An array of all the states between the starting state	and the goal state.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="Pos.html">Pos</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -372,13 +1989,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Pos.html">Pos</a></li><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#autoSolve">autoSolve</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#currentPos">currentPos</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getNeighbours">getNeighbours</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loopSolve">loopSolve</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#plates">plates</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#solution">solution</a></li><li><a href="global.html#solveAStar">solveAStar</a></li><li><a href="global.html#solveBFS">solveBFS</a></li><li><a href="global.html#solveIndex">solveIndex</a></li><li><a href="global.html#topPlate">topPlate</a></li><li><a href="global.html#tower1">tower1</a></li><li><a href="global.html#tower2">tower2</a></li><li><a href="global.html#tower3">tower3</a></li><li><a href="global.html#towerSelected">towerSelected</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Dec 29 2018 18:40:13 GMT+0000 (GMT Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 02 2019 14:23:15 GMT+0000 (GMT Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

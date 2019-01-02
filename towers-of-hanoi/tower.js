@@ -32,10 +32,7 @@ class Tower {
 		this.stackTop = -1;
 
 		if(full) {
-			for(let i = this.stackSize; i >= 1; --i) {
-				this.stack.push(i);
-			}
-			this.stackTop = this.stackSize - 1;
+			this.setAsFull();
 		}
 
 		this.x = xPos;
@@ -69,7 +66,8 @@ class Tower {
 	/**
 	*	Function to look at the plate at the top of the tower
 	*
-	*	@returns {number} The size of the plate at the top of the tower.
+	*	@returns {number} The size of the plate at the top of the tower. If
+	*	the tower stack is empty 0 is returned.
 	*/
 	peek() {
 		if(this.stackTop != -1) {
@@ -82,11 +80,22 @@ class Tower {
 	/**
 	*	Function to add plate to the tower
 	*
-	*	@returns {boolean} Value determining wether or not the opetation was a
+	*	@param {number} plate - The size of the plate to push onto the stack. 
+	*
+	*	@returns {boolean} Value determining wether or not the operation was a
 	*	success.
 	*/
 	push(plate) {
-		if(this.stackTop < this.stackSize) {
+	//TODO omar(omareq08@gmail.com): type checking on plate
+		// if(plate == NaN) {
+		// 	return false;
+		// }
+
+		if(plate == undefined) {
+			return false;
+		}
+
+		if(this.stackTop < this.stackSize - 1) {
 			if(plate < this.stack[this.stackTop] || this.stackTop == -1) {
 				this.stack.push(plate);
 				this.stackTop++;
@@ -94,6 +103,65 @@ class Tower {
 			}
 		}
 		return false;
+	}
+
+	/**
+	*	Function to coppy the values of an array into the tower.  If the array
+	*	is empty then the tower stack shall be empty.  If the array has plates
+	*	which are large on top of smaller plates the function will restore the
+	*	original value of the stack and return false.  If the input array is
+	*	larger than the maximum stack size the function will return false.
+	*
+	*	@param {array} arr - The new value of the stack
+	*	
+	*	@returns {boolean} Value determining wether or not the opertion was a
+	*	success.
+	*/
+	setStack(arr) {
+		let backup = this.stack;
+		this.stack = [];
+
+		if(arr.length > this.stackSize) {
+			return false;
+		} else if (arr.length == 0) {
+			return true;
+		}
+
+		this.stackTop = -1;
+		for(let i = 0; arr[i] != 0 && i < arr.length; i++) {
+			if(arr[i] == undefined) {
+				continue;
+			}
+
+			if(i > 0 && arr[i] > arr[i - 1]) {
+				this.stack = backup;
+				return  false;
+			}
+			this.stack.push(arr[i]);
+			this.stackTop ++;
+		}
+		// console.log("Setting Stack");
+		// console.log("Input: ", arr, " Output: ", this.stack);
+		return true;
+	}
+
+	/**
+	*	Function to fill the tower with plates.
+	*/
+	setAsFull() {
+		this.stack = [];
+		for(let i = this.stackSize; i >= 1; --i) {
+			this.stack.push(i);
+		}
+		this.stackTop = this.stackSize - 1;
+	}
+
+	/**
+	*	Function to empty the tower of plates.
+	*/
+	empty() {
+		this.stack = [];
+		this.stackTop = -1;
 	}
 
 	/**
@@ -141,7 +209,6 @@ class Tower {
 				rect(0,0, rectW, this.rh);
 			}
 		}
-
 		pop();
 	}
 }

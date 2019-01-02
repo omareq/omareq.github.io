@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ai.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ai.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+*   @file ai.js
+*   @brief File containing the functions to solve the towers of hanoi
+*   
+*   @author &lt;a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye &lt;/a>
+*   @version 1.0
+*   @date 29-Dec-2018
+*
+*******************************************************************************/
+
+//TODO omar(omareq08@gmail.com): refactor solving into a class
+
+/**
+*	Function to find the index of a pos object in a list
+*
+*	@param {array} list - list to search through
+*	@param {Pos} pos - Pos object to locate
+*
+*	@returns {number} Index value of the object in the array. If the value is
+*	not in the array false will be returned.
+*/
+function find(list, pos) {
+	for(let i = 0; i &lt; list.length; ++i) {
+		if(pos.isEqualTo(list[i])) {
+			return i;
+		}
+	}
+	return false;
+}
+
+/**
+*	Function to check if a pos object is in a list
+*
+*	@param {array} list - list to search through
+*	@param {Pos} pos - Pos object to locate
+*
+*	@returns {boolean} Value indicating if the object is in the list or not
+*/
+function contains(list, pos) {
+	for(let i = 0; i &lt; list.length; ++i) {
+		if(pos.isEqualTo(list[i])) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+*	Function to get the neighbouring states of a given pos.
+*
+*	@param {Pos} node - The game state whose neighbours are to be found.
+*
+*	@returns {Array&lt;Pos>} - An array of all the neighbouring states.
+*/
+function getNeighbours(node) {
+	neighbours = [];
+	test1 = new Tower(plates, 0, 0, 0, 0, "#000000", false);
+	test2 = new Tower(plates, 0, 0, 0, 0, "#000000", false);
+	test3 = new Tower(plates, 0, 0, 0, 0, "#000000", false);
+
+	test1.setStack(node.state[0]);
+	test2.setStack(node.state[1]);
+	test3.setStack(node.state[2]);
+
+	test = [test1, test2, test3];
+	// console.log("Test Array: ", test);
+
+	for(let towerIndex = 0; towerIndex &lt; 3; ++towerIndex) {
+		let len = test[towerIndex].stackTop;
+		if(len == -1) {
+			continue;
+		}
+		let plate = test[towerIndex].stack[len];
+		// console.log("Moving plate: ", plate);	
+		for(let testIndex = 0; testIndex &lt; 3; ++testIndex) {
+			// console.log("Towers (", towerIndex + 1, ",", testIndex + 1, ")");
+			if(testIndex == towerIndex) {
+				// console.log("skipped");
+				continue;
+			}
+
+			if(test[testIndex].push(plate)) {
+				test[towerIndex].pop();
+				validNeighbour = new Pos(test[0], test[1], test[2]);
+				neighbours.push(validNeighbour);
+
+				test[towerIndex].push(plate);
+				test[testIndex].pop();
+			} 
+		}
+	}
+	return neighbours;
+}
+
+/**
+*	Function to solve the puzzle depending on the given starting state using
+*	the Breadth First Search (BFS) Algortihm.
+*
+*	@returns {Array&lt;Pos>} An array of all the states between the starting state
+*	and the goal state.
+*/
+function solveBFS(startPos) {
+	let startNode = startPos;
+	startNode.parent = 0;
+
+	let goal1 = new Tower(plates, 0, 0, 0, 0, "#000000", false);
+	let goal2 = new Tower(plates, 0, 0, 0, 0, "#000000", true );
+	let goal3 = new Tower(plates, 0, 0, 0, 0, "#000000", false);
+
+	let goalNode = new Pos(goal1, goal2, goal3);
+
+	let frontierNodes = [startNode];
+	let exploredNodes = [];
+
+	let findingSolution = true;
+
+	let watchdog = 0;
+	while(findingSolution) {
+		watchdog++;
+
+		if(watchdog > 1000) {
+			console.log("watchdog has been activated");
+			return [];
+		} 
+
+		if(frontierNodes.length == 0) {
+			console.log("No solution");
+			return [];
+		}
+
+		let tempFrontiers = [];
+		for(let nodeIndex = 0; nodeIndex &lt; frontierNodes.length; ++nodeIndex) {
+			let currentNode = frontierNodes[nodeIndex];
+
+			if(currentNode.isEqualTo(goalNode)) {
+				goalNode = currentNode;
+				findingSolution = false;
+				exploredNodes.push(currentNode);
+				break;
+			}
+			let neighbours = getNeighbours(currentNode);
+
+			for(let i = 0; i &lt; neighbours.length; ++i) {
+				let neighbour = neighbours[i];
+				let neighbourExplored = false;
+				let neighbourFrontier = false;
+				let neighbourTempFrontier = false;
+
+				if(contains(exploredNodes, neighbour)) {
+					neighbourExplored = true;
+				}
+				if(contains(frontierNodes, neighbour)) {
+					neighbourFrontier = true;
+				}
+				if(contains(tempFrontiers, neighbour)) {
+					neighbourTempFrontier = true;
+				}
+
+				let notChecked = !neighbourExplored &amp;&amp; !neighbourFrontier &amp;&amp; !neighbourTempFrontier;
+
+				if(notChecked) {
+					neighbour.parent = currentNode;
+					tempFrontiers.push(neighbour);
+				}				
+			}
+			exploredNodes.push(currentNode);
+		}
+		if(findingSolution) {
+			arrayCopy(tempFrontiers, 0, frontierNodes, 0, tempFrontiers.length);
+			tempFrontiers = [];
+		}
+	}
+	// console.log("Explored nodes: ", exploredNodes);
+	
+	let currentNode = goalNode;
+	let solution = [];
+	solution.push(goalNode);
+
+	while(currentNode.parent) {
+		solution.push(currentNode.parent);
+		currentNode = currentNode.parent;
+	}
+
+	solution.reverse();
+	return solution;
+}
+
+/**
+*	Function to solve the puzzle depending on the given starting state using
+*	the A* Algortihm.
+*
+*	@returns {Array&lt;Pos>} An array of all the states between the starting state
+*	and the goal state.
+*/
+function solveAStar() {
+	let startNode = currentPos();
+	startNode.parent = 0;
+
+	let goal1 = new Tower(plates, 0, 0, 0, 0, "#000000", false);
+	let goal2 = new Tower(plates, 0, 0, 0, 0, "#000000", true );
+	let goal3 = new Tower(plates, 0, 0, 0, 0, "#000000", false);
+
+	let goalNode = new Pos(goal1, goal2, goal3);
+
+	let frontierNodes = [startNode];
+	let exploredNodes = [];
+
+	let findingSolution = true;
+
+	let watchdog = 0;
+
+	return [];
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Pos.html">Pos</a></li><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#autoSolve">autoSolve</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#currentPos">currentPos</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getNeighbours">getNeighbours</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loopSolve">loopSolve</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#plates">plates</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#solution">solution</a></li><li><a href="global.html#solveAStar">solveAStar</a></li><li><a href="global.html#solveBFS">solveBFS</a></li><li><a href="global.html#solveIndex">solveIndex</a></li><li><a href="global.html#topPlate">topPlate</a></li><li><a href="global.html#tower1">tower1</a></li><li><a href="global.html#tower2">tower2</a></li><li><a href="global.html#tower3">tower3</a></li><li><a href="global.html#towerSelected">towerSelected</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 02 2019 14:23:15 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

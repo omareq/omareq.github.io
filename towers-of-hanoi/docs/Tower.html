@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Tower<span class="signature">(stackSize, xPos, yPos, width, height, full)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Tower<span class="signature">(stackSize, xPos, yPos, width, height, color, full)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Class representing a Tower</div>
         
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Tower"><span class="type-signature"></span>new Tower<span class="signature">(stackSize, xPos, yPos, width, height, full)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Tower"><span class="type-signature"></span>new Tower<span class="signature">(stackSize, xPos, yPos, width, height, color, full)</span><span class="type-signature"></span></h4>
     
 
     
@@ -226,6 +226,35 @@
 
         <tr>
             
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">color</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    #ffffff
+                
+                </td>
+            
+
+            <td class="description last">hex value for the color of the plates.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>full</code></td>
             
 
@@ -395,7 +424,93 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line114">line 114</a>
+        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line184">line 184</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="empty"><span class="type-signature"></span>empty<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to empty the tower of plates.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -508,7 +623,7 @@
 
         
 <div class="param-desc">
-    The size of the plate at the top of the tower.
+    The size of the plate at the top of the tower. If	the tower stack is empty 0 is returned.
 </div>
 
 
@@ -589,7 +704,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line103">line 103</a>
+        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -697,7 +812,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line55">line 55</a>
+        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line54">line 54</a>
     </li></ul></dd>
     
 
@@ -753,7 +868,7 @@
     
 
     
-    <h4 class="name" id="push"><span class="type-signature"></span>push<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="push"><span class="type-signature"></span>push<span class="signature">(plate)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
 
     
@@ -762,6 +877,163 @@
 
 <div class="description">
     Function to add plate to the tower
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>plate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The size of the plate to push onto the stack.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Value determining wether or not the operation was a	success.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setAsFull"><span class="type-signature"></span>setAsFull<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to fill the tower with plates.
 </div>
 
 
@@ -805,7 +1077,142 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line86">line 86</a>
+        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line151">line 151</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setStack"><span class="type-signature"></span>setStack<span class="signature">(arr)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to coppy the values of an array into the tower.  If the array	is empty then the tower stack shall be empty.  If the array has plates	which are large on top of smaller plates the function will restore the	original value of the stack and return false.  If the input array is	larger than the maximum stack size the function will return false.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new value of the stack</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tower.js.html">tower.js</a>, <a href="tower.js.html#line120">line 120</a>
     </li></ul></dd>
     
 
@@ -832,7 +1239,7 @@
 
         
 <div class="param-desc">
-    Value determining wether or not the opetation was a	success.
+    Value determining wether or not the opertion was a	success.
 </div>
 
 
@@ -871,13 +1278,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Pos.html">Pos</a></li><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#autoSolve">autoSolve</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#currentPos">currentPos</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getNeighbours">getNeighbours</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loopSolve">loopSolve</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#plates">plates</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#solution">solution</a></li><li><a href="global.html#solveAStar">solveAStar</a></li><li><a href="global.html#solveBFS">solveBFS</a></li><li><a href="global.html#solveIndex">solveIndex</a></li><li><a href="global.html#topPlate">topPlate</a></li><li><a href="global.html#tower1">tower1</a></li><li><a href="global.html#tower2">tower2</a></li><li><a href="global.html#tower3">tower3</a></li><li><a href="global.html#towerSelected">towerSelected</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Dec 29 2018 18:40:13 GMT+0000 (GMT Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 02 2019 14:23:15 GMT+0000 (GMT Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
