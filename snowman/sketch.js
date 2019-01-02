@@ -8,18 +8,67 @@
 *
 *******************************************************************************/
 
+/**
+* The number of snowflakes that will be insantiated
+*
+* @type{number}
+*/
 let numFlakes = 200;
+
+/**
+* The maximum size that a snowflake can be.
+*
+* @type{number};
+*/
 let maxFlakeSize = 7;
+
+/**
+* The minimum size that a snowflake can be
+*
+* @type{number}
+*/
 let minFlakeSize = 1;
+
+/**
+* An array that will hold all of the snowflake objects.
+*
+* @type{Arraya<snowflake>}
+*/
 let flakes = [];
 
+/**
+* The noise offset for the wind forces.
+*
+* @type{number}
+*/
 let noiseOff;
+
+/**
+* The maximum magnitude of the wind vector forces.
+*
+* @type{number}
+*/
 let windMag = 5;
 
+/**
+* The accelaration due to gravity for the snowflakes.
+*
+* @type{number}
+*/
 let gravity;
 
+/**
+* The variable that holds the snowman object
+*
+* @type{snowman}
+*/
 let frosty;
 
+
+/**
+* p5.js setup function, used to create a canvas and instantiate the snowman
+* object as well as the snowflakes.
+*/
 function setup () {
   var canvas = createCanvas(600, 600);
   canvas.parent('sketch');
@@ -36,6 +85,10 @@ function setup () {
   frosty = new snowman(frostyPos, 3, 60);
 }
 
+/**
+* p5.js draw function, used to draw frosty the snowman and controls the phsyics
+* for the snowflakes.
+*/
 function draw () {
   background(0);
   grownThisFrame = false;
