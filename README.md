@@ -17,3 +17,4 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Brick Breaker
 - [ ]	Minesweeper
 - [ ]	Checkers
+- [ ]	Conways Game of Life
