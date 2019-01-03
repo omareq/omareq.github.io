@@ -9,7 +9,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Finish Antenna Calculator
 - [ ]	Finish Ninja Game
 - [ ] 	Add Ceasar Cipher
-- [ ] 	Add Simon Memory Game
+- [x] 	Add Simon Memory Game
 - [ ]	Add Sliding Puzzle Game
 - [ ]	Add Towers of Hanoi
 - [ ]	Turtle Draw Program

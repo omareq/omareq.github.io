@@ -1,20 +1,20 @@
 {"projects":{
 	"p_000":{
 		"id":"p_000",
-		"name":"snowman",
+		"name":"Snowman",
 		"demo-url":"https://omareq.github.io/snowman",
 		"docs-url":"https://omareq.github.io/snowman/docs",
 		"pic-url":"imgs/p_000.jpg",
 		"gif-url":"imgs/p_000.gif",
 		"vid-url":"vids/p_000.mp4",
-		"prev-id":"p_012",
+		"prev-id":"p_013",
 		"next-id":"p_001",
 		"brief":"Making a snowman from falling snowflakes.",
 		"tags":[]
 	},
 	"p_001":{
 		"id":"p_001",
-		"name":"langtons-ant",
+		"name":"Langtons Ant",
 		"demo-url":"https://omareq.github.io/langtons-ant",
 		"docs-url":"https://omareq.github.io/langtons-ant/docs",
 		"pic-url":"imgs/p_001.jpg",
@@ -40,7 +40,7 @@
 	},
 	"p_003":{
 		"id":"p_003",
-		"name":"love-code",
+		"name":"Love Code",
 		"demo-url":"https://omareq.github.io/love-code",
 		"docs-url":"https://omareq.github.io/love-code/docs",
 		"pic-url":"imgs/p_003.jpg",
@@ -53,7 +53,7 @@
 	},
 	"p_004":{
 		"id":"p_004",
-		"name":"antenna-calculator",
+		"name":"Antenna Calculator",
 		"demo-url":"https://omareq.github.io/antenna-calculator",
 		"docs-url":"https://omareq.github.io/antenna-calculator/docs",
 		"pic-url":"imgs/p_004.jpg",
@@ -66,7 +66,7 @@
 	},
 	"p_005":{
 		"id":"p_005",
-		"name":"multiple-canvas",
+		"name":"Multiple Canvas",
 		"demo-url":"https://omareq.github.io/multiple-canvas",
 		"docs-url":"https://omareq.github.io/multiple-canvas/docs",
 		"pic-url":"imgs/p_005.jpg",
@@ -79,7 +79,7 @@
 	},
 	"p_006":{
 		"id":"p_006",
-		"name":"ninja-game",
+		"name":"Ninja Game",
 		"demo-url":"https://omareq.github.io/ninja-game",
 		"docs-url":"https://omareq.github.io/ninja-game/docs",
 		"pic-url":"imgs/p_006.jpg",
@@ -92,7 +92,7 @@
 	},
 	"p_007":{
 		"id":"p_007",
-		"name":"bouncing-ball",
+		"name":"Bouncing Ball",
 		"demo-url":"https://omareq.github.io/bouncing-ball",
 		"docs-url":"https://omareq.github.io/bouncing-ball/docs",
 		"pic-url":"imgs/p_007.jpg",
@@ -105,7 +105,7 @@
 	},
 	"p_008":{
 		"id":"p_008",
-		"name":"electrostatics",
+		"name":"Electrostatics",
 		"demo-url":"https://omareq.github.io/electrostatics",
 		"docs-url":"https://omareq.github.io/electrostatics/docs",
 		"pic-url":"imgs/p_008.jpg",
@@ -118,7 +118,7 @@
 	},
 	"p_009":{
 		"id":"p_009",
-		"name":"drwho",
+		"name":"DrWho",
 		"demo-url":"https://omareq.github.io/drwho",
 		"docs-url":"https://omareq.github.io/drwho/docs",
 		"pic-url":"imgs/p_009.jpg",
@@ -131,7 +131,7 @@
 	},
 	"p_010":{
 		"id":"p_010",
-		"name":"lissajous",
+		"name":"Lissajous",
 		"demo-url":"https://omareq.github.io/lissajous",
 		"docs-url":"https://omareq.github.io/lissajous/docs",
 		"pic-url":"imgs/p_010.jpg",
@@ -144,7 +144,7 @@
 	},
 	"p_011":{
 		"id":"p_011",
-		"name":"particle swarm optimiser",
+		"name":"Swarm Optimiser",
 		"demo-url":"https://omareq.github.io/particle-swarm-optimiser",
 		"docs-url":"https://omareq.github.io/particle-swarm-optimiser/docs",
 		"pic-url":"imgs/p_011.jpg",
@@ -164,8 +164,21 @@
 		"gif-url":"imgs/p_012.gif",
 		"vid-url":"vids/p_012.mp4",
 		"prev-id":"p_011",
-		"next-id":"p_000",
+		"next-id":"p_012",
 		"brief":"A recreation of the Towers of Hanoi brain teaser.",
 		"tags":[""]
+	},
+	"p_013":{
+		"id":"p_013",
+		"name":"Simon",
+		"demo-url":"https://omareq.github.io/simon",
+		"docs-url":"https://omareq.github.io/simon/docs",
+		"pic-url":"imgs/p_013.jpg",
+		"gif-url":"imgs/p_013.gif",
+		"vid-url":"vids/p_013.mp4",
+		"prev-id":"p_012",
+		"next-id":"p_000",
+		"brief":"The classic Simon memory game.  How much can you remember?",
+		"tags":["game"]
 	}
 }}
