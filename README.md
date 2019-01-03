@@ -11,7 +11,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ] 	Add Ceasar Cipher
 - [x] 	Add Simon Memory Game
 - [ ]	Add Sliding Puzzle Game
-- [ ]	Add Towers of Hanoi
+- [x]	Add Towers of Hanoi
 - [ ]	Turtle Draw Program
 - [ ]	Super Hexagon
 - [ ]	Brick Breaker
