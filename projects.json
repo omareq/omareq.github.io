@@ -7,7 +7,7 @@
 		"pic-url":"imgs/p_000.jpg",
 		"gif-url":"imgs/p_000.gif",
 		"vid-url":"vids/p_000.mp4",
-		"prev-id":"p_013",
+		"prev-id":"p_014",
 		"next-id":"p_001",
 		"brief":"Making a snowman from falling snowflakes.",
 		"tags":[]
@@ -177,8 +177,21 @@
 		"gif-url":"imgs/p_013.gif",
 		"vid-url":"vids/p_013.mp4",
 		"prev-id":"p_012",
-		"next-id":"p_000",
+		"next-id":"p_014",
 		"brief":"The classic Simon memory game.  How much can you remember?",
 		"tags":["game"]
+	},
+	"p_014":{
+		"id":"p_014",
+		"name":"Game of Life",
+		"demo-url":"https://omareq.github.io/game-of-life",
+		"docs-url":"https://omareq.github.io/game-of-life/docs",
+		"pic-url":"imgs/p_014.jpg",
+		"gif-url":"imgs/p_014.gif",
+		"vid-url":"vids/p_014.mp4",
+		"prev-id":"p_013",
+		"next-id":"p_000",
+		"brief":"Conways Game of Life.  What contraption can you create?",
+		"tags":["game", "cellular automata"]
 	}
 }}
