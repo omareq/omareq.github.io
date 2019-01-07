@@ -35,6 +35,24 @@ let lightSpaceShip = [[0, 0, 0, 0, 0, 0, 0],
 					  [0, 0, 0, 0, 0, 0, 0]];
 
 /**
+*	Variable to hold the shape of a Gosper Glider Gun.  This is interesting as
+*	it proves that a finite number of cells can replicate indefinietly.
+*
+*	@type {Array<Array<number> >}
+*/
+let gliderGun = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+				 [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+/**
 *	Used to hold the state of all cell sites in the simulation.
 *
 *	@type {Array<Array<number> >}
@@ -158,6 +176,8 @@ function keyPressed() {
 		selectedInsertion = "cell";
 	} else if(key.toLowerCase() == "l") {
 		selectedInsertion = "lightSpaceShip";
+	} else if(key.toLowerCase() == "h") {
+		selectedInsertion = "gliderGun";
 	}
 }
 
@@ -193,6 +213,15 @@ function mousePressed() {
 				let yIndex = (y + j) % gridY;
 				grid1[xIndex][yIndex] = lightSpaceShip[i][j];
 				grid2[xIndex][yIndex] = lightSpaceShip[i][j];
+			}
+		}
+	} else if(selectedInsertion == "gliderGun") {
+		for(let i = 0; i < gliderGun.length; ++i) {
+			for(let j = 0; j < gliderGun[i].length; ++j) {
+				let xIndex = (x + i) % gridX;
+				let yIndex = (y + j) % gridY;
+				grid1[xIndex][yIndex] = gliderGun[i][j];
+				grid2[xIndex][yIndex] = gliderGun[i][j];
 			}
 		}
 	}
@@ -271,6 +300,12 @@ function drawMenu() {
 		fill(255);
 	}
 	text("Click L to add Light Ship", 1.02 * height, .05 * 11 * height);
+
+	fill(155);
+	if(selectedInsertion == "gliderGun") {
+		fill(255);
+	}
+	text("Click H to add Glider Gun", 1.02 * height, .05 * 13 * height);
 }
 
 /**
