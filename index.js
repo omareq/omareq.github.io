@@ -53,13 +53,14 @@ append_card_layout = function(end_card) {
 
 	let row_index = -1;
 	for(let i = 0; i < end_card; i++) {
-		card_id = "#project-card-" + i;
+		card_id = "project-card-" + i;
 		let col_index = i % 3;
 		row_index = Math.floor(i / 3);
 		
 		console.log("Row " + row_index + " Col " + col_index);
 
-		if(	$(card_id).length) {
+
+		if(	document.getElementById(card_id)) {
 			console.log("Card " + card_id + " alrady exists");
 			continue;
 		}
@@ -74,14 +75,14 @@ append_card_layout = function(end_card) {
 		console.log($(prev_card));
 
 		if(col_index == 0) {
-			let card_layout = card_layout_start + i + card_layout_end;
+			let card_layout = card_layout_start + i + "\"" + card_layout_end;
 			card_layout = section_start + card_layout + section_end;
 
-			$(card_layout).insertAfter($(prev_card).parent());
+			$(card_layout).insertAfter($(prev_card).parent().parent().parent());
 
 			console.log(card_layout);
 		} else {
-			let card_layout = card_layout_start + i + card_layout_end;
+			let card_layout = card_layout_start + i + "\"" + card_layout_end;
 			$(card_layout).insertAfter($(prev_card).parent());
 			console.log(card_layout);
 		}
@@ -89,7 +90,16 @@ append_card_layout = function(end_card) {
 }
 
 $(document).ready(function(){
-	insert_cards(0, 6);
+	if(document.title.includes("Projects")) {
+		let response = $.getJSON('projects.json', function(data) {
+			let num_cards = Object.keys(data.projects).length;
+			append_card_layout(num_cards);
+			insert_cards(0, num_cards);
+			$('main').hide().show(0);
+		});
+	} else {
+		insert_cards(0, 6);
+	}
 
 	// append_card_layout(8);
 });

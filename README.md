@@ -18,3 +18,4 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Minesweeper
 - [ ]	Checkers
 - [x]	Conways Game of Life
+- [ ]	Crazy 8's Card Game
