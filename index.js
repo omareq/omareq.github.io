@@ -57,7 +57,7 @@ append_card_layout = function(end_card) {
 		let col_index = i % 3;
 		row_index = Math.floor(i / 3);
 		
-		console.log("Row " + row_index + " Col " + col_index);
+		// console.log("Row " + row_index + " Col " + col_index);
 
 
 		if(	document.getElementById(card_id)) {
@@ -72,7 +72,7 @@ append_card_layout = function(end_card) {
 			prev_card = card_id;
 		}
 
-		console.log($(prev_card));
+		// console.log($(prev_card));
 
 		if(col_index == 0) {
 			let card_layout = card_layout_start + i + "\"" + card_layout_end;
@@ -80,12 +80,13 @@ append_card_layout = function(end_card) {
 
 			$(card_layout).insertAfter($(prev_card).parent().parent().parent());
 
-			console.log(card_layout);
+			// console.log(card_layout);
 		} else {
 			let card_layout = card_layout_start + i + "\"" + card_layout_end;
 			$(card_layout).insertAfter($(prev_card).parent());
-			console.log(card_layout);
+			// console.log(card_layout);
 		}
+		// $(card_id).hide().show(i * 300);
 	}
 }
 
