@@ -19,3 +19,6 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Checkers
 - [x]	Conways Game of Life
 - [ ]	Crazy 8's Card Game
+- [ ]	Knight's Tour Using Warnsdorff's Rule
+- [ ]	Meshing Algorithm
+- [ ]	PDE Solver
