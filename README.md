@@ -22,3 +22,4 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Knight's Tour Using Warnsdorff's Rule
 - [ ]	Meshing Algorithm
 - [ ]	PDE Solver
+- [ ]	Cooper Pair Box Hamiltonian Solver
