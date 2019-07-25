@@ -23,3 +23,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Meshing Algorithm
 - [ ]	PDE Solver
 - [ ]	Cooper Pair Box Hamiltonian Solver
+- [ ]	Convex Hull Gift Wrapping
+- [ ]	Mesh Generation Delaunay Triangles
+- [ ]	Tic Tac Toe
+- [ ]	Connect Four
