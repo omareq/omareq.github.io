@@ -1,197 +1,238 @@
-{"projects":{
-	"p_000":{
-		"id":"p_000",
-		"name":"Snowman",
-		"demo-url":"https://omareq.github.io/snowman",
-		"docs-url":"https://omareq.github.io/snowman/docs",
-		"pic-url":"imgs/p_000.jpg",
-		"gif-url":"imgs/p_000.gif",
-		"vid-url":"vids/p_000.mp4",
-		"prev-id":"p_014",
-		"next-id":"p_001",
-		"brief":"Making a snowman from falling snowflakes.",
-		"tags":[]
-	},
-	"p_001":{
-		"id":"p_001",
-		"name":"Langtons Ant",
-		"demo-url":"https://omareq.github.io/langtons-ant",
-		"docs-url":"https://omareq.github.io/langtons-ant/docs",
-		"pic-url":"imgs/p_001.jpg",
-		"gif-url":"imgs/p_001.gif",
-		"vid-url":"vids/p_001.mp4",
-		"prev-id":"p_000",
-		"next-id":"p_002",
-		"brief":"Exploring the complexities of Langton's ant.",
-		"tags":["science","cellular automata"]
-	},
-	"p_002":{
-		"id":"p_002",
-		"name":"texType",
-		"demo-url":"https://omareq.github.io/texType",
-		"docs-url":"https://omareq.github.io/texType/docs",
-		"pic-url":"imgs/p_002.jpg",
-		"gif-url":"imgs/p_002.gif",
-		"vid-url":"vids/p_002.mp4",
-		"prev-id":"p_001",
-		"next-id":"p_003",
-		"brief":"A quick game to practice typing.",
-		"tags":["game"]
-	},
-	"p_003":{
-		"id":"p_003",
-		"name":"Love Code",
-		"demo-url":"https://omareq.github.io/love-code",
-		"docs-url":"https://omareq.github.io/love-code/docs",
-		"pic-url":"imgs/p_003.jpg",
-		"gif-url":"imgs/p_003.gif",
-		"vid-url":"vids/p_003.mp4",
-		"prev-id":"p_002",
-		"next-id":"p_004",
-		"brief":"Matrix rain but with hearts.",
-		"tags":[]
-	},
-	"p_004":{
-		"id":"p_004",
-		"name":"Antenna Calculator",
-		"demo-url":"https://omareq.github.io/antenna-calculator",
-		"docs-url":"https://omareq.github.io/antenna-calculator/docs",
-		"pic-url":"imgs/p_004.jpg",
-		"gif-url":"imgs/p_004.gif",
-		"vid-url":"vids/p_004.mp4",
-		"prev-id":"p_003",
-		"next-id":"p_005",
-		"brief":"A simple tool to help when designing various antenna. (INCOMPLETE)",
-		"tags":["science"]
-	},
-	"p_005":{
-		"id":"p_005",
-		"name":"Multiple Canvas",
-		"demo-url":"https://omareq.github.io/multiple-canvas",
-		"docs-url":"https://omareq.github.io/multiple-canvas/docs",
-		"pic-url":"imgs/p_005.jpg",
-		"gif-url":"imgs/p_005.gif",
-		"vid-url":"vids/p_005.mp4",
-		"prev-id":"p_004",
-		"next-id":"p_006",
-		"brief":"Figuring out how to place two canvases on the same webpage.",
-		"tags":[]
-	},
-	"p_006":{
-		"id":"p_006",
-		"name":"Ninja Game",
-		"demo-url":"https://omareq.github.io/ninja-game",
-		"docs-url":"https://omareq.github.io/ninja-game/docs",
-		"pic-url":"imgs/p_006.jpg",
-		"gif-url":"imgs/p_006.gif",
-		"vid-url":"vids/p_006.mp4",
-		"prev-id":"p_005",
-		"next-id":"p_007",
-		"brief":"A quick side scroll ninja game. (INCOMPLETE)",
-		"tags":["game"]
-	},
-	"p_007":{
-		"id":"p_007",
-		"name":"Bouncing Ball",
-		"demo-url":"https://omareq.github.io/bouncing-ball",
-		"docs-url":"https://omareq.github.io/bouncing-ball/docs",
-		"pic-url":"imgs/p_007.jpg",
-		"gif-url":"imgs/p_007.gif",
-		"vid-url":"vids/p_007.mp4",
-		"prev-id":"p_006",
-		"next-id":"p_007",
-		"brief":"A quick bouncing ball physics simulation.",
-		"tags":["science"]
-	},
-	"p_008":{
-		"id":"p_008",
-		"name":"Electrostatics",
-		"demo-url":"https://omareq.github.io/electrostatics",
-		"docs-url":"https://omareq.github.io/electrostatics/docs",
-		"pic-url":"imgs/p_008.jpg",
-		"gif-url":"imgs/p_008.gif",
-		"vid-url":"vids/p_008.mp4",
-		"prev-id":"p_007",
-		"next-id":"p_008",
-		"brief":"A quick electrostatics physics simulation.",
-		"tags":["science"]
-	},
-	"p_009":{
-		"id":"p_009",
-		"name":"DrWho",
-		"demo-url":"https://omareq.github.io/drwho",
-		"docs-url":"https://omareq.github.io/drwho/docs",
-		"pic-url":"imgs/p_009.jpg",
-		"gif-url":"imgs/p_009.gif",
-		"vid-url":"vids/p_009.mp4",
-		"prev-id":"p_008",
-		"next-id":"p_010",
-		"brief":"My concept of the time vortex in Dr Who.",
-		"tags":[]
-	},
-	"p_010":{
-		"id":"p_010",
-		"name":"Lissajous",
-		"demo-url":"https://omareq.github.io/lissajous",
-		"docs-url":"https://omareq.github.io/lissajous/docs",
-		"pic-url":"imgs/p_010.jpg",
-		"gif-url":"imgs/p_010.gif",
-		"vid-url":"vids/p_010.mp4",
-		"prev-id":"p_009",
-		"next-id":"p_010",
-		"brief":"My concept of the classic Lissajous patterns",
-		"tags":["science"]
-	},
-	"p_011":{
-		"id":"p_011",
-		"name":"Swarm Optimiser",
-		"demo-url":"https://omareq.github.io/particle-swarm-optimiser",
-		"docs-url":"https://omareq.github.io/particle-swarm-optimiser/docs",
-		"pic-url":"imgs/p_011.jpg",
-		"gif-url":"imgs/p_011.gif",
-		"vid-url":"vids/p_011.mp4",
-		"prev-id":"p_010",
-		"next-id":"p_012",
-		"brief":"A quick and dirty swarm optimiser",
-		"tags":["science"]
-	},
-	"p_012":{
-		"id":"p_012",
-		"name":"Towers of Hanoi",
-		"demo-url":"https://omareq.github.io/towers-of-hanoi",
-		"docs-url":"https://omareq.github.io/towers-of-hanoi/docs",
-		"pic-url":"imgs/p_012.jpg",
-		"gif-url":"imgs/p_012.gif",
-		"vid-url":"vids/p_012.mp4",
-		"prev-id":"p_011",
-		"next-id":"p_012",
-		"brief":"A recreation of the Towers of Hanoi brain teaser.",
-		"tags":[""]
-	},
-	"p_013":{
-		"id":"p_013",
-		"name":"Simon",
-		"demo-url":"https://omareq.github.io/simon",
-		"docs-url":"https://omareq.github.io/simon/docs",
-		"pic-url":"imgs/p_013.jpg",
-		"gif-url":"imgs/p_013.gif",
-		"vid-url":"vids/p_013.mp4",
-		"prev-id":"p_012",
-		"next-id":"p_014",
-		"brief":"The classic Simon memory game.  How much can you remember?",
-		"tags":["game"]
-	},
-	"p_014":{
-		"id":"p_014",
-		"name":"Game of Life",
-		"demo-url":"https://omareq.github.io/game-of-life",
-		"docs-url":"https://omareq.github.io/game-of-life/docs",
-		"pic-url":"imgs/p_014.jpg",
-		"gif-url":"imgs/p_014.gif",
-		"vid-url":"vids/p_014.mp4",
-		"prev-id":"p_013",
-		"next-id":"p_000",
-		"brief":"Conways Game of Life.  What contraption can you create?",
-		"tags":["game", "cellular automata"]
-	}
-}}
+{
+    "projects": {
+        "p_000": {
+            "brief": "Making a snowman from falling snowflakes.", 
+            "demo-url": "https://omareq.github.io/snowman", 
+            "docs-url": "https://omareq.github.io/snowman/docs", 
+            "gif-url": "imgs/p_000.gif", 
+            "id": "p_000", 
+            "name": "Snowman", 
+            "next-id": "p_001", 
+            "pic-url": "imgs/p_000.jpg", 
+            "prev-id": "p_015", 
+            "tags": [], 
+            "vid-url": "vids/p_000.mp4"
+        }, 
+        "p_001": {
+            "brief": "Exploring the complexities of Langton's ant.", 
+            "demo-url": "https://omareq.github.io/langtons-ant", 
+            "docs-url": "https://omareq.github.io/langtons-ant/docs", 
+            "gif-url": "imgs/p_001.gif", 
+            "id": "p_001", 
+            "name": "Langtons Ant", 
+            "next-id": "p_002", 
+            "pic-url": "imgs/p_001.jpg", 
+            "prev-id": "p_000", 
+            "tags": [
+                "science", 
+                "cellular automata"
+            ], 
+            "vid-url": "vids/p_001.mp4"
+        }, 
+        "p_002": {
+            "brief": "A quick game to practice typing.", 
+            "demo-url": "https://omareq.github.io/texType", 
+            "docs-url": "https://omareq.github.io/texType/docs", 
+            "gif-url": "imgs/p_002.gif", 
+            "id": "p_002", 
+            "name": "texType", 
+            "next-id": "p_003", 
+            "pic-url": "imgs/p_002.jpg", 
+            "prev-id": "p_001", 
+            "tags": [
+                "game"
+            ], 
+            "vid-url": "vids/p_002.mp4"
+        }, 
+        "p_003": {
+            "brief": "Matrix rain but with hearts.", 
+            "demo-url": "https://omareq.github.io/love-code", 
+            "docs-url": "https://omareq.github.io/love-code/docs", 
+            "gif-url": "imgs/p_003.gif", 
+            "id": "p_003", 
+            "name": "Love Code", 
+            "next-id": "p_004", 
+            "pic-url": "imgs/p_003.jpg", 
+            "prev-id": "p_002", 
+            "tags": [], 
+            "vid-url": "vids/p_003.mp4"
+        }, 
+        "p_004": {
+            "brief": "A simple tool to help when designing various antenna. (INCOMPLETE)", 
+            "demo-url": "https://omareq.github.io/antenna-calculator", 
+            "docs-url": "https://omareq.github.io/antenna-calculator/docs", 
+            "gif-url": "imgs/p_004.gif", 
+            "id": "p_004", 
+            "name": "Antenna Calculator", 
+            "next-id": "p_005", 
+            "pic-url": "imgs/p_004.jpg", 
+            "prev-id": "p_003", 
+            "tags": [
+                "science"
+            ], 
+            "vid-url": "vids/p_004.mp4"
+        }, 
+        "p_005": {
+            "brief": "Figuring out how to place two canvases on the same webpage.", 
+            "demo-url": "https://omareq.github.io/multiple-canvas", 
+            "docs-url": "https://omareq.github.io/multiple-canvas/docs", 
+            "gif-url": "imgs/p_005.gif", 
+            "id": "p_005", 
+            "name": "Multiple Canvas", 
+            "next-id": "p_006", 
+            "pic-url": "imgs/p_005.jpg", 
+            "prev-id": "p_004", 
+            "tags": [], 
+            "vid-url": "vids/p_005.mp4"
+        }, 
+        "p_006": {
+            "brief": "A quick side scroll ninja game. (INCOMPLETE)", 
+            "demo-url": "https://omareq.github.io/ninja-game", 
+            "docs-url": "https://omareq.github.io/ninja-game/docs", 
+            "gif-url": "imgs/p_006.gif", 
+            "id": "p_006", 
+            "name": "Ninja Game", 
+            "next-id": "p_007", 
+            "pic-url": "imgs/p_006.jpg", 
+            "prev-id": "p_005", 
+            "tags": [
+                "game"
+            ], 
+            "vid-url": "vids/p_006.mp4"
+        }, 
+        "p_007": {
+            "brief": "A quick bouncing ball physics simulation.", 
+            "demo-url": "https://omareq.github.io/bouncing-ball", 
+            "docs-url": "https://omareq.github.io/bouncing-ball/docs", 
+            "gif-url": "imgs/p_007.gif", 
+            "id": "p_007", 
+            "name": "Bouncing Ball", 
+            "next-id": "p_007", 
+            "pic-url": "imgs/p_007.jpg", 
+            "prev-id": "p_006", 
+            "tags": [
+                "science"
+            ], 
+            "vid-url": "vids/p_007.mp4"
+        }, 
+        "p_008": {
+            "brief": "A quick electrostatics physics simulation.", 
+            "demo-url": "https://omareq.github.io/electrostatics", 
+            "docs-url": "https://omareq.github.io/electrostatics/docs", 
+            "gif-url": "imgs/p_008.gif", 
+            "id": "p_008", 
+            "name": "Electrostatics", 
+            "next-id": "p_008", 
+            "pic-url": "imgs/p_008.jpg", 
+            "prev-id": "p_007", 
+            "tags": [
+                "science"
+            ], 
+            "vid-url": "vids/p_008.mp4"
+        }, 
+        "p_009": {
+            "brief": "My concept of the time vortex in Dr Who.", 
+            "demo-url": "https://omareq.github.io/drwho", 
+            "docs-url": "https://omareq.github.io/drwho/docs", 
+            "gif-url": "imgs/p_009.gif", 
+            "id": "p_009", 
+            "name": "DrWho", 
+            "next-id": "p_010", 
+            "pic-url": "imgs/p_009.jpg", 
+            "prev-id": "p_008", 
+            "tags": [], 
+            "vid-url": "vids/p_009.mp4"
+        }, 
+        "p_010": {
+            "brief": "My concept of the classic Lissajous patterns", 
+            "demo-url": "https://omareq.github.io/lissajous", 
+            "docs-url": "https://omareq.github.io/lissajous/docs", 
+            "gif-url": "imgs/p_010.gif", 
+            "id": "p_010", 
+            "name": "Lissajous", 
+            "next-id": "p_010", 
+            "pic-url": "imgs/p_010.jpg", 
+            "prev-id": "p_009", 
+            "tags": [
+                "science"
+            ], 
+            "vid-url": "vids/p_010.mp4"
+        }, 
+        "p_011": {
+            "brief": "A quick and dirty swarm optimiser", 
+            "demo-url": "https://omareq.github.io/particle-swarm-optimiser", 
+            "docs-url": "https://omareq.github.io/particle-swarm-optimiser/docs", 
+            "gif-url": "imgs/p_011.gif", 
+            "id": "p_011", 
+            "name": "Swarm Optimiser", 
+            "next-id": "p_012", 
+            "pic-url": "imgs/p_011.jpg", 
+            "prev-id": "p_010", 
+            "tags": [
+                "science"
+            ], 
+            "vid-url": "vids/p_011.mp4"
+        }, 
+        "p_012": {
+            "brief": "A recreation of the Towers of Hanoi brain teaser.", 
+            "demo-url": "https://omareq.github.io/towers-of-hanoi", 
+            "docs-url": "https://omareq.github.io/towers-of-hanoi/docs", 
+            "gif-url": "imgs/p_012.gif", 
+            "id": "p_012", 
+            "name": "Towers of Hanoi", 
+            "next-id": "p_012", 
+            "pic-url": "imgs/p_012.jpg", 
+            "prev-id": "p_011", 
+            "tags": [
+                ""
+            ], 
+            "vid-url": "vids/p_012.mp4"
+        }, 
+        "p_013": {
+            "brief": "The classic Simon memory game.  How much can you remember?", 
+            "demo-url": "https://omareq.github.io/simon", 
+            "docs-url": "https://omareq.github.io/simon/docs", 
+            "gif-url": "imgs/p_013.gif", 
+            "id": "p_013", 
+            "name": "Simon", 
+            "next-id": "p_014", 
+            "pic-url": "imgs/p_013.jpg", 
+            "prev-id": "p_012", 
+            "tags": [
+                "game"
+            ], 
+            "vid-url": "vids/p_013.mp4"
+        }, 
+        "p_014": {
+            "brief": "Conways Game of Life.  What contraption can you create?", 
+            "demo-url": "https://omareq.github.io/game-of-life", 
+            "docs-url": "https://omareq.github.io/game-of-life/docs", 
+            "gif-url": "imgs/p_014.gif", 
+            "id": "p_014", 
+            "name": "Game of Life", 
+            "next-id": "p_015", 
+            "pic-url": "imgs/p_014.jpg", 
+            "prev-id": "p_013", 
+            "tags": [
+                "game", 
+                "cellular automata"
+            ], 
+            "vid-url": "vids/p_014.mp4"
+        }, 
+        "p_015": {
+            "brief": "An overview of possible algorithms to generate a convex hull from a set of points.", 
+            "demo-url": "https://omareq.github.io/convex-hull", 
+            "docs-url": "https://omareq.github.io/convex-hull/docs", 
+            "gif-url": "imgs/p_015.gif", 
+            "id": "p_015", 
+            "name": "convex-hull", 
+            "next-id": "p_000", 
+            "pic-url": "imgs/p_015.jpg", 
+            "prev-id": "p_014", 
+            "tags": [
+            	"algorithm"
+            ], 
+            "vid-url": "vids/p_015.mp4"
+        }
+    }
+}
