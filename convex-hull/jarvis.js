@@ -1,7 +1,7 @@
 /*******************************************************************************
 *
 *	@file jarvis.js
-*	@brief
+*	@brief The Jarvis March or Gift Wrapping algorithm
 *
 *	@author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *	@version 1.0
@@ -9,11 +9,15 @@
 *
 *******************************************************************************/
 
-// JARVIS MARCH
 let points = [];
 
 let hull = [];
 
+/**
+*	Enumeration of the possible state the jarvis march algorithm can be in
+*
+*	@enum {Integer}
+*/
 const jarvisSteps = Object.freeze({
 	LEFT: 0,
 	CALCULATE: 1,
@@ -35,6 +39,19 @@ let time = 0;
 const leftPointFrameRate = 10;
 
 const calculateFrameRate = 15;
+
+/**
+*	Enumeration of the possible directions the algorithm can use when
+*	generating the convex hull
+*
+*	@enum {String}
+*/
+const direction = Object.freeze({
+	CLOCKWISE: "clockwise",
+	ANTICLOCKWISE: "anticlockwise"
+});
+
+let angularDirection = direction.CLOCKWISE;
 
 
 /**
@@ -121,9 +138,12 @@ function jarvisMarch() {
 			const b = p5.Vector.sub(checking, currentPoint);
 			const cross = a.cross(b);
 
-			if (cross.z < 0) {
+			const clockwiseCheck = angularDirection == direction.CLOCKWISE && cross.z < 0;
+			const anticlockwiseCheck = angularDirection == direction.ANTICLOCKWISE && cross.z > 0;
+
+			if ( clockwiseCheck || anticlockwiseCheck) {
 				nextIndex = index;
-			}
+			} 
 
 			index++;
 

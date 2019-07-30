@@ -1,16 +1,13 @@
 /*******************************************************************************
 *
 *	@file divide.js
-*	@brief
+*	@brief Divide and conquer algorithm
 *
 *	@author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *	@version 1.0
 *	@date 27-July-2019
 *
 *******************************************************************************/
-
-
-// DIVIDE AND CONQUER
 
 let internalHulls = [[], [], []];
 
@@ -19,6 +16,11 @@ let internalPoints = [[], [], []];
 let finalHull = [];
 let finalPoints = [];
 
+/**
+*	Enumeration of the possible state the algorithm can be in
+*
+*	@enum {Integer}
+*/
 const divideSteps = Object.freeze({
 	SPLIT: 0,
 	CALCULATE1: 1,
@@ -30,19 +32,25 @@ const divideSteps = Object.freeze({
 
 let divideStep = divideSteps.SPLIT;
 
+/**
+*	Enumeration of the different methods for splitting the points
+*
+*	@enum {String}
+*/
 const splitMethods = Object.freeze({
 	VERTICAL: " Vertical Split ",
 	HORIZONTAL: " Horizontal Split ",
-	RADIAL: " Radial Split "
+	RADIAL: " Radial Split ",
+	ANGULAR: " Angular Split "
 });
 
 let splitMethod = splitMethods.HORIZONTAL;
-
 
 /**
 *	Returns an array with arrays of the given size.
 *
 *	@param array {Array} Array to split
+*
 *	@param chunkSize {Integer} Size of every group
 */
 function chunkArray(inputArray, chunkSize) {
@@ -66,12 +74,14 @@ function chunkArray(inputArray, chunkSize) {
     return results;
 }
 
-function radialSplit(inputArray, numChunks) {
-	// ES6 Clone Array
-    let array = [...inputArray];
-	let results = [[], [], []];
-}
-
+/**
+*	Draws a convex hull with a given colour
+*
+*	@param hullArray {Array<p5.Vector>} Array of points that amke up the
+*		verticies of the hull.
+*	
+*	@param colour {Integer} Value of the hue of the given hull from 0 to 100
+*/
 function drawHull(hullArray, colour) {
 	push();
 	colorMode(HSB, 100);
@@ -90,8 +100,12 @@ function drawHull(hullArray, colour) {
 	pop();
 }
 
+/**
+*	Calculates the internal hull for one of the subsections after division
+*
+*	@param hullIndex {Integer} Select which hull to calculate from 0 to 2
+*/
 function calculateHull(hullIndex) {
-
 	frameRate(calculateFrameRate);			
 
 	const currentPoint = internalPoints[hullIndex][currentIndex];
@@ -112,7 +126,6 @@ function calculateHull(hullIndex) {
 	if (cross.z < 0) {
 		nextIndex = index;
 	}
-
 	index++;
 
 	if (index == internalPoints[hullIndex].length) {
@@ -123,8 +136,6 @@ function calculateHull(hullIndex) {
 			index = 2;
 			if(hullIndex + 1 != internalPoints.length) {
 				internalHulls[hullIndex + 1].push(internalPoints[hullIndex + 1][0].copy());
-	    	} else {
-	    		// hull.push(internalHulls[0][0]);
 	    	}
 	    } else {
 	        internalHulls[hullIndex].push(internalPoints[hullIndex][nextIndex]);
@@ -135,6 +146,9 @@ function calculateHull(hullIndex) {
 	}		
 }
 
+/**
+*	Combines the three internal hulls into the final convex hull for all points
+*/
 function fuse() {
 	if(finalPoints.length == 0) {
 		finalPoints = [...internalHulls[0]].concat(internalHulls[1]).concat(internalHulls[2]);
@@ -142,7 +156,7 @@ function fuse() {
 		finalPoints.sort((a, b) => a.x - b.x);
 		finalHull.push(finalPoints[0]);
 	} else {
-		frameRate(calculateFrameRate);			
+		frameRate(calculateFrameRate + 10);			
 
 		const currentPoint = finalPoints[currentIndex];
 		const nextPoint = finalPoints[nextIndex];
@@ -162,7 +176,6 @@ function fuse() {
 		if (cross.z < 0) {
 			nextIndex = index;
 		}
-
 		index++;
 
 		if (index == finalPoints.length) {
@@ -182,30 +195,39 @@ function fuse() {
 	}
 }
 
+/**
+*	The Divide & Conquer algorithm
+*/
 function divideAndConquer() {
-	frameRate(3);
 	switch(divideStep) {
 		case divideSteps.SPLIT:
 			switch(splitMethod) {
 				case splitMethods.VERTICAL: {
-					// console.log("Divide and Conquer:Vertical Split");
 					points.sort((a, b) => a.x - b.x);
 					internalPoints = chunkArray(points, points.length / 3);
 				}
 				break;
 
 				case splitMethods.HORIZONTAL: {
-					// console.log("Divide and Conquer: Horizontal Split");
 					points.sort((a, b) => a.y - b.y);
 					internalPoints = chunkArray(points, points.length / 3);
 				}
 				break;
 
-				case splitMethods.RADIAL:
+				case splitMethods.RADIAL: {
 					const w2 = width / 2;
 					const h2 = height / 2;
 					points.sort((a, b) => atan2(a.y - h2, a.x - w2) - atan2(b.y - h2, b.x - w2));
 					internalPoints = chunkArray(points, points.length / 3);
+				}
+				break;
+
+				case splitMethods.ANGULAR: {
+					const w2 = width / 2;
+					const h2 = height / 2;
+					points.sort((a, b) => dist(a.x, a.y, w2, h2) - dist(b.x, b.y, w2, h2));
+					internalPoints = chunkArray(points, points.length / 3);
+				}
 				break;
 			}
 			
@@ -267,8 +289,5 @@ function divideAndConquer() {
 				}
 			}
 		break;
-
-		// 07510589141
-		// john luke 
 	}
 }
