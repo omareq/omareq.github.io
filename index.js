@@ -1,5 +1,17 @@
 let projects;
 
+archivedCards = function(projects) {
+	let sum = 0;
+
+	let obj_keys = Object.keys(projects)
+	for(const key in projects) {
+		if(projects[key]["status"] == "archived") {
+			sum++;
+		}
+	}
+	return sum;
+}
+
 create_card = function(card_id, project) {
 	let card = $(card_id);//.css( "border", "3px solid red");
 	$(card_id + ' img').attr("src", project["pic-url"]);
@@ -28,6 +40,12 @@ insert_cards = function(start_card, end_card) {
 	        rand_key = obj_keys[Math.floor(Math.random() * obj_keys.length)];
 	        obj_keys = obj_keys.filter( el => el !== rand_key);
 	        rand_project = projects[rand_key];
+
+
+	        if(rand_project["status"] == "archived") {
+	        	i--;
+	        	continue;
+	        }
 
 	        card_id = "#project-card-" + i;
 	        create_card(card_id, rand_project); 
@@ -93,7 +111,7 @@ append_card_layout = function(end_card) {
 $(document).ready(function(){
 	if(document.title.includes("Projects")) {
 		let response = $.getJSON('projects.json', function(data) {
-			let num_cards = Object.keys(data.projects).length;
+			let num_cards = Object.keys(data.projects).length - archivedCards(data.projects);
 			append_card_layout(num_cards);
 			insert_cards(0, num_cards);
 			$('main').hide().show(0);

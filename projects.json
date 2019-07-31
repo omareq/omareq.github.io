@@ -10,6 +10,7 @@
             "next-id": "p_001", 
             "pic-url": "imgs/p_000.jpg", 
             "prev-id": "p_015", 
+            "status":"active",
             "tags": [], 
             "vid-url": "vids/p_000.mp4"
         }, 
@@ -23,6 +24,7 @@
             "next-id": "p_002", 
             "pic-url": "imgs/p_001.jpg", 
             "prev-id": "p_000", 
+            "status":"active",
             "tags": [
                 "science", 
                 "cellular automata"
@@ -39,6 +41,7 @@
             "next-id": "p_003", 
             "pic-url": "imgs/p_002.jpg", 
             "prev-id": "p_001", 
+            "status":"active",
             "tags": [
                 "game"
             ], 
@@ -54,6 +57,7 @@
             "next-id": "p_004", 
             "pic-url": "imgs/p_003.jpg", 
             "prev-id": "p_002", 
+            "status":"active",
             "tags": [], 
             "vid-url": "vids/p_003.mp4"
         }, 
@@ -67,6 +71,7 @@
             "next-id": "p_005", 
             "pic-url": "imgs/p_004.jpg", 
             "prev-id": "p_003", 
+            "status":"active",
             "tags": [
                 "science"
             ], 
@@ -82,6 +87,7 @@
             "next-id": "p_006", 
             "pic-url": "imgs/p_005.jpg", 
             "prev-id": "p_004", 
+            "status":"active",
             "tags": [], 
             "vid-url": "vids/p_005.mp4"
         }, 
@@ -95,6 +101,7 @@
             "next-id": "p_007", 
             "pic-url": "imgs/p_006.jpg", 
             "prev-id": "p_005", 
+            "status":"active",
             "tags": [
                 "game"
             ], 
@@ -110,6 +117,7 @@
             "next-id": "p_007", 
             "pic-url": "imgs/p_007.jpg", 
             "prev-id": "p_006", 
+            "status":"active",
             "tags": [
                 "science"
             ], 
@@ -125,6 +133,7 @@
             "next-id": "p_008", 
             "pic-url": "imgs/p_008.jpg", 
             "prev-id": "p_007", 
+            "status":"active",
             "tags": [
                 "science"
             ], 
@@ -140,6 +149,7 @@
             "next-id": "p_010", 
             "pic-url": "imgs/p_009.jpg", 
             "prev-id": "p_008", 
+            "status":"archived",
             "tags": [], 
             "vid-url": "vids/p_009.mp4"
         }, 
@@ -153,6 +163,7 @@
             "next-id": "p_010", 
             "pic-url": "imgs/p_010.jpg", 
             "prev-id": "p_009", 
+            "status":"active",
             "tags": [
                 "science"
             ], 
@@ -168,6 +179,7 @@
             "next-id": "p_012", 
             "pic-url": "imgs/p_011.jpg", 
             "prev-id": "p_010", 
+            "status":"archived",
             "tags": [
                 "science"
             ], 
@@ -183,6 +195,7 @@
             "next-id": "p_012", 
             "pic-url": "imgs/p_012.jpg", 
             "prev-id": "p_011", 
+            "status":"active",
             "tags": [
                 ""
             ], 
@@ -198,6 +211,7 @@
             "next-id": "p_014", 
             "pic-url": "imgs/p_013.jpg", 
             "prev-id": "p_012", 
+            "status":"active",
             "tags": [
                 "game"
             ], 
@@ -213,6 +227,7 @@
             "next-id": "p_015", 
             "pic-url": "imgs/p_014.jpg", 
             "prev-id": "p_013", 
+            "status":"active",
             "tags": [
                 "game", 
                 "cellular automata"
@@ -229,6 +244,7 @@
             "next-id": "p_000", 
             "pic-url": "imgs/p_015.jpg", 
             "prev-id": "p_014", 
+            "status":"active",
             "tags": [
             	"algorithm"
             ], 
