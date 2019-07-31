@@ -106,22 +106,7 @@ function jarvisMarch() {
 
 		// calculate which points are in the hull
 		case jarvisSteps.CALCULATE:
-
-			// Draw current hull
-			push();
-			fill(0, 0, 255, 155);
-			beginShape();
-			for (var i = hull.length - 1; i >= 0; i--) {
-				push();
-				stroke(0, 0, 255);
-				strokeWeight(0.3 * pointRadius);
-				ellipse(hull[i].x, hull[i].y, pointRadius, pointRadius);
-				vertex(hull[i].x, hull[i].y);
-				pop();
-			}
-			endShape(CLOSE);
-			pop();
-
+			drawHull(hull, 65);
 
 			const nextPoint = points[nextIndex];
 			const currentPoint = points[currentIndex];
@@ -144,7 +129,6 @@ function jarvisMarch() {
 			if ( clockwiseCheck || anticlockwiseCheck) {
 				nextIndex = index;
 			} 
-
 			index++;
 
 			if (index == points.length) {
@@ -158,45 +142,14 @@ function jarvisMarch() {
 			        nextIndex = leftPointIndex;
 			    }
 			}
-
-
-
 		break;
 
 		// Draw Final hull for 5 seconds then restart
 		case jarvisSteps.DONE:
-			push();
-			fill(0, 0, 255, 155);
-			beginShape();
-			for (var i = hull.length - 1; i >= 0; i--) {
-				push();
-				stroke(0, 0, 255);
-				strokeWeight(0.3 * pointRadius);
-				ellipse(hull[i].x, hull[i].y, pointRadius, pointRadius);
-				vertex(hull[i].x, hull[i].y);
-				pop();
-			}
-			endShape(CLOSE);
-			pop();
-
+			drawHull(hull, 65);
 			time++;
-
 			if (time > frameRate() * 4) {
-				jarvisStep = jarvisSteps.LEFT;
-				time = 0;
-				frameRate(leftPointFrameRate);
-				hull = [];
-				currentIndex = -1;
-				nextIndex = 1;
-				index = 2;
-
-				points = [];
-				for(let i = 0; i < numPoints; ++i) {
-					const x = random(xBuffer, width - xBuffer);
-					const y = random(yBuffer, height - yBuffer);
-					const newPoint = createVector(x, y);
-					points.push(newPoint);
-				}
+				reset();
 			}
 		break;
 

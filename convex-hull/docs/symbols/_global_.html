@@ -256,7 +256,7 @@ ul.inheritsList
 								<div class="fixedFont">
 								<b><a href="../symbols/_global_.html#divideSteps">divideSteps</a></b>
 								</div>
-								<div class="description">Enumeration of the possible state the algorithm can be in</div>
+								<div class="description">Enumeration of the possible state the divide and conquer algorithm can be in</div>
 							</td>
 						</tr>
 					
@@ -267,6 +267,16 @@ ul.inheritsList
 								<b><a href="../symbols/_global_.html#jarvisSteps">jarvisSteps</a></b>
 								</div>
 								<div class="description">Enumeration of the possible state the jarvis march algorithm can be in</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/_global_.html#monotoneSteps">monotoneSteps</a></b>
+								</div>
+								<div class="description">Enumeration of the possible state the monotone chain algorithm can be in</div>
 							</td>
 						</tr>
 					
@@ -342,6 +352,15 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#crossZ">crossZ</a></b>(a, b, o)
+								</div>
+								<div class="description">Finds the z component of the cross product of three vectors</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/_global_.html#divideAndConquer">divideAndConquer</a></b>()
 								</div>
 								<div class="description">The Divide & Conquer algorithm</div>
@@ -354,6 +373,15 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/_global_.html#draw">draw</a></b>()
 								</div>
 								<div class="description">p5.js draw function, is run every frame to create the desired animation</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#drawEdges">drawEdges</a></b>(hullArray, colour)
+								</div>
+								<div class="description">Draws the edges of a convex hull with a given colour</div>
 							</td>
 						</tr>
 					
@@ -381,6 +409,15 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/_global_.html#jarvisMarch">jarvisMarch</a></b>()
 								</div>
 								<div class="description">Jarvis March algorithm function</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#monotoneChain">monotoneChain</a></b>()
+								</div>
+								<div class="description">The monotone chain algorithm</div>
 							</td>
 						</tr>
 					
@@ -488,7 +525,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						Enumeration of the possible state the algorithm can be in
+						Enumeration of the possible state the divide and conquer algorithm can be in
 						
 							<br />
 							<i>Defined in: </i> <a href="../symbols/src/divide.js.html">divide.js</a>.
@@ -517,6 +554,31 @@ ul.inheritsList
 						
 							<br />
 							<i>Defined in: </i> <a href="../symbols/src/jarvis.js.html">jarvis.js</a>.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="monotoneSteps"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>monotoneSteps</b>
+					
+					</div>
+					<div class="description">
+						Enumeration of the possible state the monotone chain algorithm can be in
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/monotone.js.html">monotone.js</a>.
 						
 						
 					</div>
@@ -705,6 +767,64 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="crossZ"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Float}</span>
+					<b>crossZ</b>(a, b, o)
+					
+					</div>
+					<div class="description">
+						Finds the z component of the cross product of three vectors
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/monotone.js.html">monotone.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>a</b>
+									
+								</dt>
+								<dd>{p5.Vector}</dd>
+							
+								<dt>
+									<b>b</b>
+									
+								</dt>
+								<dd>{p5.Vector}</dd>
+							
+								<dt>
+									<b>o</b>
+									
+								</dt>
+								<dd>{p5.Vector}</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Float}</span> </dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name="divideAndConquer"> </a>
 					<div class="fixedFont">
 					
@@ -761,18 +881,18 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="drawHull"> </a>
+					<a name="drawEdges"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>drawHull</b>(hullArray, colour)
+					<b>drawEdges</b>(hullArray, colour)
 					
 					</div>
 					<div class="description">
-						Draws a convex hull with a given colour
+						Draws the edges of a convex hull with a given colour
 						
 							<br />
-							<i>Defined in: </i> <a href="../symbols/src/divide.js.html">divide.js</a>.
+							<i>Defined in: </i> <a href="../symbols/src/sketch.js.html">sketch.js</a>.
 						
 						
 					</div>
@@ -787,7 +907,54 @@ ul.inheritsList
 									<b>hullArray</b>
 									
 								</dt>
-								<dd>{Array<p5.Vector>} Array of points that amke up the		verticies of the hull.</dd>
+								<dd>{Array<p5.Vector>} Array of points that amke up the
+		verticies of the hull.</dd>
+							
+								<dt>
+									<b>colour</b>
+									
+								</dt>
+								<dd>{Integer} Value of the hue of the given hull from 0 to 100</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="drawHull"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>drawHull</b>(hullArray, colour)
+					
+					</div>
+					<div class="description">
+						Draws a convex hull with a given colour
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/sketch.js.html">sketch.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>hullArray</b>
+									
+								</dt>
+								<dd>{Array<p5.Vector>} Array of points that amke up the
+		verticies of the hull.</dd>
 							
 								<dt>
 									<b>colour</b>
@@ -846,6 +1013,34 @@ ul.inheritsList
 						
 							<br />
 							<i>Defined in: </i> <a href="../symbols/src/jarvis.js.html">jarvis.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="monotoneChain"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>monotoneChain</b>()
+					
+					</div>
+					<div class="description">
+						The monotone chain algorithm
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/monotone.js.html">monotone.js</a>.
 						
 						
 					</div>
@@ -959,7 +1154,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jul 30 2019 05:48:09 GMT-0000 (GMT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Jul 31 2019 00:17:03 GMT-0000 (GMT)
 		</div>
 	</body>
 </html>

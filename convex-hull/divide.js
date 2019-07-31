@@ -17,7 +17,7 @@ let finalHull = [];
 let finalPoints = [];
 
 /**
-*	Enumeration of the possible state the algorithm can be in
+*	Enumeration of the possible state the divide and conquer algorithm can be in
 *
 *	@enum {Integer}
 */
@@ -72,32 +72,6 @@ function chunkArray(inputArray, chunkSize) {
     }
 
     return results;
-}
-
-/**
-*	Draws a convex hull with a given colour
-*
-*	@param hullArray {Array<p5.Vector>} Array of points that amke up the
-*		verticies of the hull.
-*	
-*	@param colour {Integer} Value of the hue of the given hull from 0 to 100
-*/
-function drawHull(hullArray, colour) {
-	push();
-	colorMode(HSB, 100);
-	fill(colour, 100, 100, 50);
-	beginShape();
-	for (let i = hullArray.length - 1; i >= 0; i--) {
-		push();
-		stroke(colour, 100,100);
-		strokeWeight(0.3 * pointRadius);
-		ellipse(hullArray[i].x, hullArray[i].y, pointRadius, pointRadius);
-		vertex(hullArray[i].x, hullArray[i].y);
-		pop();
-	}
-	endShape(CLOSE);
-	colorMode(RGB);
-	pop();
 }
 
 /**
@@ -270,23 +244,7 @@ function divideAndConquer() {
 			time++;
 
 			if (time > frameRate() * 4) {
-				divideStep = divideSteps.SPLIT;
-				time = 0;
-				points = [];
-				finalHull = [];
-				finalPoints = [];
-				internalHulls = [[], [], []];
-				internalPoints = [[], [], []];
-				currentIndex = 0;
-				nextIndex = 1;
-				index = 2;
-
-				for(let i = 0; i < numPoints; ++i) {
-					const x = random(xBuffer, width - xBuffer);
-					const y = random(yBuffer, height - yBuffer);
-					const newPoint = createVector(x, y);
-					points.push(newPoint);
-				}
+				reset();
 			}
 		break;
 	}

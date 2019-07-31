@@ -111,6 +111,9 @@ function reset() {
 	finalPoints = [];
 	divideStep = divideSteps.SPLIT;
 
+	lower = [];
+	upper = [];
+
 	points = [];
 	for(let i = 0; i < numPoints; ++i) {
 		const x = random(xBuffer, width - xBuffer);
@@ -128,7 +131,6 @@ function algorithmSelectEvent() {
 	let selectVal = selectAlgorithm.value();
 	if(selectVal != algorithm) {
 		algorithm = selectVal;
-		reset();
 	}
 
 	if(algorithm == algorithms.DIVIDE) {
@@ -142,6 +144,14 @@ function algorithmSelectEvent() {
 	} else {
 		selectAngularDirection.hide();
 	}
+
+	if(algorithm == algorithms.MONOTONE) {
+
+	} else {
+
+	}
+
+	reset();
 }
 
 /**
@@ -169,6 +179,56 @@ function angularSelectEvent() {
 }
 
 /**
+*	Draws a convex hull with a given colour
+*
+*	@param hullArray {Array<p5.Vector>} Array of points that amke up the
+*		verticies of the hull.
+*	
+*	@param colour {Integer} Value of the hue of the given hull from 0 to 100
+*/
+function drawHull(hullArray, colour) {
+	push();
+	colorMode(HSB, 100);
+	fill(colour, 100, 100, 50);
+	beginShape();
+	for (let i = hullArray.length - 1; i >= 0; i--) {
+		push();
+		stroke(colour, 100,100);
+		strokeWeight(0.3 * pointRadius);
+		ellipse(hullArray[i].x, hullArray[i].y, pointRadius, pointRadius);
+		vertex(hullArray[i].x, hullArray[i].y);
+		pop();
+	}
+	endShape(CLOSE);
+	colorMode(RGB);
+	pop();
+}
+
+/**
+*	Draws the edges of a convex hull with a given colour
+*
+*	@param hullArray {Array<p5.Vector>} Array of points that amke up the
+*		verticies of the hull.
+*	
+*	@param colour {Integer} Value of the hue of the given hull from 0 to 100
+*/
+function drawEdges(hullArray, colour) {
+	push();
+	colorMode(HSB, 100);
+	stroke(colour, 100, 100, 50);
+	strokeWeight(0.3 * pointRadius);
+	noFill();
+	beginShape();
+	for (let i = hullArray.length - 1; i >= 0; i--) {
+		ellipse(hullArray[i].x, hullArray[i].y, pointRadius, pointRadius);
+		vertex(hullArray[i].x, hullArray[i].y);
+	}
+	endShape();
+	colorMode(RGB);
+	pop();
+}
+
+/**
 *   p5.js setup function, creates canvas.
 */
 function setup() {
@@ -181,7 +241,7 @@ function setup() {
 	let cnv = createCanvas(cnvSize, .7 * cnvSize);
 	cnv.parent("sketch");
 
-	pointsSlider = createSlider(12, 100, 30, 1);
+	pointsSlider = createSlider(12, 100, numPoints, 1);
 	pointsSlider.parent("num-points");
 
 	pointsDisplay = createP(numPoints);
@@ -191,6 +251,7 @@ function setup() {
 	selectAlgorithm.parent("algorithm");
 	selectAlgorithm.option(algorithms.JARVIS);
 	selectAlgorithm.option(algorithms.DIVIDE);
+	selectAlgorithm.option(algorithms.MONOTONE);
 	selectAlgorithm.changed(algorithmSelectEvent);
 
 	selectAngularDirection = createSelect();
