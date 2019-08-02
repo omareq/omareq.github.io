@@ -9,6 +9,8 @@
 *
 *******************************************************************************/
 
+let resetButton;
+
 /**
 *	Variable that store how far away from the side edges new points can spawn
 *
@@ -30,9 +32,10 @@ let yBuffer;
 *	@enum {String}
 */
 const algorithms = Object.freeze({
-	MONOTONE: " Monotne Chain ",
-	JARVIS: " Jarvis March ",
-	DIVIDE: " Divide & Conquer "
+	MONOTONE: "Monotone Chain",
+	JARVIS: "Jarvis March",
+	DIVIDE: "Divide & Conquer",
+	GRAHAM: "Graham Scan"
 });
 
 /**
@@ -109,10 +112,13 @@ function reset() {
 	internalHulls = [[], [], []];
 	finalHull = [];
 	finalPoints = [];
-	divideStep = divideSteps.SPLIT;
-
 	lower = [];
 	upper = [];
+
+	divideStep = divideSteps.SPLIT;
+	jarvisStep = jarvisSteps.LEFT;
+	monotoneStep = monotoneSteps.SORT;
+	grahamStep = grahamSteps.SORT;
 
 	points = [];
 	for(let i = 0; i < numPoints; ++i) {
@@ -146,9 +152,15 @@ function algorithmSelectEvent() {
 	}
 
 	if(algorithm == algorithms.MONOTONE) {
-
+		// show monotone chain options
 	} else {
+		// hide monotone chain options
+	}
 
+	if(algorithm == algorithms.GRAHAM) {
+		// show graham scan options
+	} else {
+		// hide graham scan options
 	}
 
 	reset();
@@ -252,6 +264,7 @@ function setup() {
 	selectAlgorithm.option(algorithms.JARVIS);
 	selectAlgorithm.option(algorithms.DIVIDE);
 	selectAlgorithm.option(algorithms.MONOTONE);
+	selectAlgorithm.option(algorithms.GRAHAM);
 	selectAlgorithm.changed(algorithmSelectEvent);
 
 	selectAngularDirection = createSelect();
@@ -259,17 +272,21 @@ function setup() {
 	selectAngularDirection.option(direction.CLOCKWISE);
 	selectAngularDirection.option(direction.ANTICLOCKWISE);
 	selectAngularDirection.changed(angularSelectEvent);
+	selectAngularDirection.hide();
 
 	selectSplitMethod = createSelect();
 	selectSplitMethod.parent("algorithm-options");
 	selectSplitMethod.option(splitMethods.HORIZONTAL);
 	selectSplitMethod.option(splitMethods.VERTICAL);
 	selectSplitMethod.option(splitMethods.RADIAL);
-	selectSplitMethod.hide();
 	selectSplitMethod.changed(splitSelectEvent);
-
-	//TODO (omar: omareq08@gmail.com): ANGULAR split method for dnc notworking
+	selectSplitMethod.hide();
+//TODO (omar: omareq08@gmail.com): ANGULAR split method for dnc notworking
 	// selectSplitMethod.option(splitMethods.ANGULAR);
+
+	resetButton = createButton("Reset", "value");
+	resetButton.parent("reset-button");
+	resetButton.mousePressed(reset);
 
 	xBuffer = 0.05 * width;
 	yBuffer = 0.05 * height;
@@ -315,6 +332,10 @@ function draw() {
 
 		case algorithms.DIVIDE:
 		divideAndConquer();
+		break;
+
+		case algorithms.GRAHAM:
+		grahamScan();
 		break;
 
 		default:
