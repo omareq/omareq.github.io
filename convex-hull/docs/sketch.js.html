@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sketch.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sketch.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+*
+*	@file sketch.js
+*	@brief A quick sketch showing different methods of generating a convexhull
+*
+*	@author &lt;a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye &lt;/a>
+*	@version 1.0
+*	@date 27-July-2019
+*
+*******************************************************************************/
+
+let resetButton;
+
+/**
+*	Variable that store how far away from the side edges new points can spawn
+*
+*	@type {Integer}
+*/
+let xBuffer;
+
+/**
+*	Variable that store how far away from the top and bottom edges new points
+*	can spawn
+*
+*	@type {Integer}
+*/
+let yBuffer;
+
+/**
+*	Enumeration of the different algorithm types
+*
+*	@enum {String}
+*/
+const algorithms = Object.freeze({
+	MONOTONE: "Monotone Chain",
+	JARVIS: "Jarvis March",
+	DIVIDE: "Divide &amp; Conquer",
+	GRAHAM: "Graham Scan"
+});
+
+/**
+*	Variable that stores the current algorithm tha is being executed
+*
+*	@type {Enum&lt;String>}
+*/
+let algorithm = algorithms.JARVIS;
+
+/**
+*	Pointer for the number of points slider in the DOM
+*
+*	@type {p5.Element}
+*/
+let pointsSlider;
+
+/**
+*	Number of points to be bound by the generated convex hull
+*
+*	@type {Integer}
+*/
+let numPoints = 45;
+
+/**
+*	Pointer for the paragraph which shows the number of points in the DOM
+*
+*	@type {p5.Element}
+*/
+let pointsDisplay;
+
+/**
+*	Size of the points drawn on the canvas
+*
+*	@type {Integer}
+*/
+let pointRadius = 10;
+
+/**
+*	Pointer to select field that selects the executing algorithm
+*
+*	@type {p5.Element}
+*/
+let selectAlgorithm;
+
+
+/**
+*	Pointer to select field that selects the method that is used to split the
+*	points when divide and conquer is running
+*
+*	@type {p5.Element}
+*/
+let selectSplitMethod;
+
+/**
+*	Pointer to select field that selects the direction that the Jarvis march
+*	algorithm finds theconvex hull
+*
+*	@type {p5.Element}
+*/
+let selectAngularDirection;
+
+/**
+*	Reset all algorithm variables to initial values
+*/
+function reset() {
+	hull = [];
+	jarvisStep = 0;
+	leftPointIndex = 0;;
+	currentIndex = -1;
+	nextIndex = 1;
+	index = 2;
+	time = 0;
+
+	internalHulls = [[], [], []];
+	finalHull = [];
+	finalPoints = [];
+	lower = [];
+	upper = [];
+
+	divideStep = divideSteps.SPLIT;
+	jarvisStep = jarvisSteps.LEFT;
+	monotoneStep = monotoneSteps.SORT;
+	grahamStep = grahamSteps.SORT;
+
+	points = [];
+	for(let i = 0; i &lt; numPoints; ++i) {
+		const x = random(xBuffer, width - xBuffer);
+		const y = random(yBuffer, height - yBuffer);
+		const newPoint = createVector(x, y);
+		points.push(newPoint);
+	}
+}
+
+/**
+*	Changes the algorithm depending on what the value of the selectAlgorithm
+*	element is
+*/
+function algorithmSelectEvent() {
+	let selectVal = selectAlgorithm.value();
+	if(selectVal != algorithm) {
+		algorithm = selectVal;
+	}
+
+	if(algorithm == algorithms.DIVIDE) {
+		selectSplitMethod.show();
+	} else {
+		selectSplitMethod.hide();
+	}
+
+	if(algorithm == algorithms.JARVIS) {
+		selectAngularDirection.show();
+	} else {
+		selectAngularDirection.hide();
+	}
+
+	if(algorithm == algorithms.MONOTONE) {
+		// show monotone chain options
+	} else {
+		// hide monotone chain options
+	}
+
+	if(algorithm == algorithms.GRAHAM) {
+		// show graham scan options
+	} else {
+		// hide graham scan options
+	}
+
+	reset();
+}
+
+/**
+*	Changes the method for splitting the points in divide and conquer depending
+*	on the value of the selectSplitMethod element
+*/
+function splitSelectEvent() {
+	selectVal = selectSplitMethod.value();
+	if(selectVal != splitMethod) {
+		splitMethod = selectVal;
+		reset();
+	}
+}
+
+/**
+*	Changes the direction the jarvis march algorithm selects new points for the
+*	convex hull depending on the value of the selectAngularDirection element
+*/ 
+function angularSelectEvent() {
+	selectVal = selectAngularDirection.value();
+	if(selectVal != angularDirection) {
+		angularDirection = selectVal;
+		reset();
+	}
+}
+
+/**
+*	Draws a convex hull with a given colour
+*
+*	@param hullArray {Array&lt;p5.Vector>} Array of points that amke up the
+*		verticies of the hull.
+*	
+*	@param colour {Integer} Value of the hue of the given hull from 0 to 100
+*/
+function drawHull(hullArray, colour) {
+	push();
+	colorMode(HSB, 100);
+	fill(colour, 100, 100, 50);
+	beginShape();
+	for (let i = hullArray.length - 1; i >= 0; i--) {
+		push();
+		stroke(colour, 100,100);
+		strokeWeight(0.3 * pointRadius);
+		ellipse(hullArray[i].x, hullArray[i].y, pointRadius, pointRadius);
+		vertex(hullArray[i].x, hullArray[i].y);
+		pop();
+	}
+	endShape(CLOSE);
+	colorMode(RGB);
+	pop();
+}
+
+/**
+*	Draws the edges of a convex hull with a given colour
+*
+*	@param hullArray {Array&lt;p5.Vector>} Array of points that amke up the
+*		verticies of the hull.
+*	
+*	@param colour {Integer} Value of the hue of the given hull from 0 to 100
+*/
+function drawEdges(hullArray, colour) {
+	push();
+	colorMode(HSB, 100);
+	stroke(colour, 100, 100, 50);
+	strokeWeight(0.3 * pointRadius);
+	noFill();
+	beginShape();
+	for (let i = hullArray.length - 1; i >= 0; i--) {
+		ellipse(hullArray[i].x, hullArray[i].y, pointRadius, pointRadius);
+		vertex(hullArray[i].x, hullArray[i].y);
+	}
+	endShape();
+	colorMode(RGB);
+	pop();
+}
+
+/**
+*   p5.js setup function, creates canvas.
+*/
+function setup() {
+	let cnvSize;
+	if(windowWidth > windowHeight) {
+		cnvSize = windowHeight;
+	} else {
+		cnvSize = windowWidth;
+	}
+	let cnv = createCanvas(cnvSize, .7 * cnvSize);
+	cnv.parent("sketch");
+
+	pointsSlider = createSlider(12, 100, numPoints, 1);
+	pointsSlider.parent("num-points");
+
+	pointsDisplay = createP(numPoints);
+	pointsDisplay.parent("points-val");
+
+	selectAlgorithm = createSelect();
+	selectAlgorithm.parent("algorithm");
+	selectAlgorithm.option(algorithms.JARVIS);
+	selectAlgorithm.option(algorithms.DIVIDE);
+	selectAlgorithm.option(algorithms.MONOTONE);
+	selectAlgorithm.option(algorithms.GRAHAM);
+	selectAlgorithm.changed(algorithmSelectEvent);
+
+	selectAngularDirection = createSelect();
+	selectAngularDirection.parent("algorithm-options");
+	selectAngularDirection.option(direction.CLOCKWISE);
+	selectAngularDirection.option(direction.ANTICLOCKWISE);
+	selectAngularDirection.changed(angularSelectEvent);
+	selectAngularDirection.hide();
+
+	selectSplitMethod = createSelect();
+	selectSplitMethod.parent("algorithm-options");
+	selectSplitMethod.option(splitMethods.HORIZONTAL);
+	selectSplitMethod.option(splitMethods.VERTICAL);
+	selectSplitMethod.option(splitMethods.RADIAL);
+	selectSplitMethod.changed(splitSelectEvent);
+	selectSplitMethod.hide();
+//TODO (omar: omareq08@gmail.com): ANGULAR split method for dnc notworking
+	// selectSplitMethod.option(splitMethods.ANGULAR);
+
+	resetButton = createButton("Reset", "value");
+	resetButton.parent("reset-button");
+	resetButton.mousePressed(reset);
+
+	xBuffer = 0.05 * width;
+	yBuffer = 0.05 * height;
+
+	for(let i = 0; i &lt; numPoints; ++i) {
+		const x = random(xBuffer, width - xBuffer);
+		const y = random(yBuffer, height - yBuffer);
+		const newPoint = createVector(x, y);
+		points.push(newPoint);
+	}
+}
+
+/**
+*   p5.js draw function, is run every frame to create the desired animation
+*/
+function draw() {
+	background(0);
+	fill(255);
+	textSize(height * 0.03);
+	textAlign(LEFT, TOP);
+	noStroke();
+	text(algorithm, 0, 0);
+
+	let sliderVal = pointsSlider.value();
+	if(sliderVal != numPoints) {
+		numPoints = sliderVal;
+		pointsDisplay.elt.innerText = "Number of Points: " + str(numPoints);
+		reset();
+	}
+
+	for (var i = points.length - 1; i >= 0; i--) {
+		ellipse(points[i].x, points[i].y, pointRadius, pointRadius);
+	}
+
+	switch(algorithm) {
+		case algorithms.JARVIS:
+		jarvisMarch();
+		break;
+
+		case algorithms.MONOTONE:
+		monotoneChain();
+		break;
+
+		case algorithms.DIVIDE:
+		divideAndConquer();
+		break;
+
+		case algorithms.GRAHAM:
+		grahamScan();
+		break;
+
+		default:
+		background(255);
+		break;
+	}
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#algorithm">algorithm</a></li><li><a href="global.html#algorithms">algorithms</a></li><li><a href="global.html#algorithmSelectEvent">algorithmSelectEvent</a></li><li><a href="global.html#angularSelectEvent">angularSelectEvent</a></li><li><a href="global.html#calculateHull">calculateHull</a></li><li><a href="global.html#chunkArray">chunkArray</a></li><li><a href="global.html#crossZ">crossZ</a></li><li><a href="global.html#direction">direction</a></li><li><a href="global.html#divideAndConquer">divideAndConquer</a></li><li><a href="global.html#divideSteps">divideSteps</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#drawEdges">drawEdges</a></li><li><a href="global.html#drawHull">drawHull</a></li><li><a href="global.html#fuse">fuse</a></li><li><a href="global.html#grahamScan">grahamScan</a></li><li><a href="global.html#grahamSteps">grahamSteps</a></li><li><a href="global.html#jarvisMarch">jarvisMarch</a></li><li><a href="global.html#jarvisSteps">jarvisSteps</a></li><li><a href="global.html#monotoneChain">monotoneChain</a></li><li><a href="global.html#monotoneSteps">monotoneSteps</a></li><li><a href="global.html#numPoints">numPoints</a></li><li><a href="global.html#pointRadius">pointRadius</a></li><li><a href="global.html#pointsDisplay">pointsDisplay</a></li><li><a href="global.html#pointsSlider">pointsSlider</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#selectAlgorithm">selectAlgorithm</a></li><li><a href="global.html#selectAngularDirection">selectAngularDirection</a></li><li><a href="global.html#selectSplitMethod">selectSplitMethod</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#splitMethods">splitMethods</a></li><li><a href="global.html#splitSelectEvent">splitSelectEvent</a></li><li><a href="global.html#xBuffer">xBuffer</a></li><li><a href="global.html#yBuffer">yBuffer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Aug 12 2019 16:24:46 GMT+0100 (DST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

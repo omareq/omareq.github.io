@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: jarvis.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: jarvis.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+*
+*	@file jarvis.js
+*	@brief The Jarvis March or Gift Wrapping algorithm
+*
+*	@author &lt;a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye &lt;/a>
+*	@version 1.0
+*	@date 27-July-2019
+*
+*******************************************************************************/
+
+let points = [];
+
+let hull = [];
+
+/**
+*	Enumeration of the possible state the jarvis march algorithm can be in
+*
+*	@enum {Integer}
+*/
+const jarvisSteps = Object.freeze({
+	LEFT: 0,
+	CALCULATE: 1,
+	DONE: 2
+});
+
+let jarvisStep = 0;
+
+let leftPointIndex = 0;;
+
+let currentIndex = -1;
+
+let nextIndex = 1;
+
+let index = 2;
+
+let time = 0;
+
+const leftPointFrameRate = 10;
+
+const calculateFrameRate = 15;
+
+/**
+*	Enumeration of the possible directions the algorithm can use when
+*	generating the convex hull
+*
+*	@enum {String}
+*/
+const direction = Object.freeze({
+	CLOCKWISE: "clockwise",
+	ANTICLOCKWISE: "anticlockwise"
+});
+
+let angularDirection = direction.CLOCKWISE;
+
+
+/**
+*   Jarvis March algorithm function
+*/
+function jarvisMarch() {
+	switch(jarvisStep) {
+
+		// find left most point
+		case jarvisSteps.LEFT:
+			if(currentIndex != -1) {
+				if(points[currentIndex].x &lt; points[leftPointIndex].x) {
+					points.sort((a, b) => a.y - b.y);
+					leftPointIndex = currentIndex;
+					frameRate(leftPointFrameRate);
+				}
+
+				// Draw red around the point that is being checked
+				push();
+				stroke(255, 0, 0);
+				strokeWeight(0.3 * pointRadius);
+				const currentPoint = points[currentIndex];
+				line(0, currentPoint.y, currentPoint.x, currentPoint.y);
+				ellipse(currentPoint.x, currentPoint.y, pointRadius, pointRadius);	
+				pop();
+
+				// Draw green around the current left most point
+				push();
+				stroke(0, 255, 0);
+				strokeWeight(0.3 * pointRadius);
+				const leftPoint = points[leftPointIndex];
+				line(0, leftPoint.y, leftPoint.x, leftPoint.y);
+				ellipse(leftPoint.x, leftPoint.y, pointRadius, pointRadius);	
+				pop();
+			} else {
+				currentIndex = 0;
+				leftPointIndex = currentIndex;
+			}
+
+			currentIndex++;
+			if(currentIndex == points.length) {
+				jarvisStep++;
+				points.sort((a, b) => a.x - b.x);
+				leftPointIndex = 0;
+				currentIndex = leftPointIndex;
+				nextIndex = 1;
+				index = 2;
+				hull.push(points[leftPointIndex].copy());
+				frameRate(calculateFrameRate);
+			}
+		break;
+
+		// calculate which points are in the hull
+		case jarvisSteps.CALCULATE:
+			drawHull(hull, 65);
+
+			const nextPoint = points[nextIndex];
+			const currentPoint = points[currentIndex];
+			const checking = points[index];
+
+			push();
+			stroke(0, 255, 0);
+			line(currentPoint.x, currentPoint.y, checking.x, checking.y);
+			strokeWeight(3);
+			stroke(255, 0, 0);
+			line(currentPoint.x, currentPoint.y, nextPoint.x, nextPoint.y);
+			pop();
+			const a = p5.Vector.sub(nextPoint, currentPoint);
+			const b = p5.Vector.sub(checking, currentPoint);
+			const cross = a.cross(b);
+
+			const clockwiseCheck = angularDirection == direction.CLOCKWISE &amp;&amp; cross.z &lt; 0;
+			const anticlockwiseCheck = angularDirection == direction.ANTICLOCKWISE &amp;&amp; cross.z > 0;
+
+			if ( clockwiseCheck || anticlockwiseCheck) {
+				nextIndex = index;
+			} 
+			index++;
+
+			if (index == points.length) {
+			    if (nextIndex == 0) {
+			    	jarvisStep = jarvisSteps.DONE;
+			    	time = 0;
+			    } else {
+			        hull.push(points[nextIndex]);
+			        currentIndex = nextIndex;
+			        index = 0;
+			        nextIndex = leftPointIndex;
+			    }
+			}
+		break;
+
+		// Draw Final hull for 5 seconds then restart
+		case jarvisSteps.DONE:
+			drawHull(hull, 65);
+			time++;
+			if (time > frameRate() * 4) {
+				reset();
+			}
+		break;
+
+	}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#algorithm">algorithm</a></li><li><a href="global.html#algorithms">algorithms</a></li><li><a href="global.html#algorithmSelectEvent">algorithmSelectEvent</a></li><li><a href="global.html#angularSelectEvent">angularSelectEvent</a></li><li><a href="global.html#calculateHull">calculateHull</a></li><li><a href="global.html#chunkArray">chunkArray</a></li><li><a href="global.html#crossZ">crossZ</a></li><li><a href="global.html#direction">direction</a></li><li><a href="global.html#divideAndConquer">divideAndConquer</a></li><li><a href="global.html#divideSteps">divideSteps</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#drawEdges">drawEdges</a></li><li><a href="global.html#drawHull">drawHull</a></li><li><a href="global.html#fuse">fuse</a></li><li><a href="global.html#grahamScan">grahamScan</a></li><li><a href="global.html#grahamSteps">grahamSteps</a></li><li><a href="global.html#jarvisMarch">jarvisMarch</a></li><li><a href="global.html#jarvisSteps">jarvisSteps</a></li><li><a href="global.html#monotoneChain">monotoneChain</a></li><li><a href="global.html#monotoneSteps">monotoneSteps</a></li><li><a href="global.html#numPoints">numPoints</a></li><li><a href="global.html#pointRadius">pointRadius</a></li><li><a href="global.html#pointsDisplay">pointsDisplay</a></li><li><a href="global.html#pointsSlider">pointsSlider</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#selectAlgorithm">selectAlgorithm</a></li><li><a href="global.html#selectAngularDirection">selectAngularDirection</a></li><li><a href="global.html#selectSplitMethod">selectSplitMethod</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#splitMethods">splitMethods</a></li><li><a href="global.html#splitSelectEvent">splitSelectEvent</a></li><li><a href="global.html#xBuffer">xBuffer</a></li><li><a href="global.html#yBuffer">yBuffer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Aug 12 2019 16:24:46 GMT+0100 (DST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

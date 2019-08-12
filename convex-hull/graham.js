@@ -1,7 +1,7 @@
 /*******************************************************************************
 *
-*	@file monotone.js
-*	@brief Monotone Chain algorithm
+*	@file graham.js
+*	@brief Grahams Scan algorithm
 *
 *	@author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *	@version 1.0
