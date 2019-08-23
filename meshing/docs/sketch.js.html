@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sketch.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sketch.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+*
+*	@file sketch.js
+*	@brief	Delaunay triangulation for mesh generation
+*
+*	@author &lt;a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye &lt;/a>
+*	@version 1.0
+*	@date 08-August-2019
+*
+*******************************************************************************/
+
+/**
+*	Aeray storing a list of randomly generated points
+*
+*	@type {Array&lt;p5.Vector>}
+*/
+let myPoints = [];
+
+/**
+*	Aeray storing a list of randomly generated points
+*
+*	@type {Array&lt;p5.Vector>}
+*/
+let myHull = [];
+
+let mesh;
+
+/**
+*	Number of points to be bound by the generated convex hull
+*
+*	@type {Integer}
+*/
+let numPoints = 30;
+
+/**
+*	Size of the points drawn on the canvas
+*
+*	@type {Integer}
+*/
+let pointRadius = 4;
+
+/**
+*	Variable that store how far away from the side edges new points can spawn
+*
+*	@type {Integer}
+*/
+let xBuffer;
+
+/**
+*	Variable that store how far away from the top and bottom edges new points
+*	can spawn
+*
+*	@type {Integer}
+*/
+let yBuffer;
+
+/**
+*	Draws a set of points on the screen
+*
+*	@param verticies {Array&lt;p5.Vector>} Array of points
+*/
+function drawPoints(verticies) {
+	push();
+	noStroke();
+	fill(0, 155);
+	let points = [...verticies];
+	for (var i = points.length - 1; i >= 0; i--) {
+		ellipse(points[i].x, points[i].y, pointRadius, pointRadius);
+	}
+	pop();
+}
+
+/**
+*	Draws a convex hull with a given colour
+*
+*	@param hullArray {Array&lt;p5.Vector>} Array of points that amke up the
+*		verticies of the hull.
+*	
+*	@param colour {Integer} Value of the hue of the given hull from 0 to 100
+*/
+function drawHull(hullArray, colour) {
+	push();
+	colorMode(HSB, 100);
+	fill(colour, 100, 100, 0);
+	beginShape();
+	for (let i = hullArray.length - 1; i >= 0; i--) {
+		push();
+		stroke(colour, 100,100);
+		strokeWeight(0.3 * pointRadius);
+		ellipse(hullArray[i].x, hullArray[i].y, pointRadius, pointRadius);
+		vertex(hullArray[i].x, hullArray[i].y);
+		pop();
+	}
+	endShape(CLOSE);
+	colorMode(RGB);
+	pop();
+}
+
+
+
+
+/**
+*   p5.js setup function, creates canvas.
+*/
+function setup() {
+	let cnvSize;
+	if(windowWidth > windowHeight) {
+		cnvSize = windowHeight;
+	} else {
+		cnvSize = windowWidth;
+	}
+	let cnv = createCanvas(cnvSize, .7 * cnvSize);
+	cnv.parent('sketch');
+
+
+	xBuffer = 0.05 * width;
+	yBuffer = 0.05 * height;
+
+	for(let i = 0; i &lt; numPoints; ++i) {
+		const x = random(xBuffer, width - xBuffer);
+		const y = random(yBuffer, height - yBuffer);
+		const newPoint = createVector(x, y);
+		myPoints.push(newPoint);
+		// points.push(newPoint);
+	}
+
+	myHull = grahamScan(myPoints);
+	const v1 = new Vertex(myHull[0].x, myHull[0].y, myHull[0].z);
+	const v2 = new Vertex(myHull[1].x, myHull[1].y, myHull[1].z);
+
+	let verticies = [];
+	verticies.push(v1);
+	verticies.push(v2);
+
+	let faces = [];
+
+	for(let i = 0; i &lt; myHull.length - 2; i++) {
+		const v = new Vertex(myHull[i + 2].x, myHull[i + 2].y, myHull[i + 2].z);
+		verticies.push(v);
+		
+		const face = new Face(verticies[0], verticies[i + 1], verticies[i + 2]);
+		faces.push(face);
+		
+		verticies[0].addFace(face);
+		verticies[i + 1].addFace(face);
+		verticies[i + 2].addFace(face);
+	}
+
+	mesh = new Mesh(faces, verticies);
+}
+
+/**
+*   p5.js draw function, is run every frame to create the desired animation
+*/
+function draw() {
+	background(100);
+	drawPoints(myPoints);
+	drawHull(myHull, 50);
+	mesh.draw();
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#crossZ">crossZ</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#drawHull">drawHull</a></li><li><a href="global.html#drawPoints">drawPoints</a></li><li><a href="global.html#grahamScan">grahamScan</a></li><li><a href="global.html#myHull">myHull</a></li><li><a href="global.html#myPoints">myPoints</a></li><li><a href="global.html#numPoints">numPoints</a></li><li><a href="global.html#pointRadius">pointRadius</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#xBuffer">xBuffer</a></li><li><a href="global.html#yBuffer">yBuffer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Aug 12 2019 16:27:47 GMT+0100 (DST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
