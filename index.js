@@ -79,7 +79,7 @@ append_card_layout = function(end_card) {
 
 
 		if(	document.getElementById(card_id)) {
-			console.log("Card " + card_id + " alrady exists");
+			console.log("Card " + card_id + " already exists");
 			continue;
 		}
 
