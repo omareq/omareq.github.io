@@ -216,6 +216,11 @@ function draw() {
 	mesh.draw();
 	if(myPoints.length) {
 		const nextVertex = new Vertex(myPoints[0].x, myPoints[0].y);
+		push();
+		strokeWeight(2);
+		stroke("#00FF00");
+		line(0, nextVertex.y, width, nextVertex.y);
+		pop();
 		mesh.addVertex(nextVertex);
 		myPoints.shift();
 	}

@@ -20,10 +20,9 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [x]	Conways Game of Life
 - [ ]	Crazy 8's Card Game
 - [ ]	Knight's Tour Using Warnsdorff's Rule
-- [ ]	Meshing Algorithm
 - [ ]	PDE Solver
 - [ ]	Cooper Pair Box Hamiltonian Solver
-- [ ]	Convex Hull Gift Wrapping
+- [x]	Convex Hull Gift Wrapping
 - [ ]	Mesh Generation Delaunay Triangles
 - [ ]	Tic Tac Toe
 - [ ]	Connect Four
