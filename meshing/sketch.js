@@ -176,16 +176,6 @@ function setup() {
 		myPoints.push(newPoint);
 	}
 
-
-	// for(let j = 0; j < 5; ++j) {
-	// 	for(let i = 0; i < 5; ++i) {
-	// 	const x = i / 5 * 0.9*width + 0.05 * width;
-	// 	const y = j / 5 * 0.9*height + 0.05 * height;
-	// 	const newPoint = createVector(x, y);
-	// 	myPoints.push(newPoint);
-	// 	}
-	// }
-
 	myPoints.sort((a, b) => a.y - b.y);
 
 	myHull = grahamScan(myPoints);
@@ -226,7 +216,7 @@ function draw() {
 	mesh.draw();
 	if(myPoints.length) {
 		const nextVertex = new Vertex(myPoints[0].x, myPoints[0].y);
-		// mesh.addVertex(nextVertex);
-		// myPoints.shift();
+		mesh.addVertex(nextVertex);
+		myPoints.shift();
 	}
 }

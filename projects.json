@@ -9,7 +9,7 @@
             "name": "Snowman", 
             "next-id": "p_001", 
             "pic-url": "imgs/p_000.jpg", 
-            "prev-id": "p_015", 
+            "prev-id": "p_016", 
             "status":"active",
             "tags": [], 
             "vid-url": "vids/p_000.mp4"
@@ -241,7 +241,7 @@
             "gif-url": "imgs/p_015.gif", 
             "id": "p_015", 
             "name": "convex-hull", 
-            "next-id": "p_000", 
+            "next-id": "p_016", 
             "pic-url": "imgs/p_015.jpg", 
             "prev-id": "p_014", 
             "status":"active",
@@ -249,6 +249,22 @@
             	"algorithm"
             ], 
             "vid-url": "vids/p_015.mp4"
+        },
+        "p_016": {
+            "brief": "Generate a mesh from a set of points.", 
+            "demo-url": "https://omareq.github.io/meshing", 
+            "docs-url": "https://omareq.github.io/meshing/docs", 
+            "gif-url": "imgs/p_016.gif", 
+            "id": "p_016", 
+            "name": "Meshing", 
+            "next-id": "p_000", 
+            "pic-url": "imgs/p_016.jpg", 
+            "prev-id": "p_015", 
+            "status":"active",
+            "tags": [
+                "algorithm"
+            ], 
+            "vid-url": "vids/p_016.mp4"
         }
     }
 }
