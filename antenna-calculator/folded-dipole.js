@@ -173,6 +173,25 @@ let folded_dipole_sketch = function(p5) {
 			p5.text("r: " + r.toFixed(4) + " m", w2 + d_length - txt_size, h2);
 
 			p5.pop();
+
+			const interval = 0.3 * d_length;
+			const points = 360;
+			const t = p5.frameCount / 10;
+			const amplitude = 15 * p5.sin(t);
+
+			p5.strokeWeight(1);
+			if(amplitude > 0) {
+				p5.stroke("#FF0000");
+			} else {
+				p5.stroke("#0000FF");
+			}
+			p5.beginShape();
+			for(let i = 0; i < points; i++) {
+				const x = w2 + i / points * interval;
+				const y = h2 + radius + amplitude * p5.sin(p5.TWO_PI * i / points);
+				p5.vertex(x, y);
+			}
+			p5.endShape(p5.OPEN);
 		}
 	}
 };
