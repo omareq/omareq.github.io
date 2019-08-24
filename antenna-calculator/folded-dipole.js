@@ -95,21 +95,83 @@ let folded_dipole_sketch = function(p5) {
 		p5.background(255);
 		if(got_data) {
 			let radius = p5.height / 8;
-			let d_length = p5.width / 4;
+			let d_length = 0.25 * p5.width;
 			let w2 = 0.5 * p5.width;
 			let h2 = 0.5 * p5.height;
 
+			// antenna
 			p5.push();
 			p5.stroke(0);
 			p5.strokeWeight(5);
 			// d
 			p5.line(w2, h2 + radius, w2 - d_length, h2 + radius);
+			// b
 			p5.arc(w2 - d_length, h2, 2 * radius, 2 * radius, p5.HALF_PI, p5.PI + p5.HALF_PI);
 			// c
 			p5.line(w2 - d_length, h2 - radius, w2 + d_length, h2 - radius);
+			// b
 			p5.arc(w2 + d_length, h2, 2 * radius, 2 * radius, -p5.HALF_PI, p5.HALF_PI);
 			// a
-			p5.line(w2 + d_length, h2 + radius, w2 + 0.35 * d_length, h2 + radius);
+			p5.line(w2 + d_length, h2 + radius, w2 + 0.3 * d_length, h2 + radius);
+			p5.pop();
+
+			let txt_size = 18;
+			let space = 1.5 * radius;
+			let dim_space = 1.35 * space;
+			// dimensions
+			p5.push()
+			p5.stroke(0, 155, 0);
+
+			p5.textSize(txt_size);
+			p5.textAlign(p5.CENTER);
+
+			// d
+			p5.strokeWeight(2);
+			p5.line(w2, h2 + space, w2 - d_length, h2 + space);
+			p5.line(w2, h2 + radius, w2, h2 + dim_space);
+			p5.line(w2 - d_length, h2 + radius, w2 - d_length, h2 + dim_space);
+			p5.strokeWeight(1);
+			p5.text("d: " + d.toFixed(4) + " m", w2 - d_length / 2, h2 + space + txt_size);
+
+			// b
+			p5.strokeWeight(2);
+			p5.arc(w2 - d_length, h2, 2 * space , 2 * space, p5.HALF_PI, p5.PI + p5.HALF_PI);
+			p5.line(w2 - d_length, h2 - radius, w2 - d_length, h2 - dim_space);
+			p5.strokeWeight(1);
+			p5.text("b: " + b.toFixed(3) + " m", w2 - d_length - 1.3 * space, h2 - space);
+
+			// c
+			p5.strokeWeight(2);
+			p5.line(w2 - d_length, h2 - space, w2 + d_length, h2 - space);
+			p5.line(w2 - d_length, h2 - radius, w2 - d_length, h2 - dim_space);
+			p5.line(w2 + d_length, h2 - radius, w2 + d_length, h2 - dim_space);
+			p5.strokeWeight(1);
+			p5.text("c: " + c.toFixed(3) + " m", w2, h2 - space  - txt_size);
+
+			// b
+			p5.strokeWeight(2);
+			p5.arc(w2 + d_length, h2, 2 * space , 2 * space, -p5.HALF_PI, p5.HALF_PI);
+			p5.line(w2 + d_length, h2 - radius, w2 + d_length, h2 - dim_space);
+			p5.strokeWeight(1);
+			p5.text("b: " + b.toFixed(3) + " m", w2 + d_length + 1.3 * space, h2 - space);
+
+			// a
+			p5.strokeWeight(2);
+			p5.line(w2 + 0.3 * d_length, h2 + space, w2 + d_length, h2 + space);
+			p5.line(w2 + 0.3 * d_length, h2 + radius, w2 + 0.3 * d_length, h2 + dim_space);
+			p5.line(w2 + d_length, h2 + radius, w2 + d_length, h2 + dim_space);
+			p5.strokeWeight(1);
+			p5.text("a: " + a.toFixed(4) + " m", w2 + d_length / 2 + 0.15 * d_length, h2 + space + txt_size);
+
+			// r
+			p5.strokeWeight(2);
+			p5.line(w2 - d_length, h2, w2 - d_length - radius, h2);
+			p5.line(w2 + d_length, h2, w2 + d_length + radius, h2);
+			p5.strokeWeight(1);
+			p5.textAlign(p5.LEFT);
+			p5.text("r: " + r.toFixed(4) + " m", w2 - d_length + txt_size, h2);
+			p5.textAlign(p5.RIGHT);
+			p5.text("r: " + r.toFixed(4) + " m", w2 + d_length - txt_size, h2);
 
 			p5.pop();
 
