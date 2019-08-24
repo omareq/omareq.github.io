@@ -83,7 +83,6 @@ let folded_dipole_sketch = function(p5) {
 	  	p5.stroke(0);
 	  	p5.strokeWeight(5);
 	  	p5.fill(0, 0);
-	  	print("Setup");
 	  	// p5.noLoop();
 	}
 
@@ -174,7 +173,6 @@ let folded_dipole_sketch = function(p5) {
 			p5.text("r: " + r.toFixed(4) + " m", w2 + d_length - txt_size, h2);
 
 			p5.pop();
-
 		}
 	}
 };
