@@ -75,14 +75,6 @@ let helix_sketch = function(p5) {
 	  	got_data = true;
 	}
 
-	p5.calculate_dipole = function() {
-		form_in = document.getElementById("dipole_input_params");
-		frequency = form_in.frequency.value * 1e6;
-
-		let c = 2.99792458e8;
-		lambda = c / frequency;
-	}
-
 	p5.setup = function() {
 		let canvas = p5.createCanvas(600, 400, p5.WEBGL);
 	  	canvas.parent('helix_canvas');
