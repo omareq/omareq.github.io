@@ -66,7 +66,7 @@ def index_html(name, project_id, description="Project Description"):
     for line in template:
         newline = line;
         if "/**TITLE**/" in line:
-            newline = line.replace("/**TITLE**/", name)
+            newline = line.replace("/**TITLE**/", name.capitalize())
         elif "/**URL**/" in line:
             newline = line.replace("/**URL**/", name + "/")
         elif "/**IMG**/" in line:
@@ -80,9 +80,9 @@ def index_html(name, project_id, description="Project Description"):
         elif "/**PREV TITLE**/" in line:
             newline = line.replace("/**PREV TITLE**/", projects_json["projects"][prev_key]["name"])
         elif "/**NEXT URL**/" in line:
-            newline = line.replace("/**NEXT URL**/", projects_json["projects"][next_key]["name"])
+            newline = line.replace("/**NEXT URL**/", projects_json["projects"][next_key]["demo-url"][1:])
         elif "/**PREV URL**/" in line:
-            newline = line.replace("/**PREV URL**/", projects_json["projects"][prev_key]["name"])
+            newline = line.replace("/**PREV URL**/", projects_json["projects"][prev_key]["demo-url"][1:])
         elif "/**DESCRIPTION**/" in line:
             newline = line.replace("/**DESCRIPTION**/", description);
 
@@ -170,7 +170,7 @@ def get_lowest_key():
 def new_project(name, project_id, prev_id, description):
     return {
         "id":project_id,
-        "name":name,
+        "name":name.capitalize(),
         "demo-url":"../" + name,
         "docs-url":"../" + name + "/docs",
         "pic-url":"imgs/" + project_id + ".jpg",
@@ -210,6 +210,7 @@ def replace_prev_project_in(project_id, new_prev_id):
     global projects_json
     name = projects_json["projects"][project_id]["name"]
     new_prev_name = projects_json["projects"][new_prev_id]["name"]
+    new_prev_url = projects_json["projects"][new_prev_id]["demo-url"][1:]
 
     new_index = open("tmp_index.html", "w+")
     with open(name + "/index.html") as old_index:
@@ -218,9 +219,9 @@ def replace_prev_project_in(project_id, new_prev_id):
             if "id=\"prev-title\"" in line:
                 newline = "\t\t\t\t\t\t<h5 id=\"prev-title\">" + new_prev_name + "</h5>\n"
             elif "id=\"prev-url\"" in line:
-                newline = "\t\t\t\t\t\t<a id=\"prev-url\" href=\"../" + new_prev_name + "\" class=\"project-demo\">\n"
+                newline = "\t\t\t\t\t\t<a id=\"prev-url\" href=\"../" + new_prev_url + "\" class=\"project-demo\">\n"
             elif "id=\"prev-img\"" in line:
-                newline = "\t\t\t\t\t\t\t<img id=\"prev-img\" src=\"../imgs/"     + new_prev_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
+                newline = "\t\t\t\t\t\t\t<img id=\"prev-img\" src=\"../imgs/" + new_prev_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
 
             new_index.write(newline)
     new_index.close()
@@ -231,6 +232,7 @@ def replace_next_project_in(project_id, new_next_id):
     global projects_json
     name = projects_json["projects"][project_id]["name"]
     new_next_name = projects_json["projects"][new_next_id]["name"]
+    new_next_url = projects_json["projects"][new_next_id]["demo-url"][1:]
 
     new_index = open("tmp_index.html", "w+")
     with open(name + "/index.html") as old_index:
@@ -239,7 +241,7 @@ def replace_next_project_in(project_id, new_next_id):
             if "id=\"next-title\"" in line:
                 newline = "\t\t\t\t\t\t<h5 id=\"next-title\">" + new_next_name + "</h5>\n"
             elif "id=\"next-url\"" in line:
-                newline = "\t\t\t\t\t\t<a id=\"next-url\" href=\"../" + new_next_name + "\" class=\"project-demo\">\n"
+                newline = "\t\t\t\t\t\t<a id=\"next-url\" href=\"../" + new_next_url + "\" class=\"project-demo\">\n"
             elif "id=\"next-img\"" in line:
                 newline = "\t\t\t\t\t\t\t<img id=\"next-img\" src=\"../imgs/" + new_next_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
 
