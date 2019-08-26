@@ -10,6 +10,7 @@ projects_json_file = "projects.json"
 projects_json = ""
 
 def create_project(name, description):
+    global projects_json
     if os.path.isdir(name):
         print("The project " + name + " already exists")
         return
@@ -56,6 +57,7 @@ def readme(name):
     return
 
 def index_html(name, project_id, description="Project Description"):
+    global projects_json
     template = open("template-index.html", "r")
     output = open(name + "/index.html", "w+")
     prev_key = projects_json["projects"][project_id]["prev-id"]
@@ -143,6 +145,7 @@ def add_image(project_id):
     os.rename("p_default.jpg", img_path)
     return
 
+# what if project is archived
 def get_highest_key():
     global projects_json
     projects = projects_json["projects"]
@@ -164,7 +167,6 @@ def get_lowest_key():
 
     return low_key
 
-# what if project is archived
 def new_project(name, project_id, prev_id, description):
     return {
         "id":project_id,
@@ -176,6 +178,7 @@ def new_project(name, project_id, prev_id, description):
         "vid-url":"vids/" + project_id + ".mp4",
         "prev-id":prev_id,
         "next-id":"p_000",
+        "status":"active",
         "brief":description,
         "tags":[]
     }
@@ -204,6 +207,7 @@ def add_project_to_json(name, description):
     return current_key
 
 def replace_prev_project_in(project_id, new_prev_id):
+    global projects_json
     name = projects_json["projects"][project_id]["name"]
     new_prev_name = projects_json["projects"][new_prev_id]["name"]
 
@@ -212,11 +216,11 @@ def replace_prev_project_in(project_id, new_prev_id):
         for line in old_index:
             newline = line
             if "id=\"prev-title\"" in line:
-                newline = "<h5 id=\"prev-title\">" + new_prev_name + "</h5>\n"
+                newline = "\t\t\t\t\t\t<h5 id=\"prev-title\">" + new_prev_name + "</h5>\n"
             elif "id=\"prev-url\"" in line:
-                newline = "<a id=\"prev-url\" href=\"../" + new_prev_name + "\" class=\"project-demo\">\n"
+                newline = "\t\t\t\t\t\t<a id=\"prev-url\" href=\"../" + new_prev_name + "\" class=\"project-demo\">\n"
             elif "id=\"prev-img\"" in line:
-                newline = "<img id=\"prev-img\" src=\"../imgs/"     + new_prev_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
+                newline = "\t\t\t\t\t\t\t<img id=\"prev-img\" src=\"../imgs/"     + new_prev_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
 
             new_index.write(newline)
     new_index.close()
@@ -224,6 +228,7 @@ def replace_prev_project_in(project_id, new_prev_id):
     return
 
 def replace_next_project_in(project_id, new_next_id):
+    global projects_json
     name = projects_json["projects"][project_id]["name"]
     new_next_name = projects_json["projects"][new_next_id]["name"]
 
@@ -232,22 +237,79 @@ def replace_next_project_in(project_id, new_next_id):
         for line in old_index:
             newline = line
             if "id=\"next-title\"" in line:
-                newline = "<h5 id=\"next-title\">" + new_next_name + "</h5>\n"
+                newline = "\t\t\t\t\t\t<h5 id=\"next-title\">" + new_next_name + "</h5>\n"
             elif "id=\"next-url\"" in line:
-                newline = "<a id=\"next-url\" href=\"../" + new_next_name + "\" class=\"project-demo\">\n"
+                newline = "\t\t\t\t\t\t<a id=\"next-url\" href=\"../" + new_next_name + "\" class=\"project-demo\">\n"
             elif "id=\"next-img\"" in line:
-                newline = "<img id=\"next-img\" src=\"../imgs/" + new_next_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
+                newline = "\t\t\t\t\t\t\t<img id=\"next-img\" src=\"../imgs/" + new_next_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
 
             new_index.write(newline)
     new_index.close()
     os.rename("tmp_index.html", name + "/index.html")
     return
 
+def project_id_from_name(name):
+    global projects_json
+    projects = projects_json["projects"]
+    for key, value in projects.items():
+        if value["name"].lower() == name.lower():
+            return key
+    return
+
 def archive_project(name):
+    global projects_json, projects_json_file
     if not os.path.isdir(name):
         print("The project with this name does not exist")
         return
+
+    project_id = project_id_from_name(name)
+
+    if projects_json["projects"][project_id]["status"] == "archived":
+        print("The project " + name + " has already been archived")
+        return
+
+    next_id = projects_json["projects"][project_id]["next-id"]
+    prev_id = projects_json["projects"][project_id]["prev-id"]
+
+    replace_next_project_in(prev_id, next_id)
+    replace_prev_project_in(next_id, prev_id)
+
+    projects_json["projects"][prev_id]["next-id"] = next_id
+    projects_json["projects"][next_id]["prev-id"] = prev_id
+
+    projects_json["projects"][project_id]["status"] = "archived"
+
+    with open(projects_json_file, "w") as json_file:
+        # print json.dumps(projects_json, sort_keys=True, indent=4)
+        json.dump(projects_json, json_file, sort_keys=True, indent=4)
+
     return
+
+def remove_project(name):
+    global projects_json, projects_json_file
+    if not os.path.isdir(name):
+        print("The project with this name does not exist")
+        return
+
+    prompt = "Remove all files and folders in project " + name + "? (y/n) "
+    confirmation = raw_input(prompt)
+    if not confirmation.lower() == "y":
+        print("Deletion aborted")
+        return
+    
+    archive_project(name)
+    project_id = project_id_from_name(name)
+    print("Deleting " + name + " directory")
+    shutil.rmtree(name)
+    print("Deleting imgs/" + project_id + ".jpg")
+    os.unlink("imgs/" + project_id + ".jpg")
+
+    print("Deleting project from projects.json")
+    projects_json["projects"].pop(project_id, None)
+    with open(projects_json_file, "w") as json_file:
+        # print json.dumps(projects_json, sort_keys=True, indent=4)
+        json.dump(projects_json, json_file, sort_keys=True, indent=4)
+
 
 def load_projects_json():
     global projects_json, projects_json_file
@@ -271,7 +333,7 @@ if __name__=="__main__":
     project_name = argv[2]
 
     load_projects_json();
-    
+
     if command == "add":
         if len(argv) != 4:
             print("USAGE:\t./control.py add new_project project_description\n")
@@ -285,3 +347,4 @@ if __name__=="__main__":
         archive_project(project_name)
     elif command == "remove":
         print("Removing project: " + project_name)
+        remove_project(project_name)
