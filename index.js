@@ -59,7 +59,7 @@ append_card_layout = function(end_card) {
     let card_layout_end = ">\
         \n<h4>Code Title</h4>\
         \n<a href=\"#\" class=\"project-demo\">\
-        \n<img src=\"imgs/p_default.jpg\">\
+        \n<img src=\"imgs/p_default.jpg\" onerror=\"this.onerror=null; this.src=\'../imgs/p_default.jpg\'\">\
         \n</a>\
         \n<p class=\"project-brief\">A Brief Description of this project</p>\
         \n<a href=\"#\" class=\"project-docs\"> Docs </a>\
