@@ -68,7 +68,7 @@
             "gif-url": "imgs/p_004.gif", 
             "id": "p_004", 
             "name": "Antenna Calculator", 
-            "next-id": "p_005", 
+            "next-id": "p_006", 
             "pic-url": "imgs/p_004.jpg", 
             "prev-id": "p_003", 
             "status": "active", 
@@ -87,7 +87,7 @@
             "next-id": "p_006", 
             "pic-url": "imgs/p_005.jpg", 
             "prev-id": "p_004", 
-            "status": "active", 
+            "status": "archived", 
             "tags": [], 
             "vid-url": "vids/p_005.mp4"
         }, 
@@ -100,7 +100,7 @@
             "name": "Ninja Game", 
             "next-id": "p_007", 
             "pic-url": "imgs/p_006.jpg", 
-            "prev-id": "p_005", 
+            "prev-id": "p_004", 
             "status": "active", 
             "tags": [
                 "game"
