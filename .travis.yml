@@ -1,15 +1,17 @@
 language: node_js
 node_js:
-  - 7
+- 7
 before_install:
-  - npm install -g qunit npm@3.5.2
-
+- npm install -g qunit npm@3.5.2
 script: qunit
-
 notifications:
-  # slack: ccfrobotics:M6IA63oxtt84ody2vx2HrfYx
   email:
     recipients:
-      - omareq08@gmail.com
-    on_success: change # default: change (never | always)
-    on_failure: always # default: always
+    - omareq08@gmail.com
+    on_success: change
+    on_failure: always
+  slack:
+    rooms:
+      secure: kdinxXo7SNILUnNnx1PUhv2rg6TVpgTgy+M+zYoPlpdxzpzM2PofFk3JgZy+8za6kgzTjNKqUOw/UNpYQCr3DJD/Bndr3g0r3SAljz58keBlqJnwoyIT7ECnOo+L2EpAmZKZwdjOsC3AYbYLjUTbN/nGtWWJpgrfedmxITqa/uGjpEDRiUGCVA/qGNaZc+NIr47pxf9d8X0ucdUfpQQvtSwXPztO1jbwyMX+4wH239rlD6vSCVa1mDSVZU9YF1inlilD7+ZDEgDtjW/e4gIWClhAmHUby+SeB/GqlJpYCm5clTOatFkokpduyMOPxD5h5GaA/LKlIhFWXj3K2UfYLof7ebMi4725jZlzgYzjxfmlfWFVzQK9Zmz0JnekKcu0CZEGUTMCE4zKiQ+KBCjgbdXUzfYn6nwGMuITVJNo7Ad5Cd/zgjZSSzNstli1hB81vcKoOrLuFiH+VIMrGDaw4CNE03V/1S+sK7zuvsgPg9NuXb01QX4admd3cZbIZPAgoPJs5KiMopsbRONaaIZOM9TUUtVbSRWWZn0C3teo5FuAHHtNLx5f4nyCPZjUWsaKGouFLStssi+7RG+ZD0xLPHKOK3Z2CB52Gx2fG8IR+ptdu+jtC4a4DCbW4MXEDz/ABStA9esgj2NBWoB5IlSrD75DqXlV5Smptx6+U2ySDhU=
+    on_success: always
+    on_failure: always
