@@ -13,19 +13,19 @@ function Word(val, ypos) {
     this.x = 0;
     this.y = floor(random(1, 22)) * textHeight;
     this.run = false;
-  }
+  };
 
   this.holdOff = function() {
     this.run = true;
-  }
+  };
 
   this.setSpeed = function(increment) {
     this.speed += increment;
-  }
+  };
 
   this.runOffscreen = function() {
     return (this.x + this.width) > width;
-  }
+  };
 
   this.intersects = function(word) {
   	if(word === this) {
@@ -38,7 +38,7 @@ function Word(val, ypos) {
       }
     }
     return false;
-  }
+  };
 
   this.show = function() {
     if(this.run){
@@ -52,6 +52,6 @@ function Word(val, ypos) {
       text(this.val, this.x, this.y);
       this.x += this.speed;;
     }
-  }
+  };
 
 }

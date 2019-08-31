@@ -20,7 +20,7 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 			this.best_fitness = fitness;
 			this.best_pos = pos.copy();
 		}
-	}
+	};
 
 	for(let i = 0; i < this.num; i++) {
 		let xpos = random(this.xbounds[0], this.xbounds[1]);
@@ -55,13 +55,13 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 			generation.push(part_hist);
 		}
 		this.history.push(generation);
-	}
+	};
 
 	this.show = function() {
 		for(let i = 0; i < this.num; i++) {
 			this.particles[i].show();
 		}
-	}
+	};
 
 	this.run = function() {
 		this.show();
@@ -109,5 +109,5 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 		// console.log("generation: " + this.counter +
 		// 	" best fitness: " + this.best_fitness + 
 		// 	" x: " + this.best_pos.x + " y" + this.best_pos.y);
-	}
+	};
 }

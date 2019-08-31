@@ -27,15 +27,15 @@ let folded_dipole_sketch = function(p5) {
 
 	p5.pause_animation = function() {
 		p5.noLoop();
-	}
+	};
 
 	p5.continue_animation = function() {
 		p5.loop();
-	}
+	};
 
 	p5.change_dipole_polarisation = function() {
 		vp = !vp;
-	}
+	};
 
 	p5.calculate_folded_dipole = function() {
 		form_in = document.getElementById("folded_dipole_input_params");
@@ -74,7 +74,7 @@ let folded_dipole_sketch = function(p5) {
 	  	document.getElementById("folded_dipole_output").style.display = "block";
 	  	p5.loop();
 	  	got_data = true;
-	}
+	};
 
 	p5.setup = function() {
 		let canvas = p5.createCanvas(600, 400);
@@ -84,11 +84,11 @@ let folded_dipole_sketch = function(p5) {
 	  	p5.strokeWeight(5);
 	  	p5.fill(0, 0);
 	  	// p5.noLoop();
-	}
+	};
 
 	p5.draw_dimensions = function(count, h, r) {
 
-	}
+	};
 
 	p5.draw = function() {
 		p5.background(255);
@@ -118,7 +118,7 @@ let folded_dipole_sketch = function(p5) {
 			let space = 1.5 * radius;
 			let dim_space = 1.35 * space;
 			// dimensions
-			p5.push()
+			p5.push();
 			p5.stroke(0, 155, 0);
 
 			p5.textSize(txt_size);
@@ -193,7 +193,7 @@ let folded_dipole_sketch = function(p5) {
 			}
 			p5.endShape(p5.OPEN);
 		}
-	}
+	};
 };
 
 folded_dipole_canvas = new p5(folded_dipole_sketch);

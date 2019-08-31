@@ -202,7 +202,7 @@ function loadingAnimation() {
 	let loadPercent = map(counter, 0, totalAssets, 0, rw);
 	rect(gap, height/2 - rh/2, loadPercent, rh);
 
-	textSize(floor(0.1*height))
+	textSize(floor(0.1*height));
 	textAlign(CENTER);
 	text("Loading Assets", width/2, height/4);
 }

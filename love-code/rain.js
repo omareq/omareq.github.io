@@ -36,8 +36,8 @@ class Rain {
 	*/
 	setHeight() {
 		// height denotes the y position of the column, not the length.
-		let newHeight = random(-height, 0)
-		this.symbols = []
+		let newHeight = random(-height, 0);
+		this.symbols = [];
 
 		this.symbols.push(new Heart(this.col * this.width,
 		  newHeight,

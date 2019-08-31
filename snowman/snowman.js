@@ -29,7 +29,7 @@ class ball {
     this.currentRadius = 0;
 
     // not all snowmen are made perfectly round
-    this.widthStretcher = 0.35*random() + 1
+    this.widthStretcher = 0.35*random() + 1;
   }
 
   /**

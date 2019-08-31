@@ -84,7 +84,7 @@ function grahamScan() {
 				grahamStep = grahamSteps.SORT;
 				reset();
 			}
-		break
+		break;
 	}
 	return;
 }

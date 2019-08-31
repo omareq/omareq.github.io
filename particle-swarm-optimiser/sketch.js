@@ -81,7 +81,7 @@ let the_swarm;
 *     x and y
 */
 function func(x, y) {
-  return sin(0.07 *y + 100) * sin(0.08 * x) * 0.01 * (x - 200)**2 + 0.01 * (y - 200)**2;
+  return sin(0.07 * y + 100) * sin(0.08 * x) * 0.01 * pow(x - 200, 2) + 0.01 * pow(y - 200, 2);
 }
 
 /**

@@ -58,7 +58,7 @@ function preload() {
     "hell",
     "heaven",
     "processing",
-    "sharp"]
+    "sharp"];
   }
   catch(err) {
     console.log("Failed to load commands");
@@ -93,7 +93,7 @@ function pickCommands() {
 
 const isAlphaNumeric = ch => {
   return ch.match(/^[a-zA-Z0-9]+$/i) !== null;
-}
+};
 
 function keyPressed() {
   if(misses >= missLimit && keyCode == ENTER) {
@@ -149,10 +149,10 @@ function intersectsOtherWord(word) {
       if(logging) {
 			 console.log("Intersection: ", word.val, " : ", commands[i].val);
       }
-			return true
+			return true;
 		}
 	}
-	return false
+	return false;
 }
 
 function activateNewCommand() { 
@@ -183,7 +183,7 @@ function activateNewCommand() {
     }
     i = i + 1;
     if(logging) {
-      console.log("watchdog: ", i)
+      console.log("watchdog: ", i);
     }
   }
 }

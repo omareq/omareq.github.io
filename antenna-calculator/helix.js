@@ -30,11 +30,11 @@ let helix_sketch = function(p5) {
 
 	p5.change_helix_polarisation = function() {
 		lhp = !lhp;
-	}
+	};
 
 	p5.change_helix_res = function() {
 		points_per_turn = document.getElementById("helix_res").value;
-	}
+	};
 
 	p5.calculate_helix = function() {
 		form_in = document.getElementById("helix_input_params");
@@ -49,10 +49,10 @@ let helix_sketch = function(p5) {
 		h_spacing = 0.25 * lambda;
 		h_length = nturns * h_spacing;
 		h_pitch = p5.degrees(p5.atan2(h_spacing, h_circumference));
-		h_wire_length = p5.sqrt(h_circumference**2 + h_spacing**2) * nturns;
+		h_wire_length = p5.sqrt(pow(h_circumference, 2) + pow(h_spacing, 2)) * nturns;
 
 		let r_lambda = 1 / lambda;
-		gain = 15 * (h_circumference * r_lambda)**2;
+		gain = 15 * pow(h_circumference * r_lambda, 2);
 		gain *= nturns * h_spacing * r_lambda;
 		gain_dbi = 10 * Math.log10(0.8 * nturns);
 		impedance = 140 * h_circumference * r_lambda;
@@ -69,24 +69,24 @@ let helix_sketch = function(p5) {
 		form_out.h_wire_length.value = h_wire_length.toFixed(5);
 		form_out.reflector_diameter.value = reflector_diameter.toFixed(5);
 	  	
-	  	document.getElementById("helix_output").style.display = "block"
-	  	document.getElementById("helix_slider_div").style.display = "block"
+	  	document.getElementById("helix_output").style.display = "block";
+	  	document.getElementById("helix_slider_div").style.display = "block";
 	  	p5.loop();
 	  	got_data = true;
-	}
+	};
 
 	p5.setup = function() {
 		let canvas = p5.createCanvas(600, 400, p5.WEBGL);
 	  	canvas.parent('helix_canvas');
-	  	document.getElementById("helix_output").style.display = "none"
-	  	document.getElementById("helix_slider_div").style.display = "none"
+	  	document.getElementById("helix_output").style.display = "none";
+	  	document.getElementById("helix_slider_div").style.display = "none";
 	  	p5.stroke(0);
 	  	p5.strokeWeight(10);
 	  	p5.fill(0, 0);
 	  	p5.change_helix_res();
 	  	p5.noLoop();
 	  	//calculate_helix();
-	}
+	};
 
 	let c = 1;
 
@@ -105,7 +105,7 @@ let helix_sketch = function(p5) {
 
 		}
 
-	}
+	};
 
 	p5.draw = function() {
 		if(got_data) {
@@ -142,13 +142,13 @@ let helix_sketch = function(p5) {
 				y = r * p5.sin(theta);
 				z = h * theta;
 				if(lhp) {
-					y = -y
+					y = -y;
 				}
 				p5.vertex(x, y, z);
 			}
 			p5.endShape();
 		}
-	}
+	};
 };
 
 

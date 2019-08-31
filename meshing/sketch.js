@@ -126,15 +126,15 @@ function triangleStrip(points) {
 				break;
 			}
 			v1 = new Vertex(verticies[index].x, verticies[index].y);
-			v2 = faces[faces.length - 1].v1
-			v3 = faces[faces.length - 1].v3
+			v2 = faces[faces.length - 1].v1;
+			v3 = faces[faces.length - 1].v3;
 		} else {
 			const index = (i + 2) / 2;
 			if(index == verticies.length) {
 				break;
 			}
-			v1 = faces[faces.length - 1].v1
-			v2 = faces[faces.length - 1].v3
+			v1 = faces[faces.length - 1].v1;
+			v2 = faces[faces.length - 1].v3;
 			v3 = new Vertex(verticies[index].x, verticies[index].y);
 		}
 

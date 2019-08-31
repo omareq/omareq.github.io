@@ -69,14 +69,14 @@ class Heart {
 	*/
 	setRadius(newRadius) {
 		this.r = abs(newRadius);
-		let points = map(this.r, 0, width, 10, 60)
+		let points = map(this.r, 0, width, 10, 60);
 		let step = PI/points;
 
-		this.vertexes = []
+		this.vertexes = [];
 
 		for(let t = -PI; t < PI; t += step) {
-			let y1 = 13 * cos(t)
-			let y2 = 5 * cos(2 * t)
+			let y1 = 13 * cos(t);
+			let y2 = 5 * cos(2 * t);
 			let y3 = 2 * cos(3 * t);
 			let y4 = cos(4 * t);
 			

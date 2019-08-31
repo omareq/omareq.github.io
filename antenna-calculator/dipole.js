@@ -27,19 +27,19 @@ let dipole_sketch = function(p5) {
 
 	p5.pause_animation = function() {
 		p5.noLoop();
-	}
+	};
 
 	p5.continue_animation = function() {
 		p5.loop();
-	}
+	};
 
 	p5.change_dipole_polarisation = function() {
 		vp = !vp;
-	}
+	};
 
 	p5.change_helix_res = function() {
 		points_per_turn = document.getElementById("dipole_res").value;
-	}
+	};
 
 	p5.calculate_dipole = function() {
 		form_in = document.getElementById("dipole_input_params");
@@ -59,29 +59,29 @@ let dipole_sketch = function(p5) {
 		form_out.impedance.value = impedance.toFixed(1);
 		form_out.d_length.value = d_length.toFixed(5);
 	  	
-	  	document.getElementById("dipole_output").style.display = "block"
+	  	document.getElementById("dipole_output").style.display = "block";
 	  	//document.getElementById("helix_slider_div").style.display = "block"
 	  	p5.loop();
 	  	got_data = true;
-	}
+	};
 
 	p5.setup = function() {
 		let canvas = p5.createCanvas(600, 400);
 	  	canvas.parent('dipole_canvas');
-	  	document.getElementById("dipole_output").style.display = "none"
+	  	document.getElementById("dipole_output").style.display = "none";
 	  	//document.getElementById("helix_slider_div").style.display = "none"
 	  	p5.stroke(0);
 	  	p5.strokeWeight(5);
 	  	p5.fill(0, 0);
 	  	p5.noLoop();
 	  	//calculate_helix();
-	}
+	};
 
 	let c = 1;
 
 	p5.draw_dimensions = function(count, h, r) {
 
-	}
+	};
 
 	p5.draw = function() {
 		if(got_data) {
@@ -98,7 +98,7 @@ let dipole_sketch = function(p5) {
 				let itt = p5.TWO_PI / (points_per_wave);
 
 				let x, y;
-				p5.beginShape()
+				p5.beginShape();
 				for(let theta = start; theta <= end; theta += itt) {
 					x = theta;//lambda * theta/p5.TWO_PI;
 					y = h * p5.sin(0.05* theta + t) + .5 * p5.height;
@@ -130,7 +130,7 @@ let dipole_sketch = function(p5) {
 				let itt = p5.TWO_PI / (points_per_wave);
 
 				let x, y;
-				p5.beginShape()
+				p5.beginShape();
 				for(let theta = start; theta <= end; theta += itt) {
 					x = theta;//lambda * theta/p5.TWO_PI;
 					y = h * p5.sin(0.05* theta + t) + .5 * p5.height;
@@ -147,7 +147,7 @@ let dipole_sketch = function(p5) {
 				t -= 0.1;
 			}
 		}
-	}
+	};
 };
 
 dipole_canvas = new p5(dipole_sketch);

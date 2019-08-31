@@ -9,5 +9,5 @@ function Particle(pos, fitness) {
 		noStroke();
 		fill(0, 255, 0);
 		ellipse(this.pos.x, this.pos.y, 5, 5);
-	}
+	};
 }
