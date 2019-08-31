@@ -1,0 +1,13 @@
+language: node_js
+before_install:
+  - npm install -g qunit
+
+script: qunit
+
+notifications:
+  # slack: ccfrobotics:M6IA63oxtt84ody2vx2HrfYx
+  email:
+    recipients:
+      - omareq08@gmail.com
+    on_success: change # default: change (never | always)
+    on_failure: always # default: always
