@@ -3,7 +3,7 @@ node_js:
 - 7
 before_install:
 - npm install -g qunit npm@3.5.2
-- npm install -g eslint npm@3.5.2
+- npm install -g eslint npm@6.3.0
 script: 
 - eslint --config .eslintrc.json --ignore-path .eslintignore */*.js
 - qunit
