@@ -39,6 +39,8 @@ let targetVel;
 
 let targetSpeed = 1;
 
+let targetRadius = 10;
+
 let noiseSeed;
 
 let xBuffer = 20;
@@ -162,28 +164,52 @@ function setup() {
 /**
 *   p5.js draw function, is run every frame to create the desired animation
 */
-function draw() {
-	background(255);
-	if(currentEvasionMehod == evasionMethod.STATIC) {
-	} else if(currentEvasionMehod == evasionMethod.CONST_VEL) {
-		target.add(targetVel);
-	} else if(currentEvasionMehod == evasionMethod.CURVE_AWAY) {
-	} else if(currentEvasionMehod == evasionMethod.CURVE_IN) {
-	} else if(currentEvasionMehod == evasionMethod.RAND) {
-		noiseSeed += 0.1;
-		randEvadeVel();
-		target.add(targetVel);
-	}
-	stroke(0);
-	ellipse(target.x, target.y, 10, 10);
-	line(0, target.y, width, target.y);
-	line(target.x, 0, target.x, height);
-	missile.steerTo(target);
-	missile.update(time);
-	missile.draw(time);
 
-	if(offScreen(target) || offScreen(missile.pos)) {
-		reset();
+let explode = false;
+let explodeTime = 30;
+function draw() {
+
+	background(255);
+	if(!explode) {
+		if(currentEvasionMehod == evasionMethod.STATIC) {
+		} else if(currentEvasionMehod == evasionMethod.CONST_VEL) {
+			target.add(targetVel);
+		} else if(currentEvasionMehod == evasionMethod.CURVE_AWAY) {
+		} else if(currentEvasionMehod == evasionMethod.CURVE_IN) {
+		} else if(currentEvasionMehod == evasionMethod.RAND) {
+			noiseSeed += 0.1;
+			randEvadeVel();
+			target.add(targetVel);
+		}
+		stroke(0);
+		ellipse(target.x, target.y, targetRadius, targetRadius);
+		line(0, target.y, width, target.y);
+		line(target.x, 0, target.x, height);
+		missile.steerTo(target);
+		missile.update(time);
+		missile.draw(time);
+
+		if(offScreen(target) || offScreen(missile.pos)) {
+			reset();
+		}
+
+		if(dist(target.x, target.y, missile.pos.x, missile.pos.y) < targetRadius) {
+			console.log("Target Neutralised");
+			explode = true;
+			time = 0;
+			//reset();
+		}
+	} else {
+		stroke(255, 0, 0);
+		ellipse(target.x, target.y, targetRadius, targetRadius);
+		line(0, target.y, width, target.y);
+		line(target.x, 0, target.x, height);
+		const r = time / explodeTime * 2 * targetRadius;
+		ellipse(target.x, target.y, r, r);
+		if(time > explodeTime) {
+			explode = false;
+			reset();
+		}
 	}
 	time++;
 }
