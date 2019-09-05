@@ -1,5 +1,22 @@
 let projects;
 
+hover = function(element) {
+	element.children[0].setAttribute("src", "imgs/external_link_blue.png");
+	element.style.color = "0000FF";
+	element.style.padding = "4px";
+	element.style.margin = "2px";
+	element.style.border = "1px solid blue";
+	element.style.borderRadius = "0.2em"
+}
+
+unhover = function(element) {
+	element.children[0].setAttribute("src", "imgs/external_link.png");
+	element.style.color = "000000";
+	element.style.padding = "0px";
+	element.style.margin = "0px";
+	element.style.border = "";
+}
+
 archivedCards = function(projects) {
 	let sum = 0;
 
