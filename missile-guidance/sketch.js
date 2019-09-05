@@ -37,6 +37,10 @@ let target;
 
 let targetVel;
 
+let targetSpeed = 1;
+
+let noiseSeed;
+
 let xBuffer = 20;
 
 let yBuffer = 20;
@@ -69,10 +73,13 @@ function evasionMethodSelectEvent() {
 	}
 
 	reset();
+}
 
-	if(currentEvasionMehod == evasionMethod.CONST_VEL) {
-		target = createVector(0.5 * width,0.5 * height);
-	}
+function randEvadeVel(seed) {
+	let randVelX = noise(noiseSeed)
+	let randVelY = -noise(noiseSeed + 100);
+	targetVel = createVector(randVelX, randVelY);
+	targetVel.setMag(targetSpeed);
 }
 
 function offScreen(vector) {
@@ -99,8 +106,17 @@ function reset() {
 		let randVelX = random(0, 1);
 		let randVelY = random(-1, 0);
 		targetVel = createVector(randVelX, randVelY);
+		targetVel.setMag(targetSpeed);
+	} else if(currentEvasionMehod == evasionMethod.CURVE_AWAY) {
+	} else if(currentEvasionMehod == evasionMethod.CURVE_IN) {
+	} else if(currentEvasionMehod == evasionMethod.RAND) {
+		const xRand = random(xBuffer, 0.5 * width);
+		const yRand = random(0.5 * height, height - yBuffer);
+		target = createVector(xRand, yRand);
+		noiseSeed = random(100);
+		randEvadeVel();
 	}
-	
+
 	time = 0;
 }
 
@@ -148,10 +164,15 @@ function setup() {
 */
 function draw() {
 	background(255);
-	if(currentEvasionMehod == evasionMethod.CONST_VEL) {
+	if(currentEvasionMehod == evasionMethod.STATIC) {
+	} else if(currentEvasionMehod == evasionMethod.CONST_VEL) {
 		target.add(targetVel);
-	} else if(currentEvasionMehod == evasionMethod.STATIC) {
-
+	} else if(currentEvasionMehod == evasionMethod.CURVE_AWAY) {
+	} else if(currentEvasionMehod == evasionMethod.CURVE_IN) {
+	} else if(currentEvasionMehod == evasionMethod.RAND) {
+		noiseSeed += 0.1;
+		randEvadeVel();
+		target.add(targetVel);
 	}
 	stroke(0);
 	ellipse(target.x, target.y, 10, 10);
