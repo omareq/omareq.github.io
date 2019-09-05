@@ -14,7 +14,7 @@ Created using [p5.js](https://p5js.org/)
 
 ## TODO
 
-- [ ] Add singularity avoidance with coordinate system transform.
+- [x] Add singularity avoidance with coordinate system transform.
 
 
 - [ ] Complete user interface.

@@ -24,19 +24,30 @@ class Missile {
 	}
 
 	steerTo(target) {
-		const targetPos = target.copy();
-		const targetVec = targetPos.sub(this.pos);
+		let targetPos = target.copy();
+		let targetVec = targetPos.sub(this.pos);
 
 		let angle1 = targetVec.heading();
 		let angle2 = this.vel.heading();
 		let angle = angle1 - angle2;
 
-		if(angle > PI) {
-		 	angle = TWO_PI - angle;
-		} else if(angle < -PI) {
-			angle = TWO_PI + angle;
+		if(angle > PI || angle < -PI) {
+			targetPos.x*=-1;
+			this.pos.x*=-1;
+			this.pos.y*=-1;
+			this.vel.x*=-1;
+			this.vel.y*=-1;
+			targetVec = targetPos.sub(this.pos);
+
+			angle1 = targetVec.heading();
+			angle2 = this.vel.heading();
+			angle = angle1 - angle2;
+			this.pos.x*=-1;
+			this.pos.y*=-1;
+			this.vel.x*=-1;
+			this.vel.y*=-1;
 		}
-		// console.log("Angle: " + degrees(angle));	
+
 		const steer = this.gain * angle;
 		this.vel.rotate(steer);
 	}
