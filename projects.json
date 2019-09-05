@@ -9,7 +9,7 @@
             "name": "Snowman", 
             "next-id": "p_001", 
             "pic-url": "imgs/p_000.jpg", 
-            "prev-id": "p_016", 
+            "prev-id": "p_017", 
             "status": "active", 
             "tags": [], 
             "vid-url": "vids/p_000.mp4"
@@ -257,7 +257,7 @@
             "gif-url": "imgs/p_016.gif", 
             "id": "p_016", 
             "name": "Meshing", 
-            "next-id": "p_000", 
+            "next-id": "p_017", 
             "pic-url": "imgs/p_016.jpg", 
             "prev-id": "p_015", 
             "status": "active", 
@@ -265,6 +265,20 @@
                 "algorithm"
             ], 
             "vid-url": "vids/p_016.mp4"
+        }, 
+        "p_017": {
+            "brief": "A program looking into the various methods of missile targeting", 
+            "demo-url": "../missile-guidance", 
+            "docs-url": "../missile-guidance/docs", 
+            "gif-url": "imgs/p_017.gif", 
+            "id": "p_017", 
+            "name": "Missile-guidance", 
+            "next-id": "p_000", 
+            "pic-url": "imgs/p_017.jpg", 
+            "prev-id": "p_016", 
+            "status": "active", 
+            "tags": [], 
+            "vid-url": "vids/p_017.mp4"
         }
     }
 }
