@@ -51,6 +51,10 @@ let resetButton;
 
 let missile;
 
+let explode;
+
+let explodeTime;
+
 let time;
 
 function algorithmSelectEvent() {
@@ -119,6 +123,8 @@ function reset() {
 		randEvadeVel();
 	}
 
+	explode = false;
+	explodeTime = 30;
 	time = 0;
 }
 
@@ -164,9 +170,6 @@ function setup() {
 /**
 *   p5.js draw function, is run every frame to create the desired animation
 */
-
-let explode = false;
-let explodeTime = 30;
 function draw() {
 
 	background(255);
