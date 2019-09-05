@@ -23,7 +23,8 @@ class Missile {
 		return 0.8 * exp(-pow(0.01 * time - 3, 2)) +0.2 * Math.tanh(0.01 * time - 3) + 0.2;
 	}
 
-	steerTo(targetPos) {
+	steerTo(target) {
+		const targetPos = target.copy();
 		const targetVec = targetPos.sub(this.pos);
 
 		let angle1 = targetVec.heading();

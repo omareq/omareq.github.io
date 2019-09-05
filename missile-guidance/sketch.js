@@ -33,6 +33,14 @@ let selectEvasionMethod;
 
 let currentEvasionMehod = evasionMethod.STATIC;
 
+let target;
+
+let targetVel;
+
+let xBuffer = 20;
+
+let yBuffer = 20;
+
 let resetButton;
 
 let missile;
@@ -61,6 +69,14 @@ function evasionMethodSelectEvent() {
 	}
 
 	reset();
+
+	if(currentEvasionMehod == evasionMethod.CONST_VEL) {
+		target = createVector(0.5 * width,0.5 * height);
+	}
+}
+
+function offScreen(vector) {
+	return vector.x < 0 || vector. x > width || vector.y < 0 || vector.y > height;
 }
 
 function reset() {
@@ -70,6 +86,21 @@ function reset() {
 	const burnTime = 150;
 	const gain = 0.05;
 	missile = new Missile(pos, vel, burnTime, gain);
+
+	if(currentEvasionMehod == evasionMethod.STATIC) {
+		const xRand = random(xBuffer, width - xBuffer);
+		const yRand = random(yBuffer, height - yBuffer);
+		target = createVector(xRand, yRand);
+		console.log("New targetvector: ", target);
+	} else if(currentEvasionMehod == evasionMethod.CONST_VEL) {
+		const xRand = random(xBuffer, 0.5 * width);
+		const yRand = random(0.5 * height, height - yBuffer);
+		target = createVector(xRand, yRand);
+		let randVelX = random(0, 1);
+		let randVelY = random(-1, 0);
+		targetVel = createVector(randVelX, randVelY);
+	}
+	
 	time = 0;
 }
 
@@ -117,11 +148,22 @@ function setup() {
 */
 function draw() {
 	background(255);
-	const target = createVector(0.5 * time, 0.25 * height + 0.2 * time, 0);
+	if(currentEvasionMehod == evasionMethod.CONST_VEL) {
+		target.add(targetVel);
+	} else if(currentEvasionMehod == evasionMethod.STATIC) {
+
+	}
+	stroke(0);
 	ellipse(target.x, target.y, 10, 10);
+	line(0, target.y, width, target.y);
+	line(target.x, 0, target.x, height);
 	missile.steerTo(target);
 	missile.update(time);
 	missile.draw(time);
+
+	if(offScreen(target) || offScreen(missile.pos)) {
+		reset();
+	}
 	time++;
 }
 
