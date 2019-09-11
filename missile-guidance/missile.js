@@ -19,15 +19,17 @@ class Missile {
 	/**
 	 * Constructs the MIssile object.
 	 *
-	 * @param      {p5.Vector}  pos       The initial position
-	 * @param      {p5.Vector}  vel       The initial velocity
-	 * @param      {Integer}  	burnTime  The burn time of the rocket motor
-	 * @param      {Float}  	gain      The guidance gain
+	 * @param      {p5.Vector}  pos               The initial position
+	 * @param      {p5.Vector}  vel               The initial velocity
+	 * @param      {Integer}    burnTime          The burn time of the rocket
+	 * @param      {Integer}     selfDestructTime  The self destruct time
+	 * @param      {Float}      gain              The guidance gain
 	 */
-	constructor(pos, vel, burnTime, gain) {
+	constructor(pos, vel, burnTime, selfDestructTime, gain) {
 		this.pos = pos;
 		this.vel = vel;
 		this.burnTime = burnTime;
+		this.selfDestructTime = selfDestructTime;
 		this.gain = gain;
 	}
 

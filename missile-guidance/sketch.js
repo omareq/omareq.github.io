@@ -209,8 +209,9 @@ function reset() {
 	const pos = createVector(width / 2, height - 20);
 	const vel = createVector(0, -1, 0);
 	const burnTime = 150;
+	const selfDestructTime = 400;
 	const gain = 0.05;
-	missile = new Missile(pos, vel, burnTime, gain);
+	missile = new Missile(pos, vel, burnTime, selfDestructTime, gain);
 
 	const xBuffer = 0.125 * width;
 	const yBuffer = 0.25 * height;
@@ -366,14 +367,21 @@ function draw() {
 			explode = true;
 			time = 0;
 			//reset();
+		} else if(time > missile.selfDestructTime) {
+			console.log("Missile Self Destruct: Target Escaped");
+			explode = true;
+			time = 0;
 		}
 	} else {
-		stroke(255, 0, 0);
+		stroke(0);
 		ellipse(target.x, target.y, targetRadius, targetRadius);
 		line(0, target.y, width, target.y);
 		line(target.x, 0, target.x, height);
+		ellipse(target.x, target.y, targetRadius, targetRadius);
+
 		const r = time / explodeTime * 2 * targetRadius;
-		ellipse(target.x, target.y, r, r);
+		stroke(255, 0, 0);
+		ellipse(missile.pos.x, missile.pos.y, r, r);
 		if(time > explodeTime) {
 			explode = false;
 			reset();
