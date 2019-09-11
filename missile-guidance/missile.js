@@ -9,9 +9,21 @@
 *
 *******************************************************************************/
 
-// thrust curve
-// 0.8 * e^(-(x-3)^2) + 0.2 * tanh(x-3) + 0.2
+/**
+ * Class for missile.
+ *
+ * @class      Missile (name)
+ */
 class Missile {
+
+	/**
+	 * Constructs the MIssile object.
+	 *
+	 * @param      {p5.Vector}  pos       The initial position
+	 * @param      {p5.Vector}  vel       The initial velocity
+	 * @param      {Integer}  	burnTime  The burn time of the rocket motor
+	 * @param      {Float}  	gain      The guidance gain
+	 */
 	constructor(pos, vel, burnTime, gain) {
 		this.pos = pos;
 		this.vel = vel;
@@ -19,11 +31,27 @@ class Missile {
 		this.gain = gain;
 	}
 
+
+	/**
+	 * Function returning the thrust calculated from the thrust curve at the
+	 * given time
+	 *
+	 * @param      {Float}  time    The time, must be greater than zero
+	 * @return     {Float}  The force given from the rocket motor
+	 */
 	thrust(time) {
-		return 0.8 * exp(-pow(0.01 * time - 3, 2)) +0.2 * Math.tanh(0.01 * time - 3) + 0.2;
+		return 0.8 * exp(-pow(0.01 * time - 3, 2))
+			+ 0.2 * Math.tanh(0.01 * time - 3) + 0.2;
 	}
 
-	steerTo(target) {
+	/**
+	 * Applies a force to steer the missile towards the target according to the
+	 * provided algorithm
+	 *
+	 * @param      {p5.Vector}    target 	The targets position vector
+	 * @param      {Function}  [method=algorithm.PURSUIT] The guidance method
+	 */
+	steerTo(target, method=algorithm.PURSUIT) {
 		let targetPos = target.copy();
 		let targetVec = targetPos.sub(this.pos);
 
@@ -48,10 +76,22 @@ class Missile {
 			this.vel.y*=-1;
 		}
 
-		const steer = this.gain * angle;
-		this.vel.rotate(steer);
+		if(method == algorithm.PURSUIT) {
+			const steer = this.gain * angle;
+			this.vel.rotate(steer);
+		} else {
+			const steer = this.gain * angle;
+			this.vel.rotate(steer);
+		}
 	}
 
+
+	/**
+	 * Calculates the new position of the missile depending on the current
+	 * velocity and the thrust of the rocket motor at the current time.
+	 *
+	 * @param      {number}  time    The time
+	 */
 	update(time) {
 		const currentMag = mag(this.vel.x, this.vel.y);
 		let newMag = currentMag + this.thrust(time);
@@ -63,6 +103,13 @@ class Missile {
 		this.pos.add(this.vel);
 	}
 
+
+	/**
+	 * Draws the missile at the given time.  IF the time is greater than the
+	 * burn time then the rocket exhaust is not included in the rendering.
+	 *
+	 * @param      {number}  time    The time
+	 */
 	draw(time) {
 		let vel = this.vel.copy();
 		vel.setMag(0.015 * width);
@@ -72,7 +119,8 @@ class Missile {
 			vel = this.vel.copy();
 			vel.mult(3);
 			stroke(255, 0, 0);
-			line(this.pos.x, this.pos.y, this.pos.x - vel.x, this.pos.y - vel.y);
+			line(this.pos.x, this.pos.y,
+				this.pos.x - vel.x, this.pos.y - vel.y);
 		}
 	}
 }

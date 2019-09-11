@@ -1,62 +1,148 @@
 /*******************************************************************************
 *
-*	@file sketch.js
-*	@brief A program looking into the various methods of missile targeting.
+*	@file sketch.js A program looking into the various methods of missile
+*	targeting.
 *
-*	@author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
+*	@author Omar Essilfie-Quaye <omareq08@gmail.com>
 *	@version 1.0
 *	@date 27-August-2019
 *
 *******************************************************************************/
 
+/**
+*	Enumeration of the different algorithm types
+*
+*	@enum {String}
+*/
 const algorithm = Object.freeze({
 	PURSUIT: 	"Pursuit",
 	PN: 		"Proportional Navigation",
 	TPN: 		"True Proportional Navigation",
 	APN: 		"Augmented Proportional Navigation",
-	MOTION: 	"Motion Camoflage"
+	MOTION: 	"Motion Camouflage"
 });
 
+/**
+*	Algorithm selection handler
+*
+*	@type{p5.Element}
+*/
 let selectAlgorithm;
 
+/**
+*	Variable that stores the current missile pursuit algorithm
+*
+*	@type{Enum<String>
+*/
 let currentAlgorithm = algorithm.PURSUIT;
 
+/**
+*	Enumeration of the different target evasion methods
+*
+*	@enum {String}
+*/
 const evasionMethod = Object.freeze({
 	STATIC: 	"Static",
-	CONST_VEL: 	"Consant Velocity",
+	CONST_VEL: 	"Constant Velocity",
 	CURVE_AWAY: "Curve Away",
 	CURVE_IN: 	"Curve In",
 	RAND: 		"Random"
 });
 
+/**
+*	EvasionMethod selection handler
+*
+*	@type{p5.Element}
+*/
 let selectEvasionMethod;
 
+/**
+*	Variable that stores the target evasion method
+*
+*	@type{Enum<String>}
+*/
 let currentEvasionMehod = evasionMethod.STATIC;
 
+/**
+*	Target position vector
+*
+*	@type{p5.Vector}
+*/
 let target;
 
+/**
+*	Target velocity vector
+*
+*	@type{p5.Vector}
+*/
 let targetVel;
 
-let targetSpeed = 1;
+/**
+*	Target velocity magnitude
+*
+*	@type{Float}
+*/
+let targetSpeed = 0.95;
 
-let targetRadius = 10;
+/**
+*	Size of the target
+*
+*	@type{Float}
+*/
+let targetRadius;
 
+/**
+*	Seed for the Perlin noise used for the random evasion method.  This value
+*	persists between frames such that the end motion of the target is not
+*	unnaturally sporadic.
+*
+*	@type{Float}
+*
+*	@see randEvadeVel
+*/
 let noiseSeed;
 
-let xBuffer = 20;
-
-let yBuffer = 20;
-
+/**
+*	Handler for reset button
+*
+*	@type{p5.element}
+*/
 let resetButton;
 
+/**
+*	Launched missile
+*
+*	@type{Missile}
+*/
 let missile;
 
+/**
+*	Flag denoting if missile has hit target and explode animation is under way
+*
+*	@type{Boolean}
+*/
 let explode;
 
+/**
+*	How many frames the explode animation will run for
+*
+*	@type{Integer}
+*/
 let explodeTime;
 
+/**
+*	Simulation time, mainly used to calculate missile thrust curve
+*
+*	@type{Integer}
+*/
 let time;
 
+/**
+ * Callback function for algorithm event selector.  Changes the value of
+ * currentAlgorithm and resets the simulation
+ *
+ * @see reset
+ */
 function algorithmSelectEvent() {
 	const selectVal = selectAlgorithm.value();
 	if(selectVal != currentAlgorithm) {
@@ -69,11 +155,18 @@ function algorithmSelectEvent() {
 	reset();
 }
 
+
+/**
+ * Callback function for evasion method event selector.  Changes the value of
+ * currentEvasionMethod and resets the simulation.
+ *
+ * @see reset
+ */
 function evasionMethodSelectEvent() {
 	const selectVal = selectEvasionMethod.value();
 	if(selectVal != currentEvasionMehod) {
 		currentEvasionMehod = selectVal;
-		console.log("Selected new target evasion method: " + currentEvasionMehod);
+		console.log("New target evasion method: " + currentEvasionMehod);
 	} else {
 		return;
 	}
@@ -81,6 +174,13 @@ function evasionMethodSelectEvent() {
 	reset();
 }
 
+/**
+ * Creates a random evade velocity for the target based on Perlin noise using
+ * the provided seed value.  This new velocity replaces the previous value.
+ *
+ * @param      {Float}  seed    The seed
+ * @see        targetVel
+ */
 function randEvadeVel(seed) {
 	let randVelX = noise(noiseSeed)
 	let randVelY = -noise(noiseSeed + 100);
@@ -88,10 +188,22 @@ function randEvadeVel(seed) {
 	targetVel.setMag(targetSpeed);
 }
 
+/**
+ * Checks if a given position vector is within the bounds of the canvas.
+ *
+ * @param      {p5.Vector}  vector  The position vector
+ * @return     {Boolean}  returns true when the vector is external to the
+ * bounds of the canvas
+ */
 function offScreen(vector) {
-	return vector.x < 0 || vector. x > width || vector.y < 0 || vector.y > height;
+	return vector.x < 0 || vector. x > width
+		|| vector.y < 0 || vector.y > height;
 }
 
+/**
+ * Reset the simulation.  Creates new missile and randomises target location
+ * and initial target velocity.  Flags are reset and time is set to zero.
+ */
 function reset() {
 	console.log("Reset");
 	const pos = createVector(width / 2, height - 20);
@@ -100,29 +212,48 @@ function reset() {
 	const gain = 0.05;
 	missile = new Missile(pos, vel, burnTime, gain);
 
+	const xBuffer = 0.125 * width;
+	const yBuffer = 0.25 * height;
+	const xRand = random(xBuffer, width - xBuffer);
+	const yRand = random(yBuffer, height - yBuffer);
+
 	if(currentEvasionMehod == evasionMethod.STATIC) {
-		const xRand = random(xBuffer, width - xBuffer);
-		const yRand = random(yBuffer, height - yBuffer);
 		target = createVector(xRand, yRand);
+		targetVel = createVector(0, 0);
 		console.log("New targetvector: ", target);
 	} else if(currentEvasionMehod == evasionMethod.CONST_VEL) {
-		const xRand = random(xBuffer, 0.5 * width);
-		const yRand = random(0.5 * height, height - yBuffer);
 		target = createVector(xRand, yRand);
-		let randVelX = random(0, 1);
-		let randVelY = random(-1, 0);
-		targetVel = createVector(randVelX, randVelY);
+		targetVel = p5.Vector.random2D();
 		targetVel.setMag(targetSpeed);
 	} else if(currentEvasionMehod == evasionMethod.CURVE_AWAY) {
+		target = createVector(xRand, yRand);
+		targetVel = p5.Vector.random2D();
+		targetVel.setMag(targetSpeed);
 	} else if(currentEvasionMehod == evasionMethod.CURVE_IN) {
+		target = createVector(xRand, yRand);
+		targetVel = p5.Vector.random2D();
+		targetVel.setMag(targetSpeed);
 	} else if(currentEvasionMehod == evasionMethod.RAND) {
-		const xRand = random(xBuffer, 0.5 * width);
-		const yRand = random(0.5 * height, height - yBuffer);
 		target = createVector(xRand, yRand);
 		noiseSeed = random(100);
 		randEvadeVel();
 	}
 
+	if(target.x > 0.5 * width && targetVel.x > 0) {
+		targetVel.x *= -1;
+	}
+	if(target.x < 0.5 * width && targetVel.x < 0) {
+		targetVel.x *= -1;
+	}
+
+	if(target.y > 0.5 * height && targetVel.y > 0) {
+		targetVel.y *= -1;
+	}
+	if(target.y < 0.5 *height && targetVel < 0) {
+		targetVel.y *= -1;
+	}
+
+	targetRadius = 0.025 * width;
 	explode = false;
 	explodeTime = 30;
 	time = 0;
@@ -168,7 +299,10 @@ function setup() {
 }
 
 /**
-*   p5.js draw function, is run every frame to create the desired animation
+*   p5.js draw function, is run every frame to create the desired animation.
+*	Invokes missile drawing method.
+*
+*	@see Missile
 */
 function draw() {
 
@@ -178,7 +312,37 @@ function draw() {
 		} else if(currentEvasionMehod == evasionMethod.CONST_VEL) {
 			target.add(targetVel);
 		} else if(currentEvasionMehod == evasionMethod.CURVE_AWAY) {
+			let missileVec = target.copy().sub(missile.pos.copy());
+			let desiredVec = missileVec.rotate(QUARTER_PI);
+			stroke(255, 0, 0);
+			line(target.x, target.y,
+				target.x + desiredVec.x, target.y + desiredVec.y);
+
+			let angle1 = targetVel.heading();
+			let angle2 = desiredVec.heading();
+			let angle = angle1 - angle2;
+
+			let targetGain = 0.02;
+			let steer = targetGain * angle;
+			targetVel.rotate(steer);
+			targetVel = desiredVec.setMag(targetSpeed);
+			target.add(targetVel);
 		} else if(currentEvasionMehod == evasionMethod.CURVE_IN) {
+			let missileVec = target.copy().sub(missile.pos.copy());
+			let desiredVec = missileVec.rotate(HALF_PI + QUARTER_PI);
+			stroke(255, 0, 0);
+			line(target.x, target.y,
+				target.x + desiredVec.x, target.y + desiredVec.y);
+
+			let angle1 = targetVel.heading();
+			let angle2 = desiredVec.heading();
+			let angle = angle1 - angle2;
+
+			let targetGain = 0.02;
+			let steer = targetGain * angle;
+			targetVel.rotate(steer);
+			targetVel = desiredVec.setMag(targetSpeed);
+			target.add(targetVel);
 		} else if(currentEvasionMehod == evasionMethod.RAND) {
 			noiseSeed += 0.1;
 			randEvadeVel();
@@ -188,7 +352,7 @@ function draw() {
 		ellipse(target.x, target.y, targetRadius, targetRadius);
 		line(0, target.y, width, target.y);
 		line(target.x, 0, target.x, height);
-		missile.steerTo(target);
+		missile.steerTo(target, currentAlgorithm);
 		missile.update(time);
 		missile.draw(time);
 
@@ -196,7 +360,8 @@ function draw() {
 			reset();
 		}
 
-		if(dist(target.x, target.y, missile.pos.x, missile.pos.y) < targetRadius) {
+		let distance = dist(target.x, target.y,missile.pos.x, missile.pos.y);
+		if(distance < targetRadius) {
 			console.log("Target Neutralised");
 			explode = true;
 			time = 0;
