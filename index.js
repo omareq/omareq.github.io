@@ -6,7 +6,7 @@ hover = function(element) {
 	element.style.padding = "4px";
 	element.style.margin = "2px";
 	element.style.border = "1px solid blue";
-	element.style.borderRadius = "0.2em"
+	element.style.borderRadius = "0.2em";
 }
 
 unhover = function(element) {
@@ -39,7 +39,7 @@ create_card = function(card_id, project) {
 	$(card_id + ' h4').text(project.name);
 	$(card_id + ' h4, p').attr("style", "color: black; background: white");
 
-	if(project["brief"]) { 
+	if(project["brief"]) {
 		$(card_id + ' p').text(project["brief"]);
 	} else {
 		$(card_id + ' p').text("");
@@ -65,7 +65,7 @@ insert_cards = function(start_card, end_card) {
 	        }
 
 	        card_id = "#project-card-" + i;
-	        create_card(card_id, rand_project); 
+	        create_card(card_id, rand_project);
     	}
     });
 }
@@ -91,7 +91,7 @@ append_card_layout = function(end_card) {
 		card_id = "project-card-" + i;
 		let col_index = i % 3;
 		row_index = Math.floor(i / 3);
-		
+
 		// console.log("Row " + row_index + " Col " + col_index);
 
 
