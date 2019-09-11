@@ -377,7 +377,6 @@ function draw() {
 		ellipse(target.x, target.y, targetRadius, targetRadius);
 		line(0, target.y, width, target.y);
 		line(target.x, 0, target.x, height);
-		ellipse(target.x, target.y, targetRadius, targetRadius);
 
 		const r = time / explodeTime * 2 * targetRadius;
 		stroke(255, 0, 0);
