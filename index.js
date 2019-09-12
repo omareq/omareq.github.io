@@ -1,5 +1,16 @@
 let projects;
 
+searchEvent = function(event) {
+	console.log("Search event: ", event);
+	return false;
+}
+
+submitFunction = function(event) {
+	console.log("Submit Event: ", event);
+	event.preventDefault();
+	return false;
+}
+
 hover = function(element) {
 	element.children[0].setAttribute("src", "imgs/external_link_blue.png");
 	element.style.color = "0000FF";
