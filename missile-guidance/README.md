@@ -20,5 +20,8 @@ Created using [p5.js](https://p5js.org/)
 - [ ] Complete user interface.
 
 
+- [ ] Remove target tracking when seeker bearing is more than 90 degrees from target bearing. Possibly add search behaviour on loss of target.
+
+
 
 (This is an auto-generated document, not all links will necessarily work)
