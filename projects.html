@@ -8,10 +8,10 @@
 
         <link rel="stylesheet" href="libraries/bootstrap-4.0.0/css/bootstrap.min.css">
         <script language="javascript" type="text/javascript" src="libraries/jquery-3.3.1.min.js"></script>
-        <script src="libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script> 
+        <script src="libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 
-        <script src="index.js"></script> 
-        <link type="text/css" rel="stylesheet" href="main.css">     
+        <script src="index.js"></script>
+        <link type="text/css" rel="stylesheet" href="main.css">
     </head>
 
     <body>
@@ -33,7 +33,10 @@
             <div></div>
             <section class="container">
                 <div class="row">
-                    <p> Bootstrap Search Bar can go here </p>
+                    <form onsubmit="submitFunction(event)" class="form-inline active-purple-4 mb-4">
+                        <img src="search.png" style="width: 1.5em;">
+                      <input id="searchBar" class="form-control form-control-sm ml-3 w-75" oninput="searchEvent(event)" type="text" placeholder="Search Inactive" aria-label="Search">
+                    </form>
                 </div>
             </section>
 
@@ -76,11 +79,11 @@
                 </div>
             </section>
 
-        <footer> 
-            <div class="links"> 
+        <footer>
+            <div class="links">
                 <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
                 <a href="." class="githubio"><span>Github.io Home</span></a>
-                <a href="http://iamoquaye.gq/" class="iamoquaye"><span>iamoquaye</span></a>
+                <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
             </div>
         </footer>
 

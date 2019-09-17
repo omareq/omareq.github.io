@@ -1,5 +1,33 @@
 let projects;
 
+searchEvent = function(event) {
+	console.log("Search event: ", event);
+	return false;
+}
+
+submitFunction = function(event) {
+	console.log("Submit Event: ", event);
+	event.preventDefault();
+	return false;
+}
+
+hover = function(element) {
+	element.children[0].setAttribute("src", "imgs/external_link_blue.png");
+	element.style.color = "0000FF";
+	element.style.padding = "4px";
+	element.style.margin = "2px";
+	element.style.border = "1px solid blue";
+	element.style.borderRadius = "0.2em";
+}
+
+unhover = function(element) {
+	element.children[0].setAttribute("src", "imgs/external_link.png");
+	element.style.color = "000000";
+	element.style.padding = "0px";
+	element.style.margin = "0px";
+	element.style.border = "";
+}
+
 archivedCards = function(projects) {
 	let sum = 0;
 
@@ -22,7 +50,7 @@ create_card = function(card_id, project) {
 	$(card_id + ' h4').text(project.name);
 	$(card_id + ' h4, p').attr("style", "color: black; background: white");
 
-	if(project["brief"]) { 
+	if(project["brief"]) {
 		$(card_id + ' p').text(project["brief"]);
 	} else {
 		$(card_id + ' p').text("");
@@ -48,7 +76,7 @@ insert_cards = function(start_card, end_card) {
 	        }
 
 	        card_id = "#project-card-" + i;
-	        create_card(card_id, rand_project); 
+	        create_card(card_id, rand_project);
     	}
     });
 };
@@ -74,7 +102,7 @@ append_card_layout = function(end_card) {
 		card_id = "project-card-" + i;
 		let col_index = i % 3;
 		row_index = Math.floor(i / 3);
-		
+
 		// console.log("Row " + row_index + " Col " + col_index);
 
 

@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file field.js
 *   @brief A file containing the Field class
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 22-Aug-2018
@@ -22,7 +22,7 @@ class Field {
 	constructor(width, height) {
 		this.width = width;
 		this.height = height;
-		
+
 		/**
 		*	2D field vector array.
 		*	@type {Array<Array<p5.Vector>>}
@@ -58,7 +58,7 @@ class Field {
 			arrayCopy(zeroCol, newCol);
 			row.push(newCol);
 		}
-		
+
 		return row;
 	}
 
@@ -70,15 +70,13 @@ class Field {
 	*/
 	addParticle(part) {
 		this.particles.push(part);
-
 		for(let w = 0; w < this.width; w++) {
 			for(let h = 0; h < this.height; h++) {
 				let px = part.pos.x;
 				let py = part.pos.y;
 				let pc = part.charge;
 
-				let d = dist(w, h, px, py);
-				let d2 = d * d;
+				let d2 = (px - w) * (px - w) + (py - h) * (py - h);
 
 				let vx = w - px;
 				let vy = h - py;
@@ -104,8 +102,7 @@ class Field {
 				let py = part.pos.y;
 				let pc = part.charge;
 
-				let d = dist(w, h, px, py);
-				let d2 = d * d;
+				let d2 = (px - w) * (px - w) + (py - h) * (py - h);
 
 				let vx = w - px;
 				let vy = h - py;
