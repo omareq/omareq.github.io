@@ -3,13 +3,13 @@ let projects;
 searchEvent = function(event) {
 	console.log("Search event: ", event);
 	return false;
-}
+};
 
 submitFunction = function(event) {
 	console.log("Submit Event: ", event);
 	event.preventDefault();
 	return false;
-}
+};
 
 hover = function(element) {
 	element.children[0].setAttribute("src", "imgs/external_link_blue.png");
@@ -18,7 +18,7 @@ hover = function(element) {
 	element.style.margin = "2px";
 	element.style.border = "1px solid blue";
 	element.style.borderRadius = "0.2em";
-}
+};
 
 unhover = function(element) {
 	element.children[0].setAttribute("src", "imgs/external_link.png");
@@ -26,7 +26,7 @@ unhover = function(element) {
 	element.style.padding = "0px";
 	element.style.margin = "0px";
 	element.style.border = "";
-}
+};
 
 archivedCards = function(projects) {
 	let sum = 0;
