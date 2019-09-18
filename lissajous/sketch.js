@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   @file sketch.js - Creating my own version of the lissajous patterns
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 27-Oct-2018
@@ -104,7 +104,7 @@ function setup() {
 */
 function mouseClicked() {
   if(mouseY > height - 50 && mouseY < height) {
-    kx = map(mouseX, 0, width, 1, 50);    
+    kx = map(mouseX, 0, width, 1, 50);
     frequencyChanged = true;
   }
 
@@ -153,7 +153,7 @@ function draw() {
   if(frequencyChanged) {
     for(let i = posArray.length - 1; i > 0; --i) {
       posArray[i].x = x;
-      posArray[i].y = y;  
+      posArray[i].y = y;
     }
     frequencyChanged = false;
   }
@@ -162,21 +162,21 @@ function draw() {
   fill(electronGreen);
   ellipse(x, y, electronRadius, electronRadius);
   posArray[0] = createVector(x, y);
-  
+
   for (let i = posArray.length - 1; i > 0; --i) {
     let alpha = 100 * (posArray.length - i)/posArray.length;
     let currentX = posArray[i].x;
     let currentY = posArray[i].y;
-    
+
     fill(electronGreen, alpha);
     //ellipse(currentX, currentY, electronRadius, electronRadius);
     stroke(electronGreen, alpha);
     strokeWeight(alpha*0.05*electronRadius);
     line(currentX, currentY, posArray[i - 1].x, posArray[i - 1].y);
-    
+
     posArray[i].x = posArray[i - 1].x;
-    posArray[i].y = posArray[i - 1].y;  
-    
+    posArray[i].y = posArray[i - 1].y;
+
   }
   time += dt;
 

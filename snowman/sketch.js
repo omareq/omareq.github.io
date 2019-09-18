@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file sketch.js - Making Snowmen from snowflakes as an expansion to the
 *     challenge on the coding train.
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 24-Dec-2017
@@ -98,7 +98,7 @@ function draw () {
 
   for(let i = 0; i < flakes.length; i++) {
     let windx = windMag * noise(flakes[i].pos.x, flakes[i].pos.y, noiseOff);
-    
+
     //make sure that the wind goes left as well as right
     windx -= 0.5 * windMag;
     let wind = createVector(windx, 0);

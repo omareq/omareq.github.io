@@ -1,8 +1,8 @@
 /*******************************************************************************
-*   
+*
 *   @file sketch.js
 *   @brief Game of Life simulation
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 06-Jan-2019
@@ -78,7 +78,7 @@ let gridX = 75;
 *
 *	@type  {number}
 */
-let gridY = 75;	
+let gridY = 75;
 
 /**
 *	Stores the size of one grid cell
@@ -90,7 +90,7 @@ let size;
 /**
 *	Stores which grid is currently being displayed.  This allows for the rules
 *	to be applied on the sites of the alternate grid without changing the sites
-*	that are being read. 
+*	that are being read.
 *
 *	@type {boolean}
 */
@@ -155,7 +155,7 @@ function neighbours(grid, x, y) {
 				numNeighbours++;
 			}
 		}
-	}	
+	}
 	return numNeighbours;
 }
 
@@ -271,41 +271,41 @@ function randomiseGrid() {
 */
 function drawMenu() {
 	textAlign(LEFT, TOP);
-	textSize(.035 * height);
+	textSize(0.035 * height);
 	fill(155);
 
 	if(paused) {
 		fill(255);
 	}
-	text("Click P to Pause", 1.02 * height, .05 * height);
+	text("Click P to Pause", 1.02 * height, 0.05 * height);
 
 	fill(155);
-	text("Click D to Delete All", 1.02 * height, .05 * 3 *  height);
-	text("Click R to Randmoise", 1.02 * height, .05 * 5 * height);
+	text("Click D to Delete All", 1.02 * height, 0.05 * 3 * height);
+	text("Click R to Randmoise", 1.02 * height, 0.05 * 5 * height);
 
 	fill(155);
 	if(selectedInsertion == "cell") {
 		fill(255);
 	}
-	text("Click C to add Cell", 1.02 * height, .05 * 7 * height);
+	text("Click C to add Cell", 1.02 * height, 0.05 * 7 * height);
 
 	fill(155);
 	if(selectedInsertion == "glider") {
 		fill(255);
 	}
-	text("Click G to add Glider", 1.02 * height, .05 * 9 * height);
+	text("Click G to add Glider", 1.02 * height, 0.05 * 9 * height);
 
 	fill(155);
 	if(selectedInsertion == "lightSpaceShip") {
 		fill(255);
 	}
-	text("Click L to add Light Ship", 1.02 * height, .05 * 11 * height);
+	text("Click L to add Light Ship", 1.02 * height, 0.05 * 11 * height);
 
 	fill(155);
 	if(selectedInsertion == "gliderGun") {
 		fill(255);
 	}
-	text("Click H to add Glider Gun", 1.02 * height, .05 * 13 * height);
+	text("Click H to add Glider Gun", 1.02 * height, 0.05 * 13 * height);
 }
 
 /**
@@ -318,7 +318,7 @@ function setup() {
 	} else {
 		cnvSize = windowWidth;
 	}
-	let cnv = createCanvas(cnvSize, .7 * cnvSize);
+	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
 
 	size = height / gridY;
@@ -355,7 +355,7 @@ function draw() {
 					}
 					if(grid1[x][y] == 0 && numNeighbours == 3) {
 						grid2[x][y] = 1;
-					} 
+					}
 				}
 
 				if(grid2[x][y] == 1) {
@@ -367,7 +367,7 @@ function draw() {
 				if(!paused && frameCount % updateRate == 0) {
 					let numNeighbours = neighbours(grid2, x, y);
 					grid1[x][y] = grid2[x][y];
-					
+
 					if((grid2[x][y] == 1) && (numNeighbours < 2 || numNeighbours > 3)) {
 						grid1[x][y] = 0;
 					}
@@ -386,7 +386,7 @@ function draw() {
 			}
 		}
 	}
-	if(!paused && frameCount % updateRate == 0) { 
+	if(!paused && frameCount % updateRate == 0) {
 		usingGrid1 = !usingGrid1;
 	}
 }

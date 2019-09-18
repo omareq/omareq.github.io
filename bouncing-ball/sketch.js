@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file sketch.js
 *   @brief Simulation of bouncing ball physics
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 02-Aug-2018
@@ -21,7 +21,7 @@ let dt;
 function randBall() {
 	let randvx = random(-50, 50);
 	let randvy = random(-50, 50);
-	let randr  = random(3, 20);
+	let randr = random(3, 20);
 	return new Ball(mouseX, height - mouseY, randvx, randvy, randr, 1);
 }
 
@@ -65,7 +65,7 @@ function draw() {
 	pop();
 
 	let wallWidth = 4;
-	// Ceilling	
+	// Ceiling
 	push();
 	stroke(0, 255, 0);
 	strokeWeight(wallWidth);
@@ -87,7 +87,7 @@ function draw() {
 	stroke(255, 0, 0);
 	strokeWeight(wallWidth);
 	line(width, 0, width, height);
-	pop();	
+	pop();
 
 	// Left Wall
 	push();

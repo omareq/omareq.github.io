@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   @file snowman.js - Contains the classes snowman and ball
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 24-Dec-2017
@@ -47,7 +47,7 @@ class ball {
   grow(radius) {
     if(this.currentRadius < this.radius) {
       this.currentRadius += radius;
-      this.currentRadius  = constrain(this.currentRadius, 0, this.radius);
+      this.currentRadius = constrain(this.currentRadius, 0, this.radius);
     }
   }
 
@@ -75,7 +75,7 @@ class ball {
     let currentY = this.pos.y + this.radius - this.currentRadius;
     let distance = dist(this.pos.x, currentY, flake.pos.x, flake.pos.y);
     let isHit = distance < this.currentRadius*this.widthStretcher + flake.r;
-    
+
     //only absrob snowflake if the snowman is still growing
     if(isHit && !this.isGrownUp()) {
       flake.reset();
@@ -96,14 +96,14 @@ class ball {
 }
 
 /**
-* Class containing all the information necessary for a snowmn
+* Class containing all the information necessary for a snowmen
 */
 class snowman {
   /**
   * snowman constructor function
   *
   * @param {p5.Vector} pos - Location of the bottom of the snowman
-  * @param {nummber} numBalls - number of balls used tomake up the snowman
+  * @param {number} numBalls - number of balls used to make up the snowman
   * @param {number} ballRadius - Size of the largest ball
   */
   constructor(pos, numBalls, ballRadius) {
@@ -112,7 +112,7 @@ class snowman {
     this.ballRadius = ballRadius;
 
     // an array to hold ball objects
-    this.balls = [];    
+    this.balls = [];
     // how much each ball get smaller by from bottom to top
     this.shrinkFactor = 0.8;
     // check to see if all the balls have been set up
@@ -153,7 +153,7 @@ class snowman {
     for(let i = 0; i < this.numBalls; i++) {
       if(this.balls[i].isHitBy(snowflake)) {
         return true;
-      }           
+      }
     }
     return false;
   }
@@ -203,7 +203,7 @@ class snowman {
   }
 
   /**
-  * gives the snowman a wnoderful face :-)
+  * gives the snowman a wonderful face :-)
   */
   addFace(ball) {
     // eyes
@@ -213,7 +213,7 @@ class snowman {
     let eyeR = ball.radius / 12;
 
     fill(0);
-    let lEyeX = ball.pos.x - eyeOffsetX; 
+    let lEyeX = ball.pos.x - eyeOffsetX;
     ellipse(lEyeX, eyeY, eyeR, eyeR);
 
     let rEyeX = ball.pos.x + eyeOffsetX;
@@ -247,7 +247,7 @@ class snowman {
   /**
   * draws the snowman
   */
-  show() {    
+  show() {
     if(!this.gotSize) {
       this.calculateSize();
     }
@@ -256,7 +256,7 @@ class snowman {
       this.balls[i].show();
     }
 
-    // if the last ball if grown up then the whole snowan is done
+    // if the last ball if grown up then the whole snowman is done
     if(this.balls[this.numBalls - 1].isGrownUp()) {
       this.addArms(this.balls[this.numBalls - 2]);
       this.addFace(this.balls[this.numBalls - 1]);

@@ -11,7 +11,7 @@ let maxWordLength = 15;
 let minWordsOnScreen = 1;
 let maxWordsOnScreen = 20;
 let minSpeed = 0.7;
-let maxSpeed = 2; 
+let maxSpeed = 2;
 let speedStep = 0.005;
 let numCommands;
 let textHeight = 20;
@@ -59,8 +59,7 @@ function preload() {
     "heaven",
     "processing",
     "sharp"];
-  }
-  catch(err) {
+  } catch(err) {
     console.log("Failed to load commands");
   }
   loading = false;
@@ -101,47 +100,46 @@ function keyPressed() {
     if(logging) {
       console.log("Reseting The Game");
     }
+  } else if(isAlphaNumeric(key || key == "\\")) {
+    keyStack.push(key);
+  } else if(keyCode == BACKSPACE) {
+    keyStack.pop();
   } else {
-    if(isAlphaNumeric(key || key == "\\")) {
-      keyStack.push(key);
-    } else if(keyCode == BACKSPACE) {
-      keyStack.pop();
-    } else {
-      let stack = join(keyStack, '').toLowerCase();
-      totalCharsTyped+=keyStack.length;
-      
-      let foundWord = false;
-      for(let i = 0; i < commands.length; i++) {
-        if(commands[i].run && stack == commands[i].val.toLowerCase()) {
-          foundWord = true;
-          commands[i].holdOn();
+    let stack = join(keyStack, '').toLowerCase();
+    totalCharsTyped+=keyStack.length;
+
+    let foundWord = false;
+    for(let i = 0; i < commands.length; i++) {
+      if(commands[i].run && stack == commands[i].val.toLowerCase()) {
+        foundWord = true;
+        commands[i].holdOn();
+        activateNewCommand();
+
+        typedChars += keyStack.length;
+
+        prevScore = score;
+        score += keyStack.length * ceil(speed);
+
+        if(score%50 < prevScore%50) {
           activateNewCommand();
-
-          typedChars += keyStack.length;
-
-          prevScore = score;
-          score += keyStack.length * ceil(speed);
-
-          if(score%50 < prevScore%50) {
-            activateNewCommand();
-            if(score%150 < prevScore%150) {
-              speed += speedStep;
-              adjustSpeed = true;
-              if(speed > maxSpeed) {
-                speed = maxSpeed;
-              }
-            } 
+          if(score%150 < prevScore%150) {
+            speed += speedStep;
+            adjustSpeed = true;
+            if(speed > maxSpeed) {
+              speed = maxSpeed;
+            }
           }
-          break;
         }
+        break;
       }
-      if(!foundWord) {
-        errorCharsTyped+= keyStack.length;
-      }
-      keyStack = [];
     }
+    if(!foundWord) {
+      errorCharsTyped+= keyStack.length;
+    }
+    keyStack = [];
   }
 }
+
 
 function intersectsOtherWord(word) {
 	for(var i = 0; i < commands.length; i++) {
@@ -155,8 +153,8 @@ function intersectsOtherWord(word) {
 	return false;
 }
 
-function activateNewCommand() { 
-  i = 0; 
+function activateNewCommand() {
+  i = 0;
   if(logging) {
     console.log("Activate new command");
   }
@@ -246,14 +244,14 @@ function draw() {
 
     if(adjustSpeed) {
       commands[i].setSpeed(speed);
-    } 
+    }
   }
   adjustSpeed = false;
 
   if(misses >= missLimit && !cheatMode) {
     finalScore = score;
     finalwpm = wpm;
-    
+
     if(logging) {
       console.log("Final score:" + score);
       console.log("Final WPM:" + wpm);
@@ -275,7 +273,7 @@ function draw() {
   textAlign(LEFT, TOP);
   textSize(textHeight);
   textFont('Consolas');
-  
+
   stroke(blue);
   line(0, height - textHeight, width, height - textHeight);
   stroke(0);
@@ -288,7 +286,7 @@ function draw() {
   text("CPS: ", 0.45 * width, height - textHeight);
   fill(red);
   text(round(cps), textWidth("CPS: ") + 0.45 * width, height - textHeight);
-  
+
   wpm = cps * 12;
   fill(blue);
   text("WPM: ", 0.55 * width, height - textHeight);
@@ -300,7 +298,7 @@ function draw() {
   text("Misses: ", 0.7 * width , height - textHeight);
   fill(red);
   text(misses, textWidth("Misses: ") + 0.7 * width , height - textHeight);
-  
+
   fill(blue);
   text("Score: ", 0.85 * width , height - textHeight);
   fill(red);

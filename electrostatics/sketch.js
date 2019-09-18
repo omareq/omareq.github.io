@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file sketch.js
 *   @brief Quick Electrostatics Simulation
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 22-Aug-2018

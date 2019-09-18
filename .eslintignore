@@ -1,2 +1,3 @@
 libraries/*.js
 node_modules/*
+antenna-calculator/rechnen*.js

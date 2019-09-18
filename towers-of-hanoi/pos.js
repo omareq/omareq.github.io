@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file pos.js
 *   @brief File containing the Pos class
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 29-Dec-2018
@@ -38,7 +38,7 @@ class Pos {
 	*/
 	insert(tower, index) {
 		arrayCopy(tower.stack, 0, this.state[index], 0, tower.stackTop + 1);
-		
+
 		if(tower.stack.length < tower.stackSize) {
 			let start = tower.stackTop;
 			let end = tower.stackSize - 1;

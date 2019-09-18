@@ -36,7 +36,7 @@ let monotoneStep = monotoneSteps.SORT;
 *
 *	@param o {p5.Vector}
 *
-*	@returns {Float} 
+*	@returns {Float}
 */
 function crossZ(a, b, o) {
 	let va = p5.Vector.sub(a, o);
@@ -90,13 +90,13 @@ function monotoneChain() {
 		break;
 
 		case monotoneSteps.FUSE:
-			time++;	
+			time++;
 			drawHull(lower, 30);
 			drawHull(upper, 60);
  			if(time > 2 * frameRate()) {
  				time = 0;
  				monotoneStep++;
- 			} 			
+ 			}
 	   	break;
 
 		case monotoneSteps.DONE:

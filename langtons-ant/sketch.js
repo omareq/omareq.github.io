@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file sketch.js
 *   @brief Langtons ant an example of cellular automata
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 09-Jan-2018
@@ -64,7 +64,7 @@ let antState;
 *
 *   @type {number}
 */
-const up    = 0;
+const up = 0;
 
 /**
 *   A global constant that denotes one of the four possible ant directions in
@@ -82,7 +82,7 @@ const right = 1;
 *
 *   @type {number}
 */
-const down  = 2;
+const down = 2;
 
 /**
 *   A global constant that denotes one of the four possible ant directions in
@@ -91,7 +91,7 @@ const down  = 2;
 *
 *   @type {number}
 */
-const left  = 3;
+const left = 3;
 
 /**
 *   Turn left changing the ants bearing.
@@ -100,7 +100,7 @@ function turnLeft() {
   bearing--;
   if(bearing < up) {
     bearing = left;
-  } 
+  }
 }
 
 /**
@@ -181,17 +181,13 @@ function draw() {
     turnRight();
     grid[antx][anty] = !grid[antx][anty];
     fill(255);
-  } 
-
+  } else if(antState && grid[antx][anty] == 0){
   //  antState == true and grid at antpos == 0
-  else if(antState && grid[antx][anty] == 0){
     turnLeft();
     grid[antx][anty] = !grid[antx][anty];
     fill(0);
-  } 
-
+  } else {
   //  all other scenarios do not turn and go forward
-  else {
     //  grid at antpos is now equal to not antstate
     grid[antx][anty] = !antState;
     fill(0);

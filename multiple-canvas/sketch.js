@@ -1,6 +1,7 @@
+/* eslint no-param-reassign: 0 */
 /*******************************************************************************
 *   @file sketch.js - Figuring out how todraw multiple canvases to one webpage
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 30-Jun-2018
@@ -12,7 +13,7 @@
 */
 let sketch1 = function(p) {
 
-  let x = 325; 
+  let x = 325;
   let y = 100;
   let vx = -10;
 
@@ -46,7 +47,7 @@ let sketch1 = function(p) {
 */
 let sketch2 = function(p) {
 
-  let x = 325; 
+  let x = 325;
   let y = 100;
   let vx = 10;
 

@@ -75,7 +75,7 @@ function jarvisMarch() {
 				strokeWeight(0.3 * pointRadius);
 				const currentPoint = points[currentIndex];
 				line(0, currentPoint.y, currentPoint.x, currentPoint.y);
-				ellipse(currentPoint.x, currentPoint.y, pointRadius, pointRadius);	
+				ellipse(currentPoint.x, currentPoint.y, pointRadius, pointRadius);
 				pop();
 
 				// Draw green around the current left most point
@@ -84,7 +84,7 @@ function jarvisMarch() {
 				strokeWeight(0.3 * pointRadius);
 				const leftPoint = points[leftPointIndex];
 				line(0, leftPoint.y, leftPoint.x, leftPoint.y);
-				ellipse(leftPoint.x, leftPoint.y, pointRadius, pointRadius);	
+				ellipse(leftPoint.x, leftPoint.y, pointRadius, pointRadius);
 				pop();
 			} else {
 				currentIndex = 0;
@@ -128,7 +128,7 @@ function jarvisMarch() {
 
 			if ( clockwiseCheck || anticlockwiseCheck) {
 				nextIndex = index;
-			} 
+			}
 			index++;
 
 			if (index == points.length) {

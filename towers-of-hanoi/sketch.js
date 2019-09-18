@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file sketch.js
 *   @brief Recreation of Towers of Hanoi puzzle
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 29-Dec-2018
@@ -43,7 +43,7 @@ let towerSelected = 0;
 *	@type {number}
 */
 let plates = 7;
-	
+
 /**
 *	A variable that stores the highest value plate of the last clicked tower.
 *
@@ -96,7 +96,7 @@ function mousePressed() {
 				topPlate = tower1.peek();
 				towerSelected = 1;
 				return;
-			} 
+			}
 		}
 		if(tower2.pressed()) {
 			towerPressed = 2;
@@ -104,7 +104,7 @@ function mousePressed() {
 				topPlate = tower2.peek();
 				towerSelected = 2;
 				return;
-			} 
+			}
 		}
 		if(tower3.pressed()) {
 			towerPressed = 3;
@@ -112,41 +112,42 @@ function mousePressed() {
 				topPlate = tower3.peek();
 				towerSelected = 3;
 				return;
-			} 
+			}
 		}
 
 		if(towerPressed == 0) {
 			towerSelected = 0;
 			topPlate = 0;
 			return;
-		} else {
-			if(towerSelected == 1) {
-				if(towerPressed == 2 && tower2.push(topPlate)) {
-					tower1.pop();
-				} else if(towerPressed == 3 && tower3.push(topPlate)) {
-					tower1.pop();
-				}
-			} else if(towerSelected == 2) {
-				if(towerPressed == 1 && tower1.push(topPlate)) {
-					tower2.pop();
-				} else if(towerPressed == 3 && tower3.push(topPlate)) {
-					tower2.pop();
-				}
-			} else if(towerSelected == 3) {
-				if(towerPressed == 1 && tower1.push(topPlate)) {
-					tower3.pop();
-				} else if(towerPressed == 2 && tower2.push(topPlate)) {
-					tower3.pop();
-				}
-			}
-			tower1.isPressed = false;
-			tower2.isPressed = false;
-			tower3.isPressed = false;
-			towerSelected = 0;
-			topPlate = 0;
 		}
+
+		if(towerSelected == 1) {
+			if(towerPressed == 2 && tower2.push(topPlate)) {
+				tower1.pop();
+			} else if(towerPressed == 3 && tower3.push(topPlate)) {
+				tower1.pop();
+			}
+		} else if(towerSelected == 2) {
+			if(towerPressed == 1 && tower1.push(topPlate)) {
+				tower2.pop();
+			} else if(towerPressed == 3 && tower3.push(topPlate)) {
+				tower2.pop();
+			}
+		} else if(towerSelected == 3) {
+			if(towerPressed == 1 && tower1.push(topPlate)) {
+				tower3.pop();
+			} else if(towerPressed == 2 && tower2.push(topPlate)) {
+				tower3.pop();
+			}
+		}
+		tower1.isPressed = false;
+		tower2.isPressed = false;
+		tower3.isPressed = false;
+		towerSelected = 0;
+		topPlate = 0;
 	}
 }
+
 
 /**
 *	Function to handle key presses.  Will toggle autosolve or reset towers.
@@ -209,7 +210,7 @@ function setup() {
 
 /**
 *	p5.js draw function, used to draw all towers
-*/	
+*/
 function draw() {
 	background(255);
 	textSize(0.035 * height);
@@ -228,7 +229,7 @@ function draw() {
 		}
 		tower1.setStack(solution[solveIndex].state[0]);
 		tower2.setStack(solution[solveIndex].state[1]);
-		tower3.setStack(solution[solveIndex].state[2]);		
+		tower3.setStack(solution[solveIndex].state[2]);
 	}
 
 	tower1.draw();

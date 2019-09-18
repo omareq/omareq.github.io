@@ -1,10 +1,12 @@
 language: node_js
+sudo: required
 node_js:
-- 7
+- 8
 before_install:
-# - npm install eslint
-- npm install -g qunit npm@3.5.2
-script: 
+- npm install -g qunit
+- npm install file-system
+- npm install eslint
+script:
 # - eslint --config .eslintrc.json --ignore-path .eslintignore index.js
 - qunit
 notifications:

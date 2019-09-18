@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file rain.js
 *   @brief File containing the Rain class.
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 29-Mar-2017
@@ -43,7 +43,7 @@ class Rain {
 		  newHeight,
 		  this.width * this.scale,
 		  "pink"));
-		
+
 		for (let i = this.len - 2; i >= 0; i--) {
 			this.symbols.push(new Heart(this.col * this.width,
 			 newHeight - 2 * (this.len - 1) * this.width + 2 * i * this.width,

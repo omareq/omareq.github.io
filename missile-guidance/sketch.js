@@ -182,7 +182,7 @@ function evasionMethodSelectEvent() {
  * @see        targetVel
  */
 function randEvadeVel(seed) {
-	let randVelX = noise(noiseSeed)
+	let randVelX = noise(noiseSeed);
 	let randVelY = -noise(noiseSeed + 100);
 	targetVel = createVector(randVelX, randVelY);
 	targetVel.setMag(targetSpeed);
@@ -271,7 +271,7 @@ function setup() {
 		cnvSize = windowWidth;
 	}
 
-	let cnv = createCanvas(cnvSize, .7 * cnvSize);
+	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
 
 	selectAlgorithm = createSelect();

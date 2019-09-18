@@ -1,15 +1,16 @@
+/* eslint no-param-reassign: 0 */
 let projects;
 
 searchEvent = function(event) {
 	console.log("Search event: ", event);
 	return false;
-}
+};
 
 submitFunction = function(event) {
 	console.log("Submit Event: ", event);
 	event.preventDefault();
 	return false;
-}
+};
 
 hover = function(element) {
 	element.children[0].setAttribute("src", "imgs/external_link_blue.png");
@@ -18,7 +19,7 @@ hover = function(element) {
 	element.style.margin = "2px";
 	element.style.border = "1px solid blue";
 	element.style.borderRadius = "0.2em";
-}
+};
 
 unhover = function(element) {
 	element.children[0].setAttribute("src", "imgs/external_link.png");
@@ -26,7 +27,7 @@ unhover = function(element) {
 	element.style.padding = "0px";
 	element.style.margin = "0px";
 	element.style.border = "";
-}
+};
 
 archivedCards = function(projects) {
 	let sum = 0;
@@ -64,9 +65,13 @@ insert_cards = function(start_card, end_card) {
 		let obj_keys = Object.keys(projects);
 		let rand_key, rand_project, card_id;
 
+		const filter_func = function(el) {
+			return el !== rand_key;
+		};
+
 		for(let i = start_card; i < end_card; i++) {
 	        rand_key = obj_keys[Math.floor(Math.random() * obj_keys.length)];
-	        obj_keys = obj_keys.filter( el => el !== rand_key);
+	        obj_keys = obj_keys.filter(filter_func);
 	        rand_project = projects[rand_key];
 
 
@@ -113,7 +118,7 @@ append_card_layout = function(end_card) {
 
 		console.log("Creating Project Card " + i);
 
-		let prev_card  = "#project-card-" + (i-1);
+		let prev_card = "#project-card-" + (i-1);
 		if(i == 0) {
 			prev_card = card_id;
 		}

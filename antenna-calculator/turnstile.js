@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: 0 */
 /*******************************************************************************
 *   Author:   Omar Essilfie-Quaye
 *   Email:    omareq08@gmail.com
@@ -52,7 +53,7 @@ let turnstile_sketch = function(p5) {
 		//form_out.gain.value = gain_dbi.toFixed(5);
 		//form_out.impedance.value = impedance.toFixed(1);
 		//form_out.d_length.value = d_length.toFixed(5);
-	  	
+
 	  	document.getElementById("turnstile_output").style.display = "block";
 	  	//document.getElementById("helix_slider_div").style.display = "block"
 	  	p5.loop();

@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   @file sketch.js - Creating my own version of the time vortex from Dr Who
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 27-Oct-2018
@@ -79,12 +79,12 @@ function setup() {
 */
 function draw() {
   background(0);
-  for(i = startAngle; i < startAngle + numPoints; i++) {    
+  for(i = startAngle; i < startAngle + numPoints; i++) {
     let angle = radians(i) + 2 * noise(xoff);
 
-    let x = radius * cos(angle) 
+    let x = radius * cos(angle)
       + endX * (i - startAngle)/numPoints;
-    let y = radius * sin(angle) 
+    let y = radius * sin(angle)
       + endY * (i - startAngle)/numPoints;
     let z = 2 * startAngle - i;
 
@@ -92,7 +92,7 @@ function draw() {
     translate(x + noise(xoff), y, z + random(0, 5));
     stroke(100*sin(angle) + 100, 15, 225 + 25*sin(angle), 200);
     strokeWeight(10);
-    
+
     line(0,0,0, 0,0, random(5) -numPoints * 0.1 * noise(xoff) );
     pop();
   }

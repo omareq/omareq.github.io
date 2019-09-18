@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file tower.js
 *   @brief File containing the Tower class
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 29-Dec-2018
@@ -16,9 +16,9 @@ class Tower {
 	*	Create a Tower
 	*
 	*	@param {number} stackSize  - The maximum number of plates on the tower.
-	*	@param {number} xPos - The x location for the bottowm cetnre of the 
+	*	@param {number} xPos - The x location for the bottowm cetnre of the
 	*		tower.
-	*	@param {number} yPos - The y location for the bottowm cetnre of the 
+	*	@param {number} yPos - The y location for the bottowm cetnre of the
 	*		tower.
 	*	@param {number} width - The width of the tower.
 	*	@param {number} height - The height of the tower.
@@ -80,7 +80,7 @@ class Tower {
 	/**
 	*	Function to add plate to the tower
 	*
-	*	@param {number} plate - The size of the plate to push onto the stack. 
+	*	@param {number} plate - The size of the plate to push onto the stack.
 	*
 	*	@returns {boolean} Value determining wether or not the operation was a
 	*	success.
@@ -113,7 +113,7 @@ class Tower {
 	*	larger than the maximum stack size the function will return false.
 	*
 	*	@param {array} arr - The new value of the stack
-	*	
+	*
 	*	@returns {boolean} Value determining wether or not the opertion was a
 	*	success.
 	*/
@@ -135,7 +135,7 @@ class Tower {
 
 			if(i > 0 && arr[i] > arr[i - 1]) {
 				this.stack = backup;
-				return  false;
+				return false;
 			}
 			this.stack.push(arr[i]);
 			this.stackTop ++;
