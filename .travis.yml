@@ -3,7 +3,7 @@ node_js:
 - 7
 before_install:
 - npm install -g qunit npm@3.5.2
-- npm outdated -g
+- npm install file-system
 - npm install eslint
 script:
 # - eslint --config .eslintrc.json --ignore-path .eslintignore index.js
