@@ -2,9 +2,9 @@ language: node_js
 node_js:
 - 7
 before_install:
-# - npm install eslint
 - npm install -g qunit npm@3.5.2
-script: 
+- npm install eslint
+script:
 # - eslint --config .eslintrc.json --ignore-path .eslintignore index.js
 - qunit
 notifications:

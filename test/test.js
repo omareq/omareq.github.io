@@ -17,7 +17,7 @@ QUnit.test("Validate Projects.json", function(assert) {
 });
 
 function file_exists(path) {
-    const fs = require('fs')
+    const fs = require('fs');
     try {
         if(fs.existsSync(path)) {
             return true;
@@ -61,5 +61,38 @@ QUnit.test("Validate Docs index.html", function(assert) {
         const path = "." + projects_json.projects[id]["docs-url"];
         const index_exists = file_exists(path  + "/index.html");
         assert.equal(index_exists, true, path + "/index.html url validation");
+    }
+});
+
+function lint_js_source(file) {
+    const Linter = require("eslint").Linter;
+    const linter = new Linter();
+    const fs = require("fs");
+    const index = fs.readFileSync(file, "utf-8");
+    const options = require("../.eslintrc.json");
+    const message = linter.verify(index, options, {filename: file});
+    return message;
+}
+
+QUnit.test("Lint JS Files", function(assert) {
+    let lint_message = lint_js_source("./index.js");
+    assert.equal(lint_message, "", "Lint index.js");
+
+    lint_message = lint_js_source("./test/test.js");
+    assert.equal(lint_message, "", "Lint test.js");
+
+    const projects_json = require("../projects.json");
+    for(let id in projects_json.projects) {
+        const path = "." + projects_json.projects[id]["demo-url"];
+        const fs = require("fs");
+        const list = fs.readdirSync(path);
+        const regex = new RegExp('^((?!\.test\.).)*\.js$');
+        const result = list.filter(file => file.match(regex));
+
+        for(const file_name of result) {
+            const file = path + "/" + file_name;
+            lint_message = lint_js_source(file);
+            assert.equal(lint_message, "", path + "/" + file + " JS linting");
+        }
     }
 });
