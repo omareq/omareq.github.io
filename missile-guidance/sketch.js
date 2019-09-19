@@ -182,7 +182,7 @@ function evasionMethodSelectEvent() {
  * @see        targetVel
  */
 function randEvadeVel(seed) {
-	let randVelX = noise(noiseSeed)
+	let randVelX = noise(noiseSeed);
 	let randVelY = -noise(noiseSeed + 100);
 	targetVel = createVector(randVelX, randVelY);
 	targetVel.setMag(targetSpeed);
