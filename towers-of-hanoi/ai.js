@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file ai.js
 *   @brief File containing the functions to solve the towers of hanoi
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 29-Dec-2018
@@ -71,7 +71,7 @@ function getNeighbours(node) {
 			continue;
 		}
 		let plate = test[towerIndex].stack[len];
-		// console.log("Moving plate: ", plate);	
+		// console.log("Moving plate: ", plate);
 		for(let testIndex = 0; testIndex < 3; ++testIndex) {
 			// console.log("Towers (", towerIndex + 1, ",", testIndex + 1, ")");
 			if(testIndex == towerIndex) {
@@ -86,7 +86,7 @@ function getNeighbours(node) {
 
 				test[towerIndex].push(plate);
 				test[testIndex].pop();
-			} 
+			}
 		}
 	}
 	return neighbours;
@@ -121,7 +121,7 @@ function solveBFS(startPos) {
 		if(watchdog > 1000) {
 			console.log("watchdog has been activated");
 			return [];
-		} 
+		}
 
 		if(frontierNodes.length == 0) {
 			console.log("No solution");
@@ -155,7 +155,7 @@ function solveBFS(startPos) {
 				if(notChecked) {
 					neighbour.parent = currentNode;
 					tempFrontiers.push(neighbour);
-				}				
+				}
 			}
 			exploredNodes.push(currentNode);
 		}
@@ -165,7 +165,7 @@ function solveBFS(startPos) {
 		}
 	}
 	// console.log("Explored nodes: ", exploredNodes);
-	
+
 	let currentNode = goalNode;
 	let solution = [];
 	solution.push(goalNode);

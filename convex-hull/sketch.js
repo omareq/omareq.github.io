@@ -181,7 +181,7 @@ function splitSelectEvent() {
 /**
 *	Changes the direction the jarvis march algorithm selects new points for the
 *	convex hull depending on the value of the selectAngularDirection element
-*/ 
+*/
 function angularSelectEvent() {
 	selectVal = selectAngularDirection.value();
 	if(selectVal != angularDirection) {
@@ -195,7 +195,7 @@ function angularSelectEvent() {
 *
 *	@param hullArray {Array<p5.Vector>} Array of points that amke up the
 *		verticies of the hull.
-*	
+*
 *	@param colour {Integer} Value of the hue of the given hull from 0 to 100
 */
 function drawHull(hullArray, colour) {
@@ -221,7 +221,7 @@ function drawHull(hullArray, colour) {
 *
 *	@param hullArray {Array<p5.Vector>} Array of points that amke up the
 *		verticies of the hull.
-*	
+*
 *	@param colour {Integer} Value of the hue of the given hull from 0 to 100
 */
 function drawEdges(hullArray, colour) {

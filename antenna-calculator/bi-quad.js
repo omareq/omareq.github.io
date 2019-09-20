@@ -2,7 +2,7 @@
 *   Author:   Omar Essilfie-Quaye
 *   Email:    omareq08@gmail.com
 *   Date:     30-Jun-2018
-*   Program:  Calculating the dimensions of a bi-quad antenna depending on the 
+*   Program:  Calculating the dimensions of a bi-quad antenna depending on the
 *			  required transmission frequency.
 *
 *******************************************************************************/
@@ -63,7 +63,7 @@ let bi_quad_sketch = function(p5) {
 		form_out.w_length.value = w_length.toFixed(5);
 		form_out.h_length.value = h_length.toFixed(5);
 		form_out.d_length.value = d_length.toFixed(5);
-	  	
+
 	  	document.getElementById("bi_quad_output").style.display = "block";
 	  	//document.getElementById("helix_slider_div").style.display = "block"
 	  	p5.loop();
@@ -111,7 +111,7 @@ let bi_quad_sketch = function(p5) {
 			//reflector
 			let n = 1.4;
 			p5.rect(-2 * n * u, -n * u, 4 * n *u, 2 * n * u);
-			
+
 			//coaxial connector
 			p5.strokeWeight(3);
 			p5.ellipse(0, 4, 30, 30);
@@ -128,19 +128,19 @@ let bi_quad_sketch = function(p5) {
 			p5.line(2*u + 20, -20, u + 20, -u -20);
 			p5.strokeWeight(1);
 			p5.text("L1: " + l1.toFixed(4) + " m", 1.95 * u + 20, - 0.7 * u - 20);
-			
+
 			//l2
 			p5.strokeWeight(2);
 			p5.line(-2*u, u + 20 ,2*u, u + 20);
 			p5.strokeWeight(1);
 			p5.text("L2: " + l2.toFixed(4) + " m", 0, 0.95* u);
-			
+
 			//base reflector length
 			p5.strokeWeight(2);
 			p5.line(-2 * n * u, 1.2 * n * u + 20, 2 * n * u, 1.2 * n * u + 20);
 			p5.strokeWeight(1);
 			p5.text("BRL: " + h_length.toFixed(4) + " m", 0, 1.2 * n * u);
-			
+
 			//base reflector width
 			p5.textAlign(p5.LEFT);
 			p5.strokeWeight(2);

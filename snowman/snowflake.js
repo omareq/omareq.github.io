@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   @file snowman.js - Contains the class snowflake
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 24-Dec-2017

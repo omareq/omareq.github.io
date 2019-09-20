@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file sketch.js - Particle swarm optimiser, because nature is a great
 *     source of inspiration
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 24-Nov-2018
@@ -47,7 +47,7 @@ let x_step;
 let y_step;
 
 /**
-*   A gloabl vairable that stores the minimum value of the optimsed function 
+*   A gloabl vairable that stores the minimum value of the optimsed function
 *   that is displayed on the screen
 *
 *   @type{number}
@@ -55,7 +55,7 @@ let y_step;
 let min_val;
 
 /**
-*   A gloabl vairable that stores the maximum value of the optimsed function 
+*   A gloabl vairable that stores the maximum value of the optimsed function
 *   that is displayed on the screen
 *
 *   @type{number}
@@ -72,9 +72,9 @@ let the_swarm;
 /**
 *   The function that is going to optimised by the swarm
 *
-*   @param {number} x - The x coordinate at which the function will be 
+*   @param {number} x - The x coordinate at which the function will be
 *     evaluated
-*   @param {number} y - The y coordinate at which the function will be 
+*   @param {number} y - The y coordinate at which the function will be
 *     evaluated
 *
 *   @returns {number} A sinlge number providing the value of the function at
@@ -101,7 +101,7 @@ function setup () {
       next_val = func(x, y);
       surf_strip.push(next_val);
 
-      if (x !=0 && y!=0) {        
+      if (x !=0 && y!=0) {
         if(next_val < min_val) {
           min_val = next_val;
         }
@@ -112,7 +112,7 @@ function setup () {
         min_val = next_val;
         max_val = next_val;
         first = false;
-      }       
+      }
     }
     surface.push(surf_strip);
   }

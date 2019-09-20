@@ -57,7 +57,7 @@ function keyPressed() {
 			ninja.jump();
 		} if(key.toLowerCase() == "s"  || keyCode == DOWN_ARROW) {
 			ninja.drop();
-		} 
+		}
 	} else if(gameMode == endMode && keyCode == ENTER) {
 		gameMode = startMode;
 		ninja.reset();
@@ -86,7 +86,7 @@ function loadSpikes() {
 
 	function loadComplete(img) {
 		spikeImgs[0] = img;
-		spikeLoadCounter++;	
+		spikeLoadCounter++;
 		obstacle.setSprite(img);
 	}
 
@@ -118,7 +118,7 @@ function loadTileSprite(folder, index) {
 function loadTiles() {
 	function bgLoadComplete(img) {
 		bgTile = img;
-		tileLoadCounter++;	
+		tileLoadCounter++;
 		BGLoaded = true;
 	}
 
@@ -195,7 +195,7 @@ function loadingAnimation() {
 	let rw = width - 2*gap;
 	noFill();
 	rect(gap, height/2 - rh/2, rw, rh);
-	
+
 	fill(255);
 	noStroke();
 	let counter = ninjaLoadCounter + spikeLoadCounter + tileLoadCounter + soundLoadCounter;
@@ -239,7 +239,7 @@ function gameLoop() {
 		for(let x = fgx; x < width; x+= tileWidth) {
 			image(tileImgs[2], x, floorHeight, tileWidth, tileHeight);
 		}
-			
+
 	} else {
 		stroke(0);
 		strokeWeight(3);

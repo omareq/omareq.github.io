@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file ball.js
 *   @brief File containing the Ball class
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 02-Aug-2018
@@ -28,7 +28,7 @@ class Ball {
 		this.vx = vx;
 		this.vy = vy;
 		this.r = r;
-		this.m = m;	
+		this.m = m;
 		this.colour = color(255, 255, 255);
 	}
 

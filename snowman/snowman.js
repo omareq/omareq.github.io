@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   @file snowman.js - Contains the classes snowman and ball
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 24-Dec-2017
@@ -75,7 +75,7 @@ class ball {
     let currentY = this.pos.y + this.radius - this.currentRadius;
     let distance = dist(this.pos.x, currentY, flake.pos.x, flake.pos.y);
     let isHit = distance < this.currentRadius*this.widthStretcher + flake.r;
-    
+
     //only absrob snowflake if the snowman is still growing
     if(isHit && !this.isGrownUp()) {
       flake.reset();
@@ -112,7 +112,7 @@ class snowman {
     this.ballRadius = ballRadius;
 
     // an array to hold ball objects
-    this.balls = [];    
+    this.balls = [];
     // how much each ball get smaller by from bottom to top
     this.shrinkFactor = 0.8;
     // check to see if all the balls have been set up
@@ -153,7 +153,7 @@ class snowman {
     for(let i = 0; i < this.numBalls; i++) {
       if(this.balls[i].isHitBy(snowflake)) {
         return true;
-      }           
+      }
     }
     return false;
   }
@@ -213,7 +213,7 @@ class snowman {
     let eyeR = ball.radius / 12;
 
     fill(0);
-    let lEyeX = ball.pos.x - eyeOffsetX; 
+    let lEyeX = ball.pos.x - eyeOffsetX;
     ellipse(lEyeX, eyeY, eyeR, eyeR);
 
     let rEyeX = ball.pos.x + eyeOffsetX;
@@ -247,7 +247,7 @@ class snowman {
   /**
   * draws the snowman
   */
-  show() {    
+  show() {
     if(!this.gotSize) {
       this.calculateSize();
     }

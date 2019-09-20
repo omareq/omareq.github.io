@@ -68,7 +68,7 @@ let helix_sketch = function(p5) {
 		form_out.h_length.value = h_length.toFixed(5);
 		form_out.h_wire_length.value = h_wire_length.toFixed(5);
 		form_out.reflector_diameter.value = reflector_diameter.toFixed(5);
-	  	
+
 	  	document.getElementById("helix_output").style.display = "block";
 	  	document.getElementById("helix_slider_div").style.display = "block";
 	  	p5.loop();

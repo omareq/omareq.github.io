@@ -1,8 +1,8 @@
 /*******************************************************************************
-*   
+*
 *   @file sketch.js
 *   @brief Game of Life simulation
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 06-Jan-2019
@@ -78,7 +78,7 @@ let gridX = 75;
 *
 *	@type  {number}
 */
-let gridY = 75;	
+let gridY = 75;
 
 /**
 *	Stores the size of one grid cell
@@ -90,7 +90,7 @@ let size;
 /**
 *	Stores which grid is currently being displayed.  This allows for the rules
 *	to be applied on the sites of the alternate grid without changing the sites
-*	that are being read. 
+*	that are being read.
 *
 *	@type {boolean}
 */
@@ -155,7 +155,7 @@ function neighbours(grid, x, y) {
 				numNeighbours++;
 			}
 		}
-	}	
+	}
 	return numNeighbours;
 }
 
@@ -355,7 +355,7 @@ function draw() {
 					}
 					if(grid1[x][y] == 0 && numNeighbours == 3) {
 						grid2[x][y] = 1;
-					} 
+					}
 				}
 
 				if(grid2[x][y] == 1) {
@@ -367,7 +367,7 @@ function draw() {
 				if(!paused && frameCount % updateRate == 0) {
 					let numNeighbours = neighbours(grid2, x, y);
 					grid1[x][y] = grid2[x][y];
-					
+
 					if((grid2[x][y] == 1) && (numNeighbours < 2 || numNeighbours > 3)) {
 						grid1[x][y] = 0;
 					}
@@ -386,7 +386,7 @@ function draw() {
 			}
 		}
 	}
-	if(!paused && frameCount % updateRate == 0) { 
+	if(!paused && frameCount % updateRate == 0) {
 		usingGrid1 = !usingGrid1;
 	}
 }

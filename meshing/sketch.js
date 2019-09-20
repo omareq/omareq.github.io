@@ -75,7 +75,7 @@ function drawPoints(verticies) {
 *
 *	@param hullArray {Array<p5.Vector>} Array of points that amke up the
 *		verticies of the hull.
-*	
+*
 *	@param colour {Integer} Value of the hue of the given hull from 0 to 100
 */
 function drawHull(hullArray, colour) {
@@ -191,10 +191,10 @@ function setup() {
 	// for(let i = 0; i < myHull.length - 2; i++) {
 	// 	const v = new Vertex(myHull[i + 2].x, myHull[i + 2].y);
 	// 	verticies.push(v);
-		
+
 	// 	const face = new Face(verticies[0], verticies[i + 1], verticies[i + 2]);
 	// 	faces.push(face);
-		
+
 	// 	verticies[0].addFace(face);
 	// 	verticies[i + 1].addFace(face);
 	// 	verticies[i + 2].addFace(face);

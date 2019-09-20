@@ -1,4 +1,5 @@
 {
+    "extends": "eslint:recommended",
     "parserOptions": {
         "ecmaVersion": 6,
         "sourceType": "module",
@@ -14,6 +15,19 @@
         "qunit": true
     },
     "rules": {
+        "no-extra-parens": "all",
+        "valid-typeof": "true",
+
+        "curly": "all",
+        "no-extend-native": [2, {"exceptions": ["Object"]}],
+
+        "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+        "comma-style": [2, "last"],
+        "keyword-spacing": {"before": true, "after": true},
+        "new-parens"    : 2,
+        "no-lonely-if": 2,
+        "no-multiple-empty-lines": [2, {"max": 3, "maxBOF": 0,"maxEOF": 1}],
+        "no-trailing-spaces": 2,
         "semi": "error"
     }
 }

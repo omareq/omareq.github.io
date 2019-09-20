@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file heart.js
 *   @brief File containing the Heart class.
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 29-Mar-2017
@@ -79,9 +79,9 @@ class Heart {
 			let y2 = 5 * cos(2 * t);
 			let y3 = 2 * cos(3 * t);
 			let y4 = cos(4 * t);
-			
+
 			let y  = (y1 - y2 - y3 - y4);
-			let x  = 16 * pow(sin(t), 3);	
+			let x  = 16 * pow(sin(t), 3);
 
 			y /= 16;
 			x /= 16;
@@ -150,11 +150,11 @@ class Heart {
 			}
 		}
 
-		beginShape();		
+		beginShape();
 		for (let i = this.vertexes.length - 1; i >= 0; i--) {
 			vertex(this.vertexes[i].x, this.vertexes[i].y);
 		}
 		endShape(CLOSE);
-		pop();		
+		pop();
 	}
 }

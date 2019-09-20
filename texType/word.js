@@ -45,7 +45,7 @@ function Word(val, ypos) {
       fill(this.green);
       if(this.x > width * 0.6) {
         fill(this.amber);
-      } 
+      }
       if(this.x > width * 0.85) {
         fill(this.red);
       }

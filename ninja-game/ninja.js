@@ -23,7 +23,7 @@ class Ninja {
 		this.theta = 0;
 	}
 
-	reset() {		
+	reset() {
 		this.idleMode = 0;
 		this.runMode = 1;
 		this.jumpMode = 2;
@@ -75,10 +75,10 @@ class Ninja {
 				this.theta = 0;
 				this.omega = 0;
 			}
-		}	
+		}
 
 		this.moveCounter += 0.5;
-		this.moveCounter %= 10;	
+		this.moveCounter %= 10;
 	}
 
 	collideWith(obstacle) {

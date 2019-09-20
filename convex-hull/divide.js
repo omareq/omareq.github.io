@@ -80,7 +80,7 @@ function chunkArray(inputArray, chunkSize) {
 *	@param hullIndex {Integer} Select which hull to calculate from 0 to 2
 */
 function calculateHull(hullIndex) {
-	frameRate(calculateFrameRate);			
+	frameRate(calculateFrameRate);
 
 	const currentPoint = internalPoints[hullIndex][currentIndex];
 	const nextPoint = internalPoints[hullIndex][nextIndex];
@@ -117,7 +117,7 @@ function calculateHull(hullIndex) {
 	        index = 0;
 	        nextIndex = 0;
 	    }
-	}		
+	}
 }
 
 /**
@@ -130,7 +130,7 @@ function fuse() {
 		finalPoints.sort((a, b) => a.x - b.x);
 		finalHull.push(finalPoints[0]);
 	} else {
-		frameRate(calculateFrameRate + 10);			
+		frameRate(calculateFrameRate + 10);
 
 		const currentPoint = finalPoints[currentIndex];
 		const nextPoint = finalPoints[nextIndex];
@@ -204,7 +204,7 @@ function divideAndConquer() {
 				}
 				break;
 			}
-			
+
 			currentIndex = 0;
 			nextIndex = 1;
 			index = 2;
@@ -234,7 +234,7 @@ function divideAndConquer() {
 			drawHull(internalHulls[0], 0);
 			drawHull(internalHulls[1], 30);
 			drawHull(internalHulls[2], 60);
-			
+
 			fuse();
 			drawHull(finalHull, 90);
 		break;

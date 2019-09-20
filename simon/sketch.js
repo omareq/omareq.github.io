@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   @file sketch.js - Creating my own version of the Simon memory game
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 29-Oct-2018
@@ -170,7 +170,7 @@ function extendSequence(amount=1) {
 /**
 *   Function to begin the game
 */
-function startGame() {    
+function startGame() {
     showSequence = true;
     startMode = false;
 }
@@ -301,7 +301,7 @@ function draw() {
         text("To play classic Simon click C.  To play backwards Simon click B.",
          .5 * width, .5 * height);
         // text("", .5 * width, .5 * height);
-            
+
         text("Click to see sequence", .5 * width, .75 * height);
 
         if(score != -1) {

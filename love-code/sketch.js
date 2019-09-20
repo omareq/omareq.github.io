@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file sketch.js
 *   @brief Matrix rain code but with hearts
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 29-Mar-2017

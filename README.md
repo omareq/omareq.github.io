@@ -10,7 +10,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 
 ## Todo
 
-- [ ]   Testing, make sure that all js files are linked in index.html
+- [ ]   Testing, make sure that all js files are linked in index.html, image size, spell check, markdown validator, html validator
 - [ ]	Finish Antenna Calculator
 - [ ]	Finish Ninja Game
 - [ ] 	Add Caesar Cipher

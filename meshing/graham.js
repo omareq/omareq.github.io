@@ -18,7 +18,7 @@
 *
 *	@param o {p5.Vector}
 *
-*	@returns {Float} 
+*	@returns {Float}
 */
 function crossZ(a, b, o) {
 	let va = p5.Vector.sub(a, o);

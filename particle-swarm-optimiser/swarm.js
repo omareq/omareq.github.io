@@ -38,7 +38,7 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 			this.check_global_fitness(pos, fitness);
 		} else {
 			this.best_pos = pos.copy();
-			this.best_fitness = fitness;	
+			this.best_fitness = fitness;
 		}
 
 	}
@@ -92,7 +92,7 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 
 			n_pos = createVector(nx, ny);
 
-			let fitness = this.fitness_func(n_pos.x, n_pos.y);			
+			let fitness = this.fitness_func(n_pos.x, n_pos.y);
 			// console.log("nx: " + n_pos.x + " ny: " + n_pos.y + " f: " + fitness )
 
 			if(fitness < this.particles[i].fitness) {
@@ -107,7 +107,7 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 		this.add_history();
 
 		// console.log("generation: " + this.counter +
-		// 	" best fitness: " + this.best_fitness + 
+		// 	" best fitness: " + this.best_fitness +
 		// 	" x: " + this.best_pos.x + " y" + this.best_pos.y);
 	};
 }

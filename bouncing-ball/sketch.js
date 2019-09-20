@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   @file sketch.js
 *   @brief Simulation of bouncing ball physics
-*   
+*
 *   @author <a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye </a>
 *   @version 1.0
 *   @date 02-Aug-2018
@@ -65,7 +65,7 @@ function draw() {
 	pop();
 
 	let wallWidth = 4;
-	// Ceilling	
+	// Ceilling
 	push();
 	stroke(0, 255, 0);
 	strokeWeight(wallWidth);
@@ -87,7 +87,7 @@ function draw() {
 	stroke(255, 0, 0);
 	strokeWeight(wallWidth);
 	line(width, 0, width, height);
-	pop();	
+	pop();
 
 	// Left Wall
 	push();
