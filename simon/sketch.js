@@ -227,13 +227,13 @@ function mousePressed() {
         if(nextInput) {
           nextInput = false;
 
-            if(mx < .5 * width && my < .5 * height) {
+            if(mx < 0.5 * width && my < 0.5 * height) {
                 input.push(1);
-            } else if(mx > .5 * width && my < .5 * height) {
+            } else if(mx > 0.5 * width && my < 0.5 * height) {
                 input.push(2);
-            } else if(mx < .5 * width && my > .5 * height) {
+            } else if(mx < 0.5 * width && my > 0.5 * height) {
                 input.push(3);
-            } else if(mx > .5 * width && my > .5 * height) {
+            } else if(mx > 0.5 * width && my > 0.5 * height) {
                 input.push(4);
             }
 
@@ -256,9 +256,9 @@ function setup() {
     noStroke();
     let size = 0;
     if(windowHeight > windowWidth) {
-        size = .95 * windowWidth;
+        size = 0.95 * windowWidth;
     } else {
-        size = .95 * windowHeight;
+        size = 0.95 * windowHeight;
     }
     let canvas = createCanvas(size, size);
     canvas.parent('sketch');
@@ -299,14 +299,14 @@ function draw() {
         textSize(0.035 * height);
         fill(255);
         text("To play classic Simon click C.  To play backwards Simon click B.",
-         .5 * width, .5 * height);
-        // text("", .5 * width, .5 * height);
+         0.5 * width, 0.5 * height);
+        // text("", 0.5 * width, 0.5 * height);
 
-        text("Click to see sequence", .5 * width, .75 * height);
+        text("Click to see sequence", 0.5 * width, 0.75 * height);
 
         if(score != -1) {
-            textSize(.2 * height);
-            text(score, .5 * width, .25 * height);
+            textSize(0.2 * height);
+            text(score, 0.5 * width, 0.25 * height);
         }
       return;
     }

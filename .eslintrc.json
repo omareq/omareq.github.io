@@ -21,6 +21,8 @@
         "curly": "all",
         "no-else-return": 2,
         "no-extend-native": [2, {"exceptions": ["Object"]}],
+        "no-extra-label": 2,
+        "no-floating-decimal": 2,
 
         "brace-style": [2, "1tbs", { "allowSingleLine": true }],
         "comma-style": [2, "last"],

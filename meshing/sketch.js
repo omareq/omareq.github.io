@@ -162,7 +162,7 @@ function setup() {
 	} else {
 		cnvSize = windowWidth;
 	}
-	let cnv = createCanvas(cnvSize, .7 * cnvSize);
+	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
 
 
