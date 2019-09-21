@@ -119,34 +119,35 @@ function mousePressed() {
 			towerSelected = 0;
 			topPlate = 0;
 			return;
-		} else {
-			if(towerSelected == 1) {
-				if(towerPressed == 2 && tower2.push(topPlate)) {
-					tower1.pop();
-				} else if(towerPressed == 3 && tower3.push(topPlate)) {
-					tower1.pop();
-				}
-			} else if(towerSelected == 2) {
-				if(towerPressed == 1 && tower1.push(topPlate)) {
-					tower2.pop();
-				} else if(towerPressed == 3 && tower3.push(topPlate)) {
-					tower2.pop();
-				}
-			} else if(towerSelected == 3) {
-				if(towerPressed == 1 && tower1.push(topPlate)) {
-					tower3.pop();
-				} else if(towerPressed == 2 && tower2.push(topPlate)) {
-					tower3.pop();
-				}
-			}
-			tower1.isPressed = false;
-			tower2.isPressed = false;
-			tower3.isPressed = false;
-			towerSelected = 0;
-			topPlate = 0;
 		}
+
+		if(towerSelected == 1) {
+			if(towerPressed == 2 && tower2.push(topPlate)) {
+				tower1.pop();
+			} else if(towerPressed == 3 && tower3.push(topPlate)) {
+				tower1.pop();
+			}
+		} else if(towerSelected == 2) {
+			if(towerPressed == 1 && tower1.push(topPlate)) {
+				tower2.pop();
+			} else if(towerPressed == 3 && tower3.push(topPlate)) {
+				tower2.pop();
+			}
+		} else if(towerSelected == 3) {
+			if(towerPressed == 1 && tower1.push(topPlate)) {
+				tower3.pop();
+			} else if(towerPressed == 2 && tower2.push(topPlate)) {
+				tower3.pop();
+			}
+		}
+		tower1.isPressed = false;
+		tower2.isPressed = false;
+		tower3.isPressed = false;
+		towerSelected = 0;
+		topPlate = 0;
 	}
 }
+
 
 /**
 *	Function to handle key presses.  Will toggle autosolve or reset towers.

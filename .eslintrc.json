@@ -19,6 +19,7 @@
         "valid-typeof": "true",
 
         "curly": "all",
+        "no-else-return": 2,
         "no-extend-native": [2, {"exceptions": ["Object"]}],
 
         "brace-style": [2, "1tbs", { "allowSingleLine": true }],
