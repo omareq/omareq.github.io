@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: 0 */
 /*******************************************************************************
 *   Author:   Omar Essilfie-Quaye
 *   Email:    omareq08@gmail.com

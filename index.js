@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: 0 */
 let projects;
 
 searchEvent = function(event) {

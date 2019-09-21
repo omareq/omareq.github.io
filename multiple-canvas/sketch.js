@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: 0 */
 /*******************************************************************************
 *   @file sketch.js - Figuring out how todraw multiple canvases to one webpage
 *

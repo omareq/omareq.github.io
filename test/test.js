@@ -4,10 +4,11 @@ QUnit.test("Hello Test", function(assert) {
 
 function is_valid_JSON(str) {
 	if(str == "") return false;
-	str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
-	str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
-	str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
-	return (/^[\],:{}\s]*$/).test(str);
+    json_str = str;
+	json_str = json_str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
+	json_str = json_str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
+	json_str = json_str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
+	return (/^[\],:{}\s]*$/).test(json_str);
 }
 
 QUnit.test("Validate Projects.json", function(assert) {
