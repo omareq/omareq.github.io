@@ -62,15 +62,15 @@ function getNeighbours(node) {
 	test2.setStack(node.state[1]);
 	test3.setStack(node.state[2]);
 
-	test = [test1, test2, test3];
+	testArr = [test1, test2, test3];
 	// console.log("Test Array: ", test);
 
 	for(let towerIndex = 0; towerIndex < 3; ++towerIndex) {
-		let len = test[towerIndex].stackTop;
+		let len = testArr[towerIndex].stackTop;
 		if(len == -1) {
 			continue;
 		}
-		let plate = test[towerIndex].stack[len];
+		let plate = testArr[towerIndex].stack[len];
 		// console.log("Moving plate: ", plate);
 		for(let testIndex = 0; testIndex < 3; ++testIndex) {
 			// console.log("Towers (", towerIndex + 1, ",", testIndex + 1, ")");
@@ -79,13 +79,13 @@ function getNeighbours(node) {
 				continue;
 			}
 
-			if(test[testIndex].push(plate)) {
-				test[towerIndex].pop();
-				validNeighbour = new Pos(test[0], test[1], test[2]);
+			if(testArr[testIndex].push(plate)) {
+				testArr[towerIndex].pop();
+				validNeighbour = new Pos(testArr[0], testArr[1], testArr[2]);
 				neighbours.push(validNeighbour);
 
-				test[towerIndex].push(plate);
-				test[testIndex].pop();
+				testArr[towerIndex].push(plate);
+				testArr[testIndex].pop();
 			}
 		}
 	}

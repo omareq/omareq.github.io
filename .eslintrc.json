@@ -26,6 +26,10 @@
         "no-implicit-coercion": 2,
         "no-loop-func": 2,
         "no-multi-spaces": 2,
+        "no-native-reassign": 2,
+        "no-new-func": 2,
+        "no-new-wrappers": 2,
+        "no-new": 2,
 
         "brace-style": [2, "1tbs", { "allowSingleLine": true }],
         "comma-style": [2, "last"],
