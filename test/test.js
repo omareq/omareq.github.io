@@ -41,7 +41,7 @@ QUnit.test("Validate Project index.html", function(assert) {
     const projects_json = require("../projects.json");
     for(let id in projects_json.projects) {
         const path = "." + projects_json.projects[id]["demo-url"];
-        const index_exists = file_exists(path  + "/index.html");
+        const index_exists = file_exists(path + "/index.html");
         assert.equal(index_exists, true, path + "/index.html url validation");
     }
 });
@@ -68,7 +68,7 @@ QUnit.test("Validate Docs index.html", function(assert) {
     const projects_json = require("../projects.json");
     for(let id in projects_json.projects) {
         const path = "." + projects_json.projects[id]["docs-url"];
-        const index_exists = file_exists(path  + "/index.html");
+        const index_exists = file_exists(path + "/index.html");
         assert.equal(index_exists, true, path + "/index.html url validation");
     }
 });

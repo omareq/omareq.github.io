@@ -21,7 +21,7 @@ let dt;
 function randBall() {
 	let randvx = random(-50, 50);
 	let randvy = random(-50, 50);
-	let randr  = random(3, 20);
+	let randr = random(3, 20);
 	return new Ball(mouseX, height - mouseY, randvx, randvy, randr, 1);
 }
 
@@ -65,7 +65,7 @@ function draw() {
 	pop();
 
 	let wallWidth = 4;
-	// Ceilling
+	// Ceiling
 	push();
 	stroke(0, 255, 0);
 	strokeWeight(wallWidth);

@@ -64,7 +64,7 @@ let antState;
 *
 *   @type {number}
 */
-const up    = 0;
+const up = 0;
 
 /**
 *   A global constant that denotes one of the four possible ant directions in
@@ -82,7 +82,7 @@ const right = 1;
 *
 *   @type {number}
 */
-const down  = 2;
+const down = 2;
 
 /**
 *   A global constant that denotes one of the four possible ant directions in
@@ -91,7 +91,7 @@ const down  = 2;
 *
 *   @type {number}
 */
-const left  = 3;
+const left = 3;
 
 /**
 *   Turn left changing the ants bearing.

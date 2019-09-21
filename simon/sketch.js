@@ -311,10 +311,10 @@ function draw() {
       return;
     }
 
-    alpha[greenIndex]  = offAlpha;
-    alpha[redIndex]    = offAlpha;
+    alpha[greenIndex] = offAlpha;
+    alpha[redIndex] = offAlpha;
     alpha[yellowIndex] = offAlpha;
-    alpha[blueIndex]   = offAlpha;
+    alpha[blueIndex] = offAlpha;
 
     if(showSequence) {
         let sequenceVal = sequence[position];
@@ -339,10 +339,10 @@ function draw() {
         }
 
         if((frameCount - frameOffset) % frequency > delayStart) {
-            alpha[greenIndex]  = offAlpha;
-            alpha[redIndex]    = offAlpha;
+            alpha[greenIndex] = offAlpha;
+            alpha[redIndex] = offAlpha;
             alpha[yellowIndex] = offAlpha;
-            alpha[blueIndex]   = offAlpha;
+            alpha[blueIndex] = offAlpha;
         }
     } else if(inputMode) {
         let inputVal = input[input.length - 1];

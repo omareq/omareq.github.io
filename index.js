@@ -117,7 +117,7 @@ append_card_layout = function(end_card) {
 
 		console.log("Creating Project Card " + i);
 
-		let prev_card  = "#project-card-" + (i-1);
+		let prev_card = "#project-card-" + (i-1);
 		if(i == 0) {
 			prev_card = card_id;
 		}

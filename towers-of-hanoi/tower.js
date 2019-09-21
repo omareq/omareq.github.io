@@ -135,7 +135,7 @@ class Tower {
 
 			if(i > 0 && arr[i] > arr[i - 1]) {
 				this.stack = backup;
-				return  false;
+				return false;
 			}
 			this.stack.push(arr[i]);
 			this.stackTop ++;

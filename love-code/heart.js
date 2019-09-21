@@ -80,8 +80,8 @@ class Heart {
 			let y3 = 2 * cos(3 * t);
 			let y4 = cos(4 * t);
 
-			let y  = (y1 - y2 - y3 - y4);
-			let x  = 16 * pow(sin(t), 3);
+			let y = (y1 - y2 - y3 - y4);
+			let x = 16 * pow(sin(t), 3);
 
 			y /= 16;
 			x /= 16;

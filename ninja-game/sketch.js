@@ -55,7 +55,7 @@ function keyPressed() {
 	} else if(gameMode == playMode) {
 		if(key.toLowerCase() == "w" || keyCode == UP_ARROW) {
 			ninja.jump();
-		} if(key.toLowerCase() == "s"  || keyCode == DOWN_ARROW) {
+		} if(key.toLowerCase() == "s" || keyCode == DOWN_ARROW) {
 			ninja.drop();
 		}
 	} else if(gameMode == endMode && keyCode == ENTER) {

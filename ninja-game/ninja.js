@@ -38,7 +38,7 @@ class Ninja {
 	}
 
 	setSprites(spriteIdle, spriteRun, spriteJump) {
-		this.spriteRun  = spriteRun;
+		this.spriteRun = spriteRun;
 		this.spriteJump = spriteJump;
 		this.spriteIdle = spriteIdle;
 		this.spritesLoaded = true;

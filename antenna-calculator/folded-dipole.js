@@ -145,7 +145,7 @@ let folded_dipole_sketch = function(p5) {
 			p5.line(w2 - d_length, h2 - radius, w2 - d_length, h2 - dim_space);
 			p5.line(w2 + d_length, h2 - radius, w2 + d_length, h2 - dim_space);
 			p5.strokeWeight(1);
-			p5.text("c: " + c.toFixed(3) + " m", w2, h2 - space  - txt_size);
+			p5.text("c: " + c.toFixed(3) + " m", w2, h2 - space - txt_size);
 
 			// b
 			p5.strokeWeight(2);

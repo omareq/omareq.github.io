@@ -24,7 +24,7 @@ function setup() {
 	let colWidth = width/cols;
 	for(let i = 0; i < cols; i++) {
 		let colLength = floor(random(2, 10));
-		let colSpeed  = random(0.8, 10);
+		let colSpeed = random(0.8, 10);
 		rain.push(new Rain(i,
 		  colWidth,
 		  colLength,

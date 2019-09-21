@@ -47,7 +47,7 @@ class ball {
   grow(radius) {
     if(this.currentRadius < this.radius) {
       this.currentRadius += radius;
-      this.currentRadius  = constrain(this.currentRadius, 0, this.radius);
+      this.currentRadius = constrain(this.currentRadius, 0, this.radius);
     }
   }
 
@@ -96,14 +96,14 @@ class ball {
 }
 
 /**
-* Class containing all the information necessary for a snowmn
+* Class containing all the information necessary for a snowmen
 */
 class snowman {
   /**
   * snowman constructor function
   *
   * @param {p5.Vector} pos - Location of the bottom of the snowman
-  * @param {nummber} numBalls - number of balls used tomake up the snowman
+  * @param {number} numBalls - number of balls used to make up the snowman
   * @param {number} ballRadius - Size of the largest ball
   */
   constructor(pos, numBalls, ballRadius) {
@@ -203,7 +203,7 @@ class snowman {
   }
 
   /**
-  * gives the snowman a wnoderful face :-)
+  * gives the snowman a wonderful face :-)
   */
   addFace(ball) {
     // eyes
@@ -256,7 +256,7 @@ class snowman {
       this.balls[i].show();
     }
 
-    // if the last ball if grown up then the whole snowan is done
+    // if the last ball if grown up then the whole snowman is done
     if(this.balls[this.numBalls - 1].isGrownUp()) {
       this.addArms(this.balls[this.numBalls - 2]);
       this.addFace(this.balls[this.numBalls - 1]);

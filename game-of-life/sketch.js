@@ -280,7 +280,7 @@ function drawMenu() {
 	text("Click P to Pause", 1.02 * height, 0.05 * height);
 
 	fill(155);
-	text("Click D to Delete All", 1.02 * height, 0.05 * 3 *  height);
+	text("Click D to Delete All", 1.02 * height, 0.05 * 3 * height);
 	text("Click R to Randmoise", 1.02 * height, 0.05 * 5 * height);
 
 	fill(155);
