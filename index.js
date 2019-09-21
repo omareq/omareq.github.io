@@ -64,9 +64,13 @@ insert_cards = function(start_card, end_card) {
 		let obj_keys = Object.keys(projects);
 		let rand_key, rand_project, card_id;
 
+		const filter_func = function(el) {
+			return el !== rand_key;
+		};
+
 		for(let i = start_card; i < end_card; i++) {
 	        rand_key = obj_keys[Math.floor(Math.random() * obj_keys.length)];
-	        obj_keys = obj_keys.filter( el => el !== rand_key);
+	        obj_keys = obj_keys.filter(filter_func);
 	        rand_project = projects[rand_key];
 
 

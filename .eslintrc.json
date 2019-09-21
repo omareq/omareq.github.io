@@ -23,6 +23,8 @@
         "no-extend-native": [2, {"exceptions": ["Object"]}],
         "no-extra-label": 2,
         "no-floating-decimal": 2,
+        "no-implicit-coercion": 2,
+        "no-loop-func": 2,
 
         "brace-style": [2, "1tbs", { "allowSingleLine": true }],
         "comma-style": [2, "last"],
