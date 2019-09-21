@@ -6,7 +6,7 @@ class Obstacle {
 		this.vx = vx;
 		this.w = w;
 		this.h = h;
-		this.img;
+		this.img = null;
 		this.spriteLoaded = false;
 	}
 

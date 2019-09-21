@@ -6,8 +6,8 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 	this.particles = [];
 	this.steps = steps;
 	this.counter = 0;
-	this.best_fitness;
-	this.best_pos;
+	this.best_fitness = null;
+	this.best_pos = null;
 
 	this.p_momentum = 0.5;
 	this.p_personal = 2;
