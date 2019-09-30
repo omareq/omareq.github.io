@@ -281,7 +281,7 @@
             "vid-url": "vids/p_017.mp4"
         },
         "p_018": {
-            "brief": "A Simple strategy game where you have to flood the whole board with one colour (INCOMPLETE)",
+            "brief": "A Simple strategy game where you have to flood the whole board with one colour",
             "demo-url": "/flood-it",
             "docs-url": "/flood-it/docs",
             "gif-url": "imgs/p_018.gif",

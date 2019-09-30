@@ -18,19 +18,43 @@ class Grid {
     /**
      * Constructs for the Grid object.
      *
-     * @param      {Integer}   size               The number of rows and columns
-     * @param      {Integer}   numColours         The number of possible colours
-     * @param      {boolean}   [randomise=false]  If the grid should be given a
-     *  random initial value
+     * @param      {Integer}  gridSize            The number of rows and columns
+     * @param      {Integer}  numColours          The number of possible colours
+     * @param      {Float}    x                   Horizontal position of the
+     *                                            grid in pixels
+     * @param      {Float}    y                   Vertical position of the grid
+     *                                            in pixels
+     * @param      {Float}    sizePixels          Size of the grid in pixels
+     * @param      {boolean}  [randomise=false]   If the grid should be given a
+     *                                            random initial value
+     * @param      {boolean}  [showNumbers=true]  The show numbers flag
      */
-    constructor(size, numColours, randomise=true) {
-        this.size = size;
+    constructor(gridSize,
+      numColours,
+      x, y,
+      sizePixels,
+      randomise = true,
+      showNumbers = true) {
+
+        this.gridSize = gridSize;
         this.numColours = numColours;
+        this.x = x;
+        this.y = y;
+        this.sizePixels = sizePixels;
+        this.boxSize = this.sizePixels / this.gridSize;
+        this.showNumbers = showNumbers;
+
+        this.lastRow = -1;
+        this.lastCol = -1;
+        this.visited = [];
+        this.frontier = [[0, 0]];
+        this.maxclick = 50.0 * this.gridSize * this.numColours;
+        this.maxclick = Math.floor(this.maxclick / 168) + 1;
 
         this.grid = [];
-        for(let row = 0; row < this.size; ++row) {
+        for(let row = 0; row < this.gridSize; ++row) {
             this.grid.push([]);
-            for(let col = 0; col < this.size; ++ col) {
+            for(let col = 0; col < this.gridSize; ++col) {
                 this.grid[row].push(0);
             }
         }
@@ -41,35 +65,270 @@ class Grid {
     }
 
     /**
+     * Finds the colour of the tile at the given position in pixels.
+     *
+     * @param      {Integer}  xPos    The x position in pixels
+     * @param      {Integer}  yPos    The y position in pixels
+     * @return     {Integer}  Number representing the colour of the tile.
+     */
+    colourAt(xPos, yPos) {
+        const lastRow = Math.floor(yPos / this.boxSize);
+        const lastCol = Math.floor(xPos / this.boxSize);
+        return this.grid[lastRow][lastCol];
+    }
+
+    /**
+     * Finds the Manhattan neighbours of a given tile in the grid
+     *
+     * @param      {Array}  gridIndex  The grid index values in an array.  The
+     *                                 first value of each index is the row
+     *                                 index and the second value is the column
+     *                                 index.
+     * @return     {Array}  The index values of all the neighbours as a 2D array
+     */
+    getNeighbours(gridIndex) {
+        const rowIndex = gridIndex[0];
+        const colIndex = gridIndex[1];
+
+        // Manhattan directions
+        // Add diagonal directions to get faster fill
+        let directions = [[0, 1],
+                          [0, -1],
+                          [1, 0],
+                          [-1, 0]];
+
+        let neighbourList = [];
+        for(let i = 0; i < directions.length; ++i) {
+            const neighbourRow = rowIndex + directions[i][0];
+            const neighbourCol = colIndex + directions[i][1];
+
+            if(neighbourRow < 0 || neighbourRow >= this.gridSize) {
+                continue;
+            }
+
+            if(neighbourCol < 0 || neighbourCol >= this.gridSize) {
+                continue;
+            }
+
+            neighbourList.push([neighbourRow, neighbourCol]);
+        }
+        return neighbourList;
+    }
+
+    /**
+     * Determines if the given tile is the colour of any of the values in the
+     * wanted colour list stored in the object.  This wanted colour list is
+     * determined when the mouse is clicked and is given by the colour value of
+     * the tile at the cursor location as well as the colour value of the tile
+     * at the top left position (this.grid[0][0]).
+     *
+     * @param      {Array}   tileIndex  The tile index with the first value
+     *                                  being the row index and the second value
+     *                                  being the column index
+     * @return     {boolean}  true when the given tile is one of the colours in
+     *                        the this.wantedColours array.
+     * @see colourAt
+     */
+    tileHasColour(tileIndex) {
+        const rowIndex = tileIndex[0];
+        const colIndex = tileIndex[1];
+        const checkingColour = this.grid[rowIndex][colIndex];
+
+        for(let i = 0; i < this.wantedColours.length; ++i) {
+            if(checkingColour == this.wantedColours[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determines if the given tile has been previously visited during the flood
+     * fill algorithm.  This is done my comparing the given index to an array
+     * of indices of previously traversed tiles in the grid.  This array is
+     * updated as each tile is "explored" and is reset to [] every time the
+     * mouse is pressed at the beginning of this.fill.
+     *
+     * @param      {Array}   tileIndex  The tile index with the first value
+     *                                  being the row index and the second value
+     *                                  being the column index
+     * @return     {boolean}  { description_of_the_return_value }
+     *
+     * @see fill
+     * @see notBeenNeighbour
+     */
+    notBeenVisited(tileIndex) {
+        const rowIndex = tileIndex[0];
+        const colIndex = tileIndex[1];
+
+        for(let i = 0; i < this.visited.length; ++i) {
+            if(tileIndex[0] == this.visited[i][0] && tileIndex[1] == this.visited[i][1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Determines if the given tile is already a neighbour encountered in the
+     * previous steps of the flood fill algorithm.  This is done my comparing
+     * the given index to an array of indices of previously traversed tiles in
+     * the grid.  This array is updated as each tile is encountered as a
+     * neighbour to an explored tile and is reset to [] every time the
+     * mouse is pressed at the beginning of this.fill.
+     *
+     * @param      {Array}   tileIndex  The tile index with the first value
+     *                                   being the row index and the second value
+     *                                   being the column index
+     * @return     {boolean}  { description_of_the_return_value }
+     *
+     * @see fill
+     * @see notBeenVisited
+     */
+    notBeenNeighbour(tileIndex) {
+        const rowIndex = tileIndex[0];
+        const colIndex = tileIndex[1];
+
+        if(this.neighbours.length == 0) {
+            return true;
+        }
+
+        for(let i = 0; i < this.neighbours.length; ++i) {
+            if(tileIndex[0] == this.neighbours[i][0] && tileIndex[1] == this.neighbours[i][1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Implements the flood fill algorithm
+     *
+     * @param      {Integer}  selectedColour  Number representing the selected
+     *                                        colour
+     * @return     {Integer}  Integer indicating the success condition of the
+     *                        function.  The only error condition resulting in
+     *                        -1 occurs when the selected colour is equal to the
+     *                        colour of the top left tile (this.grid[0][0]). All
+     *                        other condition result in success and return 0.
+     */
+    fill(selectedColour) {
+        const prevColour = this.grid[0][0];
+        if(selectedColour == prevColour) {
+            return -1;
+        }
+        this.wantedColours = [selectedColour, prevColour];
+        let boundColourFilter = this.tileHasColour.bind(this);
+        let boundVisitFilter = this.notBeenVisited.bind(this);
+        let boundNeighbourFilter = this.notBeenNeighbour.bind(this);
+        this.frontier = [[0,0]];
+        this.visited = [];
+
+        let watchdog = 0;
+        while(this.frontier.length) {
+            watchdog++;
+            if(watchdog > 100) {
+                break;
+            }
+            console.log("\nLOOP COUNT: ", watchdog, "\n");
+
+            this.neighbours = [];
+            for(let i = this.frontier.length - 1; i >= 0; --i) {
+                const frontierRow = this.frontier[i][0];
+                const frontierCol = this.frontier[i][1];
+                const currentColour = this.grid[frontierRow][frontierCol];
+                this.grid[frontierRow][frontierCol] = selectedColour;
+
+                if(currentColour != prevColour) {
+                    continue;
+                }
+
+                let currentNeighbours = this.getNeighbours(this.frontier[i]);
+                let colourFilter = currentNeighbours.filter(boundColourFilter);
+                let visitFilter = colourFilter.filter(boundVisitFilter);
+                let finalNeighbours = visitFilter.filter(boundNeighbourFilter);
+
+                this.neighbours = this.neighbours.concat(finalNeighbours);
+
+                this.visited.push(this.frontier.splice(i, 1));
+            }
+            console.log("Visited: ", this.visited);
+            console.log("Neighbours: ", this.neighbours);
+
+            this.frontier = [];
+            this.frontier = this.frontier.concat(this.neighbours);
+            console.log("New Frontier: ", this.frontier);
+        }
+        console.log("Exit");
+        return 0;
+    }
+
+    /**
      * Method that randomly selects colours for each tile in the grid
      */
     randomiseGrid() {
-        for(let row = 0; row < this.size; ++row) {
-            for(let col = 0; col < this.size; ++ col) {
-                this.grid[row][col] = Math.floor(Math.random() * this.numColours);
+        for(let row = 0; row < this.gridSize; ++row) {
+            for(let col = 0; col < this.gridSize; ++ col) {
+                const newColor = Math.floor(Math.random() * this.numColours);
+                this.grid[row][col] = newColor;
             }
         }
     }
 
     /**
-     * Method that draws the grid in the given position at the given size
+     * Determines if all of the grid has the same colour.
      *
-     * @param      {Float}   x       Horizontal position of the grid
-     * @param      {Float}   y       Vertical position of the grid
-     * @param      {Float}   s       Size of the grid in pixels
+     * @return     {boolean}  true when the whole grid is the same colour
      */
-    draw(x, y, s) {
-        const boxSize = s / this.size;
+    winState() {
+        const firstColour = this.grid[0][0];
+        for(let row = 0; row < this.gridSize; ++row) {
+            for(let col = 0; col < this.gridSize; ++col) {
+                if(this.grid[row][col] != firstColour) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Toggle the internal state of the show numbers flag
+     */
+    toggleShowNumbers() {
+        this.showNumbers = !this.showNumbers;
+    }
+
+    /**
+     * Method that draws the grid in the given position at the given dimensions
+     */
+    draw() {
+        const halfBoxSize = 0.5 * this.boxSize;
+
+        if(this.showNumbers) {
+            textSize(halfBoxSize);
+            textAlign(CENTER, CENTER);
+        }
 
         push();
         colorMode(HSB, 100);
         noStroke();
-        for(let row = 0; row < this.size; ++row) {
-            for(let col = 0; col < this.size; ++ col) {
+        for(let row = 0; row < this.gridSize; ++row) {
+            for(let col = 0; col < this.gridSize; ++ col) {
+                const yPos = this.y + row * this.boxSize;
+                const xPos = this.x + col * this.boxSize;
+
                 const colourVal = this.grid[row][col];
                 const hue = 100 * colourVal / this.numColours;
                 fill(hue, 100, 100);
-                rect(x + row * boxSize, y + col * boxSize, boxSize, boxSize);
+                rect(xPos, yPos, this.boxSize, this.boxSize);
+
+                if(this.showNumbers) {
+                    push();
+                    fill(hue, 25, 75);
+                    text(colourVal, xPos + halfBoxSize, yPos + halfBoxSize);
+                    pop();
+                }
             }
         }
         pop();
