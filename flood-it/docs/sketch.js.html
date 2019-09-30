@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sketch.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sketch.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *	@file sketch.js A Simple strategy game where you have to flood the whole
+ *  board with one colour
+ *
+ *	@author Omar Essilfie-Quaye &lt;omareq08@gmail.com>
+ *	@version 1.0
+ *	@date 30-September-2019
+ *
+*******************************************************************************/
+
+/**
+ * The current number of cols and rows in the grid
+ *
+ * @type       {Integer}
+ */
+let gridSize = 10;
+
+/**
+ * The current number of colours available to fill tiles in the grid
+ *
+ * @type       {number}
+ */
+let numColours = 5;
+
+/**
+ * The instance of the Grid object
+ *
+ * @type       {Grid}
+ * @see Grid
+ */
+let grid = undefined;
+
+/**
+ * Handler for the reset button
+ *
+ * @type       {p5.element}
+ */
+let resetButton = undefined;
+
+/**
+ * Handler for the show numbers toggle button
+ *
+ * @type       {p5.element}
+ */
+let numbersButton = undefined;
+
+/**
+ * Show numbers state flag
+ *
+ * @type       {boolean}
+ */
+let showNumbers = false;
+
+/**
+ * Stores the number of clicks the player has taken on their way to the final
+ * state
+ *
+ * @type       {Integer}
+ */
+let clicks = undefined;
+
+/**
+ * Show / Hide numbers event handler
+ */
+function numberToggle() {
+    if(showNumbers == true) {
+        numbersButton.elt.textContent = "Show Numbers";
+    } else {
+        numbersButton.elt.textContent = "Hide Numbers";
+    }
+
+    grid.toggleShowNumbers();
+    showNumbers = !showNumbers;
+}
+
+/**
+ * Mouse down event handler.  Accesses the grid to request the colour of the
+ * tile at the cursor location.  Uses this colour to implement the next step in
+ * the fill process.  Finally checks to see if the state of the grid matches
+ * the end game state or if the game has ended due to an excess of clicks from
+ * the player.
+ */
+function mousePressed() {
+    if(mouseX &lt; 0 || mouseX > width || mouseY &lt; 0 || mouseY > height) {
+        return;
+    }
+    const selectedColour = grid.colourAt(mouseX, mouseY);
+    const failState = grid.fill(selectedColour);
+    if(!failState) {
+        clicks++;
+        console.log("Clicks: ", clicks, " / ", grid.maxclick);
+        if (grid.winState()) {
+            // game over through win
+            console.log("Congratulations You Won The Game\n");
+            reset();
+        } else if(clicks >= grid.maxclick) {
+            // game over through loss
+            console.log("Unfortunately You Lost The Game\n");
+            reset();
+        }
+    }
+}
+
+/**
+ * Reset the grid and all game states
+ */
+function reset() {
+    const x = 0;
+    const y = 0;
+    const randomise = true;
+    grid = new Grid(gridSize, numColours, x, y, width, randomise, showNumbers);
+    clicks = 0;
+}
+
+/**
+ *   p5.js setup function, creates canvas.
+ */
+function setup() {
+	let cnvSize;
+	if(windowWidth > windowHeight) {
+		cnvSize = 0.7 * windowHeight;
+	} else {
+		cnvSize = 0.7 * windowWidth;
+	}
+	let cnv = createCanvas(cnvSize, cnvSize);
+	cnv.parent('sketch');
+
+    if(showNumbers){
+        numbersButton = createButton("Hide Numbers", "value");
+    } else {
+        numbersButton = createButton("Show Numbers", "value");
+    }
+    numbersButton.parent("numbers-button");
+    numbersButton.mousePressed(numberToggle);
+
+    resetButton = createButton("Reset", "value");
+    resetButton.parent("reset-button");
+    resetButton.mousePressed(reset);
+    reset();
+}
+
+/**
+ *   p5.js draw function, is run every frame to create the desired animation
+ */
+function draw() {
+	background(255);
+    grid.draw();
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Grid.html">Grid</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clicks">clicks</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#grid">grid</a></li><li><a href="global.html#gridSize">gridSize</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#numbersButton">numbersButton</a></li><li><a href="global.html#numberToggle">numberToggle</a></li><li><a href="global.html#numColours">numColours</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#resetButton">resetButton</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#showNumbers">showNumbers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Sep 30 2019 22:36:14 GMT+0100 (BST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

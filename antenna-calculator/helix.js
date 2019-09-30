@@ -50,10 +50,10 @@ let helix_sketch = function(p5) {
 		h_spacing = 0.25 * lambda;
 		h_length = nturns * h_spacing;
 		h_pitch = p5.degrees(p5.atan2(h_spacing, h_circumference));
-		h_wire_length = p5.sqrt(pow(h_circumference, 2) + pow(h_spacing, 2)) * nturns;
+		h_wire_length = p5.sqrt(p5.pow(h_circumference, 2) + p5.pow(h_spacing, 2)) * nturns;
 
 		let r_lambda = 1 / lambda;
-		gain = 15 * pow(h_circumference * r_lambda, 2);
+		gain = 15 * p5.pow(h_circumference * r_lambda, 2);
 		gain *= nturns * h_spacing * r_lambda;
 		gain_dbi = 10 * Math.log10(0.8 * nturns);
 		impedance = 140 * h_circumference * r_lambda;
