@@ -291,7 +291,10 @@
             "pic-url": "imgs/p_018.jpg",
             "prev-id": "p_017",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "algorithm",
+                "game"
+            ],
             "vid-url": "vids/p_018.mp4"
         }
     }
