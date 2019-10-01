@@ -285,22 +285,22 @@ function draw() {
   fill(blue);
   text("CPS: ", 0.45 * width, height - textHeight);
   fill(red);
-  text(round(cps), textWidth("CPS: ") + 0.45 * width, height - textHeight);
+  text(round(cps), textWidth("CPS: ") + 0.5 * width, height - textHeight);
 
   wpm = cps * 12;
   fill(blue);
   text("WPM: ", 0.55 * width, height - textHeight);
   fill(red);
-  text(round(wpm), textWidth("WPM: ") + 0.55 * width, height - textHeight);
+  text(round(wpm), textWidth("WPM: ") + 0.6 * width, height - textHeight);
 
 
   fill(blue);
   text("Misses: ", 0.7 * width , height - textHeight);
   fill(red);
-  text(misses, textWidth("Misses: ") + 0.7 * width , height - textHeight);
+  text(misses, textWidth("Misses: ") + 0.78 * width , height - textHeight);
 
   fill(blue);
   text("Score: ", 0.85 * width , height - textHeight);
   fill(red);
-  text(floor(score), textWidth("Score: ") + 0.85 * width , height - textHeight);
+  text(floor(score), textWidth("Score: ") + 0.92 * width , height - textHeight);
 }
