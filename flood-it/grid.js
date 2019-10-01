@@ -34,7 +34,7 @@ class Grid {
       x, y,
       sizePixels,
       randomise = true,
-      showNumbers = true) {
+      showNumbers = false) {
 
         this.gridSize = gridSize;
         this.numColours = numColours;
@@ -251,6 +251,7 @@ class Grid {
                 this.neighbours = this.neighbours.concat(finalNeighbours);
 
                 this.visited.push(this.frontier.splice(i, 1));
+                this.visited = [...new Set(this.visited)];
             }
             console.log("Visited: ", this.visited);
             console.log("Neighbours: ", this.neighbours);
