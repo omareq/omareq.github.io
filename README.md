@@ -10,11 +10,11 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 
 ## Todo
 
-- [ ]   Testing, make sure that all js files are linked in index.html, image size, spell check, markdown validator, html validator
+- [ ] Testing, make sure that all js files are linked in index.html, image size, spell check, markdown validator, html validator
 - [ ]	Finish Antenna Calculator
 - [ ]	Finish Ninja Game
-- [ ] 	Add Caesar Cipher
-- [x] 	Add Simon Memory Game
+- [ ] Add Caesar Cipher
+- [x] Add Simon Memory Game
 - [ ]	Add Sliding Puzzle Game
 - [x]	Add Towers of Hanoi
 - [ ]	Turtle Draw Program
@@ -31,8 +31,9 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Mesh Generation Delaunay Triangles
 - [ ]	Tic Tac Toe
 - [ ]	Connect Four
-- [ ]   Optics ABCD Matrix
-- [ ]   Optical resonator stability
-- [ ]   Monte Carlo Integration
-- [ ]   Implicit iterative integration
-- [ ]   Recursive Integration
+- [ ] Optics ABCD Matrix
+- [ ] Optical resonator stability
+- [ ] Monte Carlo Integration
+- [ ] Implicit iterative integration
+- [ ] Recursive Integration
+- [ ] Black Body Radiance calculator
