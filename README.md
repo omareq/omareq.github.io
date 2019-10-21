@@ -37,3 +37,4 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ] Implicit iterative integration
 - [ ] Recursive Integration
 - [ ] Black Body Radiance calculator
+- [ ] Interpolation Methods
