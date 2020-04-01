@@ -29,6 +29,7 @@ function file_exists(path) {
     return false;
 }
 
+// ADD: Test for README.md
 QUnit.test("Validate Project Folder", function(assert) {
     const projects_json = require("../projects.json");
     for(let id in projects_json.projects) {
