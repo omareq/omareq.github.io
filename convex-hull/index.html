@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="author" content="Omar Essilfie-Quaye">
   <meta property="og:title" content="Convex Hull">
-  <meta property="og:description" content="Demonstration of various convex hull generation algorithms.">
+  <meta property="og:description" content="Animated demonstration of various convex hull generation algorithms.  Created by Omar Essilfie-Quaye">
   <meta property="og:image" content="https://omareq.github.io/imgs/p_015.jpg">
   <meta property="og:url" content="https://omareq.github.io/convex-hull/">
   <meta property="og:site_name" content="Omar EQ Githubio">
@@ -58,6 +58,196 @@
         <div class="col-sm-3"></div>
 
 
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+        <div class="row text-center">
+          <div class="col-sm-12">
+            Github Repo
+            <a href="https://github.com/omareq/omareq.github.io/tree/master/convex-hull">
+                <img src="../imgs/github-logo.png" alt="Link to github repository"
+                     style="max-width:75px">
+            </a>
+            Docs
+            <a href="./docs">
+                <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
+                     style="max-width:75px">
+            </a>
+          </div>
+        </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+            <div>
+                <h2>What is a convex hull?</h2>
+                <p>
+                    In geometry a convex hull, also known as a convex envelope,
+                    of a set of points is the smallest convex set that contains
+                    it.  For a set of points on a 2D plane this can be thought
+                    of as the hull that is created by a rubber band that
+                    stretches around it.
+                </p>
+                <p>
+                    There are many uses of convex hulls in mathematics however
+                    I am personally interested in their use in computational
+                    simulations.  If a convex hull of a set of points can be
+                    generated then that set of points can be meshed knowing that
+                    the entire problem space has been covered.  This can then
+                    lead on to any number of finite element methods used to
+                    simulate real world physics.
+                </p>
+            </div>
+            <div>
+                <h2>Jarvis March</h2>
+                <P>
+                    Runtime: <b><i>O(nh)</i></b>
+                    (n - total number of points, h - number of hull points)
+                </p>
+                <p>
+                    Jarvis march is the name of a convex hull generation
+                    algorithm known as the
+                    <a href="https://en.wikipedia.org/wiki/Gift_wrapping_algorithm">
+                        gift wrapping algorithm
+                    </a>
+                    in the special case that the set of points is on a 2D plane.
+                    It was published by R. A. Jarvis in
+                    <a href="https://www.sciencedirect.com/science/article/abs/pii/0020019073900203?via%3Dihub">
+                        Information Processing letters
+                    </a>
+                    in December 1972.
+                </p>
+                <p>
+                    Starting from a leftmost point of the data set, we keep the
+                    points in the convex hull by anti-clockwise rotation.  From
+                    a current point, we can choose the next point by checking
+                    the orientations of those points from the current point.
+                    When the angle is largest, the point is chosen.  After
+                    completing all points, when the next point is the start
+                    point, stop the algorithm.
+                </p>
+            </div>
+
+            <div>
+                <h2>Divide and Conquer</h2>
+                <P>
+                    Runtime: <b><i>O(nh log<sub>p</sub> nh)</i></b>
+                    (n - total number of points,
+                     h - number of hull points,
+                     p - number of recursive partitions)
+                </p>
+                <p>
+                    <a href="https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm">
+                        Divide and conquer
+                    </a>
+                    is an algorithm design concept which is
+                    based in multiple branch recursion.  A problem is broken
+                    down into smaller and smaller problems which can be solved
+                    directly and the answers combined to solve the original
+                    problem.  In the convex hull generation problem the basic element
+                    would be three points making a triangle.  The solution used
+                    however does not go use that many recursive steps.  In
+                    actuality this was solved iteratively for the sake of
+                    improving the ease of animation but this can be done in
+                    parallel on multiple processors with limited memory sharing.
+                </p>
+                <p>
+                    In this example the points are sorted and then separated
+                    equally into three subsets.  These subsets are individually
+                    processed and the convex hull is generated for each using
+                    the gift wrapping algorithm.  The three convex hulls are
+                    then combined to form a new set of points for which the
+                    final convex hull will be computed.  It is important to note
+                    that whilst the points are sorted for visual clarity this is
+                    not necessary and even if the convex hulls for the subsets
+                    overlap the merge will still work successfully.
+                </p>
+            </div>
+
+            <div>
+                <h2>Monotone Chain</h2>
+                <P>
+                    Runtime: <b><i>O(n log n)</i></b>
+                    (n - total number of points)
+                </p>
+                <p>
+                    The
+                    <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain">
+                        Monotone Chain
+                    </a>
+                    algorithm is another method of creating a convex hull from
+                    a set of points in a 2d plane.  It was developed by A. M.
+                    Andrew and published in
+                    <a href="https://sci-hub.tw/10.1016/0020-0190(79)90072-3">
+                        Information Processing Letters
+                    </a>
+                    at the end of April 1979 and was revised later on in the
+                    year.
+                </p>
+                <p>
+                    First the points are sorted
+                    by x coordinate and in case of a tie by y coordinate.  First
+                    the upper hull is generated starting at the left most point
+                    travelling in a clockwise manner and is finished at the
+                    right most point.  Each subsequent point is chosen by
+                    comparing the orientations of every point from the current
+                    point.  When the angle is largest, the point is chosen.
+                    This is duplicated for the lower hull
+                    and then the two hulls are combined to create the final
+                    convex hull.
+                <p>
+                </p>
+                    It should be noted that this can be partially simplified
+                    when calculating the lower hull by removing all points in
+                    the upper hull from comparisons except for the left most
+                    point.  This differs from the divide and conquer method due
+                    to the fact that every point is in consideration for both
+                    the upper and lower hull, the problem space has not been
+                    reduced to a simpler problem.
+                </p>
+            </div>
+
+            <div>
+                <h2>Graham Scan</h2>
+                 <P>
+                    Runtime: <b><i>O(n log n)</i></b>
+                    (n - total number of points)
+                </p>
+                <p>
+                    The
+                    <a href="https://en.wikipedia.org/wiki/Graham_scan">
+                        Graham Scan
+                    </a>
+                    algorithm, like the monotone chain algorithm, is a convex
+                    hull generation algorithm that has a time complexity faster
+                    than the gift wrapping algorithm as it does not depend on
+                    the number of hull points.  It is also limited to a 2D
+                    plane.  It is named after Ronald Graham who published the
+                    algorithm in
+                    <a href="http://www.math.ucsd.edu/~ronspubs/72_10_convex_hull.pdf">
+                        Information Processing Letters
+                    </a>
+                    in January 1972.
+                </p>
+                <p>
+                   First the lowest point in the set is found, if there are two
+                   then the leftmost point is used.  Next the points are sorted
+                   with respect to the angle that they make between the lowest
+                   point and the x axis.  For each point the previous two points
+                   are checked to see if they are going in a clock wise or
+                   counter clockwise direction.  If the turn is deemed to be
+                   clockwise then the second to last point is not in the convex
+                   hull and it is rejected.  The current point keeps checking
+                   the previous points until it reaches a counter clockwise
+                   turn, when this happens the current point is added to the
+                   convex hull and the algorithm moves on to the next point.
+                   This continues until the algorithm reaches the point at which
+                   it started.
+                </p>
+            </div>
+        </div>
       </div>
     </section>
 

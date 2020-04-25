@@ -9,7 +9,7 @@ body {
 	display: block;
 }
 
-.jumbotron h1, h2, h3, h4 {
+.jumbotron h1, h3, h4 {
 	color: white;
 }
 
@@ -38,7 +38,7 @@ body {
 
 .link-div a span {
 	display: inline-block;
-	transform:scale(1); 
+	transform:scale(1);
 }
 
 .link-div a:hover span {
@@ -145,7 +145,7 @@ body {
 	font-size: 1.1rem;
 }
 
-.project-card p {	
+.project-card p {
 	color: #cccccc;
 	background: #cccccc;
 }
