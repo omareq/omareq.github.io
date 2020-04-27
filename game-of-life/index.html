@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="author" content="Omar Essilfie-Quaye">
   <meta property="og:title" content="Game Of Life">
-  <meta property="og:description" content="Replica of Conway's Game of Life">
+  <meta property="og:description" content="Replica of Conway's Game of Life a cellular automata theorised by mathematician John Horton Conway in 1970.  Created by Omar Essilfie-Quaye ">
   <meta property="og:image" content="https://omareq.github.io/imgs/p_014.jpg">
   <meta property="og:url" content="https://omareq.github.io/game-of-life/">
   <meta property="og:site_name" content="Omar EQ Githubio">
@@ -29,6 +29,9 @@
         <div class="row text-center">
           <h1>Game of Life</h1>
         </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
+        </div>
       </div>
     </section>
 
@@ -39,6 +42,102 @@
         </div>
       </div>
     </section>
+
+    <section class="container" style="padding-top:10px">
+        <div class="row text-center">
+          <div class="col-sm-12">
+            Github Repo
+            <a href="https://github.com/omareq/omareq.github.io/tree/master/game-of-life">
+                <img src="../imgs/github-logo.png" alt="Link to github repository"
+                     style="max-width:75px">
+            </a>
+            Docs
+            <a href="./docs">
+                <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
+                     style="max-width:75px">
+            </a>
+          </div>
+        </div>
+    </section>
+
+     <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+            <div>
+              <h2> Cellular Automata </h2>
+              <p>
+                The Game of Life, initially dubbed Life, was created by John
+                Conway a British Mathematician and is talked about in
+                <a href="https://web.stanford.edu/class/sts145/Library/life.pdf">
+                  Scientific American
+                </a>
+                inOctober 1970.  Life is an example of what is known as a
+                cellular automata.  Cellular automata are discrete simulations
+                with a very basic rule set that can be used to study advanced
+                mathematics.  I personally enjoy how complex things can arise
+                from such simple rules, some people have gone so far as to
+                design miniature computers out the elements of the game of life.
+              </p>
+
+              <p>
+                Generally in cellular automata there is some grid type structure
+                which can contain some form of life, which is usually denoted
+                by a state.  In the game of life this is 0 or 1, alive or dead,
+                however this can take any number of possible combinations.  Each
+                cell can communicate with it's neighbouring cells, this can be
+                just the immediate cells next to it, up, down, left and right or
+                it can reach further out than that.  This communication lets the
+                cell figure out how it should change it's own state for the next
+                generation which is dictated by the rules of the game.  Due to
+                the fact that the game can be run just by setting the initial
+                states of all the cells with no further input it is known as a
+                zero-player game.
+              </p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+     <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+            <div>
+              <h2> Rules </h2>
+              <!-- <p><a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Rules">Wikipedia</a></p> -->
+
+              <p>
+                The rules for state changes between generations in Life are
+                shown below.
+              </p>
+
+              <ul class="list-group">
+                <li class="list-group-item"> <b>1)</b> Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
+                <li class="list-group-item"> <b>2)</b> Any live cell with two or three live neighbours lives on to the next generation.</li>
+                <li class="list-group-item"> <b>3)</b> Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
+                <li class="list-group-item"> <b>4)</b> Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+              </ul>
+
+              <p>
+                The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed; births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick. Each generation is a pure function of the preceding one. The rules continue to be applied repeatedly to create further generations.
+              </p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+            <div>
+              <!-- <h2> Cool Creations </h2> -->
+              <p>
+              </p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+
 
     <section class="container">
       <div class="row">

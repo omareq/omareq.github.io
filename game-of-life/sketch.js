@@ -314,12 +314,13 @@ function drawMenu() {
 function setup() {
 	let cnvSize;
 	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
+		cnvSize = 0.95 * windowHeight;
 	} else {
-		cnvSize = windowWidth;
+		cnvSize = 0.6 * windowWidth;
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
-	cnv.parent('sketch');
+	cnv.parent("sketch");
+
 
 	size = height / gridY;
 
