@@ -175,7 +175,7 @@ function keyPressed() {
 	if(key.toLowerCase() == "s") {
 		autoSolve = !autoSolve;
 		if(autoSolve) {
-			solve()
+			solve();
 		}
 	} if(key.toLowerCase() == "r") {
 			tower1.setAsFull();
@@ -219,7 +219,7 @@ function setup() {
 	tower3 = new Tower(plates, 0.80 * width, yPos, towerW, towerH, b, false);
 
 	if(autoSolve) {
-		solve()
+		solve();
 		loopSolve = true;
 	}
 }
