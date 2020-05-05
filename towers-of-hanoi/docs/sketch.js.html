@@ -29,7 +29,7 @@
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
 *   @file sketch.js
 *   @brief Recreation of Towers of Hanoi puzzle
-*   
+*
 *   @author &lt;a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye &lt;/a>
 *   @version 1.0
 *   @date 29-Dec-2018
@@ -37,14 +37,14 @@
 *******************************************************************************/
 
 /**
-*	A global vairable that holds the information for the first Tower object.
+*	A global variable that holds the information for the first Tower object.
 *
 *	@type {Tower}
 */
 let tower1;
 
 /**
-*	A global vairable that holds the information for the second Tower object.
+*	A global variable that holds the information for the second Tower object.
 *
 *	@type {Tower}
 */
@@ -52,7 +52,7 @@ let tower2;
 
 
 /**
-*	A global vairable that holds the information for the third Tower object.
+*	A global variable that holds the information for the third Tower object.
 *
 *	@type {Tower}
 */
@@ -71,7 +71,7 @@ let towerSelected = 0;
 *	@type {number}
 */
 let plates = 7;
-	
+
 /**
 *	A variable that stores the highest value plate of the last clicked tower.
 *
@@ -84,7 +84,7 @@ let topPlate;
 *
 *	@type{boolean}
 */
-let autoSolve = false;
+let autoSolve = true;
 
 /**
 *	Flag to see if the AI resets and continues to solve the puzzle once it has
@@ -92,7 +92,7 @@ let autoSolve = false;
 *
 *	@type{boolean}
 */
-let loopSolve = false;
+let loopSolve = true;
 
 /**
 *
@@ -124,7 +124,7 @@ function mousePressed() {
 				topPlate = tower1.peek();
 				towerSelected = 1;
 				return;
-			} 
+			}
 		}
 		if(tower2.pressed()) {
 			towerPressed = 2;
@@ -132,7 +132,7 @@ function mousePressed() {
 				topPlate = tower2.peek();
 				towerSelected = 2;
 				return;
-			} 
+			}
 		}
 		if(tower3.pressed()) {
 			towerPressed = 3;
@@ -140,41 +140,61 @@ function mousePressed() {
 				topPlate = tower3.peek();
 				towerSelected = 3;
 				return;
-			} 
+			}
 		}
 
 		if(towerPressed == 0) {
 			towerSelected = 0;
 			topPlate = 0;
 			return;
-		} else {
-			if(towerSelected == 1) {
-				if(towerPressed == 2 &amp;&amp; tower2.push(topPlate)) {
-					tower1.pop();
-				} else if(towerPressed == 3 &amp;&amp; tower3.push(topPlate)) {
-					tower1.pop();
-				}
-			} else if(towerSelected == 2) {
-				if(towerPressed == 1 &amp;&amp; tower1.push(topPlate)) {
-					tower2.pop();
-				} else if(towerPressed == 3 &amp;&amp; tower3.push(topPlate)) {
-					tower2.pop();
-				}
-			} else if(towerSelected == 3) {
-				if(towerPressed == 1 &amp;&amp; tower1.push(topPlate)) {
-					tower3.pop();
-				} else if(towerPressed == 2 &amp;&amp; tower2.push(topPlate)) {
-					tower3.pop();
-				}
-			}
-			tower1.isPressed = false;
-			tower2.isPressed = false;
-			tower3.isPressed = false;
-			towerSelected = 0;
-			topPlate = 0;
 		}
+
+		if(towerSelected == 1) {
+			if(towerPressed == 2 &amp;&amp; tower2.push(topPlate)) {
+				tower1.pop();
+			} else if(towerPressed == 3 &amp;&amp; tower3.push(topPlate)) {
+				tower1.pop();
+			}
+		} else if(towerSelected == 2) {
+			if(towerPressed == 1 &amp;&amp; tower1.push(topPlate)) {
+				tower2.pop();
+			} else if(towerPressed == 3 &amp;&amp; tower3.push(topPlate)) {
+				tower2.pop();
+			}
+		} else if(towerSelected == 3) {
+			if(towerPressed == 1 &amp;&amp; tower1.push(topPlate)) {
+				tower3.pop();
+			} else if(towerPressed == 2 &amp;&amp; tower2.push(topPlate)) {
+				tower3.pop();
+			}
+		}
+		tower1.isPressed = false;
+		tower2.isPressed = false;
+		tower3.isPressed = false;
+		towerSelected = 0;
+		topPlate = 0;
 	}
 }
+
+/**
+*   Function to find the solution from the current state of the towers.  If the
+*   current state is in a solution that has already been calculated the function
+*   will not recalculate the solution.
+*/
+function solve() {
+	let start = currentPos();
+	if(solution.length > 0 &amp;&amp; contains(solution, start)) {
+		solveIndex = find(solution, start);
+	} else {
+		solution = solveBFS(currentPos());
+		solveIndex = 0;
+		loopSolve = false;
+	}
+	tower1.isPressed = false;
+	tower2.isPressed = false;
+	tower3.isPressed = false;
+}
+
 
 /**
 *	Function to handle key presses.  Will toggle autosolve or reset towers.
@@ -183,23 +203,15 @@ function keyPressed() {
 	if(key.toLowerCase() == "s") {
 		autoSolve = !autoSolve;
 		if(autoSolve) {
-			let start = currentPos();
-			if(solution.length > 0 &amp;&amp; contains(solution, start)) {
-				solveIndex = find(solution, start);
-			} else {
-				solution = solveBFS(currentPos());
-				solveIndex = 0;
-			}
-			tower1.isPressed = false;
-			tower2.isPressed = false;
-			tower3.isPressed = false;
+			solve()
 		}
 	} if(key.toLowerCase() == "r") {
 			tower1.setAsFull();
 			tower2.empty();
 			tower3.empty();
-			loopSolve = false;
-			autoSolve = false;
+			solve();
+			loopSolve = true;
+			autoSolve = true;
 	} if(key.toLowerCase() == "l") {
 		loopSolve = !loopSolve;
 	}
@@ -215,9 +227,9 @@ function currentPos() {
 }
 
 /**
-*	p5.js setup function, used to create a canvas and instantiate the tower
-*	objects
-*/
+ * p5.js setup function, used to create a canvas and instantiate the tower
+ * objects
+ */
 function setup() {
 	let canvas = createCanvas(0.8*windowWidth, 0.8 * windowHeight);
 	canvas.parent('sketch');
@@ -233,11 +245,16 @@ function setup() {
 	tower1 = new Tower(plates, 0.20 * width, yPos, towerW, towerH, r, true );
 	tower2 = new Tower(plates, 0.50 * width, yPos, towerW, towerH, g, false);
 	tower3 = new Tower(plates, 0.80 * width, yPos, towerW, towerH, b, false);
+
+	if(autoSolve) {
+		solve()
+		loopSolve = true;
+	}
 }
 
 /**
 *	p5.js draw function, used to draw all towers
-*/	
+*/
 function draw() {
 	background(255);
 	textSize(0.035 * height);
@@ -256,7 +273,7 @@ function draw() {
 		}
 		tower1.setStack(solution[solveIndex].state[0]);
 		tower2.setStack(solution[solveIndex].state[1]);
-		tower3.setStack(solution[solveIndex].state[2]);		
+		tower3.setStack(solution[solveIndex].state[2]);
 	}
 
 	tower1.draw();
@@ -272,13 +289,13 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Pos.html">Pos</a></li><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#autoSolve">autoSolve</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#currentPos">currentPos</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getNeighbours">getNeighbours</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loopSolve">loopSolve</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#plates">plates</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#solution">solution</a></li><li><a href="global.html#solveAStar">solveAStar</a></li><li><a href="global.html#solveBFS">solveBFS</a></li><li><a href="global.html#solveIndex">solveIndex</a></li><li><a href="global.html#topPlate">topPlate</a></li><li><a href="global.html#tower1">tower1</a></li><li><a href="global.html#tower2">tower2</a></li><li><a href="global.html#tower3">tower3</a></li><li><a href="global.html#towerSelected">towerSelected</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Pos.html">Pos</a></li><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#autoSolve">autoSolve</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#currentPos">currentPos</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getNeighbours">getNeighbours</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loopSolve">loopSolve</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#plates">plates</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#solution">solution</a></li><li><a href="global.html#solve">solve</a></li><li><a href="global.html#solveAStar">solveAStar</a></li><li><a href="global.html#solveBFS">solveBFS</a></li><li><a href="global.html#solveIndex">solveIndex</a></li><li><a href="global.html#topPlate">topPlate</a></li><li><a href="global.html#tower1">tower1</a></li><li><a href="global.html#tower2">tower2</a></li><li><a href="global.html#tower3">tower3</a></li><li><a href="global.html#towerSelected">towerSelected</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 02 2019 14:43:37 GMT+0000 (GMT Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue May 05 2020 11:01:30 GMT+0100 (BST)
 </footer>
 
 <script> prettyPrint(); </script>

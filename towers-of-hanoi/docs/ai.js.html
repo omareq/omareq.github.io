@@ -29,7 +29,7 @@
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
 *   @file ai.js
 *   @brief File containing the functions to solve the towers of hanoi
-*   
+*
 *   @author &lt;a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye &lt;/a>
 *   @version 1.0
 *   @date 29-Dec-2018
@@ -90,16 +90,16 @@ function getNeighbours(node) {
 	test2.setStack(node.state[1]);
 	test3.setStack(node.state[2]);
 
-	test = [test1, test2, test3];
+	testArr = [test1, test2, test3];
 	// console.log("Test Array: ", test);
 
 	for(let towerIndex = 0; towerIndex &lt; 3; ++towerIndex) {
-		let len = test[towerIndex].stackTop;
+		let len = testArr[towerIndex].stackTop;
 		if(len == -1) {
 			continue;
 		}
-		let plate = test[towerIndex].stack[len];
-		// console.log("Moving plate: ", plate);	
+		let plate = testArr[towerIndex].stack[len];
+		// console.log("Moving plate: ", plate);
 		for(let testIndex = 0; testIndex &lt; 3; ++testIndex) {
 			// console.log("Towers (", towerIndex + 1, ",", testIndex + 1, ")");
 			if(testIndex == towerIndex) {
@@ -107,14 +107,14 @@ function getNeighbours(node) {
 				continue;
 			}
 
-			if(test[testIndex].push(plate)) {
-				test[towerIndex].pop();
-				validNeighbour = new Pos(test[0], test[1], test[2]);
+			if(testArr[testIndex].push(plate)) {
+				testArr[towerIndex].pop();
+				validNeighbour = new Pos(testArr[0], testArr[1], testArr[2]);
 				neighbours.push(validNeighbour);
 
-				test[towerIndex].push(plate);
-				test[testIndex].pop();
-			} 
+				testArr[towerIndex].push(plate);
+				testArr[testIndex].pop();
+			}
 		}
 	}
 	return neighbours;
@@ -149,7 +149,7 @@ function solveBFS(startPos) {
 		if(watchdog > 1000) {
 			console.log("watchdog has been activated");
 			return [];
-		} 
+		}
 
 		if(frontierNodes.length == 0) {
 			console.log("No solution");
@@ -180,10 +180,12 @@ function solveBFS(startPos) {
 					notChecked = false;
 				}
 
+				// add check to see if same plate is moved twice
+
 				if(notChecked) {
 					neighbour.parent = currentNode;
 					tempFrontiers.push(neighbour);
-				}				
+				}
 			}
 			exploredNodes.push(currentNode);
 		}
@@ -193,7 +195,7 @@ function solveBFS(startPos) {
 		}
 	}
 	// console.log("Explored nodes: ", exploredNodes);
-	
+
 	let currentNode = goalNode;
 	let solution = [];
 	solution.push(goalNode);
@@ -242,13 +244,13 @@ function solveAStar() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Pos.html">Pos</a></li><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#autoSolve">autoSolve</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#currentPos">currentPos</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getNeighbours">getNeighbours</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loopSolve">loopSolve</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#plates">plates</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#solution">solution</a></li><li><a href="global.html#solveAStar">solveAStar</a></li><li><a href="global.html#solveBFS">solveBFS</a></li><li><a href="global.html#solveIndex">solveIndex</a></li><li><a href="global.html#topPlate">topPlate</a></li><li><a href="global.html#tower1">tower1</a></li><li><a href="global.html#tower2">tower2</a></li><li><a href="global.html#tower3">tower3</a></li><li><a href="global.html#towerSelected">towerSelected</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Pos.html">Pos</a></li><li><a href="Tower.html">Tower</a></li></ul><h3>Global</h3><ul><li><a href="global.html#autoSolve">autoSolve</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#currentPos">currentPos</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getNeighbours">getNeighbours</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loopSolve">loopSolve</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#plates">plates</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#solution">solution</a></li><li><a href="global.html#solve">solve</a></li><li><a href="global.html#solveAStar">solveAStar</a></li><li><a href="global.html#solveBFS">solveBFS</a></li><li><a href="global.html#solveIndex">solveIndex</a></li><li><a href="global.html#topPlate">topPlate</a></li><li><a href="global.html#tower1">tower1</a></li><li><a href="global.html#tower2">tower2</a></li><li><a href="global.html#tower3">tower3</a></li><li><a href="global.html#towerSelected">towerSelected</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 02 2019 14:43:37 GMT+0000 (GMT Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue May 05 2020 11:01:30 GMT+0100 (BST)
 </footer>
 
 <script> prettyPrint(); </script>

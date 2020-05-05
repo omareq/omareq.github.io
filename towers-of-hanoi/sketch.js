@@ -9,14 +9,14 @@
 *******************************************************************************/
 
 /**
-*	A global vairable that holds the information for the first Tower object.
+*	A global variable that holds the information for the first Tower object.
 *
 *	@type {Tower}
 */
 let tower1;
 
 /**
-*	A global vairable that holds the information for the second Tower object.
+*	A global variable that holds the information for the second Tower object.
 *
 *	@type {Tower}
 */
@@ -24,7 +24,7 @@ let tower2;
 
 
 /**
-*	A global vairable that holds the information for the third Tower object.
+*	A global variable that holds the information for the third Tower object.
 *
 *	@type {Tower}
 */
@@ -56,7 +56,7 @@ let topPlate;
 *
 *	@type{boolean}
 */
-let autoSolve = false;
+let autoSolve = true;
 
 /**
 *	Flag to see if the AI resets and continues to solve the puzzle once it has
@@ -64,7 +64,7 @@ let autoSolve = false;
 *
 *	@type{boolean}
 */
-let loopSolve = false;
+let loopSolve = true;
 
 /**
 *
@@ -148,6 +148,25 @@ function mousePressed() {
 	}
 }
 
+/**
+*   Function to find the solution from the current state of the towers.  If the
+*   current state is in a solution that has already been calculated the function
+*   will not recalculate the solution.
+*/
+function solve() {
+	let start = currentPos();
+	if(solution.length > 0 && contains(solution, start)) {
+		solveIndex = find(solution, start);
+	} else {
+		solution = solveBFS(currentPos());
+		solveIndex = 0;
+		loopSolve = false;
+	}
+	tower1.isPressed = false;
+	tower2.isPressed = false;
+	tower3.isPressed = false;
+}
+
 
 /**
 *	Function to handle key presses.  Will toggle autosolve or reset towers.
@@ -156,23 +175,15 @@ function keyPressed() {
 	if(key.toLowerCase() == "s") {
 		autoSolve = !autoSolve;
 		if(autoSolve) {
-			let start = currentPos();
-			if(solution.length > 0 && contains(solution, start)) {
-				solveIndex = find(solution, start);
-			} else {
-				solution = solveBFS(currentPos());
-				solveIndex = 0;
-			}
-			tower1.isPressed = false;
-			tower2.isPressed = false;
-			tower3.isPressed = false;
+			solve()
 		}
 	} if(key.toLowerCase() == "r") {
 			tower1.setAsFull();
 			tower2.empty();
 			tower3.empty();
-			loopSolve = false;
-			autoSolve = false;
+			solve();
+			loopSolve = true;
+			autoSolve = true;
 	} if(key.toLowerCase() == "l") {
 		loopSolve = !loopSolve;
 	}
@@ -188,9 +199,9 @@ function currentPos() {
 }
 
 /**
-*	p5.js setup function, used to create a canvas and instantiate the tower
-*	objects
-*/
+ * p5.js setup function, used to create a canvas and instantiate the tower
+ * objects
+ */
 function setup() {
 	let canvas = createCanvas(0.8*windowWidth, 0.8 * windowHeight);
 	canvas.parent('sketch');
@@ -206,6 +217,11 @@ function setup() {
 	tower1 = new Tower(plates, 0.20 * width, yPos, towerW, towerH, r, true );
 	tower2 = new Tower(plates, 0.50 * width, yPos, towerW, towerH, g, false);
 	tower3 = new Tower(plates, 0.80 * width, yPos, towerW, towerH, b, false);
+
+	if(autoSolve) {
+		solve()
+		loopSolve = true;
+	}
 }
 
 /**
