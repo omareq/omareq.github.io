@@ -29,13 +29,16 @@ function file_exists(path) {
     return false;
 }
 
-// ADD: Test for README.md
 QUnit.test("Validate Project Folder", function(assert) {
     const projects_json = require("../projects.json");
     for(let id in projects_json.projects) {
         const path = "." + projects_json.projects[id]["demo-url"];
         const exists = file_exists(path);
         assert.equal(exists, true, path + " url validation");
+
+        const readme_path = path + "/README.md";
+        const readme_exists = file_exists(readme_path);
+        assert.equal(readme_exists, true, readme_path + " url validation");
     }
 });
 
