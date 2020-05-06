@@ -49,11 +49,16 @@ QUnit.test("Validate Project index.html", function(assert) {
 });
 
 QUnit.test("Validate Project Image Files", function(assert) {
+    let sizeOf = require('image-size');
     const projects_json = require("../projects.json");
     for(let id in projects_json.projects) {
         const path = "./" + projects_json.projects[id]["pic-url"];
         const exists = file_exists(path);
         assert.equal(exists, true, path + " img validation");
+
+        let dimensions = sizeOf(path);
+        let msg = path + " img square aspect validation";
+        assert.equal(dimensions.width, dimensions.height, msg);
     }
 });
 
