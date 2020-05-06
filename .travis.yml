@@ -6,6 +6,7 @@ before_install:
 - npm install -g qunit
 - npm install file-system
 - npm install eslint
+- npm install image-size
 script:
 # - eslint --config .eslintrc.json --ignore-path .eslintignore index.js
 - qunit
