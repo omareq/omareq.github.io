@@ -47,7 +47,7 @@ let bi_quad_sketch = function(p5) {
 		d_length = lambda / 2;
 
 		l1 = 0.025 * 9.7 * lambda;
-		l2 = 0.7 * 9.7 * lambda;
+		l2 = 0.1 * 0.7071 * 9.7 * lambda;
 		wire_diam = 0.6 * Math.pow(frequency / 1e6, -0.8);
 		wire_length = ( 20 * lambda*1e6 + 40 * p5.PI * wire_diam )/10000000;
 
