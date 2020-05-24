@@ -181,7 +181,7 @@ class Tower {
 	/**
 	*	Draws a tower with all the plates it contains.
 	*/
-	draw() {
+	draw(title) {
 		push();
 		rectMode(CENTER);
 		translate(this.x, this.y);
@@ -209,6 +209,11 @@ class Tower {
 				rect(0,0, rectW, this.rh);
 			}
 		}
+
 		pop();
+		fill(0);
+		textAlign(CENTER, CENTER);
+		textSize(ceil(this.rh));
+		text(title, this.x, this.y + 1.5 * this.rh);
 	}
 }

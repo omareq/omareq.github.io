@@ -248,7 +248,7 @@ function draw() {
 		tower3.setStack(solution[solveIndex].state[2]);
 	}
 
-	tower1.draw();
-	tower2.draw();
-	tower3.draw();
+	tower1.draw("A");
+	tower2.draw("B");
+	tower3.draw("C");
 }
