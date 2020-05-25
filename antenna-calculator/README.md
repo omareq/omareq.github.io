@@ -28,6 +28,7 @@ Animations created using [p5.js](https://p5js.org/)
 
 [ ]	Add inverse calculation, ie antenna frequency from dimensions
 
+[ ] Add reflection from transmission line calculation
 ## Impedance Gain List
 
 | Antenna        | Impedance (ohm) | Gain (dB)          |
