@@ -14,7 +14,7 @@ Animations created using [p5.js](https://p5js.org/)
 
 [x]	Add switch polarisation state by adding pi
 
-[ ]	Add HPBW (Half Power Beam Width)
+[ ]	Add HPBW (Half Power Beam Width) or transmission diagram
 
 [ ]	Draw reflector dish
 
@@ -27,3 +27,14 @@ Animations created using [p5.js](https://p5js.org/)
 [ ]	Add different antenna types
 
 [ ]	Add inverse calculation, ie antenna frequency from dimensions
+
+## Impedance Gain List
+
+| Antenna        | Impedance (ohm) | Gain (dB)          |
+|----------------|-----------------|--------------------|
+| Bi Quad        | 61              | 10 -12             |
+| Dipole         | 73              | 2                  |
+| Folded Dipole  | 292             | 2 ??               |
+| Helical        | 140             | Turns ??           |
+| Turnstile      | 36              | 3dB < dipole ??    |
+| Yagi-Uda       | Driven Elmt     | Parasitic Elmts ?? |
