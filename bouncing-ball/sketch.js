@@ -8,9 +8,9 @@
 *
 *******************************************************************************/
 
-let ball;
 let balls = [];
 let dt;
+let maxNumBalls;
 
 /**
 *	Generates a ball with a random velocity and a random radius positiones at
@@ -19,17 +19,19 @@ let dt;
 *	@returns {Ball} Ball Object with random velocity at the pointer location.
 */
 function randBall() {
-	let randvx = random(-50, 50);
-	let randvy = random(-50, 50);
+	let randvx = random(-5, 5);
+	let randvy = 0 //random(-50, 50);
 	let randr = random(3, 20);
-	return new Ball(mouseX, height - mouseY, randvx, randvy, randr, 1);
+	return new Ball(mouseX, height - mouseY, randvx, randvy, randr, 0.1*randr**2);
 }
 
 /**
 *	When the mouse is pressed a new ball is added to the balls array.
 */
 function mousePressed() {
-	balls.push(randBall());
+	if(balls.length < maxNumBalls) {
+		balls.push(randBall());
+	}
 }
 
 /**
@@ -42,6 +44,7 @@ function setup() {
 	background(0);
 	balls.push(randBall());
 	dt = 0.1;
+	maxNumBalls = 25;
 }
 
 /**
@@ -51,10 +54,26 @@ function setup() {
 function draw() {
 	background(0);
 	for(let i = 0; i < balls.length; i++) {
-		ball = balls[i];
+		let ball = balls[i];
 		ball.show();
-		ball.checkEdges();
-		ball.applyForce(0, -10, dt);
+
+		for(let updates = 0; updates < 1; updates++) {
+			ball.checkEdges();
+			// ball.applyForce(0, -10, dt);
+			ball.applyForce(0, 0, dt);
+
+			for(let j = 0; j < balls.length; j++) {
+				if(i == j) {
+					continue;
+				}
+
+				target = balls[j];
+				if(ball.hits(target)) {
+					ball.collidePhysics(target);
+				}
+
+			}
+		}
 	}
 	//console.log(ball.y)
 	push();
