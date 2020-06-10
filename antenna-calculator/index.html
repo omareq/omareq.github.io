@@ -30,8 +30,24 @@
         <div class="row text-center">
           <h1>Antenna Calculator</h1>
         </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
+        </div>
       </div>
     </section>
+
+<!--   <section class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+          <p>
+            I have been making antennas for a while now and I have realised that I have gotten into the bad habit of actually doing the same calculation to get the dimensions over and over again. Obviously I should know better by now. Anyway I decided to write up the calculations very quickly and then to make a quick animation of the results.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
   <div class="container">
     <ul class="nav navbar nav-tabs" style="padding-bottom: 0px">
       <li><a class="active nav-item nav-link" data-toggle="tab" href="#bi-quad">Bi-Quad</a></li>
@@ -250,6 +266,15 @@
               <form id="turnstile_output">
                 Wavelength (m):<br>
                 <input name="wavelength" onfocus="this.blur()" readonly style="background: #b5b5b5; padding-bottom: 0px; margin: 0px">
+                <br>
+                Gain (dBi):<br>
+                <input name="gain" onfocus="this.blur()" readonly style="background: #b5b5b5">
+                <br>
+                Impedance (&#8486):<br>
+                <input name="impedance" onfocus="this.blur()" readonly style="background: #b5b5b5">
+                <br>
+                Dipole Total Length (m):<br>
+                <input name="d_length" onfocus="this.blur()" readonly style="background: #b5b5b5">
                 <br><br>
               </form>
             </div>
@@ -287,6 +312,23 @@
     </div>
   </div>
 
+  <section class="container" style="padding-top:10px">
+    <div class="row text-center">
+      <div class="col-sm-12">
+        Github Repo
+        <a href="https://github.com/omareq/omareq.github.io/tree/master/antenna-calculator">
+            <img src="../imgs/github-logo.png" alt="Link to github repository"
+                 style="max-width:75px">
+        </a>
+        Docs
+        <a href="./docs">
+            <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
+                 style="max-width:75px">
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section class="container">
     <div class="row">
       <div class="col-sm-3">
@@ -311,14 +353,13 @@
     </div>
   </section>
 
-    <footer>
+  <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
         <a href="../" class="githubio"><span>Github.io Home</span></a>
         <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
     </div>
   </footer>
-
 </div>
 </body>
 </html>
