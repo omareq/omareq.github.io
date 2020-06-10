@@ -152,6 +152,8 @@ function solveBFS(startPos) {
 					notChecked = false;
 				}
 
+				// add check to see if same plate is moved twice
+
 				if(notChecked) {
 					neighbour.parent = currentNode;
 					tempFrontiers.push(neighbour);
