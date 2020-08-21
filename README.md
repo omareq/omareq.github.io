@@ -39,3 +39,4 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Black Body Radiance calculator
 - [ ]   Interpolation Methods
 - [ ]   Quadruped Robot IK
+- [ ]   Missile Command Arcade Game
