@@ -42,7 +42,7 @@ def create_project(name, description):
 
     print("Creating " + name + "/docs")
     os.mkdir(name + "/docs")
-    os.system("jsdoc -R README.md -d " + name +"/docs " + name + "/*.js")
+    os.system("jsdoc -R " + name + "/README.md -d " + name +"/docs " + name + "/*.js")
 
     return
 
@@ -107,8 +107,8 @@ def sketch_js(name, description):
  *\t@file sketch.js " + description + "\n\
  *\n\
  *\t@author Omar Essilfie-Quaye <omareq08@gmail.com>\n\
- *\t@version 1.0\n" + date_str + "\n\
- *\n b" + "*" * 79 + "/\n\n")
+ *\t@version 1.0\n " + date_str + "\n\
+ *\n " + "*" * 77 + "/\n\n")
 
 
     f.write("/**\n\
@@ -364,6 +364,17 @@ def remove_project(name):
     with open(projects_json_file, "w+") as json_file:
         json.dump(projects_json, json_file, sort_keys=True, indent=4)
 
+def usage():
+    print("Usage:\t control [OPTION] [PROJECT]\n\n\
+            [OPTIONS]\n\
+            add        Add a new project to the web page\n\
+                           -- Additional Argument Description\n\
+                           USAGE:\t./control.py add new_project project_description\n\
+            archive    Remove a project from active view but do not delete files\n\
+            remove     Remove all files associated with a project\n\
+            restore    Returns a project to an active state from the archive\n\n")
+    exit(0)
+
 
 def load_projects_json():
     global projects_json, projects_json_file
@@ -374,15 +385,7 @@ if __name__=="__main__":
     argv = sys.argv
 
     if len(argv) < 3:
-        print("Usage:\t control [OPTION] [PROJECT]\n\n\
-            [OPTIONS]\n\
-            add        Add a new project to the web page\n\
-                           -- Additional Argument Description\n\
-                           USAGE:\t./control.py add new_project project_description\n\
-            archive    Remove a project from active view but do not delete files\n\
-            remove     Remove all files associated with a project\n\
-            restore    Returns a project to an active state from the archive\n\n")
-        exit(0)
+        usage()
 
     command = argv[1]
     project_name = argv[2]
@@ -406,3 +409,5 @@ if __name__=="__main__":
     elif command == "restore":
         print("Restoring project: " + project_name)
         restore_project(project_name)
+    else:
+        usage()
