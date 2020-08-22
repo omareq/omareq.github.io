@@ -24,13 +24,24 @@ let natalya;
 let viewAngle = 0;
 
 let i = 0;
-let lastState = 1;
 let firstState = 0;
+let lastState = 2;
 let state = firstState;
+let gaitCounter = 0;
 
-walk_array = [0.1, 0, 0,
-                0, 0, 0,
-                0, 0, 0];
+/**
+ * Array to control the walking gait as well as the static pose of the robot.
+ * The order of the control parameters in the array are as follows:
+ *
+ *   [0] Walking X          [1] Walking Y            [2] Walking Rotation
+ *   [3] Static Offset X    [4] Static Offset Y      [5] Static Offset Z
+ *   [6] Static Offset Yaw  [7] Static Offset Pitch  [8] Static Offset Roll
+ *
+ *   @type      {Array<number>}
+ **/
+walkArray = [0.5, 0, 0,
+               0, 0, 0,
+               0, 0, 0];
 
 /**
  * Function to delay execution of the current thread by the time provided.
@@ -43,6 +54,7 @@ function delay(milliseconds) {
   do {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
+  console.log("Delay " + milliseconds + "(ms)");
 }
 
 function preload() {
@@ -57,7 +69,7 @@ function setup() {
 	if(windowWidth > windowHeight) {
 		cnvSize = windowHeight;
 	} else {
-		cnvSize = windowWidth;
+		cnvSize = 0.6 * windowWidth;
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize, WEBGL);
 	cnv.parent('sketch');
@@ -69,25 +81,36 @@ function setup() {
  */
 function draw() {
     background(250);
-    // model(objModel);
+    i+=0.01;
     viewAngle += radians(0.5);
     fill(0);
+
     if(state == 0) {
         natalya.home(i);
-
     } else if(state == 1) {
         natalya.stand90(i);
+    } else if(state == 2) {
+        i+=0.09;
+        natalya.walk(walkArray, i);
+        if(i >= 1) {
+            gaitCounter++;
+            state--;
+            if(gaitCounter > 10 * 12) {
+                state++;
+                gaitCounter = 0;
+            }
+        }
     }
-
-    i+=0.01;
 
     if(i >= 1) {
         i = 0;
         state++;
         if(state > lastState) {
             state = firstState;
+            delay(250);
         }
     }
+
     natalya.draw(0,0,0, -PI/6, viewAngle,0);
 }
 

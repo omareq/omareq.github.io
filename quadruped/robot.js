@@ -393,183 +393,135 @@ class Robot {
         this.lb_servos_write(lb_vals);
     }
 
-/** [] **/
-    walk(control) {
+    /**
+     * Function to control the motion of the robot.  The order of the control
+     * parameters in the array are as follows:
+     *   [0] walking x          [1] walking y            [2] walking rotation
+     *   [3] static offset x    [4] static offset y      [5] static offset z
+     *   [6] static offset yaw  [7] static offset pitch  [8] static offset roll
+     *
+     * @param      {Array<number>}  control  The control values array
+     * @param      {number}         i        Increment value
+     * @return     {boolean}        Success condition depending on correct input
+     *                              parameters and valid servo motions.
+     */
+    walk(control, i) {
         if(control.length != 9) {
-            return -1;
+            return false;
         }
 
         // add validity checks on control data
 
-        let x = control[0];
-        let y = control[1];
-        let z = control[2];
+        let walkX = control[0];
+        let walkY = control[1];
+        let walkR = control[2];
+
+        let staticX = control[3];
+        let staticY = control[4];
+        let staticZ = control[5];
+
+        let staticYaw = control[6];
+        let staticPitch = control[7];
+        let staticRoll = control[8];
 
         let delta_theta = control[0] * 0.15 * PI;
-        // let[] rf_end = {HALF_PI, PI, PI};
-        // let[] lf_end = {HALF_PI, 0, PI};
-        // let[] rb_end = {HALF_PI, 0, PI};
-        // let[] lb_end = {HALF_PI, PI, PI};
 
         if (control[0] != 0) {
+
             //right front
             if(this.gait_step == 0) {
                 let rf_start = this.rf_servos_read();
-                let rf_end = [0.50 * PI, 0.75 * PI, 0.75 * PI];
+                let rf_end = [0.50 * PI + staticYaw, 0.75 * PI, 0.75 * PI];
 
-                let steps = 90;
-                let inc = 1.0 / steps;
-                for(let i = 0; i <=1; i += inc) {
-                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
-                    // delay(2);
-                }
-
+                this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
             } else if(this.gait_step == 1) {
                 let rf_start = this.rf_servos_read();
-                let rf_end = [0.50 * PI - delta_theta, 0.75 * PI, 0.75 * PI];
+                let rf_end = [0.50 * PI + staticYaw - delta_theta, 0.75 * PI, 0.75 * PI];
 
-                let steps = 90;
-                let inc = 1.0 / steps;
-                for(let i = 0; i <=1; i += inc) {
-                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
-                    // delay(2);
-                }
+                this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
             } else if(this.gait_step == 2) {
                 let rf_start = this.rf_servos_read();
-                let rf_end = [0.50 * PI - delta_theta, 0.50 * PI, 0.50 * PI];
+                let rf_end = [0.50 * PI + staticYaw - delta_theta, 0.50 * PI, 0.50 * PI];
 
-                let steps = 90;
-                let inc = 1.0 / steps;
-                for(let i = 0; i <=1; i += inc) {
-                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
-                    // delay(3);
-                }
-
+                this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
 
             // left back
-        } else if(this.gait_step == 3) {
-            let lb_start = this.lb_servos_read();
-            let lb_end = [0.50 * PI, 0.75 * PI, 0.75 * PI];
+            } else if(this.gait_step == 3) {
+                let lb_start = this.lb_servos_read();
+                let lb_end = [0.50 * PI + staticYaw, 0.75 * PI, 0.75 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
-                // delay(3);
-            }
-        } else if(this.gait_step == 4) {
-            let lb_start = this.lb_servos_read();
-            let lb_end = [0.50 * PI + delta_theta, 0.75 * PI, 0.75 * PI];
+            } else if(this.gait_step == 4) {
+                let lb_start = this.lb_servos_read();
+                let lb_end = [0.50 * PI + staticYaw + delta_theta, 0.75 * PI, 0.75 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
-                // delay(3);
-            }
-        } else if(this.gait_step == 5) {
-            let lb_start = this.lb_servos_read();
-            let lb_end = [0.50 * PI + delta_theta, 0.50 * PI, 0.50 * PI];
+            } else if(this.gait_step == 5) {
+                let lb_start = this.lb_servos_read();
+                let lb_end = [0.50 * PI + staticYaw + delta_theta, 0.50 * PI, 0.50 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
-                // delay(3);
-            }
 
             // left front
-        } else if(this.gait_step == 6) {
-            let lf_start = this.lf_servos_read();
-            let lf_end = [0.50 * PI, 0.25 * PI, 0.75 * PI];
+            } else if(this.gait_step == 6) {
+                let lf_start = this.lf_servos_read();
+                let lf_end = [0.50 * PI + staticYaw, 0.25 * PI, 0.75 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
-                // delay(3);
-            }
-        } else if(this.gait_step == 7) {
-            let lf_start = this.lf_servos_read();
-            let lf_end = [0.50 * PI + delta_theta, 0.25 * PI, 0.75 * PI];
+            } else if(this.gait_step == 7) {
+                let lf_start = this.lf_servos_read();
+                let lf_end = [0.50 * PI + staticYaw + delta_theta, 0.25 * PI, 0.75 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
-                // delay(3);
-            }
-        } else if(this.gait_step == 8) {
-            let lf_start = this.lf_servos_read();
-            let lf_end = [0.50 * PI + delta_theta, 0.50 * PI, 0.50 * PI];
+            } else if(this.gait_step == 8) {
+                let lf_start = this.lf_servos_read();
+                let lf_end = [0.50 * PI + staticYaw + delta_theta, 0.50 * PI, 0.50 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
-                // delay(3);
-            }
 
             // right back
-        } else if(this.gait_step == 9) {
-            let rb_start = this.rb_servos_read();
-            let rb_end = [0.50 * PI , 0.25 * PI, 0.75 * PI];
+            } else if(this.gait_step == 9) {
+                let rb_start = this.rb_servos_read();
+                let rb_end = [0.50 * PI + staticYaw , 0.25 * PI, 0.75 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
-                // delay(3);
-            }
-        } else if(this.gait_step == 10) {
-            let rb_start = this.rb_servos_read();
-            let rb_end = [0.50 * PI - delta_theta, 0.25 * PI, 0.75 * PI];
+            } else if(this.gait_step == 10) {
+                let rb_start = this.rb_servos_read();
+                let rb_end = [0.50 * PI + staticYaw - delta_theta, 0.25 * PI, 0.75 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
-                // delay(3);
-            }
-        } else if(this.gait_step == 11) {
-            let rb_start = this.rb_servos_read();
-            let rb_end = [0.50 * PI - delta_theta, 0.50 * PI, 0.50 * PI];
+            } else if(this.gait_step == 11) {
+                let rb_start = this.rb_servos_read();
+                let rb_end = [0.50 * PI + staticYaw - delta_theta, 0.50 * PI, 0.50 * PI];
 
-            let steps = 90;
-            let inc = 1.0 / steps;
-            for(let i = 0; i <=1; i += inc) {
                 this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
-                // delay(3);
-            }
 
-                //return to start
+            // return to start
             } else if(this.gait_step == 12) {
                 let rf_start = this.rf_servos_read();
                 let lf_start = this.lf_servos_read();
                 let rb_start = this.rb_servos_read();
                 let lb_start = this.lb_servos_read();
-                let rf_end = [0.5 * PI, 0.5 * PI, 0.5 * PI];
-                let lf_end = [0.5 * PI, 0.5 * PI, 0.5 * PI];
-                let rb_end = [0.5 * PI, 0.5 * PI, 0.5 * PI];
-                let lb_end = [0.5 * PI, 0.5 * PI, 0.5 * PI];
+                let rf_end = [0.5 * PI + staticYaw, 0.5 * PI, 0.5 * PI];
+                let lf_end = [0.5 * PI + staticYaw, 0.5 * PI, 0.5 * PI];
+                let rb_end = [0.5 * PI + staticYaw, 0.5 * PI, 0.5 * PI];
+                let lb_end = [0.5 * PI + staticYaw, 0.5 * PI, 0.5 * PI];
 
-                let steps = 90;
-                let inc = 1.0 / steps;
-                for(let i = 0; i <=1; i += inc) {
-                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
-                    this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
-                    this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
-                    this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
-                    delay(3);
-                }
-
+                this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
+                this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
+                this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
             }
         }
 
-        this.gait_step++;
-        if(this.gait_step > 12) {
-            this.gait_step = 0;
+        if(i >= 1) {
+            this.gait_step++;
+            if(this.gait_step > 12) {
+                this.gait_step = 0;
+            }
         }
+
+        return true;
     }
 
     /**
