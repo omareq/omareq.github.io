@@ -50,10 +50,11 @@ def create_project(name, description):
 
 def readme(name, description):
     f = open(name + "/README.md", "w+")
-    f.write("# " + name + "\n\n")
-    f.write(description + "\n")
-    f.write("Check out the [Demo](https://omareq.github.io/" + name + ").\n")
-    f.write("Check out the [Docs](https://omareq.github.io/" + name + "/docs).\n")
+    capsName = name.strip()[0].capitalize() + name.strip()[1:]
+    f.write("# " + capsName + "\n\n")
+    f.write(description + "\n\n")
+    f.write("Check out the [Demo](https://omareq.github.io/" + name + ").\n\n")
+    f.write("Check out the [Docs](https://omareq.github.io/" + name + "/docs).\n\n")
     f.write("Created using [p5.js](https://p5js.org/)\n\n")
     f.write("## Contact Details\n")
     f.write("__Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)\n")
@@ -71,7 +72,8 @@ def index_html(name, project_id, description="Project Description"):
     for line in template:
         newline = line;
         if "/**TITLE**/" in line:
-            newline = line.replace("/**TITLE**/", name.capitalize())
+            capsName = name.strip()[0].capitalize() + name.strip()[1:]
+            newline = line.replace("/**TITLE**/", capsName)
         elif "/**URL**/" in line:
             newline = line.replace("/**URL**/", name + "/")
         elif "/**IMG**/" in line:
