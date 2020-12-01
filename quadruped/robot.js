@@ -25,21 +25,39 @@ class Robot {
      *                               pixel sizes.
      */
     constructor(scale) {
+        // Look for a way to make this a private static const without breaking
+        // the linter
+        this.gaitStep = {
+            RIGHT_FRONT_UP: 0,
+            RIGHT_FRONT_TRAVEL: 1,
+            RIGHT_FRONT_DOWN: 2,
+            LEFT_BACK_UP: 3,
+            LEFT_BACK_TRAVEL: 4,
+            LEFT_BACK_DOWN: 5,
+            LEFT_FRONT_UP: 6,
+            LEFT_FRONT_TRAVEL: 7,
+            LEFT_FRONT_DOWN: 8,
+            RIGHT_BACK_UP: 9,
+            RIGHT_BACK_TRAVEL: 10,
+            RIGHT_BACK_DOWN:11,
+            RETURN_TO_START: 12
+        };
         this.base = undefined;
         this.under_base = undefined;
         //right front, left front, right back, left back
         this.servos = [];
         //right front, left front, right back, left back: upper, lower
         this.legs = [];
-        this.servo_angles = [];
-        this.servo_height = 0.0361;
-        this.servo_width = 0.02;
-        this.servo_length = 0.0405;
+        this.servoAngles = [];
+        this.servoHeight = 0.0361;
+        this.servoWidth = 0.02;
+        this.servoLength = 0.0405;
+        this.coxa_length = 0.0591;
         this.upper_leg_length = 0.13;
         this.lower_leg_length = 0.13;
         this.under_base_width = 0.138;
         this.scale_val = scale;
-        this.gait_step = 0;
+        this.currentGaitStep = this.gaitStep.RIGHT_FRONT_UP;
         this.partsLoaded = false;
 
         this.load_parts(); // add error handling
@@ -47,7 +65,7 @@ class Robot {
         console.log("OBJ Assets Loaded Successfully");
 
         for(let i = 0; i < 12; i++) {
-            this.servo_angles[i] = random(0.35 * PI, 0.65 * PI);
+            this.servoAngles[i] = random(0.35 * PI, 0.65 * PI);
         }
     }
 
@@ -108,7 +126,7 @@ class Robot {
                 return;
             }
         }
-        this.servo_angles = new_angles;
+        this.servoAngles = new_angles;
     }
 
     /**
@@ -134,9 +152,9 @@ class Robot {
                 return;
             }
         }
-        this.servo_angles[0] = new_angles[0];
-        this.servo_angles[1] = new_angles[1];
-        this.servo_angles[2] = new_angles[2];
+        this.servoAngles[0] = new_angles[0];
+        this.servoAngles[1] = new_angles[1];
+        this.servoAngles[2] = new_angles[2];
     }
 
     /**
@@ -162,9 +180,9 @@ class Robot {
                 return;
             }
         }
-        this.servo_angles[3] = new_angles[0];
-        this.servo_angles[4] = new_angles[1];
-        this.servo_angles[5] = new_angles[2];
+        this.servoAngles[3] = new_angles[0];
+        this.servoAngles[4] = new_angles[1];
+        this.servoAngles[5] = new_angles[2];
     }
 
     /**
@@ -190,9 +208,9 @@ class Robot {
                 return;
             }
         }
-        this.servo_angles[6] = new_angles[0];
-        this.servo_angles[7] = new_angles[1];
-        this.servo_angles[8] = new_angles[2];
+        this.servoAngles[6] = new_angles[0];
+        this.servoAngles[7] = new_angles[1];
+        this.servoAngles[8] = new_angles[2];
     }
 
     /**
@@ -218,9 +236,9 @@ class Robot {
                 return;
             }
         }
-        this.servo_angles[9] = new_angles[0];
-        this.servo_angles[10] = new_angles[1];
-        this.servo_angles[11] = new_angles[2];
+        this.servoAngles[9] = new_angles[0];
+        this.servoAngles[10] = new_angles[1];
+        this.servoAngles[11] = new_angles[2];
     }
 
     /**
@@ -236,7 +254,7 @@ class Robot {
      *                              respectively.
      */
     servos_read() {
-        return this.servo_angles;
+        return this.servoAngles;
     }
 
     /**
@@ -249,9 +267,9 @@ class Robot {
      *                              respectively.
      */
     rf_servos_read() {
-        let rf_angles = [this.servo_angles[0],
-            this.servo_angles[1],
-            this.servo_angles[2]];
+        let rf_angles = [this.servoAngles[0],
+            this.servoAngles[1],
+            this.servoAngles[2]];
         return rf_angles;
     }
 
@@ -265,9 +283,9 @@ class Robot {
      *                              respectively.
      */
     lf_servos_read() {
-        let lf_angles = [this.servo_angles[3],
-            this.servo_angles[4],
-            this.servo_angles[5]];
+        let lf_angles = [this.servoAngles[3],
+            this.servoAngles[4],
+            this.servoAngles[5]];
         return lf_angles;
     }
 
@@ -281,9 +299,9 @@ class Robot {
      *                              respectively.
      */
     rb_servos_read() {
-        let rb_angles = [this.servo_angles[6],
-            this.servo_angles[7],
-            this.servo_angles[8]];
+        let rb_angles = [this.servoAngles[6],
+            this.servoAngles[7],
+            this.servoAngles[8]];
         return rb_angles;
     }
 
@@ -297,10 +315,52 @@ class Robot {
      *                              respectively.
      */
     lb_servos_read() {
-        let lb_angles = [this.servo_angles[9],
-            this.servo_angles[10],
-            this.servo_angles[11]];
+        let lb_angles = [this.servoAngles[9],
+            this.servoAngles[10],
+            this.servoAngles[11]];
         return lb_angles;
+    }
+
+    //  list of signs to that the IK will match the global reference frame
+    //  RF x(+), y(-), z(+) - theta1+half pi+quarter pi, pi-theta2, theta3
+    //  LF x(+), y(+), z(+) - theta1+halfpi,             pi-theta2, theta3
+    //  RB x(+), y(-), z(+) - theta1+quarter pi,         theta2,    theta3 honestly no clue maybe add an x offset
+    //  LB x(), y(), z() -
+    IK(pos) {
+        if(pos.length != 3) {
+            console.log("Robot.IK() pos parameter is meant to have a length " +
+                "of 3.  X, Y and Z coordinates in cm.");
+        }
+
+        let x = 0.01 * pos[0];
+        let y = 0.01 * pos[1];
+        let z = 0.01 * pos[2];
+        // Add positional validity checks for out of bounds regions
+
+        let cx = this.coxa_length;
+        let fm = this.upper_leg_length;
+        let tb = this.lower_leg_length;
+
+        let r2 = x * x + y * y;
+        let r = sqrt(r2);
+        let alpha = sqrt(pow(z + cx, 2) + r2);
+
+        let theta1;
+        if(x == 0) {
+            theta1 = HALF_PI + QUARTER_PI;
+        } else {
+            theta1 = atan(y / x);
+        }
+
+        let theta2 = acos((alpha * alpha - fm * fm - tb * tb) / (-2 * fm * tb));
+
+        let phi1 = atan(r / (z + cx));
+        let phi2 = asin(sin(theta2) * tb / alpha);
+        let epsilon = 3 * HALF_PI - phi1 - phi2 - theta2;
+
+        let theta3 = PI - phi1 - phi2;
+
+        return [theta1 + QUARTER_PI, theta2, theta3];
     }
 
     /**
@@ -426,98 +486,122 @@ class Robot {
 
         let delta_theta = control[0] * 0.15 * PI;
 
+        let rf_start = this.rf_servos_read();
+        let lb_start = this.lb_servos_read();
+        let lf_start = this.lf_servos_read();
+        let rb_start = this.rb_servos_read();
+
+        let rf_end, lb_end, lf_end, rb_end;
+
         if (control[0] != 0) {
+            switch(this.currentGaitStep) {
+                //right front
+                case this.gaitStep.RIGHT_FRONT_UP:
+                    rf_end = [HALF_PI + staticYaw,
+                        3 * QUARTER_PI,
+                        3 * QUARTER_PI];
 
-            //right front
-            if(this.gait_step == 0) {
-                let rf_start = this.rf_servos_read();
-                let rf_end = [0.50 * PI + staticYaw, 0.75 * PI, 0.75 * PI];
+                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                    break;
+                case this.gaitStep.RIGHT_FRONT_TRAVEL:
+                    rf_end = [HALF_PI + staticYaw - delta_theta,
+                        3 * QUARTER_PI,
+                        3 * QUARTER_PI];
 
-                this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
-            } else if(this.gait_step == 1) {
-                let rf_start = this.rf_servos_read();
-                let rf_end = [0.50 * PI + staticYaw - delta_theta, 0.75 * PI, 0.75 * PI];
+                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                    break;
+                case this.gaitStep.RIGHT_FRONT_DOWN:
+                    rf_end = [HALF_PI + staticYaw - delta_theta,
+                        HALF_PI,
+                        HALF_PI];
 
-                this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
-            } else if(this.gait_step == 2) {
-                let rf_start = this.rf_servos_read();
-                let rf_end = [0.50 * PI + staticYaw - delta_theta, 0.50 * PI, 0.50 * PI];
+                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                    break;
+                // left back
+                case this.gaitStep.LEFT_BACK_UP:
+                    lb_end = [HALF_PI + staticYaw,
+                        3 * QUARTER_PI,
+                        3 * QUARTER_PI];
 
-                this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                    this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
+                    break;
+                case this.gaitStep.LEFT_BACK_TRAVEL:
+                    lb_end = [HALF_PI + staticYaw + delta_theta,
+                        3 * QUARTER_PI,
+                        3 * QUARTER_PI];
 
-            // left back
-            } else if(this.gait_step == 3) {
-                let lb_start = this.lb_servos_read();
-                let lb_end = [0.50 * PI + staticYaw, 0.75 * PI, 0.75 * PI];
+                    this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
+                    break;
+                case this.gaitStep.LEFT_BACK_DOWN:
+                    lb_end = [HALF_PI + staticYaw + delta_theta,
+                        HALF_PI,
+                        HALF_PI];
 
-                this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
-            } else if(this.gait_step == 4) {
-                let lb_start = this.lb_servos_read();
-                let lb_end = [0.50 * PI + staticYaw + delta_theta, 0.75 * PI, 0.75 * PI];
+                    this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
+                    break;
+                // left front
+                case this.gaitStep.LEFT_FRONT_UP:
+                    lf_end = [HALF_PI + staticYaw,
+                        QUARTER_PI,
+                        3 * QUARTER_PI];
 
-                this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
-            } else if(this.gait_step == 5) {
-                let lb_start = this.lb_servos_read();
-                let lb_end = [0.50 * PI + staticYaw + delta_theta, 0.50 * PI, 0.50 * PI];
+                    this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
+                    break;
+                case this.gaitStep.LEFT_FRONT_TRAVEL:
+                    lf_end = [HALF_PI + staticYaw + delta_theta,
+                        QUARTER_PI,
+                        3 * QUARTER_PI];
 
-                this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
+                    this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
+                    break;
+                case this.gaitStep.LEFT_FRONT_DOWN:
+                    lf_end = [HALF_PI + staticYaw + delta_theta,
+                        HALF_PI,
+                        HALF_PI];
 
-            // left front
-            } else if(this.gait_step == 6) {
-                let lf_start = this.lf_servos_read();
-                let lf_end = [0.50 * PI + staticYaw, 0.25 * PI, 0.75 * PI];
+                    this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
+                    break;
+                // right back
+                case this.gaitStep.RIGHT_BACK_UP:
+                    rb_end = [HALF_PI + staticYaw ,
+                        QUARTER_PI,
+                        3 * QUARTER_PI];
 
-                this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
-            } else if(this.gait_step == 7) {
-                let lf_start = this.lf_servos_read();
-                let lf_end = [0.50 * PI + staticYaw + delta_theta, 0.25 * PI, 0.75 * PI];
+                    this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
+                    break;
+                case this.gaitStep.RIGHT_BACK_TRAVEL:
+                    rb_end = [HALF_PI + staticYaw - delta_theta,
+                    QUARTER_PI,
+                    3 * QUARTER_PI];
 
-                this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
-            } else if(this.gait_step == 8) {
-                let lf_start = this.lf_servos_read();
-                let lf_end = [0.50 * PI + staticYaw + delta_theta, 0.50 * PI, 0.50 * PI];
+                    this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
+                    break;
+                case this.gaitStep.RIGHT_BACK_DOWN:
+                    rb_end = [HALF_PI + staticYaw - delta_theta,
+                        HALF_PI,
+                        HALF_PI];
 
-                this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
+                    this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
+                    break;
+                // return to start
+                case this.gaitStep.RETURN_TO_START:
+                    rf_end = [HALF_PI + staticYaw, HALF_PI, HALF_PI];
+                    lf_end = [HALF_PI + staticYaw, HALF_PI, HALF_PI];
+                    rb_end = [HALF_PI + staticYaw, HALF_PI, HALF_PI];
+                    lb_end = [HALF_PI + staticYaw, HALF_PI, HALF_PI];
 
-            // right back
-            } else if(this.gait_step == 9) {
-                let rb_start = this.rb_servos_read();
-                let rb_end = [0.50 * PI + staticYaw , 0.25 * PI, 0.75 * PI];
-
-                this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
-            } else if(this.gait_step == 10) {
-                let rb_start = this.rb_servos_read();
-                let rb_end = [0.50 * PI + staticYaw - delta_theta, 0.25 * PI, 0.75 * PI];
-
-                this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
-            } else if(this.gait_step == 11) {
-                let rb_start = this.rb_servos_read();
-                let rb_end = [0.50 * PI + staticYaw - delta_theta, 0.50 * PI, 0.50 * PI];
-
-                this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
-
-            // return to start
-            } else if(this.gait_step == 12) {
-                let rf_start = this.rf_servos_read();
-                let lf_start = this.lf_servos_read();
-                let rb_start = this.rb_servos_read();
-                let lb_start = this.lb_servos_read();
-                let rf_end = [0.5 * PI + staticYaw, 0.5 * PI, 0.5 * PI];
-                let lf_end = [0.5 * PI + staticYaw, 0.5 * PI, 0.5 * PI];
-                let rb_end = [0.5 * PI + staticYaw, 0.5 * PI, 0.5 * PI];
-                let lb_end = [0.5 * PI + staticYaw, 0.5 * PI, 0.5 * PI];
-
-                this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
-                this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
-                this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
-                this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
+                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                    this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
+                    this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
+                    this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
+                    break;
             }
         }
 
         if(i >= 1) {
-            this.gait_step++;
-            if(this.gait_step > 12) {
-                this.gait_step = 0;
+            this.currentGaitStep++;
+            if(this.currentGaitStep > 12) {
+                this.currentGaitStep = 0;
             }
         }
 
@@ -552,8 +636,8 @@ class Robot {
         push();
         stroke(255);
         strokeWeight(2.5);
-        let y_line = 0.3 * this.servo_height;
-        line(0, -y_line, 0, 0, -y_line, -this.servo_length);
+        let y_line = 0.3 * this.servoHeight;
+        line(0, -y_line, 0, 0, -y_line, -this.servoLength);
         pop();
         noStroke();
         this.base_draw();
@@ -579,7 +663,7 @@ class Robot {
      */
     under_base_draw() {
         push();
-        translate(0,this.servo_height - 0.0035,0);
+        translate(0,this.servoHeight - 0.0035,0);
         model(this.under_base);
         pop();
     }
@@ -589,25 +673,25 @@ class Robot {
      */
     rf_draw() {
         push();
-        translate(this.under_base_width/2 - this.servo_length*sin(PI/4),
-            0, -this.under_base_width/2 + this.servo_length*sin(PI/4));//+,0,-
+        translate(this.under_base_width/2 - this.servoLength*sin(PI/4),
+            0, -this.under_base_width/2 + this.servoLength*sin(PI/4));//+,0,-
         rotateY(PI/4);//pi/4
-        translate(0,this.servo_height/2, 0);
+        translate(0,this.servoHeight/2, 0);
         push();
         fill(125);
         model(this.servos[0]);
         pop();
         push();
-        translate(0, - this.servo_height, 0);
-        rotateY((PI - this.servo_angles[0]) - HALF_PI); // control angle for hip + is forward and - is backward
+        translate(0, - this.servoHeight, 0);
+        rotateY((PI - this.servoAngles[0]) - HALF_PI); // control angle for hip + is forward and - is backward
         rotateX(HALF_PI);
         push();
         fill(125);
         model(this.servos[1]);
         pop();
         push();
-        translate(0.5 * this.servo_length, -1.5 * this.servo_width, 0);
-        rotateY(PI - this.servo_angles[1]); //control angle for upper leg + is down and - is up
+        translate(0.5 * this.servoLength, -1.5 * this.servoWidth, 0);
+        rotateY(PI - this.servoAngles[1]); //control angle for upper leg + is down and - is up
         push();
         fill(0);
         model(this.legs[0]);
@@ -616,7 +700,7 @@ class Robot {
         translate(0, 0, 0.625 * this.upper_leg_length);
         //lower servo
         push();
-        translate(0, this.servo_width, 0);
+        translate(0, this.servoWidth, 0);
         rotateY(HALF_PI);
         push();
         fill(125);
@@ -625,8 +709,8 @@ class Robot {
         pop();
         // lower leg
         push();
-        translate(0,- 0.35 * this.servo_width,0);
-        rotateY(PI + this.servo_angles[2]); //control angle for lower leg - is down + is up
+        translate(0,- 0.35 * this.servoWidth,0);
+        rotateY(PI + this.servoAngles[2]); //control angle for lower leg - is down + is up
         rotateX(-PI);
         push();
         fill(125);
@@ -644,25 +728,25 @@ class Robot {
      */
     lf_draw() {
         push();
-        translate(-this.under_base_width/2 + this.servo_length*sin(PI/4),
-            0, -this.under_base_width/2 + this.servo_length*sin(PI/4)); //-,0,-
+        translate(-this.under_base_width/2 + this.servoLength*sin(PI/4),
+            0, -this.under_base_width/2 + this.servoLength*sin(PI/4)); //-,0,-
         rotateY(-PI/4);//-pi/4
-        translate(0, this.servo_height/2,0);
+        translate(0, this.servoHeight/2,0);
         push();
         fill(125);
         model(this.servos[3]);
         pop();
         push();
-        translate(0, -this.servo_height, 0);
-        rotateY((PI -this.servo_angles[3]) - HALF_PI); // control angle for hip - is forward and + is backward
+        translate(0, -this.servoHeight, 0);
+        rotateY((PI -this.servoAngles[3]) - HALF_PI); // control angle for hip - is forward and + is backward
         rotateX(HALF_PI);
         push();
         fill(125);
         model(this.servos[4]);
         pop();
         push();
-        translate(-0.5 * this.servo_length, -1.5 * this.servo_width, 0);
-        rotateY(-this.servo_angles[4]); //control angle for upper leg - is down and + is up
+        translate(-0.5 * this.servoLength, -1.5 * this.servoWidth, 0);
+        rotateY(-this.servoAngles[4]); //control angle for upper leg - is down and + is up
         push();
         fill(0);
         model(this.legs[2]);
@@ -671,7 +755,7 @@ class Robot {
         translate(0, 0, 0.625 * this.upper_leg_length);
         //lower servo
         push();
-        translate(0, this.servo_width, 0);
+        translate(0, this.servoWidth, 0);
         rotateY(HALF_PI);
         push();
         fill(125);
@@ -680,8 +764,8 @@ class Robot {
         pop();
         // lower leg
         push();
-        translate(0, -0.35 * this.servo_width,0);
-        rotateY(-this.servo_angles[5]); //control angle for lower leg - is down + is up
+        translate(0, -0.35 * this.servoWidth,0);
+        rotateY(-this.servoAngles[5]); //control angle for lower leg - is down + is up
         //rotateZ(0);
         push();
         fill(125);
@@ -699,25 +783,25 @@ class Robot {
      */
     rb_draw() {
         push();
-        translate(this.under_base_width/2 - this.servo_length*sin(PI/4),
-            0, this.under_base_width/2 - this.servo_length*sin(PI/4)); //+,0,+
+        translate(this.under_base_width/2 - this.servoLength*sin(PI/4),
+            0, this.under_base_width/2 - this.servoLength*sin(PI/4)); //+,0,+
         rotateY(-PI/4);//-pi/4
-        translate(0, this.servo_height/2,0);
+        translate(0, this.servoHeight/2,0);
         push();
         fill(125);
         model(this.servos[0]);
         pop();
         push();
-        translate(0, - this.servo_height, 0);
-        rotateY((PI - this.servo_angles[6]) - HALF_PI); // control angle for hip - is forward and + is backward
+        translate(0, - this.servoHeight, 0);
+        rotateY((PI - this.servoAngles[6]) - HALF_PI); // control angle for hip - is forward and + is backward
         rotateX(HALF_PI);
         push();
         fill(125);
         model(this.servos[4]);
         pop();
         push();
-        translate(0.5 * this.servo_length, 0.9* this.servo_width, 0);
-        rotateY(this.servo_angles[7]); //control angle for upper leg - is down and + is up
+        translate(0.5 * this.servoLength, 0.9* this.servoWidth, 0);
+        rotateY(this.servoAngles[7]); //control angle for upper leg - is down and + is up
         push();
         fill(0);
         model(this.legs[2]);
@@ -726,7 +810,7 @@ class Robot {
         translate(0, 0, 0.625 * this.upper_leg_length);
         //lower servo
         push();
-        translate(0, -0.8* this.servo_width, 0);
+        translate(0, -0.8* this.servoWidth, 0);
         rotateY(HALF_PI);
         push();
         fill(125);
@@ -735,8 +819,8 @@ class Robot {
         pop();
         // lower leg
         push();
-        translate(0, 0.35 * this.servo_width, 0);
-        rotateY(PI + this.servo_angles[8]); //control angle for lower leg + is down - is up
+        translate(0, 0.35 * this.servoWidth, 0);
+        rotateY(PI + this.servoAngles[8]); //control angle for lower leg + is down - is up
         rotateX(PI);
         push();
         fill(125);
@@ -754,18 +838,18 @@ class Robot {
      */
     lb_draw() {
         push();
-        translate(-this.under_base_width/2 + this.servo_length * sin(PI/4),
-            0, this.under_base_width/2 - this.servo_length*sin(PI/4)); //-,0,+
+        translate(-this.under_base_width/2 + this.servoLength * sin(PI/4),
+            0, this.under_base_width/2 - this.servoLength*sin(PI/4)); //-,0,+
         rotateY(PI/4);//pi/4
-        translate(0, this.servo_height/2,0);
+        translate(0, this.servoHeight/2,0);
         push();
         fill(125);
         model(this.servos[0]);
         pop();
 
         push();
-        translate(0, -this.servo_height, 0);
-        rotateY((PI - this.servo_angles[9]) - HALF_PI); // control angle for hip - is forward and + is backward
+        translate(0, -this.servoHeight, 0);
+        rotateY((PI - this.servoAngles[9]) - HALF_PI); // control angle for hip - is forward and + is backward
         rotateX(HALF_PI);
         push();
         fill(125);
@@ -773,8 +857,8 @@ class Robot {
         pop();
 
         push();
-        translate(-0.5 * this.servo_length, 0.9 * this.servo_width, 0);
-        rotateY(PI + this.servo_angles[10]); //control angle for upper leg - is down and + is up
+        translate(-0.5 * this.servoLength, 0.9 * this.servoWidth, 0);
+        rotateY(PI + this.servoAngles[10]); //control angle for upper leg - is down and + is up
         rotateY(0);
         push();
         fill(0);
@@ -785,7 +869,7 @@ class Robot {
         translate(0, 0, 0.625 * this.upper_leg_length);
         //lower servo
         push();
-        translate(0, -0.8 * this.servo_width, 0);
+        translate(0, -0.8 * this.servoWidth, 0);
         rotateY(HALF_PI);
         push();
         fill(125);
@@ -795,8 +879,8 @@ class Robot {
 
         // lower leg
         push();
-        translate(0, 0.35 * this.servo_width,0);
-        rotateY(-this.servo_angles[11]); //control angle for lower leg + is down - is up
+        translate(0, 0.35 * this.servoWidth,0);
+        rotateY(-this.servoAngles[11]); //control angle for lower leg + is down - is up
         rotateX(0);
         push();
         fill(125);
