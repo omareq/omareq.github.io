@@ -88,7 +88,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(255, 0, 0, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                    borderColor: 'rgba(255, 0, 0, 0.65)',
+                    // fill: false
                 },
                 {
                     label: 'LF Hip Elevation',
@@ -96,7 +99,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(0, 255, 0, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                    borderColor: 'rgba(0, 255, 0, 0.65)',
+                    // fill: false
                 },
                 {
                     label: 'LF Knee Extension',
@@ -104,7 +110,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(0, 0, 255, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    borderColor: 'rgba(0, 0, 255, 0.65)',
+                    // fill: false
                 }
             ]
         },
@@ -149,7 +158,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(255, 0, 0, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                    borderColor: 'rgba(255, 0, 0, 0.65)',
+                    // fill: false
                 },
                 {
                     label: 'RF Hip Elevation',
@@ -157,7 +169,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(0, 255, 0, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                    borderColor: 'rgba(0, 255, 0, 0.65)',
+                    // fill: false
                 },
                 {
                     label: 'RF Knee Extension',
@@ -165,7 +180,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(0, 0, 255, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    borderColor: 'rgba(0, 0, 255, 0.65)',
+                    // fill: false
                 }
             ]
         },
@@ -210,7 +228,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(255, 0, 0, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                    borderColor: 'rgba(255, 0, 0, 0.65)',
+                    // fill: false
                 },
                 {
                     label: 'LB Hip Elevation',
@@ -218,7 +239,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(0, 255, 0, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                    borderColor: 'rgba(0, 255, 0, 0.65)',
+                    // fill: false
                 },
                 {
                     label: 'LB Knee Extension',
@@ -226,7 +250,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(0, 0, 255, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    borderColor: 'rgba(0, 0, 255, 0.65)',
+                    // fill: false
                 }
             ]
         },
@@ -271,7 +298,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(255, 0, 0, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                    borderColor: 'rgba(255, 0, 0, 0.65)',
+                    // fill: false
                 },
                 {
                     label: 'RB Hip Elevation',
@@ -279,7 +309,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(0, 255, 0, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                    borderColor: 'rgba(0, 255, 0, 0.65)',
+                    // fill: false
                 },
                 {
                     label: 'RB Knee Extension',
@@ -287,7 +320,10 @@ function chartSetup() {
                         x: 0,
                         y: 90
                     }],
-                    backgroundColor: 'rgba(0, 0, 255, 0.35)'
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    borderColor: 'rgba(0, 0, 255, 0.65)',
+                    // fill: false
                 }
             ]
         },
@@ -326,13 +362,13 @@ function chartSetup() {
  * Function to plot the angles of all the leg servos on the chart js canvases.
  */
 function chartUpdate() {
-    if(frameCount % 5 == 0) {
+    if(frameCount % 3 == 0) {
         for(let i = 0; i < 3; i++) {
             lfScatterChart.data.datasets[i].data.push({x: frameCount, y: natalya.lf_servos_read()[i]*180.0/3.1415927});
             rfScatterChart.data.datasets[i].data.push({x: frameCount, y: natalya.rf_servos_read()[i]*180.0/3.1415927});
             lbScatterChart.data.datasets[i].data.push({x: frameCount, y: natalya.lb_servos_read()[i]*180.0/3.1415927});
             rbScatterChart.data.datasets[i].data.push({x: frameCount, y: natalya.rb_servos_read()[i]*180.0/3.1415927});
-            if(rbScatterChart.data.datasets[i].data["length"] >= 80) {
+            if(rbScatterChart.data.datasets[i].data["length"] >= 155) {
                 lfScatterChart.data.datasets[i].data.shift();
                 rfScatterChart.data.datasets[i].data.shift();
                 lbScatterChart.data.datasets[i].data.shift();
