@@ -121,12 +121,18 @@ function chartSetup() {
                 xAxes: [{
                     type: 'linear',
                     position: 'bottom',
-
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Frame'
+                      }
                 }],
                 yAxes: [{
                     min: 0,
-                    max: 180
-                }],
+                    max: 180,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Angle Degrees'
+                      }}],
             },
             // showLines: false // disable for all datasets
         }
@@ -175,12 +181,19 @@ function chartSetup() {
             scales: {
                 xAxes: [{
                     type: 'linear',
-                    position: 'bottom'
+                    position: 'bottom',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Frame'
+                      }
                 }],
                 yAxes: [{
                     min: 0,
-                    max: 180
-                }]
+                    max: 180,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Angle Degrees'
+                      }}],
             },
             // showLines: false // disable for all datasets
         }
@@ -229,12 +242,19 @@ function chartSetup() {
             scales: {
                 xAxes: [{
                     type: 'linear',
-                    position: 'bottom'
+                    position: 'bottom',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Frame'
+                      }
                 }],
                 yAxes: [{
                     min: 0,
-                    max: 180
-                }]
+                    max: 180,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Angle Degrees'
+                      }}],
             },
             // showLines: false // disable for all datasets
         }
@@ -283,12 +303,19 @@ function chartSetup() {
             scales: {
                 xAxes: [{
                     type: 'linear',
-                    position: 'bottom'
+                    position: 'bottom',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Frame'
+                      }
                 }],
                 yAxes: [{
                     min: 0,
-                    max: 180
-                }]
+                    max: 180,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Angle Degrees'
+                      }}],
             },
             // showLines: false // disable for all datasets
         }

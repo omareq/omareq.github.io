@@ -1,6 +1,7 @@
 # Quadruped
 
-A quick mock up of a quadruped design to test Inverse Kinematics
+A quick mock up of a quadruped design to test Inverse Kinematics for a robot
+that I have built.
 
 Check out the [Demo](https://omareq.github.io/quadruped).
 Check out the [Docs](https://omareq.github.io/quadruped/docs).
