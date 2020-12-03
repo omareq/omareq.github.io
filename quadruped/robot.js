@@ -9,6 +9,9 @@
  *
  ******************************************************************************/
 
+ // SERVO FULL CLOCKWISE ROTATION FROM ABOVE IS 180 DEGREES
+ // AND FULL COUNTER CLOCKWISE ROTATION IS 0 DEGREES
+
 /**
  * This class describes a quadruped robot and all the functions necessary to
  * control the robots pose as well as it's animation.
@@ -413,10 +416,10 @@ class Robot {
      *                               the final position.
      */
     home(i) {
-        let rf_end = [HALF_PI, PI, PI];
+        let rf_end = [HALF_PI, PI, 0];
         let lf_end = [HALF_PI, 0, PI];
         let rb_end = [HALF_PI, 0, PI];
-        let lb_end = [HALF_PI, PI, PI];
+        let lb_end = [HALF_PI, PI, 0];
 
         let rf_start = this.rf_servos_read();
         let lf_start = this.lf_servos_read();
@@ -440,7 +443,7 @@ class Robot {
      */
     stand90(i) {
         let itt = i * HALF_PI;
-        let rf_vals = [HALF_PI, PI - itt, PI - itt];
+        let rf_vals = [HALF_PI, PI - itt, itt];
         this.rf_servos_write(rf_vals);
 
         let lf_vals = [HALF_PI, itt, PI - itt];
@@ -449,7 +452,7 @@ class Robot {
         let rb_vals = [HALF_PI, itt, PI - itt];
         this.rb_servos_write(rb_vals);
 
-        let lb_vals = [HALF_PI, PI - itt, PI - itt];
+        let lb_vals = [HALF_PI, PI - itt, itt];
         this.lb_servos_write(lb_vals);
     }
 
@@ -499,14 +502,14 @@ class Robot {
                 case this.gaitStep.RIGHT_FRONT_UP:
                     rf_end = [HALF_PI + staticYaw,
                         3 * QUARTER_PI,
-                        3 * QUARTER_PI];
+                        QUARTER_PI];
 
                     this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
                     break;
                 case this.gaitStep.RIGHT_FRONT_TRAVEL:
                     rf_end = [HALF_PI + staticYaw - delta_theta,
                         3 * QUARTER_PI,
-                        3 * QUARTER_PI];
+                        QUARTER_PI];
 
                     this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
                     break;
@@ -521,14 +524,14 @@ class Robot {
                 case this.gaitStep.LEFT_BACK_UP:
                     lb_end = [HALF_PI + staticYaw,
                         3 * QUARTER_PI,
-                        3 * QUARTER_PI];
+                        QUARTER_PI];
 
                     this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
                     break;
                 case this.gaitStep.LEFT_BACK_TRAVEL:
                     lb_end = [HALF_PI + staticYaw + delta_theta,
                         3 * QUARTER_PI,
-                        3 * QUARTER_PI];
+                        QUARTER_PI];
 
                     this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
                     break;
@@ -710,7 +713,7 @@ class Robot {
         // lower leg
         push();
         translate(0,- 0.35 * this.servoWidth,0);
-        rotateY(PI + this.servoAngles[2]); //control angle for lower leg - is down + is up
+        rotateY(PI + PI - this.servoAngles[2]); //control angle for lower leg - is down + is up
         rotateX(-PI);
         push();
         fill(125);
@@ -880,7 +883,7 @@ class Robot {
         // lower leg
         push();
         translate(0, 0.35 * this.servoWidth,0);
-        rotateY(-this.servoAngles[11]); //control angle for lower leg + is down - is up
+        rotateY(PI + this.servoAngles[11]); //control angle for lower leg + is down - is up
         rotateX(0);
         push();
         fill(125);
