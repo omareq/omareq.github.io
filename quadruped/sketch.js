@@ -28,8 +28,13 @@ let firstState = 0;
 let lastState = 2;
 let state = firstState;
 let gaitCounter = 0;
-// let y = 0;
-// let yInc = 0.05;
+let x = 1;
+let y = 1;
+let yInc = 0.1;
+let roll = 0;
+let pitch = 1.25;
+let rollInc = 0.25;
+let pitchInc = 0.25;
 
 /**
  * Array to control the walking gait as well as the static pose of the robot.
@@ -413,23 +418,53 @@ function draw() {
     } else if(state == 1) {
         natalya.stand90(i);
     } else if(state == 2) {
-        i+=0.09;
-        natalya.walk(walkArray, i);
-        if(i >= 1) {
-            gaitCounter++;
-            state--;
-            if(gaitCounter > 10 * 12) {
-                state++;
-                gaitCounter = 0;
-            }
-        }
-        // let angles = natalya.IK([5, y, 10]);
-        // y+= yInc;
-        // if(abs(y) > 3){
-        //     yInc *=-1;
+        // i+=0.09;
+        // natalya.walk(walkArray, i);
+        // if(i >= 1) {
+        //     gaitCounter++;
+        //     state--;
+        //     if(gaitCounter > 10 * 12) {
+        //         state++;
+        //         gaitCounter = 0;
+        //     }
         // }
-        // natalya.rb_servos_write(angles);
-        // i-=0.01;
+        //
+
+
+
+        roll += rollInc;
+        if(roll < -7 || roll > 7) {
+            rollInc *= -1;
+        }
+
+        pitch += pitchInc;
+        if(pitch < -7 || pitch > 7) {
+            pitchInc *= -1;
+        }
+
+        y+= yInc;
+        x = 5;
+        if(y > 20 || y <=-20){
+            yInc *=-1;
+        }
+        i-=0.01;
+
+        let deltaRoll = 100 * 0.5 * natalya.under_base_width * sin(radians(roll));
+        let deltaPitch = 100 * 0.5 * natalya.under_base_width * sin(radians(pitch));
+        let z = 9;
+        let lfz = z + deltaRoll + deltaPitch;
+        let rfz = z - deltaRoll + deltaPitch;
+        let lbz = z + deltaRoll - deltaPitch;
+        let rbz = z - deltaRoll - deltaPitch;
+
+        let rf_angles = natalya.rf_IK([x, x, rfz]);
+        let lf_angles = natalya.lf_IK([-x, x, lfz]);
+        let rb_angles = natalya.rb_IK([x, -x, rbz]);
+        let lb_angles = natalya.lb_IK([-x, x, lbz]);
+        natalya.rf_servos_write(rf_angles);
+        natalya.lf_servos_write(lf_angles);
+        natalya.rb_servos_write(rb_angles);
+        natalya.lb_servos_write(lb_angles);
     }
 
     if(i >= 1) {
@@ -442,6 +477,10 @@ function draw() {
     }
 
     chartUpdate();
-    natalya.draw(0,0,0, -PI/6, viewAngle,0);
+    // rotateY(radians(-y));
+    // natalya.draw(0,0,0, radians(-0.5*pitch), PI/4, radians(0.5*roll));
+    natalya.draw(0,0,0, -PI/6, 0.1*viewAngle,0);//radians(roll));
+    // natalya.draw(0,0,0, radians(pitch), viewAngle, radians(roll));
+    // natalya.draw(0,0,0, -PI/6, viewAngle, radians(roll));
 }
 
