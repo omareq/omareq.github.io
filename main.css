@@ -161,6 +161,11 @@ body {
 	transition: 0.3s all;
 }
 
+#external_link img{
+	margin: 2em;
+	border-radius: 0.5em;
+}
+
 footer .links a:hover span{
 	text-decoration: none;
 	color: white;
