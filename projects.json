@@ -11,7 +11,9 @@
             "pic-url": "imgs/p_000.jpg",
             "prev-id": "p_019",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "fun"
+            ],
             "vid-url": "vids/p_000.mp4"
         },
         "p_001": {
@@ -43,7 +45,8 @@
             "prev-id": "p_001",
             "status": "active",
             "tags": [
-                "game"
+                "game",
+                "typing"
             ],
             "vid-url": "vids/p_002.mp4"
         },
@@ -58,7 +61,9 @@
             "pic-url": "imgs/p_003.jpg",
             "prev-id": "p_002",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "fun"
+            ],
             "vid-url": "vids/p_003.mp4"
         },
         "p_004": {
@@ -73,7 +78,8 @@
             "prev-id": "p_003",
             "status": "active",
             "tags": [
-                "science"
+                "science",
+                "physics"
             ],
             "vid-url": "vids/p_004.mp4"
         },
@@ -119,7 +125,8 @@
             "prev-id": "p_006",
             "status": "active",
             "tags": [
-                "science"
+                "science",
+                "physics"
             ],
             "vid-url": "vids/p_007.mp4"
         },
@@ -135,7 +142,8 @@
             "prev-id": "p_007",
             "status": "active",
             "tags": [
-                "science"
+                "science",
+                "physics"
             ],
             "vid-url": "vids/p_008.mp4"
         },
@@ -197,7 +205,8 @@
             "prev-id": "p_011",
             "status": "active",
             "tags": [
-                ""
+                "game",
+                "puzzle"
             ],
             "vid-url": "vids/p_012.mp4"
         },
@@ -308,7 +317,10 @@
             "pic-url": "imgs/p_019.jpg",
             "prev-id": "p_018",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "robot",
+                "science"
+            ],
             "vid-url": "vids/p_019.mp4"
         }
     }

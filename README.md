@@ -13,6 +13,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Testing, make sure that all js files are linked in index.html, spell check, markdown validator, html validator
 - [ ]	Finish Antenna Calculator
 - [ ]	Finish Ninja Game
+- [ ]   Finish texType Docs and rest of texType/todo
 - [ ]   Add Caesar Cipher
 - [x]   Add Simon Memory Game
 - [ ]	Add Sliding Puzzle Game
