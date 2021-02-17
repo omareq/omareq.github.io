@@ -257,7 +257,7 @@
             "gif-url": "imgs/p_016.gif", 
             "id": "p_016", 
             "name": "Meshing", 
-            "next-id": "p_017", 
+            "next-id": "p_018", 
             "pic-url": "imgs/p_016.jpg", 
             "prev-id": "p_015", 
             "status": "active", 
@@ -276,7 +276,7 @@
             "next-id": "p_018", 
             "pic-url": "imgs/p_017.jpg", 
             "prev-id": "p_016", 
-            "status": "active", 
+            "status": "archived", 
             "tags": [], 
             "vid-url": "vids/p_017.mp4"
         }, 
@@ -289,7 +289,7 @@
             "name": "Flood-it", 
             "next-id": "p_019", 
             "pic-url": "imgs/p_018.jpg", 
-            "prev-id": "p_017", 
+            "prev-id": "p_016", 
             "status": "active", 
             "tags": [
                 "algorithm", 
