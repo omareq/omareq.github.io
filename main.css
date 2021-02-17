@@ -99,6 +99,10 @@ body {
 	border-radius: 0px;
 }
 
+.front img {
+	border-radius: 50%;
+}
+
 .back {
 	z-index: 2; /* back side, placed above front */
 	transform: rotateY(0deg);
@@ -159,6 +163,11 @@ body {
 .project-card:hover img{
 	max-width: 100%;
 	transition: 0.3s all;
+}
+
+#external_link img{
+	margin: 2em;
+	border-radius: 0.5em;
 }
 
 footer .links a:hover span{
