@@ -99,6 +99,10 @@ body {
 	border-radius: 0px;
 }
 
+.front img {
+	border-radius: 50%;
+}
+
 .back {
 	z-index: 2; /* back side, placed above front */
 	transform: rotateY(0deg);
