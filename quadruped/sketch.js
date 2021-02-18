@@ -418,20 +418,17 @@ function draw() {
     } else if(state == 1) {
         natalya.stand90(i);
     } else if(state == 2) {
-        // i+=0.09;
-        // natalya.walk(walkArray, i);
-        // if(i >= 1) {
-        //     gaitCounter++;
-        //     state--;
-        //     if(gaitCounter > 10 * 12) {
-        //         state++;
-        //         gaitCounter = 0;
-        //     }
-        // }
-        //
-
-
-
+        i+=0.09;
+        natalya.walk(walkArray, i);
+        if(i >= 1) {
+            gaitCounter++;
+            state--;
+            if(gaitCounter > 10 * 12) {
+                state++;
+                gaitCounter = 0;
+            }
+        }
+    } else if(state == 3) {
         roll += rollInc;
         if(roll < -7 || roll > 7) {
             rollInc *= -1;
