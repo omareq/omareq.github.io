@@ -349,7 +349,7 @@ class Robot {
         let alpha = sqrt(pow(z + cx, 2) + r2);
 
         if(alpha >= 0.999 * (tb + fm)) {
-            console.log("Robot.IK() this position is not physically reachable.")
+            console.log("Robot.IK() this position is not physically reachable.");
             return;
         }
 
