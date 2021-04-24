@@ -261,7 +261,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line14">line 14</a>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -271,6 +271,8 @@
 
     
 </dl>
+
+
 
 
 
@@ -315,7 +317,7 @@
     
 
     
-    <h4 class="name" id="applyForce"><span class="type-signature"></span>applyForce<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="applyForce"><span class="type-signature"></span>applyForce<span class="signature">(fx, fy, dt)</span><span class="type-signature"></span></h4>
     
 
     
@@ -332,6 +334,101 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The x component of the force.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The y component of the force.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The time step.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -367,7 +464,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line38">line 38</a>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -377,6 +474,8 @@
 
     
 </dl>
+
+
 
 
 
@@ -453,7 +552,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line52">line 52</a>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -463,6 +562,282 @@
 
     
 </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="collidePhysics"><span class="type-signature"></span>collidePhysics<span class="signature">(ball)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Applies physics for elastic collision between balls.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ball</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ball to do the collision against.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="hits"><span class="type-signature"></span>hits<span class="signature">(ball)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks to see if the given ball collides with this ball.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ball</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ball to check the collision against.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
 
 
 
@@ -539,7 +914,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line82">line 82</a>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line156">line 156</a>
     </li></ul></dd>
     
 
@@ -549,6 +924,8 @@
 
     
 </dl>
+
+
 
 
 
@@ -589,7 +966,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 20 2018 21:55:36 GMT+0000 (GMT Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Apr 24 2021 20:24:19 GMT+0100 (BST)
 </footer>
 
 <script> prettyPrint(); </script>
