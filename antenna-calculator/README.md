@@ -1,29 +1,78 @@
 # Antenna Dimensions Calculator
 
-I have been making antennas for a while now and I have realised that I have gotten into the bad habbit of actually doing the same calculation to get the dimensions over and over again.  Obviously I should know better by now.  Anyway I decided to write up the calculations verry quickly and then to make a quick animation of the results. Checkout the [Demo](https://omareq.github.io/antenna-calculator/).
+I have been making antennas for a while now and I have realised that I have
+gotten into the bad habit of actually doing the same calculation to get the
+dimensions over and over again.  Obviously I should know better by now.  Anyway
+I decided to write up the calculations very quickly and then to make a quick
+animation of the results. Checkout the
+[Demo](https://omareq.github.io/antenna-calculator/).
 
 Animations created using [p5.js](https://p5js.org/)
 
 ## To do list
 
-[ ] Figure out why the first and last vertex of the helix are connected
+#### General
 
-[ ]	Figure out how to pause animation when active tab is changed
+- [ ]   Add toggle to hide or show dimensions
 
-[x]	Add slider to adjust helix resolution
+- [ ]   Add current frequency indicator in top left corner of diagram
 
-[x]	Add switch polarisation state by adding pi
+- [ ]   Create schematic export to pdf or some other format
 
-[ ]	Add HPBW (Half Power Beam Width)
+- [ ]   Add inverse calculation, ie antenna frequency from dimensions
 
-[ ]	Draw reflector dish
+- [ ]   Add reflection from transmission line calculation
 
-[ ]	Update animations to show dimensions of antenna
+#### Bi-Quad
 
-[ ]	Create stop animation option that displays static image with dimensions
+- [ ]   Add animation
 
-[ ]	Create schematic export to pdf or some other format
+- [ ]   Add Impedance and Gain
 
-[ ]	Add different antenna types
+#### Dipole
 
-[ ]	Add inverse calculation, ie antenna frequency from dimensions
+- [x]   Add dimensions to drawing
+
+#### Folded Dipole
+
+- [ ]   Add Gain
+
+#### Helical
+
+- [ ]   Figure out why the first and last vertex of the helix are connected
+
+- [ ]   Figure out how to pause animation when active tab is changed
+
+- [ ]   Add HPBW (Half Power Beam Width) or transmission diagram
+
+- [ ]   Draw reflector dish
+
+- [ ]   Update animations to show dimensions of antenna
+
+- [ ]   Create stop animation option that displays static image with dimensions
+
+#### Turnstile
+
+- [ ]   Add animation
+
+- [x]   Add dimensions to drawing
+
+#### Yagi-Uda
+
+- [ ]   Just do it (__tick__)
+
+
+## Impedance Gain List
+
+| Antenna        | Impedance (ohm)    | Gain (dB)             |
+|----------------|--------------------|-----------------------|
+| Bi Quad        | 61                 | 10 - 12               |
+| Dipole         | 73 Requires Balun  | 2.1                   |
+| Folded Dipole  | 292                | 2.1                   |
+| Helical        | 140                | Depends on Turns      |
+| Turnstile      | 36                 | Approx 3dB < dipole   |
+| Yagi-Uda       | Driven Element     | Parasitic Elements    |
+
+## Author
+
+[Omar Essilfie-Quaye](mailto:omareq08)

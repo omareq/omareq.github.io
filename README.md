@@ -11,8 +11,10 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 ## Todo
 
 - [ ]   Testing, make sure that all js files are linked in index.html, spell check, markdown validator, html validator
+- [ ]   Adjusting mailto links with subject line for each project
 - [ ]	Finish Antenna Calculator
 - [ ]	Finish Ninja Game
+- [ ]   Finish texType Docs and rest of texType/todo
 - [ ]   Add Caesar Cipher
 - [x]   Add Simon Memory Game
 - [ ]	Add Sliding Puzzle Game
@@ -39,3 +41,4 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Black Body Radiance calculator
 - [ ]   Interpolation Methods
 - [ ]   Quadruped Robot IK
+- [ ]   Missile Command Arcade Game

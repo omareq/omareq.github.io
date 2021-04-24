@@ -42,7 +42,7 @@ def create_project(name, description):
 
     print("Creating " + name + "/docs")
     os.mkdir(name + "/docs")
-    os.system("jsdoc -R README.md -d " + name +"/docs " + name + "/*.js")
+    os.system("jsdoc -R " + name + "/README.md -d " + name +"/docs " + name + "/*.js")
 
     return
 
@@ -50,10 +50,11 @@ def create_project(name, description):
 
 def readme(name, description):
     f = open(name + "/README.md", "w+")
-    f.write("# " + name + "\n\n")
-    f.write(description + "\n")
-    f.write("Check out the [Demo](https://omareq.github.io/" + name + ").\n")
-    f.write("Check out the [Docs](https://omareq.github.io/" + name + "/docs).\n")
+    capsName = name.strip()[0].capitalize() + name.strip()[1:]
+    f.write("# " + capsName + "\n\n")
+    f.write(description + "\n\n")
+    f.write("Check out the [Demo](https://omareq.github.io/" + name + ").\n\n")
+    f.write("Check out the [Docs](https://omareq.github.io/" + name + "/docs).\n\n")
     f.write("Created using [p5.js](https://p5js.org/)\n\n")
     f.write("## Contact Details\n")
     f.write("__Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)\n")
@@ -71,7 +72,8 @@ def index_html(name, project_id, description="Project Description"):
     for line in template:
         newline = line;
         if "/**TITLE**/" in line:
-            newline = line.replace("/**TITLE**/", name.capitalize())
+            capsName = name.strip()[0].capitalize() + name.strip()[1:]
+            newline = line.replace("/**TITLE**/", capsName)
         elif "/**URL**/" in line:
             newline = line.replace("/**URL**/", name + "/")
         elif "/**IMG**/" in line:
@@ -107,8 +109,8 @@ def sketch_js(name, description):
  *\t@file sketch.js " + description + "\n\
  *\n\
  *\t@author Omar Essilfie-Quaye <omareq08@gmail.com>\n\
- *\t@version 1.0\n" + date_str + "\n\
- *\n b" + "*" * 79 + "/\n\n")
+ *\t@version 1.0\n " + date_str + "\n\
+ *\n " + "*" * 77 + "/\n\n")
 
 
     f.write("/**\n\
@@ -364,6 +366,17 @@ def remove_project(name):
     with open(projects_json_file, "w+") as json_file:
         json.dump(projects_json, json_file, sort_keys=True, indent=4)
 
+def usage():
+    print("Usage:\t control [OPTION] [PROJECT]\n\n\
+            [OPTIONS]\n\
+            add        Add a new project to the web page\n\
+                           -- Additional Argument Description\n\
+                           USAGE:\t./control.py add new_project project_description\n\
+            archive    Remove a project from active view but do not delete files\n\
+            remove     Remove all files associated with a project\n\
+            restore    Returns a project to an active state from the archive\n\n")
+    exit(0)
+
 
 def load_projects_json():
     global projects_json, projects_json_file
@@ -374,15 +387,7 @@ if __name__=="__main__":
     argv = sys.argv
 
     if len(argv) < 3:
-        print("Usage:\t control [OPTION] [PROJECT]\n\n\
-            [OPTIONS]\n\
-            add        Add a new project to the web page\n\
-                           -- Additional Argument Description\n\
-                           USAGE:\t./control.py add new_project project_description\n\
-            archive    Remove a project from active view but do not delete files\n\
-            remove     Remove all files associated with a project\n\
-            restore    Returns a project to an active state from the archive\n\n")
-        exit(0)
+        usage()
 
     command = argv[1]
     project_name = argv[2]
@@ -406,3 +411,5 @@ if __name__=="__main__":
     elif command == "restore":
         print("Restoring project: " + project_name)
         restore_project(project_name)
+    else:
+        usage()

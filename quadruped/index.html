@@ -1,0 +1,280 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Omar Essilfie-Quaye">
+  <meta property="og:title" content="Quadruped">
+  <meta property="og:description" content="Project Description">
+  <meta property="og:image" content="https://omareq.github.io/imgs/p_019.jpg">
+  <meta property="og:url" content="https://omareq.github.io/quadruped/">
+  <meta property="og:site_name" content="Omar EQ Githubio">
+  <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
+  <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
+  <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <script src="../libraries/chartjs-2.7.3.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="../main.css">
+
+  <title>Quadruped</title>
+
+</head>
+
+<body style="width:100%; text-align:center">
+  <div id="main">
+    <section class="jumbotron jumbotron-main">
+      <div class="container">
+        <div class="row text-center">
+          <h1>Quadruped</h1>
+        </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+  	     <div id="sketch"></div>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          Github Repo
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/quadruped">
+              <img src="../imgs/github-logo.png" alt="Link to github repository"
+                   style="max-width:75px">
+          </a>
+          Docs
+          <a href="./docs">
+              <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
+                   style="max-width:75px">
+          </a>
+        </div>
+      </div>
+  </section>
+
+    <div>
+      <section class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <canvas id="lfChart"></canvas>
+          </div>
+          <div class="col-sm-6">
+            <canvas id="rfChart"></canvas>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <canvas id="lbChart"></canvas>
+          </div>
+          <div class="col-sm-6">
+            <canvas id="rbChart"></canvas>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <h2> Walking Robots </h2>
+              <p>
+                Robotics in general is becoming more and more pervasive in our
+                everyday lives and having robots with the ability to maintain
+                pace with us effortlessly requires alternate means of
+                locomotion.  In general most of the world does not have flat or
+                paved land which wheeled robots can traverse easily.  The loss
+                of speed and precision by sacrificing this is more than
+                accounted for by the gain of the ability to navigate obstacles
+                and rough or dynamic terrain provided by legged robots.
+              </p>
+              <p>
+                Robots that can travel using means alternative to the classical
+                wheeled or tracked robot paradigm provide advantages in terms of
+                mobility and terrain navigation.  The general articulated limb
+                approach of building these robots allows for locomotion that is
+                much more versatile than wheeled robots but this comes at the
+                cost of much greater complexity and increased power consumption.
+                This complexity increase is not confined to the mechanical world
+                but extends into the software and sensor hardware territory as
+                well.  One of the main issues underpinning these complexities is
+                maintaining balance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-8">
+            <div>
+              <!-- https://link.springer.com/chapter/10.1007/978-3-540-70534-5_11#:~:text=Walking%20robots%20are%20an%20important,world's%20land%20area%20is%20unpaved.&text=Robots%20with%20six%20or%20more,while%20three%20legs%20are%20moving. -->
+              <p>
+                The requirement of a walking robot to maintain balance
+                immediately gives rise to a mechanical arrangement for the legs
+                which has high speed and torque with a low inertia.  This means
+                that as the robot falls the legs can react quickly and have
+                enough control authority to correct for any wobbles.  This high
+                speed motion needs to be measured by sensors with high
+                acquisition rates and this in turn means that software needs to
+                be able to keep up with all of this data.  One of the easiest
+                ways to attempt to negate this is develop a robot with many legs
+                which provide static stability if more than three are on the
+                ground at any given time.
+              </p>
+
+              <p>
+                A classic example of a multi legged robot is a hexapod robot.
+                There are two sets of three legs so when moving one set can be on
+                the ground whilst the second is in the air, this maintains
+                optimal stability at all times.  Moving to the alternate extreme
+                where there is almost never any stability is bipedal robots
+                based on humans. These have two legs and even when both of them
+                are on the ground the robot will be unstable, unless it has
+                extremely wide feet.  It is very hard for a bipedal robot to
+                balance when walking and it requires very agile robots with fast
+                computers to achieve it.
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div>
+              <img src="./imgs/cassie-bipedal-robot-agility-robotics-single.png"  style="max-width: 85%">
+              <p>
+                <em>
+                  <a href="https://www.agilityrobotics.com/cassie">Cassie</a>
+                  Bipedal robot created by
+                  <a href="https://www.agilityrobotics.com/">Agility Robotics</a>
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<!--     <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <h2> Quadrupeds </h2>
+              <p>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> -->
+
+<!--     <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <h2> Forward Kinematics </h2>
+              <p>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> -->
+
+  <!--   <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <h2> Inverse Kinematics </h2>
+              <p>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> -->
+
+   <!--  <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <h2> Gait Pattern </h2>
+              <p>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> -->
+
+    <section class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <a id="external_link" href="../projects.html" >
+                    <img src="../imgs/all-projects-button.jpg" alt="Link to all projects page"
+                    style="max-width: 11em;">
+                </a>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </section>
+
+    <section class="container">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="project-card" id="previous">
+            <h5 id="prev-title">Flood-it</h5>
+            <a id="prev-url" href="../flood-it" class="project-demo">
+              <img id="prev-img" src="../imgs/p_018.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
+            </a>
+          </div>
+        </div>
+
+        <div class="col-sm-6"></div>
+
+        <div class="col-sm-3">
+          <div class="project-card" id="next">
+						<h5 id="next-title">Snowman</h5>
+						<a id="next-url" href="../snowman" class="project-demo">
+							<img id="next-img" src="../imgs/p_000.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+  </footer>
+
+  <script language="javascript" type="text/javascript" src="../libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="../libraries/p5.dom.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+  <script language="javascript" type="text/javascript" src="robot.js"></script>
+</body>
+</html>

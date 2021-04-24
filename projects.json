@@ -9,9 +9,11 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_018",
+            "prev-id": "p_019",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "fun"
+            ],
             "vid-url": "vids/p_000.mp4"
         },
         "p_001": {
@@ -43,7 +45,8 @@
             "prev-id": "p_001",
             "status": "active",
             "tags": [
-                "game"
+                "game",
+                "typing"
             ],
             "vid-url": "vids/p_002.mp4"
         },
@@ -58,7 +61,9 @@
             "pic-url": "imgs/p_003.jpg",
             "prev-id": "p_002",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "fun"
+            ],
             "vid-url": "vids/p_003.mp4"
         },
         "p_004": {
@@ -73,7 +78,8 @@
             "prev-id": "p_003",
             "status": "active",
             "tags": [
-                "science"
+                "science",
+                "physics"
             ],
             "vid-url": "vids/p_004.mp4"
         },
@@ -119,7 +125,8 @@
             "prev-id": "p_006",
             "status": "active",
             "tags": [
-                "science"
+                "science",
+                "physics"
             ],
             "vid-url": "vids/p_007.mp4"
         },
@@ -135,7 +142,8 @@
             "prev-id": "p_007",
             "status": "active",
             "tags": [
-                "science"
+                "science",
+                "physics"
             ],
             "vid-url": "vids/p_008.mp4"
         },
@@ -197,7 +205,8 @@
             "prev-id": "p_011",
             "status": "active",
             "tags": [
-                ""
+                "game",
+                "puzzle"
             ],
             "vid-url": "vids/p_012.mp4"
         },
@@ -257,7 +266,7 @@
             "gif-url": "imgs/p_016.gif",
             "id": "p_016",
             "name": "Meshing",
-            "next-id": "p_017",
+            "next-id": "p_018",
             "pic-url": "imgs/p_016.jpg",
             "prev-id": "p_015",
             "status": "active",
@@ -276,7 +285,7 @@
             "next-id": "p_018",
             "pic-url": "imgs/p_017.jpg",
             "prev-id": "p_016",
-            "status": "active",
+            "status": "archived",
             "tags": [],
             "vid-url": "vids/p_017.mp4"
         },
@@ -287,15 +296,32 @@
             "gif-url": "imgs/p_018.gif",
             "id": "p_018",
             "name": "Flood-it",
-            "next-id": "p_000",
+            "next-id": "p_019",
             "pic-url": "imgs/p_018.jpg",
-            "prev-id": "p_017",
+            "prev-id": "p_016",
             "status": "active",
             "tags": [
                 "algorithm",
                 "game"
             ],
             "vid-url": "vids/p_018.mp4"
+        },
+        "p_019": {
+            "brief": "A quick mock up of a quadruped robot design to test Inverse Kinematics",
+            "demo-url": "/quadruped",
+            "docs-url": "/quadruped/docs",
+            "gif-url": "imgs/p_019.gif",
+            "id": "p_019",
+            "name": "Quadruped",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_019.jpg",
+            "prev-id": "p_018",
+            "status": "active",
+            "tags": [
+                "robot",
+                "science"
+            ],
+            "vid-url": "vids/p_019.mp4"
         }
     }
 }

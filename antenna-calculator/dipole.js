@@ -117,7 +117,21 @@ let dipole_sketch = function(p5) {
 				p5.line(0.20 * p5.width, 0.46 * p5.height, 0.25 * p5.width, 0.46 * p5.height);
 				p5.line(0.20 * p5.width, 0.54 * p5.height, 0.25 * p5.width, 0.54 * p5.height);
 
-
+				// Draw vertical arm dimensions
+				p5.push();
+				let txt_size = 18;
+				p5.textSize(txt_size);
+				p5.textAlign(p5.CENTER);
+	            p5.stroke(0, 155, 0);
+				p5.strokeWeight(2);
+				let g = 0.035 * p5.width;
+				h = 0.3 * p5.height;
+				p5.line(0.2 * p5.width, 0.5 * p5.height + h, 0.2 * p5.width, 0.50 * p5.height - h);
+				p5.line(0.2 * p5.width - g, 0.5 * p5.height + h, 0.2 * p5.width + g, 0.5 * p5.height + h);
+				p5.line(0.2 * p5.width - g, 0.5 * p5.height - h, 0.2 * p5.width + g, 0.5 * p5.height - h);
+				p5.strokeWeight(1);
+				p5.text("L: " + d_length.toFixed(4) + " m", 0.2 * p5.width - 2.5 * g, 0.5 * p5.height);
+				p5.pop();
 
 				t -= 0.1;
 			} else {
