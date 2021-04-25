@@ -12,6 +12,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 
 - [ ]   Testing, make sure that all js files are linked in index.html, spell check, markdown validator, html validator
 - [ ]   Adjusting mailto links with subject line for each project
+- [ ]   Adjust bootstrap containers to be container-fluid for responsive design
 - [ ]	Finish Antenna Calculator
 - [ ]	Finish Ninja Game
 - [ ]   Finish texType Docs and rest of texType/todo
