@@ -53,8 +53,8 @@ def readme(name, description):
     capsName = name.strip()[0].capitalize() + name.strip()[1:]
     f.write("# " + capsName + "\n\n")
     f.write(description + "\n\n")
-    f.write("Check out the [Demo](https://omareq.github.io/" + name + ").\n\n")
-    f.write("Check out the [Docs](https://omareq.github.io/" + name + "/docs).\n\n")
+    f.write("Check out the [Demo](https://omareq.github.io/" + name + "/).\n\n")
+    f.write("Check out the [Docs](https://omareq.github.io/" + name + "/docs/).\n\n")
     f.write("Created using [p5.js](https://p5js.org/)\n\n")
     f.write("## Contact Details\n")
     f.write("__Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)\n")
@@ -178,8 +178,8 @@ def new_project(name, project_id, prev_id, description):
     return {
         "id":project_id,
         "name":name.capitalize(),
-        "demo-url":"/" + name,
-        "docs-url":"/" + name + "/docs",
+        "demo-url":"/" + name + "/",
+        "docs-url":"/" + name + "/docs/",
         "pic-url":"imgs/" + project_id + ".jpg",
         "gif-url":"imgs/" + project_id + ".gif",
         "vid-url":"vids/" + project_id + ".mp4",

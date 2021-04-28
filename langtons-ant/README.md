@@ -6,4 +6,4 @@ Langtons ant with added extra 'antState' variable.  This variable along with the
 
 Check out the [Demo](https://omareq.github.io/langtons-ant/). How long are you willing to wait to see if you will get the superhigway?
 
-[Docs](https://omareq.github.io/langtons-ant/docs)
+[Docs](https://omareq.github.io/langtons-ant/docs/)

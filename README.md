@@ -11,6 +11,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 ## Todo
 
 - [ ]   Testing, make sure that all js files are linked in index.html, spell check, markdown validator, html validator
+- [ ]   Add "/" to end of links in README files so that Google doesn't ignore them during indexing due to file redirect protocols, redo docs.  Also add "/" to end of links to docs in project index.html files
 - [ ]   Adjusting mailto links with subject line for each project
 - [ ]   Adjust bootstrap containers to be container-fluid for responsive design
 - [ ]	Finish Antenna Calculator
