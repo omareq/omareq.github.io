@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import os
 import sys
@@ -28,7 +28,7 @@ def create_project(name, description):
     print("Creating imgs/" + obj_id + ".jpg")
     add_image(obj_id)
     print("Creating " + name + "/index.html")
-    index_html(name, obj_id)
+    index_html(name, obj_id, description)
 
     prev_id = projects_json["projects"][obj_id]["prev-id"]
     prev_name = projects_json["projects"][prev_id]["name"]
@@ -201,14 +201,14 @@ def add_project_to_json(name, description):
 
     current_project_json = new_project(name, current_key, prev_key, description)
 
-    print "New JSON Object: \n", json.dumps(current_project_json, sort_keys=True, indent=4)
+    print("New JSON Object: \n", json.dumps(current_project_json, sort_keys=True, indent=4))
 
     projects_json["projects"][current_key] = current_project_json
     projects_json["projects"][prev_key]["next-id"] = current_key
     projects_json["projects"][next_key]["prev-id"] = current_key
 
     with open(projects_json_file, "w") as json_file:
-        # print json.dumps(projects_json, sort_keys=True, indent=4)
+        # print(json.dumps(projects_json, sort_keys=True, indent=4))
         json.dump(projects_json, json_file, sort_keys=True, indent=4)
 
     return current_key
@@ -221,7 +221,7 @@ def replace_prev_project_in(project_id, new_prev_id):
     new_prev_url = projects_json["projects"][new_prev_id]["demo-url"][1:]
 
     new_index = open("tmp_index.html", "w+")
-    with open(url + "/index.html") as old_index:
+    with open(url + "index.html") as old_index:
         for line in old_index:
             newline = line
             if "id=\"prev-title\"" in line:
@@ -233,8 +233,8 @@ def replace_prev_project_in(project_id, new_prev_id):
 
             new_index.write(newline)
     new_index.close()
-    print("Replacing " + url + "/index.html")
-    os.rename("tmp_index.html", url + "/index.html")
+    print("Replacing " + url + "index.html")
+    os.rename("tmp_index.html", url + "index.html")
     return
 
 def replace_next_project_in(project_id, new_next_id):
@@ -245,7 +245,7 @@ def replace_next_project_in(project_id, new_next_id):
     new_next_url = projects_json["projects"][new_next_id]["demo-url"][1:]
 
     new_index = open("tmp_index.html", "w+")
-    with open(url + "/index.html") as old_index:
+    with open(url + "index.html") as old_index:
         for line in old_index:
             newline = line
             if "id=\"next-title\"" in line:
@@ -257,8 +257,8 @@ def replace_next_project_in(project_id, new_next_id):
 
             new_index.write(newline)
     new_index.close()
-    print("Replacing " + url + "/index.html")
-    os.rename("tmp_index.html", url + "/index.html")
+    print("Replacing " + url + "index.html")
+    os.rename("tmp_index.html", url + "index.html")
     return
 
 def project_id_from_name(name):
@@ -268,9 +268,9 @@ def project_id_from_name(name):
 
     projects = projects_json["projects"]
     for key, value in projects.items():
-        # print "Demo url: " + value["demo-url"][1:]
-        # print "Name: " + name
-        if value["demo-url"][1:].lower() == name.lower():
+        # print("Demo url: " + value["demo-url"][1:].replace('/',''))
+        # print("Name: " + name)
+        if value["demo-url"][1:].lower().replace('/','') == name.lower():
             return key
 
     print("There is no project with the url " + name + " in projects.json")
@@ -349,7 +349,7 @@ def remove_project(name):
         return
 
     prompt = "Remove all files and folders in project " + name + "? (y/n) "
-    confirmation = raw_input(prompt)
+    confirmation = input(prompt)
     if not confirmation.lower() == "y":
         print("Deletion aborted")
         return
