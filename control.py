@@ -91,7 +91,9 @@ def index_html(name, project_id, description="Project Description"):
         elif "/**PREV URL**/" in line:
             newline = line.replace("/**PREV URL**/", projects_json["projects"][prev_key]["demo-url"][1:])
         elif "/**DESCRIPTION**/" in line:
-            newline = line.replace("/**DESCRIPTION**/", description);
+            newline = line.replace("/**DESCRIPTION**/", description +
+                ".  This is a project created by Omar Essilfie-Quaye on " +
+                date.today().strftime("%d %B %Y."));
 
         output.write(newline)
 
