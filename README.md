@@ -1,6 +1,6 @@
 # Github.io
 
-[![Build Status](https://travis-ci.org/omareq/omareq.github.io.svg?branch=master)](https://travis-ci.org/omareq/omareq.github.io)
+[![Build Status](https://travis-ci.com/omareq/omareq.github.io.svg?branch=master)](https://travis-ci.com/omareq/omareq.github.io)
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fomareq.github.io)
 ![GitHub repo size](https://img.shields.io/github/repo-size/omareq/omareq.github.io)
 
@@ -11,6 +11,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 ## Todo
 
 - [ ]   Testing, make sure that all js files are linked in index.html, spell check, markdown validator, html validator
+- [ ]   Add "/" to end of links in README files so that Google doesn't ignore them during indexing due to file redirect protocols, redo docs.  Also add "/" to end of links to docs in project index.html files
 - [ ]   Adjusting mailto links with subject line for each project
 - [ ]   Adjust bootstrap containers to be container-fluid for responsive design
 - [ ]	Finish Antenna Calculator
