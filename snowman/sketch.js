@@ -70,7 +70,15 @@ let frosty;
 * object as well as the snowflakes.
 */
 function setup () {
-  var canvas = createCanvas(600, 600);
+  let cnvSize;
+  let canvas;
+  if(windowWidth > windowHeight) {
+    cnvSize = 0.95 * windowHeight;
+    canvas = createCanvas(cnvSize, 0.7 * cnvSize);
+  } else {
+    cnvSize = 0.925 * windowWidth;
+    canvas = createCanvas(cnvSize, 0.95 * cnvSize);
+  }
   canvas.parent('sketch');
   ellipseMode(RADIUS);
 
