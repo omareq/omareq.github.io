@@ -9,7 +9,7 @@
 *******************************************************************************/
 
 /**
-* The number of snowflakes that will be insantiated
+* The number of snowflakes that will be instantiated
 *
 * @type{number}
 */
@@ -51,7 +51,7 @@ let noiseOff;
 let windMag = 5;
 
 /**
-* The accelaration due to gravity for the snowflakes.
+* The acceleration due to gravity for the snowflakes.
 *
 * @type{number}
 */
@@ -86,7 +86,7 @@ function setup () {
 }
 
 /**
-* p5.js draw function, used to draw frosty the snowman and controls the phsyics
+* p5.js draw function, used to draw frosty the snowman and controls the physics
 * for the snowflakes.
 */
 function draw () {
