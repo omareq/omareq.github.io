@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <!-- <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script> -->
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"> </script>
 
   <link type="text/css" rel="stylesheet" href="../main.css">
 
@@ -29,7 +31,7 @@
 <body style="width:100%; text-align:center">
   <div id="main">
     <section class="jumbotron jumbotron-main">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row text-center">
           <h1>Snow Men From Snow Flakes</h1>
         </div>
@@ -39,7 +41,7 @@
       </div>
     </section>
 
-    <section class="container">
+    <section class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
   	     <div id="sketch"></div>
@@ -47,7 +49,7 @@
       </div>
     </section>
 
-    <section class="container" style="padding-top:10px">
+    <section class="container-fluid" style="padding-top:10px">
       <div class="row text-center">
         <div class="col-sm-12">
           Github Repo
@@ -64,7 +66,7 @@
       </div>
   </section>
 
-  <section class="container">
+  <section class="container-fluid">
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
@@ -76,13 +78,16 @@
         </div>
     </section>
 
-    <section class="container">
+    <section class="container-fluid">
         <div class="row text-left">
             <div class="col-sm-12">
                 <h2>Snowfall - The Original</h2>
                 <p>
                     This quick project is based on the great live stream by The
-                    Coding Train titled <a href="https://thecodingtrain.com/CodingChallenges/088-snowfall.html">Snowfall</a>.
+                    Coding Train titled
+                    <a href="https://thecodingtrain.com/CodingChallenges/088-snowfall.html">
+                        Snowfall
+                    </a>.
                     Dan Shiffman from The Coding Train is great at making fun
                     little projects easy and accessible please go and visit his
                     site and if you have time watch the full live stream it
@@ -94,21 +99,86 @@
         </div>
     </section>
 
-
-
- <!--    <section class="container">
+    <section class="container-fluid">
         <div class="row text-left">
             <div class="col-sm-12">
                 <h2>Forces of the Fall</h2>
                 <p>
-                    How snowflakes fall gravity integration of acc / vel / pos
-                    wind forces
+                    The first step in producing the code above was deciding on
+                    how to generate snowflakes.  Snowflake generation is a
+                    random process which means that each new snowflake will be
+                    created at a random horizontal location above the canvas
+                    with a random size.  The size is limited to be between a
+                    minimum and maximum of 1 and 7 pixels, this mimics the
+                    effect of having some snowflakes being nearby and others
+                    being much further away.  This process is repeated until
+                    200 snowflakes are made.  If a snowflake is blown off the
+                    edge of the canvas it will be recycled and used again at the
+                    top with all values randomised once more.
                 </p>
+                <p>
+                    Once the size and position of each snowflake has been
+                    generated we need to make the snowflake fall.  In the real
+                    world how objects fall is determined by gravity.  Basic
+                    physics tells us that all objects fall at a rate of 9.8(m/s)
+                    .  Whilst we can mimic the maths behind falling there is one
+                    crucial difference between the real world and a computer
+                    generated one, time only goes forwards during each frame,
+                    i.e. time is discrete.  So to simulate our falling snowflake
+                    we need to think about time going forwards in steps and not
+                    smoothly.
+                </p>
+                <!-- graph with real time vs stepped time using floor function -->
+                <p>
+                    Applying forces in discrete time steps is a common
+                    occurrence in computer graphics.  The goal is to use the
+                    knowledge we have about the applied forces and figure out
+                    the position of the snowflake for each frame so that we can
+                    draw it.  Starting with Newton's Second law of motion
+                    \( F=ma \) we can see that the acceleration due to the force
+                    of gravity will be \( a=F/m \).  If we take the mass of the
+                    particle to be related to it's size we now have the
+                    acceleration.
+                </p>
+                <!-- Picture of forces on a snowflake -->
+                <p>
+                    Acceleration is the rate of change of
+                    velocity so the particles velocity will change and the
+                    velocity is rate of change of position so that will change
+                    too.  If we follow the chain of changes from Newton's Second
+                    law we can calculate a new position for the snowflake.
+                    This can be seen in the equation below where \(\Delta t\) is
+                    the time step, or time between frames.  As this is not meant
+                    to be a real world simulation we can just say that
+                    \(\Delta t\) is 1 so that we don't have to do as many
+                    calculations.
+                </p>
+                <p>
+                    $$ Vel_{new} = Vel_{old} + \Delta t * accel $$
+                    $$ Pos_{new} = Pos_{old} + \Delta t * vel $$
+                </p>
+                <p>
+                    The beauty of this system is that to simulate additional
+                    forces all that needs to be done is to find the new
+                    acceleration with all the forces applied and follow the
+                    steps just as before.  This means that to simulate the wind
+                    all that needs to be done is to add a sideways force to the
+                    snowflakes as they fall.  These forces are generated
+                    randomly using
+                    <a href="https://en.wikipedia.org/wiki/Perlin_noise#:~:text=Perlin%20noise%20is%20a%20procedural,details%20are%20the%20same%20size.">
+                        Perlin noise.
+                    </a>
+                    The advantage of Perlin noise is that it is a type of
+                    gradient noise which varies smoothly over time, this means
+                    that the wind won't be blowing left in one frame and then
+                    right in the next.
+                </p>
+                <!-- perlin noise image -->
             </div>
         </div>
-    </section> -->
+    </section>
 
-<!-- <section class="container">
+<!-- <section class="container-fluid">
         <div class="row text-left">
             <div class="col-sm-12">
                 <h2>I Want to Build a Snowman</h2>
@@ -121,7 +191,7 @@
         </div>
     </section> -->
 
- <!--    <section class="container">
+ <!--    <section class="container-fluid">
         <div class="row text-left">
             <div class="col-sm-12">
                 <h2>Smush them all together</h2>
@@ -133,16 +203,16 @@
         </div>
     </section> -->
 
-    <section class="container">
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="project-card" id="previous">
-						<h5 id="prev-title">Quadruped</h5>
-						<a id="prev-url" href="../quadruped/" class="project-demo">
-							<img id="prev-img" src="../imgs/p_019.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
-            </a>
-          </div>
-        </div>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="project-card" id="previous">
+			        <h5 id="prev-title">Quadruped</h5>
+                    <a id="prev-url" href="../quadruped/" class="project-demo">
+                        <img id="prev-img" src="../imgs/p_019.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
+                    </a>
+                </div>
+            </div>
 
         <div class="col-sm-6"></div>
 
