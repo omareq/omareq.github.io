@@ -44,3 +44,4 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Interpolation Methods
 - [ ]   Quadruped Robot IK
 - [ ]   Missile Command Arcade Game
+- [ ]   Perlin noise generation
