@@ -90,7 +90,7 @@ function setup () {
   }
 
   frostyPos = createVector(width/2, height);
-  frosty = new snowman(frostyPos, 3, 60);
+  frosty = new snowman(frostyPos, 3, 0.125 * height);
 }
 
 /**
