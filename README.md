@@ -13,6 +13,8 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Testing, make sure that all js files are linked in index.html, spell check, markdown validator, html validator
 - [ ]   Add "/" to end of links in README files so that Google doesn't ignore them during indexing due to file redirect protocols, redo docs.  Also add "/" to end of links to docs in project index.html files
 - [ ]   Adjusting mailto links with subject line for each project
+- [ ]   Local mathjax install with proper fonts etc
+- [ ]   alternate js sources
 - [ ]   Adjust bootstrap containers to be container-fluid for responsive design
 - [ ]	Finish Antenna Calculator
 - [ ]	Finish Ninja Game
