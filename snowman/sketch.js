@@ -32,7 +32,7 @@ let minFlakeSize = 1;
 /**
 * An array that will hold all of the snowflake objects.
 *
-* @type{Arraya<snowflake>}
+* @type{Array <snowflake>}
 */
 let flakes = [];
 
