@@ -8,6 +8,12 @@ Check out the [Docs](https://omareq.github.io/quadruped/docs/).
 Created using [p5.js](https://p5js.org/)
 Created using [chart.js](https://chartjs.org/)
 
+## TODO
+
+- [ ]	Add Servo Sounds
+
+- [ ]	Do Full IK 
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)
 
