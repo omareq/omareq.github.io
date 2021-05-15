@@ -5,6 +5,8 @@ A recreation of the classic Towers of Hanoi brain teaser.  The auto solve is cur
 ## Example
 
 Solving the towers of hanoi problem for 7 plates in 128 moves.
+FYI, Chuck Norris can solve the Towers of Hanoi in one move,
+shh don't tell anyone.
 
 ![Animation of towers of hanoi being solved](https://omareq.github.io/imgs/p_012.gif)
 

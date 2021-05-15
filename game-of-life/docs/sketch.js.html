@@ -27,10 +27,10 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
-*   
+*
 *   @file sketch.js
 *   @brief Game of Life simulation
-*   
+*
 *   @author &lt;a href='mailto:omareq08@gmail.com'> Omar Essilfie-Quaye &lt;/a>
 *   @version 1.0
 *   @date 06-Jan-2019
@@ -63,6 +63,24 @@ let lightSpaceShip = [[0, 0, 0, 0, 0, 0, 0],
 					  [0, 0, 0, 0, 0, 0, 0]];
 
 /**
+*	Variable to hold the shape of a Gosper Glider Gun.  This is interesting as
+*	it proves that a finite number of cells can replicate indefinietly.
+*
+*	@type {Array&lt;Array&lt;number> >}
+*/
+let gliderGun = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+				 [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+/**
 *	Used to hold the state of all cell sites in the simulation.
 *
 *	@type {Array&lt;Array&lt;number> >}
@@ -88,7 +106,7 @@ let gridX = 75;
 *
 *	@type  {number}
 */
-let gridY = 75;	
+let gridY = 75;
 
 /**
 *	Stores the size of one grid cell
@@ -100,7 +118,7 @@ let size;
 /**
 *	Stores which grid is currently being displayed.  This allows for the rules
 *	to be applied on the sites of the alternate grid without changing the sites
-*	that are being read. 
+*	that are being read.
 *
 *	@type {boolean}
 */
@@ -165,7 +183,7 @@ function neighbours(grid, x, y) {
 				numNeighbours++;
 			}
 		}
-	}	
+	}
 	return numNeighbours;
 }
 
@@ -186,6 +204,8 @@ function keyPressed() {
 		selectedInsertion = "cell";
 	} else if(key.toLowerCase() == "l") {
 		selectedInsertion = "lightSpaceShip";
+	} else if(key.toLowerCase() == "h") {
+		selectedInsertion = "gliderGun";
 	}
 }
 
@@ -221,6 +241,15 @@ function mousePressed() {
 				let yIndex = (y + j) % gridY;
 				grid1[xIndex][yIndex] = lightSpaceShip[i][j];
 				grid2[xIndex][yIndex] = lightSpaceShip[i][j];
+			}
+		}
+	} else if(selectedInsertion == "gliderGun") {
+		for(let i = 0; i &lt; gliderGun.length; ++i) {
+			for(let j = 0; j &lt; gliderGun[i].length; ++j) {
+				let xIndex = (x + i) % gridX;
+				let yIndex = (y + j) % gridY;
+				grid1[xIndex][yIndex] = gliderGun[i][j];
+				grid2[xIndex][yIndex] = gliderGun[i][j];
 			}
 		}
 	}
@@ -270,35 +299,41 @@ function randomiseGrid() {
 */
 function drawMenu() {
 	textAlign(LEFT, TOP);
-	textSize(.035 * height);
+	textSize(0.035 * height);
 	fill(155);
 
 	if(paused) {
 		fill(255);
 	}
-	text("Click P to Pause", 1.02 * height, .05 * height);
+	text("Click P to Pause", 1.02 * height, 0.05 * height);
 
 	fill(155);
-	text("Click D to Delete All", 1.02 * height, .05 * 3 *  height);
-	text("Click R to Randmoise", 1.02 * height, .05 * 5 * height);
+	text("Click D to Delete All", 1.02 * height, 0.05 * 3 * height);
+	text("Click R to Randmoise", 1.02 * height, 0.05 * 5 * height);
 
 	fill(155);
 	if(selectedInsertion == "cell") {
 		fill(255);
 	}
-	text("Click C to add Cell", 1.02 * height, .05 * 7 * height);
+	text("Click C to add Cell", 1.02 * height, 0.05 * 7 * height);
 
 	fill(155);
 	if(selectedInsertion == "glider") {
 		fill(255);
 	}
-	text("Click G to add Glider", 1.02 * height, .05 * 9 * height);
+	text("Click G to add Glider", 1.02 * height, 0.05 * 9 * height);
 
 	fill(155);
 	if(selectedInsertion == "lightSpaceShip") {
 		fill(255);
 	}
-	text("Click L to add Light Ship", 1.02 * height, .05 * 11 * height);
+	text("Click L to add Light Ship", 1.02 * height, 0.05 * 11 * height);
+
+	fill(155);
+	if(selectedInsertion == "gliderGun") {
+		fill(255);
+	}
+	text("Click H to add Glider Gun", 1.02 * height, 0.05 * 13 * height);
 }
 
 /**
@@ -307,12 +342,13 @@ function drawMenu() {
 function setup() {
 	let cnvSize;
 	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
+		cnvSize = 0.95 * windowHeight;
 	} else {
-		cnvSize = windowWidth;
+		cnvSize = 0.6 * windowWidth;
 	}
-	let cnv = createCanvas(cnvSize, .7 * cnvSize);
-	cnv.parent('sketch');
+	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
+	cnv.parent("sketch");
+
 
 	size = height / gridY;
 
@@ -348,7 +384,7 @@ function draw() {
 					}
 					if(grid1[x][y] == 0 &amp;&amp; numNeighbours == 3) {
 						grid2[x][y] = 1;
-					} 
+					}
 				}
 
 				if(grid2[x][y] == 1) {
@@ -360,7 +396,7 @@ function draw() {
 				if(!paused &amp;&amp; frameCount % updateRate == 0) {
 					let numNeighbours = neighbours(grid2, x, y);
 					grid1[x][y] = grid2[x][y];
-					
+
 					if((grid2[x][y] == 1) &amp;&amp; (numNeighbours &lt; 2 || numNeighbours > 3)) {
 						grid1[x][y] = 0;
 					}
@@ -379,7 +415,7 @@ function draw() {
 			}
 		}
 	}
-	if(!paused &amp;&amp; frameCount % updateRate == 0) { 
+	if(!paused &amp;&amp; frameCount % updateRate == 0) {
 		usingGrid1 = !usingGrid1;
 	}
 }</code></pre>
@@ -392,13 +428,18 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#clearGrid">clearGrid</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#drawMenu">drawMenu</a></li><li><a href="global.html#glider">glider</a></li><li><a href="global.html#grid1">grid1</a></li><li><a href="global.html#grid2">grid2</a></li><li><a href="global.html#gridX">gridX</a></li><li><a href="global.html#gridY">gridY</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#lightSpaceShip">lightSpaceShip</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#neighbours">neighbours</a></li><li><a href="global.html#paused">paused</a></li><li><a href="global.html#randomiseGrid">randomiseGrid</a></li><li><a href="global.html#selectedInsertion">selectedInsertion</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#size">size</a></li><li><a href="global.html#updateRate">updateRate</a></li><li><a href="global.html#usingGrid1">usingGrid1</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#clearGrid">clearGrid</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#drawMenu">drawMenu</a></li><li><a href="global.html#glider">glider</a></li><li><a href="global.html#gliderGun">gliderGun</a></li><li><a href="global.html#grid1">grid1</a></li><li><a href="global.html#grid2">grid2</a></li><li><a href="global.html#gridX">gridX</a></li><li><a href="global.html#gridY">gridY</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#lightSpaceShip">lightSpaceShip</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#neighbours">neighbours</a></li><li><a href="global.html#paused">paused</a></li><li><a href="global.html#randomiseGrid">randomiseGrid</a></li><li><a href="global.html#selectedInsertion">selectedInsertion</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#size">size</a></li><li><a href="global.html#updateRate">updateRate</a></li><li><a href="global.html#usingGrid1">usingGrid1</a></li></ul>
 </nav>
 
 <br class="clear">
 
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed May 05 2021 14:27:00 GMT+0100 (BST)
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 06 2019 19:59:07 GMT+0000 (GMT Standard Time)
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
 </footer>
 
 <script> prettyPrint(); </script>

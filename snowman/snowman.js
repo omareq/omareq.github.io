@@ -76,7 +76,7 @@ class ball {
     let distance = dist(this.pos.x, currentY, flake.pos.x, flake.pos.y);
     let isHit = distance < this.currentRadius*this.widthStretcher + flake.r;
 
-    //only absrob snowflake if the snowman is still growing
+    //only absorb snowflake if the snowman is still growing
     if(isHit && !this.isGrownUp()) {
       flake.reset();
     }
