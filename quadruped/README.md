@@ -12,7 +12,13 @@ Created using [chart.js](https://chartjs.org/)
 
 - [ ]	Add Servo Sounds
 
-- [ ]	Do Full IK 
+- [ ]	Do Full IK
+
+- [ ]   Electronics
+
+- [ ]   Schematics
+
+- [ ]   Assembly
 
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)
