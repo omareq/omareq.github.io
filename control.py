@@ -42,7 +42,10 @@ def create_project(name, description):
 
     print("Creating " + name + "/docs")
     os.mkdir(name + "/docs")
-    os.system("jsdoc -R " + name + "/README.md -d " + name +"/docs " + name + "/*.js")
+    # os.system("jsdoc -R " + name + "/README.md -d " + name +"/docs " + name + "/*.js")
+    os.chdir(name)
+    os.system("jsdoc -c ../.jsdoc-conf.json *.js")
+    os.chdir("..")
 
     return
 
