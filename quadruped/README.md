@@ -10,7 +10,7 @@ Created using [chart.js](https://chartjs.org/)
 
 ## TODO
 
-- [ ]	Add Servo Sounds
+- [ ]	Add Servo Sounds - [sound effects](https://www.asoundeffect.com/sound-library/servos/)
 
 - [ ]	Do Full IK
 
