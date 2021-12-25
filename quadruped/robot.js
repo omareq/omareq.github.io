@@ -333,6 +333,7 @@ class Robot {
         if(pos.length != 3) {
             console.log("Robot.IK() pos parameter is meant to have a length " +
                 "of 3.  X, Y and Z coordinates in cm.");
+            return;
         }
 
         let x = 0.01 * pos[0];
@@ -499,18 +500,20 @@ class Robot {
      *                               the final position.
      */
     stand90(i) {
-        let itt = i * HALF_PI;
-        let rf_vals = [HALF_PI, PI - itt, itt];
-        this.rf_servos_write(rf_vals);
+        let rf_end = [HALF_PI, HALF_PI, HALF_PI];
+        let lf_end = [HALF_PI, HALF_PI, HALF_PI];
+        let rb_end = [HALF_PI, HALF_PI, HALF_PI];
+        let lb_end = [HALF_PI, HALF_PI, HALF_PI];
 
-        let lf_vals = [HALF_PI, itt, PI - itt];
-        this.lf_servos_write(lf_vals);
+        let rf_start = this.rf_servos_read();
+        let lf_start = this.lf_servos_read();
+        let rb_start = this.rb_servos_read();
+        let lb_start = this.lb_servos_read();
 
-        let rb_vals = [HALF_PI, itt, PI - itt];
-        this.rb_servos_write(rb_vals);
-
-        let lb_vals = [HALF_PI, PI - itt, itt];
-        this.lb_servos_write(lb_vals);
+        this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+        this.lf_servos_write(this.lerp_angles(lf_start, lf_end, i));
+        this.rb_servos_write(this.lerp_angles(rb_start, rb_end, i));
+        this.lb_servos_write(this.lerp_angles(lb_start, lb_end, i));
     }
 
     /**

@@ -71,7 +71,7 @@ function delay(milliseconds) {
   do {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
-  console.log("Delay " + milliseconds + "(ms)");
+  // console.log("Delay " + milliseconds + "(ms)");
 }
 
 function preload() {
@@ -409,7 +409,6 @@ function setup() {
  */
 function draw() {
     background(250);
-    i+=0.01;
     viewAngle += radians(0.5);
     fill(0);
 
@@ -448,7 +447,7 @@ function draw() {
 
         let deltaRoll = 100 * 0.5 * natalya.under_base_width * sin(radians(roll));
         let deltaPitch = 100 * 0.5 * natalya.under_base_width * sin(radians(pitch));
-        let z = 9;
+        let z = 6;
         let lfz = z + deltaRoll + deltaPitch;
         let rfz = z - deltaRoll + deltaPitch;
         let lbz = z + deltaRoll - deltaPitch;
@@ -464,6 +463,7 @@ function draw() {
         natalya.lb_servos_write(lb_angles);
     }
 
+    i+=0.01;
     if(i >= 1) {
         i = 0;
         state++;
