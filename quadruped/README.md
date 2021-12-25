@@ -5,8 +5,9 @@ that I have built.
 
 Check out the [Demo](https://omareq.github.io/quadruped/).
 Check out the [Docs](https://omareq.github.io/quadruped/docs/).
-Created using [p5.js](https://p5js.org/)
-Created using [chart.js](https://chartjs.org/)
+Created using [p5.js](https://p5js.org/).
+Created using [chart.js](https://chartjs.org/).
+Gif Created using [Gimp](https://www.gimp.org/).
 
 ## Example
 
