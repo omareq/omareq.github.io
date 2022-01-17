@@ -47,3 +47,4 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Quadruped Robot IK
 - [ ]   Missile Command Arcade Game
 - [ ]   Perlin noise generation
+- [ ]   Hangman Game
