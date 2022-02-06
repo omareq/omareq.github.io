@@ -16,6 +16,7 @@
 
 
     <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"> </script>
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 
@@ -26,9 +27,12 @@
 <body style="width:100%; text-align:center">
   <div id="main">
     <section class="jumbotron jumbotron-main">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row text-center">
           <h1>The Love Code</h1>
+        </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
         </div>
       </div>
     </section>
@@ -55,12 +59,104 @@
       </div>
     </section>
 
+
+    <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <h2> The Code for Love </h2>
+              <p>
+                The inspiration for this small project was provided by a friend
+                of mine who asked what would it look like if a love potion was
+                made in real life.  I took that, mixed in a little bit of
+                matrix goodness and hey presto we have a cool animation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-8">
+            <div>
+              <h2> Well The Equation for Love </h2>
+              <p>
+                There is actually an equation that denotes the shape of a heart.
+                There are a whole family of equations dedicated to reproducing
+                the classic symbol that is associated with love.  The equation
+                shown below was chosen due to it's aesthetically pleasing geometry,
+                however it could easily be replaced with many other equations.
+              </p>
+
+              <p>
+                Equations for simple lines are usually given in the form of
+                \( y = f(x)\) where \(f\) is an arbitrary function of \(x\).
+                For example a straight line with a 45 degree slope is given by
+                \(y=x\).  This works for simple line where for each value of
+                \(x\) there is only one value for \(y\).  This is not the case
+                for a heart and because of this we will be switching to polar
+                coordinates where a line is defined by the angle around the
+                origin \(\theta\) rather than the \(x\) and \(y\) coordinates.
+              </p>
+              <p>
+                $$ x = 16 sin^{3} ( \theta )$$
+                $$ y = 13cos(\theta) - 5cos(2\theta) -  cos(3\theta) - cos(4\theta)$$
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+              <img src="imgs/heart-graph.png" alt="A graph showing how the variables in the heart equation generate the shape of the heart." style="width: 11em; max-width: 95%">
+           </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <p>
+                In this case the angle around the origin is given by the value
+                \(\theta\).  We normally think about angles in degrees from
+                \(0^{\circ}\) to \(360^{\circ}\), however when we work with
+                trigonometric functions it is customary to work in radians.
+                When working with radians angles usually go from
+                \(-\pi \le \theta < \pi\).  Using the equation above we are able
+                to find an \(x\) and \(y\) coordinate for every point along the
+                heart line if we rotate all the way around the origin.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+<!--
+    <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <h2> Matrix Rain </h2>
+              <p>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> -->
+
     <section class="container">
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <a id="external_link" href="../projects.html" >
-                    <img src="../imgs/all-projects-button.jpg" style="max-width: 11em;">
+                    <img src="../imgs/all-projects-button.jpg" style="max-width: 11em;" alt="image link to all projects page">
                 </a>
             </div>
             <div class="col-sm-4"></div>
@@ -73,7 +169,7 @@
         <div class="project-card" id="previous">
           <h5 id="prev-title">TexType</h5>
           <a id="prev-url" href="../texType/" class="project-demo">
-            <img id="prev-img" src="../imgs/p_002.jpg">
+            <img id="prev-img" src="../imgs/p_002.jpg" alt="image of the typing game project">
           </a>
         </div>
       </div>
@@ -84,7 +180,7 @@
         <div class="project-card" id="next">
           <h5 id="next-title">Antenna Calculator</h5>
           <a id="next-url" href="../antenna-calculator/" class="project-demo">
-            <img d="next-img" src="../imgs/p_004.jpg">
+            <img d="next-img" src="../imgs/p_004.jpg" alt="image of the antenna calculator">
           </a>
         </div>
       </div>

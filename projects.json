@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_019",
+            "prev-id": "p_020",
             "status": "active",
             "tags": [
                 "fun"
@@ -313,7 +313,7 @@
             "gif-url": "imgs/p_019.gif",
             "id": "p_019",
             "name": "Quadruped",
-            "next-id": "p_000",
+            "next-id": "p_020",
             "pic-url": "imgs/p_019.jpg",
             "prev-id": "p_018",
             "status": "active",
@@ -322,6 +322,20 @@
                 "science"
             ],
             "vid-url": "vids/p_019.mp4"
+        },
+        "p_020": {
+            "brief": "Generate a random walk within a grid based on the work of Dan from the coding train",
+            "demo-url": "/random-walk/",
+            "docs-url": "/random-walk/docs/",
+            "gif-url": "imgs/p_020.gif",
+            "id": "p_020",
+            "name": "Random-walk",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_020.jpg",
+            "prev-id": "p_019",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_020.mp4"
         }
     }
 }
