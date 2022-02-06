@@ -74,6 +74,39 @@ class Face {
 		return true;
 	}
 
+	getCCWVertexList() {
+		// what is the chance that the top most vertex is also inline with the
+		// right most vertex of the remaining pair
+		vertexList = [];
+		options = [this.v1, this.v2, this.v3];
+
+		// find top most vertex
+		// do checks for equal y values first
+		if(options[0].y < options[1].y && options[0].y < options[2].y) {
+			vertexList.push(options[0]);
+			options.splice(0, 1);
+		} else if(options[1].y < options[2].y) {
+			vertexList.push(options[1]);
+			options.splice(1, 1);
+		} else {
+			vertexList.push(options[2]);
+			options.splice(2, 1);
+		}
+
+		// find left vertex from remaining pair
+		if(options[0] < options[1]) {
+			vertexList.push(options[0]);
+			options.splice(0, 1);
+		} else {
+			vertexList.push(options[1]);
+			options.splice(1, 1);
+		}
+
+		// add last vertex
+		vertexList.push(options[0]);
+		return vertexList;
+	}
+
 	bounds(vertex) {
 		const mid = this.midPoint();
 
