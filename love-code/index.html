@@ -130,13 +130,49 @@
                 to find an \(x\) and \(y\) coordinate for every point along the
                 heart line if we rotate all the way around the origin.
               </p>
+              <p>
+                One interesting thing to note about computers is that when they
+                display objects on screens they can't draw things with infinitely
+                small lines.  At some point the lines become smaller than the pixels
+                and you don't gain anything by going smaller.  In this case though
+                it is more important to know that the more lines you draw on the
+                screen the longer it takes to draw them, because the computer has
+                to do lots of maths to calculate how to draw everything.  With
+                so many hearts scrolling by it is prudent not to let them have
+                too many lines.
+              </p>
+              <p>
+                The way to limit the number of lines in the heart is to only draw
+                points on the heart by incrementing the angle around the origin
+                as we go.  Doing this creates a pixelate heart.  The smaller the
+                increment the more smooth the heart is, but the longer it takes to
+                draw.  The values chosen for the step size in this code is
+                related to the size of the heart.  The large the heart the
+                smaller the step size so that large hearts don't look too
+                pixelated in comparison to the smaller ones.
+              </p>
             </div>
           </div>
         </div>
       </section>
     </div>
-<!--
-    <div>
+
+<!--     <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <h2> Be Still My Beating Heart </h2>
+              <p>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> -->
+
+<!--      <div>
       <section class="container" style="padding-top:10px">
         <div class="row text-left">
           <div class="col-sm-12">
