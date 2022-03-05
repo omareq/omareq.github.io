@@ -13,7 +13,7 @@ script:
 notifications:
   email:
     recipients:
-    - omareq08@gmail.com
+    - omareq08+travisci@gmail.com
     on_success: change
     on_failure: always
   slack:
