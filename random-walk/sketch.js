@@ -11,11 +11,40 @@
  *****************************************************************************/
 
 /**
+ * Monitors how often the reset button is pushed.  This helps provide debouncing
+ * of the reset button when it is used on mobile devices.
+ *
+ * @type       {Float}
+ */
+let lastResetTime = 0;
+
+/**
+ * The number of lattice nodes on the vertical axis of the grid.
+ *
+ * @type       {Integer}
+ */
+let verticalGridPoints = 10;
+
+/**
+ * Handler for the number of grid points slider.
+ *
+ * @type       {p5.element}
+ */
+let verticalGridPointsSlider = undefined;
+
+/**
+ * Handler for the paragraphs that displays the current grid size.
+ *
+ * @type       {p5.element}
+ */
+let verticalGridPointsDisplay = undefined;
+
+/**
  * The pixel spacing between lattice nodes on the canvas.
  *
  * @type       {Integer}
  */
-let spacing;
+let spacing = undefined;
 
 /**
  * The generated lattice nodes
@@ -161,13 +190,21 @@ function generateWalk() {
  * Resets the canvas and draws a new random walk.
  */
 function reset() {
+    if(millis() - lastResetTime < 275) {
+        return;
+    }
+
     for(let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
         let currentNode = nodes[nodeIndex];
         currentNode.visited = false;
     }
+    spacing = height / verticalGridPoints;
     walk = [];
+    nodes = [];
+    generateTriangleGrid();
     generateWalk();
-    draw();
+
+    lastResetTime = millis();
 }
 
 /**
@@ -183,11 +220,18 @@ function setup() {
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
 
-    spacing = height / 10;
+    spacing = height / verticalGridPoints;
     generateTriangleGrid();
     generateWalk();
     console.log("Generated Walk:");
     console.log(walk);
+
+    verticalGridPointsDisplay = createP("Number of Vertical Grid Points: " +
+        str(verticalGridPoints));
+    verticalGridPointsDisplay.parent("vertical-grid-points-val");
+
+    verticalGridPointsSlider = createSlider(4, 25, verticalGridPoints, 1);
+    verticalGridPointsSlider.parent("vertical-grid-points");
 
     resetButton = createButton("Reset", "value");
     resetButton.parent("reset-button");
@@ -219,6 +263,13 @@ function draw() {
         fill(0, 0, 255);
         ellipse(walk[walk.length - 1].x, walk[walk.length - 1].y,
             spacing / 8, spacing / 8);
-    noLoop();
+
+    let sliderVal = verticalGridPointsSlider.value();
+    if(sliderVal != verticalGridPoints) {
+        verticalGridPoints = sliderVal;
+        verticalGridPointsDisplay.elt.innerText = "Number of Vertical Grid Points: " +
+            str(verticalGridPoints);
+        reset();
+    }
 }
 

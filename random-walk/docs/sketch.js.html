@@ -33,14 +33,67 @@
  *
  *	@author Omar Essilfie-Quaye &lt;omareq08@gmail.com>
  *	@version 1.0
- *  @date 11-June-2021
+ *	@date 11-June-2021
  *  @link https://omareq.github.io/random-walk/
  *
  *****************************************************************************/
 
-let spacing;
+/**
+ * Monitors how often the reset button is pushed.  This helps provide debouncing
+ * of the reset button when it is used on mobile devices.
+ *
+ * @type       {Float}
+ */
+let lastResetTime = 0;
+
+/**
+ * The number of lattice nodes on the vertical axis of the grid.
+ *
+ * @type       {Integer}
+ */
+let verticalGridPoints = 10;
+
+/**
+ * Handler for the number of grid points slider.
+ *
+ * @type       {p5.element}
+ */
+let verticalGridPointsSlider = undefined;
+
+/**
+ * Handler for the paragraphs that displays the current grid size.
+ *
+ * @type       {p5.element}
+ */
+let verticalGridPointsDisplay = undefined;
+
+/**
+ * The pixel spacing between lattice nodes on the canvas.
+ *
+ * @type       {Integer}
+ */
+let spacing = undefined;
+
+/**
+ * The generated lattice nodes
+ *
+ * @type       {Array&lt;GraphNodes>}
+ */
 let nodes = [];
+
+/**
+ * The generated random self avoiding walk
+ *
+ * @type       {Array&lt;GraohNode>}
+ */
 let walk = [];
+
+/**
+ * Handler for the reset button
+ *
+ * @type       {p5.element}
+ */
+let resetButton = undefined;
 
 /**
  * Checks to see if a GraphNode list contains a given node.
@@ -128,6 +181,7 @@ function generateWalk() {
     randomNodeIndex = floor(random(nodes.length));
     let currentNode = nodes[randomNodeIndex];
     currentNode.visited = true;
+    walk = [];
     walk.push(currentNode);
     let watchdog = nodes.length;
     console.log("watchdog: " + watchdog);
@@ -161,6 +215,27 @@ function generateWalk() {
 }
 
 /**
+ * Resets the canvas and draws a new random walk.
+ */
+function reset() {
+    if(millis() - lastResetTime &lt; 275) {
+        return;
+    }
+
+    for(let nodeIndex = 0; nodeIndex &lt; nodes.length; nodeIndex++) {
+        let currentNode = nodes[nodeIndex];
+        currentNode.visited = false;
+    }
+    spacing = height / verticalGridPoints;
+    walk = [];
+    nodes = [];
+    generateTriangleGrid();
+    generateWalk();
+
+    lastResetTime = millis();
+}
+
+/**
  * p5.js setup function, creates canvas.
  */
 function setup() {
@@ -173,12 +248,23 @@ function setup() {
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
 
-    spacing = height / 10;
+    spacing = height / verticalGridPoints;
     generateTriangleGrid();
     generateWalk();
     console.log("Generated Walk:");
     console.log(walk);
- }
+
+    verticalGridPointsDisplay = createP("Number of Vertical Grid Points: " +
+        str(verticalGridPoints));
+    verticalGridPointsDisplay.parent("vertical-grid-points-val");
+
+    verticalGridPointsSlider = createSlider(4, 25, verticalGridPoints, 1);
+    verticalGridPointsSlider.parent("vertical-grid-points");
+
+    resetButton = createButton("Reset", "value");
+    resetButton.parent("reset-button");
+    resetButton.mousePressed(reset);
+}
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
@@ -186,6 +272,7 @@ function setup() {
 function draw() {
 	background(0);
     stroke(255);
+    fill(255);
     for(let i = 0; i &lt; nodes.length; i++) {
         ellipse(nodes[i].x, nodes[i].y, spacing / 8, spacing / 8);
     }
@@ -204,7 +291,14 @@ function draw() {
         fill(0, 0, 255);
         ellipse(walk[walk.length - 1].x, walk[walk.length - 1].y,
             spacing / 8, spacing / 8);
-    noLoop();
+
+    let sliderVal = verticalGridPointsSlider.value();
+    if(sliderVal != verticalGridPoints) {
+        verticalGridPoints = sliderVal;
+        verticalGridPointsDisplay.elt.innerText = "Number of Vertical Grid Points: " +
+            str(verticalGridPoints);
+        reset();
+    }
 }
 
 </code></pre>
@@ -217,12 +311,12 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="GraphNode.html">GraphNode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#contains">contains</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#generateTriangleGrid">generateTriangleGrid</a></li><li><a href="global.html#generateWalk">generateWalk</a></li><li><a href="global.html#getNodeFromList">getNodeFromList</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="GraphNode.html">GraphNode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#contains">contains</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#generateTriangleGrid">generateTriangleGrid</a></li><li><a href="global.html#generateWalk">generateWalk</a></li><li><a href="global.html#getNodeFromList">getNodeFromList</a></li><li><a href="global.html#lastResetTime">lastResetTime</a></li><li><a href="global.html#nodes">nodes</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#resetButton">resetButton</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#spacing">spacing</a></li><li><a href="global.html#verticalGridPoints">verticalGridPoints</a></li><li><a href="global.html#verticalGridPointsDisplay">verticalGridPointsDisplay</a></li><li><a href="global.html#verticalGridPointsSlider">verticalGridPointsSlider</a></li><li><a href="global.html#walk">walk</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Mar 23 2022 15:41:33 GMT+0000 (GMT)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Mar 23 2022 17:04:51 GMT+0000 (GMT)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
