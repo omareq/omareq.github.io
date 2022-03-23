@@ -15,9 +15,14 @@ class GraphNode {
         this.j = j;
         this.x = x;
         this.y = y;
+        this.visited = false;
+        this.neighbours;
+        this.connected = [];
     }
 
     setNeighbours(neighbourList) {
         this.neighbours = neighbourList;
+        for(let i = 0; i < this.neighbours.length; i++) {
+        }
     }
 }
