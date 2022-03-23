@@ -4,9 +4,10 @@ Generate a random walk within a grid based on the work of Dan from the coding
 train.  The difference between this random walk and normal ones is that it is
 self avoiding.  This means that the path does not cross itself.
 
+## Example
 Here's an image of an example self avoiding walk:
 
-![Self Avoiding Walk](../imgs/p_020.jpg)
+![Self Avoiding Walk](https://omareq.github.io/imgs/p_020.jpg)
 
 This self avoiding walk differs from others by being on a non rectangular
 lattice.  This is implemented by creating lattice vectors to represent the grid
