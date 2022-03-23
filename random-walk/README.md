@@ -1,6 +1,8 @@
 # Random-walk
 
-Generate a random walk within a grid based on the work of Dan from the coding train.
+Generate a random walk within a grid based on the work of Dan from the coding
+train.  The difference between this random walk and normal ones is that it is
+self avoiding.  This means that the path does not cross itself.
 
 Lattice Vectors [picture](https://mpb.readthedocs.io/en/latest/Data_Analysis_Tutorial/)
 

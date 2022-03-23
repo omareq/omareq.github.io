@@ -144,14 +144,14 @@ function draw() {
     }
 
     fill(255, 0, 0);
-    stroke(255, 0, 0)
+    stroke(255, 0, 0);
     ellipse(walk[0].x, walk[0].y, spacing / 8, spacing / 8);
     for(let i = 1; i < walk.length; i++) {
         noStroke();
         ellipse(walk[i].x, walk[i].y, spacing / 8, spacing / 8);
         stroke(0, 255, 0);
         strokeWeight(2);
-        line(walk[i].x, walk[i].y, walk[i-1].x, walk[i-1].y,)
+        line(walk[i].x, walk[i].y, walk[i-1].x, walk[i-1].y);
     }
     noLoop();
 }

@@ -16,13 +16,10 @@ class GraphNode {
         this.x = x;
         this.y = y;
         this.visited = false;
-        this.neighbours;
-        this.connected = [];
+        this.neighbours = [];
     }
 
     setNeighbours(neighbourList) {
         this.neighbours = neighbourList;
-        for(let i = 0; i < this.neighbours.length; i++) {
-        }
     }
 }
