@@ -115,6 +115,8 @@ def sketch_js(name, description):
  *\n\
  *\t@author Omar Essilfie-Quaye <omareq08@gmail.com>\n\
  *\t@version 1.0\n " + date_str + "\n\
+ *\t@link https://omareq.github.io/" + name + "/\n\
+ *\t@link https://omareq.github.io/" + name + "/docs/\n\
  *\n " + "*" * 77 + "/\n\n")
 
 
