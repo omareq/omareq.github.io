@@ -11,6 +11,7 @@
 
 let spacing;
 let nodes = [];
+let walk = [];
 
 function contains(nodesList, nodeIndecies) {
     for(let nodeIndex = 0; nodeIndex < nodesList.length; nodeIndex++) {
@@ -20,6 +21,15 @@ function contains(nodesList, nodeIndecies) {
         }
     }
     return false;
+}
+
+function getNodeFromList(nodesList, nodeIndecies) {
+    for(let nodeIndex = 0; nodeIndex < nodesList.length; nodeIndex++) {
+        const node = nodesList[nodeIndex];
+        if(node.i == nodeIndecies[0] && node.j == nodeIndecies[1]) {
+            return node;
+        }
+    }
 }
 
 /**
@@ -36,7 +46,7 @@ function generateTriangleGrid() {
             let pnt = r1.copy().mult(i).add(r2.copy().mult(j));
             pnt.x = pnt.x + 0.5 * spacing;
             pnt.y = pnt.y + 0.5 * spacing;
-            if(pnt.y <= 0 || pnt.x >= width || pnt.y >= height) {
+            if(pnt.x <= 0.5 || pnt.y <= 0.5 || pnt.x >= width-0.5 || pnt.y >= height-0.5) {
                 continue;
             }
             nodes.push(new GraphNode(i, j, pnt.x, pnt.y));
@@ -63,6 +73,46 @@ function generateTriangleGrid() {
     }
 }
 
+
+/**
+ * Generates a random walk given a list of nodes in a grid
+ */
+function generateWalk() {
+    randomNodeIndex = floor(random(nodes.length));
+    let currentNode = nodes[randomNodeIndex];
+    currentNode.visited = true;
+    walk.push(currentNode);
+    let watchdog = nodes.length;
+    console.log("watchdog: " + watchdog);
+    while(watchdog > 0) {
+        watchdog--;
+
+        orderedNeighbours = currentNode.neighbours;
+        neighbours = shuffle(orderedNeighbours);
+        let foundUnvisitedNeighbour = false;
+
+        for(let n = 0; n < neighbours.length; n++) {
+            if(!contains(nodes, neighbours[n])) {
+                continue;
+            }
+            currentNeighbour = getNodeFromList(nodes, neighbours[n]);
+            if(!currentNeighbour.visited) {
+                currentNode = currentNeighbour;
+                currentNode.visited = true;
+                foundUnvisitedNeighbour = true;
+                walk.push(currentNode);
+                break;
+            }
+        }
+
+        if(!foundUnvisitedNeighbour) {
+            console.log("No more unvisited neighbours");
+            console.log("watchdog: " + watchdog);
+            break;
+        }
+    }
+}
+
 /**
  * p5.js setup function, creates canvas.
  */
@@ -78,6 +128,9 @@ function setup() {
 
     spacing = height / 10;
     generateTriangleGrid();
+    generateWalk();
+    console.log("Generated Walk:");
+    console.log(walk);
  }
 
 /**
@@ -88,6 +141,17 @@ function draw() {
     stroke(255);
     for(let i = 0; i < nodes.length; i++) {
         ellipse(nodes[i].x, nodes[i].y, spacing / 8, spacing / 8);
+    }
+
+    fill(255, 0, 0);
+    stroke(255, 0, 0)
+    ellipse(walk[0].x, walk[0].y, spacing / 8, spacing / 8);
+    for(let i = 1; i < walk.length; i++) {
+        noStroke();
+        ellipse(walk[i].x, walk[i].y, spacing / 8, spacing / 8);
+        stroke(0, 255, 0);
+        strokeWeight(2);
+        line(walk[i].x, walk[i].y, walk[i-1].x, walk[i-1].y,)
     }
     noLoop();
 }
