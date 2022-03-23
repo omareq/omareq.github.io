@@ -171,6 +171,10 @@ function draw() {
         strokeWeight(2);
         line(walk[i].x, walk[i].y, walk[i-1].x, walk[i-1].y);
     }
+        stroke(0, 0, 255);
+        fill(0, 0, 255);
+        ellipse(walk[walk.length - 1].x, walk[walk.length - 1].y,
+            spacing / 8, spacing / 8);
     noLoop();
 }
 
