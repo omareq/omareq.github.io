@@ -21,6 +21,10 @@ Check out the [Docs](https://omareq.github.io/random-walk/docs/).
 
 Created using [p5.js](https://p5js.org/)
 
+## Todo
+
+[ ] Add Backtracking
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)
 
