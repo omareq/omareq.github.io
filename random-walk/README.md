@@ -7,7 +7,7 @@ self avoiding.  This means that the path does not cross itself.
 ## Example
 Here's an image of an example self avoiding walk:
 
-![Self Avoiding Walk](https://omareq.github.io/imgs/p_020.jpg)
+![Self Avoiding Walk](https://omareq.github.io/imgs/p_020.gif)
 
 This self avoiding walk differs from others by being on a non rectangular
 lattice.  This is implemented by creating lattice vectors to represent the grid

@@ -217,7 +217,7 @@ function setup() {
 	} else {
 		cnvSize = windowWidth;
 	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
+	let cnv = createCanvas(0.9 * cnvSize, 0.9 * cnvSize);
 	cnv.parent('sketch');
 
     spacing = height / verticalGridPoints;
