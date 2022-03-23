@@ -13,6 +13,15 @@ let spacing;
 let nodes = [];
 let walk = [];
 
+/**
+ * Checks to see if a GraphNode list contains a given node.
+ *
+ * @param      {Array<GraphNode>}  nodesList     The list of nodes
+ * @param      {Array<Integer>}  nodeIndecies  The lattice indecies.  Should not
+ *                               have more than 2 elements representing the
+ *                               components for each lattice vector.
+ * @return     {boolean}  Boolean true if the node is in the list.
+ */
 function contains(nodesList, nodeIndecies) {
     for(let nodeIndex = 0; nodeIndex < nodesList.length; nodeIndex++) {
         const node = nodesList[nodeIndex];
@@ -23,6 +32,15 @@ function contains(nodesList, nodeIndecies) {
     return false;
 }
 
+/**
+ * Gets the node specified by the lattice indecies from the list.
+ *
+ * @param      {Array<GraphNode>}  nodesList     The list of nodes
+ * @param      {Array<Integer>}  nodeIndecies  The lattice indecies.  Should not
+ *                               have more than 2 elements representing the
+ *                               components for each lattice vector.
+ * @return     {GraphNode}  The node from list.
+ */
 function getNodeFromList(nodesList, nodeIndecies) {
     for(let nodeIndex = 0; nodeIndex < nodesList.length; nodeIndex++) {
         const node = nodesList[nodeIndex];
@@ -153,6 +171,10 @@ function draw() {
         strokeWeight(2);
         line(walk[i].x, walk[i].y, walk[i-1].x, walk[i-1].y);
     }
+        stroke(0, 0, 255);
+        fill(0, 0, 255);
+        ellipse(walk[walk.length - 1].x, walk[walk.length - 1].y,
+            spacing / 8, spacing / 8);
     noLoop();
 }
 

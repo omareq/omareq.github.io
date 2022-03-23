@@ -38,26 +38,123 @@
  *****************************************************************************/
 
 let spacing;
-let pts = [];
+let nodes = [];
+let walk = [];
+
+/**
+ * Checks to see if a GraphNode list contains a given node.
+ *
+ * @param      {Array&lt;GraphNode>}  nodesList     The list of nodes
+ * @param      {Array&lt;Integer>}  nodeIndecies  The lattice indecies.  Should not
+ *                               have more than 2 elements representing the
+ *                               components for each lattice vector.
+ * @return     {boolean}  Boolean true if the node is in the list.
+ */
+function contains(nodesList, nodeIndecies) {
+    for(let nodeIndex = 0; nodeIndex &lt; nodesList.length; nodeIndex++) {
+        const node = nodesList[nodeIndex];
+        if(node.i == nodeIndecies[0] &amp;&amp; node.j == nodeIndecies[1]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Gets the node specified by the lattice indecies from the list.
+ *
+ * @param      {Array&lt;GraphNode>}  nodesList     The list of nodes
+ * @param      {Array&lt;Integer>}  nodeIndecies  The lattice indecies.  Should not
+ *                               have more than 2 elements representing the
+ *                               components for each lattice vector.
+ * @return     {GraphNode}  The node from list.
+ */
+function getNodeFromList(nodesList, nodeIndecies) {
+    for(let nodeIndex = 0; nodeIndex &lt; nodesList.length; nodeIndex++) {
+        const node = nodesList[nodeIndex];
+        if(node.i == nodeIndecies[0] &amp;&amp; node.j == nodeIndecies[1]) {
+            return node;
+        }
+    }
+}
 
 /**
  * Generate a graph of nodes arranged in a triangular pattern
  */
 function generateTriangleGrid() {
-    let r1 = createVector(spacing * sqrt(3) / 2, -spacing / 2);
-    let r2 = createVector(spacing * sqrt(3) / 2 , spacing / 2);
+    const r1 = createVector(spacing * sqrt(3) / 2, -spacing / 2);
+    const r2 = createVector(spacing * sqrt(3) / 2 , spacing / 2);
     console.log("R1: " + r1.x + " " + r1.y);
     console.log("R2: " + r2.x + " " + r2.y);
 
     for(let i = -25; i &lt; 25; i++) {
         for(let j = 0; j &lt; 60; j++) {
-            pnt = r1.copy().mult(i).add(r2.copy().mult(j));
+            let pnt = r1.copy().mult(i).add(r2.copy().mult(j));
             pnt.x = pnt.x + 0.5 * spacing;
             pnt.y = pnt.y + 0.5 * spacing;
-            if(pnt.y &lt;= 0 || pnt.x >= width || pnt.y >= height) {
+            if(pnt.x &lt;= 0.5 || pnt.y &lt;= 0.5 || pnt.x >= width-0.5 || pnt.y >= height-0.5) {
                 continue;
             }
-            pts.push(pnt);
+            nodes.push(new GraphNode(i, j, pnt.x, pnt.y));
+        }
+    }
+
+    for(let nodeIndex = 0; nodeIndex &lt; nodes.length; nodeIndex++) {
+        const currentNode = nodes[nodeIndex];
+        const i = currentNode.i;
+        const j = currentNode.j;
+        const possibleNeighbors = [
+            [i, j + 1],
+            [i, j - 1],
+            [i + 1, j],
+            [i - 1, j]
+        ];
+
+        for(let n = possibleNeighbors.length - 2; n >= 0; n--) {
+            if(!contains(nodes, possibleNeighbors[n])) {
+                possibleNeighbors.splice(1, n);
+            }
+        }
+        nodes[nodeIndex].setNeighbours(possibleNeighbors);
+    }
+}
+
+
+/**
+ * Generates a random walk given a list of nodes in a grid
+ */
+function generateWalk() {
+    randomNodeIndex = floor(random(nodes.length));
+    let currentNode = nodes[randomNodeIndex];
+    currentNode.visited = true;
+    walk.push(currentNode);
+    let watchdog = nodes.length;
+    console.log("watchdog: " + watchdog);
+    while(watchdog > 0) {
+        watchdog--;
+
+        orderedNeighbours = currentNode.neighbours;
+        neighbours = shuffle(orderedNeighbours);
+        let foundUnvisitedNeighbour = false;
+
+        for(let n = 0; n &lt; neighbours.length; n++) {
+            if(!contains(nodes, neighbours[n])) {
+                continue;
+            }
+            currentNeighbour = getNodeFromList(nodes, neighbours[n]);
+            if(!currentNeighbour.visited) {
+                currentNode = currentNeighbour;
+                currentNode.visited = true;
+                foundUnvisitedNeighbour = true;
+                walk.push(currentNode);
+                break;
+            }
+        }
+
+        if(!foundUnvisitedNeighbour) {
+            console.log("No more unvisited neighbours");
+            console.log("watchdog: " + watchdog);
+            break;
         }
     }
 }
@@ -76,7 +173,10 @@ function setup() {
 	cnv.parent('sketch');
 
     spacing = height / 10;
-    generateTriangleGrid()
+    generateTriangleGrid();
+    generateWalk();
+    console.log("Generated Walk:");
+    console.log(walk);
  }
 
 /**
@@ -84,9 +184,25 @@ function setup() {
  */
 function draw() {
 	background(0);
-    for(let i = 0; i &lt; pts.length; i++) {
-        ellipse(pts[i].x, pts[i].y, spacing / 8, spacing / 8);
+    stroke(255);
+    for(let i = 0; i &lt; nodes.length; i++) {
+        ellipse(nodes[i].x, nodes[i].y, spacing / 8, spacing / 8);
     }
+
+    fill(255, 0, 0);
+    stroke(255, 0, 0);
+    ellipse(walk[0].x, walk[0].y, spacing / 8, spacing / 8);
+    for(let i = 1; i &lt; walk.length; i++) {
+        noStroke();
+        ellipse(walk[i].x, walk[i].y, spacing / 8, spacing / 8);
+        stroke(0, 255, 0);
+        strokeWeight(2);
+        line(walk[i].x, walk[i].y, walk[i-1].x, walk[i-1].y);
+    }
+        stroke(0, 0, 255);
+        fill(0, 0, 255);
+        ellipse(walk[walk.length - 1].x, walk[walk.length - 1].y,
+            spacing / 8, spacing / 8);
     noLoop();
 }
 
@@ -100,12 +216,12 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#generateTriangleGrid">generateTriangleGrid</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="GraphNode.html">GraphNode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#contains">contains</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#generateTriangleGrid">generateTriangleGrid</a></li><li><a href="global.html#generateWalk">generateWalk</a></li><li><a href="global.html#getNodeFromList">getNodeFromList</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Jun 12 2021 16:55:25 GMT+0100 (BST)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Mar 23 2022 14:50:09 GMT+0000 (GMT)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
