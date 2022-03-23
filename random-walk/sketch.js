@@ -56,7 +56,7 @@ let nodes = [];
 /**
  * The generated random self avoiding walk
  *
- * @type       {Array<GraohNode>}
+ * @type       {Array<GraphNode>}
  */
 let walk = [];
 
