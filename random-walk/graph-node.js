@@ -44,7 +44,9 @@ class GraphNode {
      *
      * @param      {Array<Array<Integers> >}  neighbourList  The neighbour list
      *             . Each neighbour should have 2 elements corresponding to the
-     *             lattice vectors.
+     *             lattice vectors.  Example neighbour list for the node [0,0]
+     *             is:
+     *                  [[0, 1], [0, -1], [1, 0], [-1, 0]]
      */
     setNeighbours(neighbourList) {
         this.neighbours = neighbourList;
