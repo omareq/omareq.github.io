@@ -10,9 +10,33 @@
  *
  *****************************************************************************/
 
+/**
+ * The pixel spacing between lattice nodes on the canvas.
+ *
+ * @type       {Integer}
+ */
 let spacing;
+
+/**
+ * The generated lattice nodes
+ *
+ * @type       {Array<GraphNodes>}
+ */
 let nodes = [];
+
+/**
+ * The generated random self avoiding walk
+ *
+ * @type       {Array<GraohNode>}
+ */
 let walk = [];
+
+/**
+ * Handler for the reset button
+ *
+ * @type       {p5.element}
+ */
+let resetButton = undefined;
 
 /**
  * Checks to see if a GraphNode list contains a given node.
@@ -100,6 +124,7 @@ function generateWalk() {
     randomNodeIndex = floor(random(nodes.length));
     let currentNode = nodes[randomNodeIndex];
     currentNode.visited = true;
+    walk = [];
     walk.push(currentNode);
     let watchdog = nodes.length;
     console.log("watchdog: " + watchdog);
@@ -133,6 +158,19 @@ function generateWalk() {
 }
 
 /**
+ * Resets the canvas and draws a new random walk.
+ */
+function reset() {
+    for(let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
+        let currentNode = nodes[nodeIndex];
+        currentNode.visited = false;
+    }
+    walk = [];
+    generateWalk();
+    draw();
+}
+
+/**
  * p5.js setup function, creates canvas.
  */
 function setup() {
@@ -150,7 +188,11 @@ function setup() {
     generateWalk();
     console.log("Generated Walk:");
     console.log(walk);
- }
+
+    resetButton = createButton("Reset", "value");
+    resetButton.parent("reset-button");
+    resetButton.mousePressed(reset);
+}
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
@@ -158,6 +200,7 @@ function setup() {
 function draw() {
 	background(0);
     stroke(255);
+    fill(255);
     for(let i = 0; i < nodes.length; i++) {
         ellipse(nodes[i].x, nodes[i].y, spacing / 8, spacing / 8);
     }
