@@ -6,6 +6,7 @@
  *	@author Omar Essilfie-Quaye <omareq08@gmail.com>
  *	@version 1.0
  *	@date 11-June-2021
+ *  @link https://omareq.github.io/random-walk/
  *
  *****************************************************************************/
 
