@@ -40,6 +40,27 @@ let verticalGridPointsSlider = undefined;
 let verticalGridPointsDisplay = undefined;
 
 /**
+ * The number of seconds to wait before auto reset.
+ *
+ * @type       {Integer}
+ */
+let refreshTime = 5;
+
+/**
+ * Handler for the refresh time slider.
+ *
+ * @type       {p5.element}
+ */
+let refreshTimeSlider = undefined;
+
+/**
+ * Handler for the paragraphs that displays the current refresh time.
+ *
+ * @type       {p5.element}
+ */
+let refreshTimeDisplay = undefined;
+
+/**
  * The pixel spacing between lattice nodes on the canvas.
  *
  * @type       {Integer}
@@ -226,12 +247,19 @@ function setup() {
     console.log("Generated Walk:");
     console.log(walk);
 
-    verticalGridPointsDisplay = createP("Number of Vertical Grid Points: " +
+    verticalGridPointsDisplay = createP("No. of Vertical Grid Points: " +
         str(verticalGridPoints));
     verticalGridPointsDisplay.parent("vertical-grid-points-val");
 
     verticalGridPointsSlider = createSlider(4, 25, verticalGridPoints, 1);
     verticalGridPointsSlider.parent("vertical-grid-points");
+
+    refreshTimeDisplay = createP("Refresh Time (s): " +
+        str(refreshTime));
+    refreshTimeDisplay.parent("refresh-time-val");
+
+    refreshTimeSlider = createSlider(1, 60, refreshTime, 1);
+    refreshTimeSlider.parent("refresh-time");
 
     resetButton = createButton("Reset", "value");
     resetButton.parent("reset-button");
@@ -267,8 +295,20 @@ function draw() {
     let sliderVal = verticalGridPointsSlider.value();
     if(sliderVal != verticalGridPoints) {
         verticalGridPoints = sliderVal;
-        verticalGridPointsDisplay.elt.innerText = "Number of Vertical Grid Points: " +
+        verticalGridPointsDisplay.elt.innerText = "No. of Vertical Grid Points: " +
             str(verticalGridPoints);
+        reset();
+    }
+
+    sliderVal = refreshTimeSlider.value();
+    if(sliderVal != refreshTime) {
+        refreshTime = sliderVal;
+        refreshTimeDisplay.elt.innerText = "Refresh Time (s): " +
+            str(refreshTime);
+        reset();
+    }
+
+    if(millis() - lastResetTime > refreshTime * 1000) {
         reset();
     }
 }
