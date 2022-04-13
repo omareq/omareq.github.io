@@ -15,6 +15,8 @@ points.  Other lattices can be implemented by changing the lattice vectors.
 
 Lattice Vectors [picture](https://mpb.readthedocs.io/en/latest/Data_Analysis_Tutorial/)
 
+Pivot Algorithm [Example Code](https://www.guangshi.io/posts/pivot-algorithm/)
+
 Check out the [Demo](https://omareq.github.io/random-walk/).
 
 Check out the [Docs](https://omareq.github.io/random-walk/docs/).
