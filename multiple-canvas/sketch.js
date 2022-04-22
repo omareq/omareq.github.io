@@ -20,7 +20,6 @@ let sketch1 = function(p) {
   p.setup = function() {
   	let canvas = p.createCanvas(600, 200);//, p.WEBGL);
   	canvas.parent('sketch1');
-    p.createCanvas(700, 410);
   };
 
   p.draw = function() {
@@ -54,7 +53,6 @@ let sketch2 = function(p) {
   p.setup = function() {
   	let canvas = p.createCanvas(600, 200);//, p.WEBGL);
   	canvas.parent('sketch2');
-    p.createCanvas(700, 410);
   };
 
   p.draw = function() {
