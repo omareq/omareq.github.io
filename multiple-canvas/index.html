@@ -20,6 +20,7 @@
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 
   <link type="text/css" rel="stylesheet" href="../main.css">
+  <link type="text/css" rel="stylesheet" href="./code.css">
   <title>Multiple Canvas</title>
 </head>
 
@@ -51,6 +52,84 @@
           <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
           style="max-width:75px">
         </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2> Multi canvas. But why?</h2>
+        <p>
+          The general usage for the canvas is to draw a single animation on a
+          web page.  In this scenario the canvas is already perfectly created.
+          For some web pages more complicated layout with multiple animations
+          explaining the same thing may be required.  In this scenario, the
+          usage of multiple canvases is required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2> p5.js Instance Mode - The Secret to Success</h2>
+        <p>
+          The usage of p5.js usually happens in the global scope.  Instance mode
+          allows for the specific instance of p5.js in usage to be given a
+          handler and all variables used are retained within a limited scope.
+          This means that 2 instances can be set up with the same setup and draw
+          functions but they will not interfere with each other.  Its is now
+          possible to use these instances to control 2 separate canvases.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2> Code Example</h2>
+        <pre>
+          <code>
+  /**
+  *   Function for the first instance of the p5js object.
+  */
+  let sketch1 = function(p) {
+    p.setup = function() {
+      p.createCanvas(512, 512);
+    };
+
+    p.draw = function() {
+      p.background(0);
+    };
+  };
+
+  /**
+  *   Function for the second instance of the p5js object.
+  */
+  let sketch2 = function(p) {
+    p.setup = function() {
+      p.createCanvas(512, 512);
+    };
+
+    p.draw = function() {
+      p.background(255);
+    };
+  };
+
+  /**
+  *   Handler for first p5 object
+  */
+  let mcanvas1 = new p5(sketch1);
+
+  /**
+  *   Handler for second p5 object
+  */
+  let mcanvas2 = new p5(sketch2);
+          </code>
+        </pre>
       </div>
     </div>
   </section>
