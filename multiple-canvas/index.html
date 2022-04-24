@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script language="javascript" type="text/javascript" src="../libraries/run_prettify.js"></script>
 
   <link type="text/css" rel="stylesheet" href="../main.css">
     <title>Multiple Canvas</title>
@@ -92,42 +92,42 @@
       <div class="col-sm-12">
         <h2> Code Example</h2>
         <pre>
-          <code class="prettyprint">
-01  /**
-02  *   Function for the first instance of the p5js object.
-03  */
-04  let sketch1 = function(p) {
-05    p.setup = function() {
-06      p.createCanvas(512, 512);
-07    };
-08
-09    p.draw = function() {
-11      p.background(0);
-12    };
-13  };
-14
-15  /**
-16  *   Function for the second instance of the p5js object.
-17  */
-18  let sketch2 = function(p) {
-19    p.setup = function() {
-20      p.createCanvas(512, 512);
-21    };
-22
-23    p.draw = function() {
-24      p.background(255);
-25    };
-26  };
-27
-28  /**
-29  *   Handler for first p5 object
-20  */
-31  let mcanvas1 = new p5(sketch1);
-32
-33  /**
-34  *   Handler for second p5 object
-35  */
-36  let mcanvas2 = new p5(sketch2);
+          <code class="prettyprint lang-js">
+  /**
+  *   Function for the first instance of the p5js object.
+  */
+  let sketch1 = function(p) {
+    p.setup = function() {
+      p.createCanvas(512, 512);
+    };
+
+    p.draw = function() {
+      p.background(0);
+    };
+  };
+
+  /**
+  *   Function for the second instance of the p5js object.
+  */
+  let sketch2 = function(p) {
+    p.setup = function() {
+      p.createCanvas(512, 512);
+    };
+
+    p.draw = function() {
+      p.background(255);
+    };
+  };
+
+  /**
+  *   Handler for first p5 object
+  */
+  let mcanvas1 = new p5(sketch1);
+
+  /**
+  *   Handler for second p5 object
+  */
+  let mcanvas2 = new p5(sketch2);
           </code>
         </pre>
       </div>
