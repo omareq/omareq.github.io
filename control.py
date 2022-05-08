@@ -349,6 +349,7 @@ def restore_project(name):
         json.dump(projects_json, json_file, sort_keys=True, indent=4)
     return
 
+# what about removing from git by git deletion
 def remove_project(name):
     global projects_json, projects_json_file
     if not os.path.isdir(name):
