@@ -6,7 +6,11 @@ Created using [p5.js](https://p5js.org/)
 
 ## Todo
 
--[ ]    Docs
+-[ ]    Finish Game Play
+
+-[x]    Docs
+
+-[ ]    Finish Game play instructions on index.html
 
 -[ ]	Make class for game control
 
