@@ -42,16 +42,16 @@ let startMode = 1;
 let playMode = 2;
 let endMode = 3;
 let gameMode = startMode;
+let gameScore = 0;
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(0.8 * windowWidth, 0.8 * windowHeight);
   floorHeight = 0.8 * height;
 }
 
 function keyPressed() {
 	if(gameMode == startMode && keyCode == ENTER) {
-		physicsHandler = setInterval(physicsUpdate, 20);
-		gameMode = playMode;
+		startGame();
 	} else if(gameMode == playMode) {
 		if(key.toLowerCase() == "w" || keyCode == UP_ARROW) {
 			ninja.jump();
@@ -61,9 +61,7 @@ function keyPressed() {
 			endGame();
 		}
 	} else if(gameMode == endMode && keyCode == ENTER) {
-		gameMode = startMode;
-		ninja.reset();
-		obstacle.reset();
+		resetGame();
 	}
 }
 
@@ -73,20 +71,30 @@ function mousePressed() {
 	}
 
 	if(gameMode == startMode) {
-		physicsHandler = setInterval(physicsUpdate, 20);
-		gameMode = playMode;
+		startGame();
 	} else if(gameMode == playMode) {
 		ninja.jump();
 	} else if(gameMode == endMode) {
-		gameMode = startMode;
-		ninja.reset();
-		obstacle.reset();
+		resetGame();
 	}
+}
+
+function resetGame() {
+	gameMode = startMode;
+	ninja.reset();
+	obstacle.reset();
+	gameScore = 0;
+}
+
+function startGame() {
+	physicsHandler = setInterval(physicsUpdate, 20);
+	gameMode = playMode;
 }
 
 function endGame() {
 	clearInterval(physicsHandler);
 	gameMode = endMode;
+  console.log("Game Score: " + gameScore);
 }
 
 function physicsUpdate() {
@@ -267,6 +275,10 @@ function gameLoop() {
 
 	obstacle.draw();
 	ninja.draw();
+	gameScore += 1;
+	textSize(floor(0.06*height));
+	textAlign(CENTER);
+	text("Score: " + gameScore, 0.2 * width, 0.95 * height);
 }
 
 function endScreen() {
@@ -277,7 +289,8 @@ function endScreen() {
 	strokeWeight(1);
 	textAlign(CENTER);
 	textSize(0.12 * width);
-	text("Game Over", 0.5 * width, 0.5 * height);
+	text("Game Over", 0.5 * width, 0.25 * height);
+	text("Score: " + gameScore, 0.5 * width, 0.5 * height);
 
 	textSize(0.06 * width);
 	text("Press Enter To Continue", 0.5 * width, 0.75 * height);
