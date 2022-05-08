@@ -25,3 +25,5 @@ Ninja Sprites and Tile set from [gameart2d](https://www.gameart2d.com)
 Spikes from [graphic-buffet](https://www.graphic-buffet.com)
 
 Sound Effects from [soundbible](https://www.soundbible.com/)
+
+Animations created using [ezgif](https://ezgif.com/)
