@@ -60,7 +60,7 @@ def readme(name, description):
     f.write("Check out the [Docs](https://omareq.github.io/" + name + "/docs/).\n\n")
     f.write("Created using [p5.js](https://p5js.org/)\n\n")
     f.write("## Contact Details\n")
-    f.write("__Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)\n")
+    f.write("__Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)\n")
     f.write("\n\n(This is an auto-generated document, not all links will necessarily work)\n")
     f.close()
     return
@@ -113,7 +113,7 @@ def sketch_js(name, description):
  *\n\
  *\t@file sketch.js " + description + "\n\
  *\n\
- *\t@author Omar Essilfie-Quaye <omareq08@gmail.com>\n\
+ *\t@author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>\n\
  *\t@version 1.0\n " + date_str + "\n\
  *\t@link https://omareq.github.io/" + name + "/\n\
  *\t@link https://omareq.github.io/" + name + "/docs/\n\
@@ -349,6 +349,7 @@ def restore_project(name):
         json.dump(projects_json, json_file, sort_keys=True, indent=4)
     return
 
+# what about removing from git by git deletion
 def remove_project(name):
     global projects_json, projects_json_file
     if not os.path.isdir(name):
