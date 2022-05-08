@@ -55,10 +55,29 @@ function keyPressed() {
 	} else if(gameMode == playMode) {
 		if(key.toLowerCase() == "w" || keyCode == UP_ARROW) {
 			ninja.jump();
-		} if(key.toLowerCase() == "s" || keyCode == DOWN_ARROW) {
+		} else if(key.toLowerCase() == "s" || keyCode == DOWN_ARROW) {
 			ninja.drop();
+		} else if(key.toLowerCase() == "k") {
+			endGame();
 		}
 	} else if(gameMode == endMode && keyCode == ENTER) {
+		gameMode = startMode;
+		ninja.reset();
+		obstacle.reset();
+	}
+}
+
+function mousePressed() {
+	if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
+		return;
+	}
+
+	if(gameMode == startMode) {
+		physicsHandler = setInterval(physicsUpdate, 20);
+		gameMode = playMode;
+	} else if(gameMode == playMode) {
+		ninja.jump();
+	} else if(gameMode == endMode) {
 		gameMode = startMode;
 		ninja.reset();
 		obstacle.reset();
@@ -215,7 +234,7 @@ function startScreen() {
 	text("Press Enter To Start Game", 0.5 * width, 0.5 * height);
 
 	textSize(0.03 * width);
-	text("W - Jump   S - Drop", 0.5 * width, 0.75 * height);
+	text("W - Jump    S - Drop    K - Kill", 0.5 * width, 0.75 * height);
 
 }
 
@@ -265,7 +284,7 @@ function endScreen() {
 }
 
 function setup () {
-  	let canvas = createCanvas(windowWidth, windowHeight);
+  	let canvas = createCanvas(0.8 * windowWidth, 0.8 * windowHeight);
   	canvas.parent('sketch');
 
 	floorHeight = 0.8 * height;
