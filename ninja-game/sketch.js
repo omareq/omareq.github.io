@@ -6,45 +6,252 @@
 *
 *******************************************************************************/
 
+/**
+* How far the floor is from the top of the window.
+*
+* @type       {number}
+*/
 let floorHeight;
+
+/**
+* Ninja object.
+*
+* @type       {Ninja}
+*/
 let ninja;
+
+/**
+* Obstacle object.
+*
+* @type       {Obstacle}
+*/
 let obstacle;
+
+/**
+* The number of pixels that the foreground moves every frame.
+*
+* @type       {number}
+*/
 let fgScrollSpeed = -7;
+
+/**
+* The current x position of the foreground.
+*
+* @type       {number}
+*/
 let fgx = 0;
+
+/**
+* Handle for the physics loop callback.
+*
+* @type       {intervalID}
+*/
 let physicsHandler;
+
+/**
+* Array of idle sprite images for the ninja.
+*
+* @type       {Array<p5.Image>}
+*/
 let idle = [];
+
+/**
+* Array of running sprite images for the ninja.
+*
+* @type       {Array<p5.Image>}
+*/
 let run = [];
+
+/**
+* Array of jumping sprite images for the ninja.
+*
+* @type       {Array<p5.Image>}
+*/
 let jump = [];
+
+/**
+* Flag to show if assets are still loading.
+*
+* @type       {boolean}
+*/
 let loading = true;
+
+/**
+* Expected number of ninja sprite images to load.
+*
+* @type       {number}
+*/
 let totalNinjaAssets = 30;
+
+/**
+* The number of ninja sprite images loaded without any errors.
+*
+* @type       {number}
+*/
 let ninjaLoadCounter = 0;
 
+/**
+* Array of spike obstacle images.
+*
+* @type       {Array<p5.Image>}
+*/
 let spikeImgs = [];
+
+/**
+* Expected number of spike sprite images to load.
+*
+* @type       {number}
+*/
 let totalSpikeAssets = 1;
+
+/**
+* The number of spike sprite images loaded without any errors.
+*
+* @type       {number}
+*/
 let spikeLoadCounter = 0;
 
+/**
+* The current x position of the background.
+*
+* @type       {number}
+*/
 let bgx = 0;
+
+/**
+* The number of pixels that the background moves every frame.
+*
+* @type       {number}
+*/
 let bgScrollSpeed = -2;
+
+/**
+* Flag stating if the day time background image was loaded without error.
+*
+* @type       {boolean}
+*/
 let BGLoaded = false;
+
+/**
+* Flag stating if the night time background image was loaded without error.
+*
+* @type       {boolean}
+*/
 let BGNightLoaded = false;
+
+/**
+* Flag for if it is daytime of night time
+*
+* @type       {boolean}
+*/
 let nightTime = false;
+
+/**
+* Array of ground and water tile images.
+*
+* @type       {Array<p5.Image>}
+*/
 let tileImgs = [];
+
+/**
+* Flag stating if the floor tiles loaded without error.
+*
+* @type       {boolean}
+*/
 let tilesLoaded = false;
+
+/**
+* Number of expected floor tiles images to load.
+*
+* @type       {number}
+*/
 let totalTileAssets = 19;
+
+/**
+* The number of floor tile images loaded without any errors.
+*
+* @type       {number}
+*/
 let tileLoadCounter = 0;
 
+/**
+* Array of sounds that have loaded.
+*
+* @type       {Array<p5.SoundFile>}
+*/
 let sounds = [];
+
+/**
+* Flag stating if the sounds have loaded without error.
+*
+* @type       {boolean}
+*/
 let soundsLoaded = false;
+
+/**
+* Number of expected sound assets.
+*
+* @type       {number}
+*/
 let totalSoundAssets = 1;
+
+/**
+* Number of sound assets loaded without error.
+*
+* @type       {number}
+*/
 let soundLoadCounter = 0;
 
+/**
+* The total number of expected assets.
+*
+* @type       {number}
+*/
 let totalAssets = totalNinjaAssets + totalSpikeAssets + totalTileAssets +
 	totalSoundAssets;
 
+/**
+* Start state for the gameMode variable.
+*
+* @type       {number}
+*/
 let startMode = 1;
+
+/**
+* Play state for the gameMode variable.
+*
+* @type       {number}
+*/
 let playMode = 2;
+
+/**
+* End state for the gameMode variable.
+*
+* @type       {number}
+*/
 let endMode = 3;
+
+/**
+* Variable to keep track of the current game state.
+*
+*
+* Can be values from 1 - 3 as defined by the mode variables
+*
+* <pre>
+* startMode - 1
+* playMode  - 2
+* endMode   - 3
+* </pre>
+*
+* @type       {number}
+*/
 let gameMode = startMode;
+
+/**
+* Variable to store the current game score.
+*
+* @type       {number}
+*/
 let gameScore = 0;
 
 /**
@@ -60,9 +267,11 @@ function windowResized() {
 * p5.js keyPressed function used to control the ninja and also to switch game
 * modes at the start screen and end screen.
 *
-*	"w" - Jump
+* <pre>
+* "w" - Jump
 * "S" - Drop
 * "K" - Kill
+* </pre>
 */
 function keyPressed() {
 	if(gameMode == startMode && keyCode == ENTER) {
@@ -401,7 +610,7 @@ function gameLoop() {
 * obstacle objects. Also loads the various assets needed for drawing the game.
 */
 function setup () {
-  	let canvas = createCanvas(0.8 * windowWidth, 0.8 * windowHeight);
+  let canvas = createCanvas(0.8 * windowWidth, 0.8 * windowHeight);
   	canvas.parent('sketch');
 
 	floorHeight = 0.8 * height;

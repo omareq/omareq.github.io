@@ -34,43 +34,252 @@
 *
 *******************************************************************************/
 
+/**
+* How far the floor is from the top of the window.
+*
+* @type       {number}
+*/
 let floorHeight;
+
+/**
+* Ninja object.
+*
+* @type       {Ninja}
+*/
 let ninja;
+
+/**
+* Obstacle object.
+*
+* @type       {Obstacle}
+*/
 let obstacle;
+
+/**
+* The number of pixels that the foreground moves every frame.
+*
+* @type       {number}
+*/
 let fgScrollSpeed = -7;
+
+/**
+* The current x position of the foreground.
+*
+* @type       {number}
+*/
 let fgx = 0;
+
+/**
+* Handle for the physics loop callback.
+*
+* @type       {intervalID}
+*/
 let physicsHandler;
+
+/**
+* Array of idle sprite images for the ninja.
+*
+* @type       {Array&lt;p5.Image>}
+*/
 let idle = [];
+
+/**
+* Array of running sprite images for the ninja.
+*
+* @type       {Array&lt;p5.Image>}
+*/
 let run = [];
+
+/**
+* Array of jumping sprite images for the ninja.
+*
+* @type       {Array&lt;p5.Image>}
+*/
 let jump = [];
+
+/**
+* Flag to show if assets are still loading.
+*
+* @type       {boolean}
+*/
 let loading = true;
+
+/**
+* Expected number of ninja sprite images to load.
+*
+* @type       {number}
+*/
 let totalNinjaAssets = 30;
+
+/**
+* The number of ninja sprite images loaded without any errors.
+*
+* @type       {number}
+*/
 let ninjaLoadCounter = 0;
 
+/**
+* Array of spike obstacle images.
+*
+* @type       {Array&lt;p5.Image>}
+*/
 let spikeImgs = [];
+
+/**
+* Expected number of spike sprite images to load.
+*
+* @type       {number}
+*/
 let totalSpikeAssets = 1;
+
+/**
+* The number of spike sprite images loaded without any errors.
+*
+* @type       {number}
+*/
 let spikeLoadCounter = 0;
 
+/**
+* The current x position of the background.
+*
+* @type       {number}
+*/
 let bgx = 0;
+
+/**
+* The number of pixels that the background moves every frame.
+*
+* @type       {number}
+*/
 let bgScrollSpeed = -2;
+
+/**
+* Flag stating if the day time background image was loaded without error.
+*
+* @type       {boolean}
+*/
 let BGLoaded = false;
+
+/**
+* Flag stating if the night time background image was loaded without error.
+*
+* @type       {boolean}
+*/
+let BGNightLoaded = false;
+
+/**
+* Flag for if it is daytime of night time
+*
+* @type       {boolean}
+*/
+let nightTime = false;
+
+/**
+* Array of ground and water tile images.
+*
+* @type       {Array&lt;p5.Image>}
+*/
 let tileImgs = [];
+
+/**
+* Flag stating if the floor tiles loaded without error.
+*
+* @type       {boolean}
+*/
 let tilesLoaded = false;
+
+/**
+* Number of expected floor tiles images to load.
+*
+* @type       {number}
+*/
 let totalTileAssets = 19;
+
+/**
+* The number of floor tile images loaded without any errors.
+*
+* @type       {number}
+*/
 let tileLoadCounter = 0;
 
+/**
+* Array of sounds that have loaded.
+*
+* @type       {Array&lt;p5.SoundFile>}
+*/
 let sounds = [];
+
+/**
+* Flag stating if the sounds have loaded without error.
+*
+* @type       {boolean}
+*/
 let soundsLoaded = false;
+
+/**
+* Number of expected sound assets.
+*
+* @type       {number}
+*/
 let totalSoundAssets = 1;
+
+/**
+* Number of sound assets loaded without error.
+*
+* @type       {number}
+*/
 let soundLoadCounter = 0;
 
+/**
+* The total number of expected assets.
+*
+* @type       {number}
+*/
 let totalAssets = totalNinjaAssets + totalSpikeAssets + totalTileAssets +
 	totalSoundAssets;
 
+/**
+* Start state for the gameMode variable.
+*
+* @type       {number}
+*/
 let startMode = 1;
+
+/**
+* Play state for the gameMode variable.
+*
+* @type       {number}
+*/
 let playMode = 2;
+
+/**
+* End state for the gameMode variable.
+*
+* @type       {number}
+*/
 let endMode = 3;
+
+/**
+* Variable to keep track of the current game state.
+*
+*
+* Can be values from 1 - 3 as defined by the mode variables
+*
+* &lt;pre>
+* startMode - 1
+* playMode  - 2
+* endMode   - 3
+* &lt;/pre>
+*
+* @type       {number}
+*/
 let gameMode = startMode;
+
+/**
+* Variable to store the current game score.
+*
+* @type       {number}
+*/
 let gameScore = 0;
 
 /**
@@ -86,9 +295,11 @@ function windowResized() {
 * p5.js keyPressed function used to control the ninja and also to switch game
 * modes at the start screen and end screen.
 *
-*	"w" - Jump
+* &lt;pre>
+* "w" - Jump
 * "S" - Drop
 * "K" - Kill
+* &lt;/pre>
 */
 function keyPressed() {
 	if(gameMode == startMode &amp;&amp; keyCode == ENTER) {
@@ -223,12 +434,22 @@ function loadTiles() {
 		BGLoaded = true;
 	}
 
+	function bgNightLoadComplete(img) {
+		bgNightTile = img;
+		tileLoadCounter++;
+		BGNightLoaded = true;
+	}
+
 	function error(err) {
 		console.log(err);
 	}
 
 	loadImage("assets/tileset/BG/BG.png",
 	  bgLoadComplete,
+	  error);
+
+	loadImage("assets/tileset/BG/BG-Night.png",
+	  bgNightLoadComplete,
 	  error);
 
 	let folder = "assets/tileset/Tiles/";
@@ -362,14 +583,26 @@ function endScreen() {
 * score for every frame of animation.
 */
 function gameLoop() {
-	if(BGLoaded) {
-		bgx += bgScrollSpeed;
-		bgx %= width;
+	if(nightTime) {
+		if(BGNightLoaded) {
+			bgx += bgScrollSpeed;
+			bgx %= width;
 
-		image(bgTile, bgx, 0, width, height);
-		image(bgTile, bgx + width, 0, width, height);
+			image(bgNightTile, bgx, 0, width, height);
+			image(bgNightTile, bgx + width, 0, width, height);
+		} else {
+			background(66, 53, 111);
+		}
 	} else {
-		background(255);
+		if(BGLoaded) {
+			bgx += bgScrollSpeed;
+			bgx %= width;
+
+			image(bgTile, bgx, 0, width, height);
+			image(bgTile, bgx + width, 0, width, height);
+		} else {
+			background(221, 248, 255);
+		}
 	}
 
 	if(tilesLoaded) {
@@ -394,6 +627,10 @@ function gameLoop() {
 	textSize(floor(0.06*height));
 	textAlign(CENTER);
 	text("Score: " + gameScore, 0.2 * width, 0.95 * height);
+
+	if(gameScore % 5000 == 0) {
+		nightTime = !nightTime;
+	}
 }
 
 /**
@@ -401,7 +638,7 @@ function gameLoop() {
 * obstacle objects. Also loads the various assets needed for drawing the game.
 */
 function setup () {
-  	let canvas = createCanvas(0.8 * windowWidth, 0.8 * windowHeight);
+  let canvas = createCanvas(0.8 * windowWidth, 0.8 * windowHeight);
   	canvas.parent('sketch');
 
 	floorHeight = 0.8 * height;
@@ -482,12 +719,12 @@ function draw () {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#endGame">endGame</a></li><li><a href="global.html#endScreen">endScreen</a></li><li><a href="global.html#gameLoop">gameLoop</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loadingAnimation">loadingAnimation</a></li><li><a href="global.html#loadNinjaSprites">loadNinjaSprites</a></li><li><a href="global.html#loadSounds">loadSounds</a></li><li><a href="global.html#loadSpikes">loadSpikes</a></li><li><a href="global.html#loadSprite">loadSprite</a></li><li><a href="global.html#loadTiles">loadTiles</a></li><li><a href="global.html#loadTileSprite">loadTileSprite</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#physicsUpdate">physicsUpdate</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#startScreen">startScreen</a></li><li><a href="global.html#windowResized">windowResized</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#BGLoaded">BGLoaded</a></li><li><a href="global.html#BGNightLoaded">BGNightLoaded</a></li><li><a href="global.html#bgScrollSpeed">bgScrollSpeed</a></li><li><a href="global.html#bgx">bgx</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#endGame">endGame</a></li><li><a href="global.html#endMode">endMode</a></li><li><a href="global.html#endScreen">endScreen</a></li><li><a href="global.html#fgScrollSpeed">fgScrollSpeed</a></li><li><a href="global.html#fgx">fgx</a></li><li><a href="global.html#floorHeight">floorHeight</a></li><li><a href="global.html#gameLoop">gameLoop</a></li><li><a href="global.html#gameMode">gameMode</a></li><li><a href="global.html#gameScore">gameScore</a></li><li><a href="global.html#idle">idle</a></li><li><a href="global.html#jump">jump</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loading">loading</a></li><li><a href="global.html#loadingAnimation">loadingAnimation</a></li><li><a href="global.html#loadNinjaSprites">loadNinjaSprites</a></li><li><a href="global.html#loadSounds">loadSounds</a></li><li><a href="global.html#loadSpikes">loadSpikes</a></li><li><a href="global.html#loadSprite">loadSprite</a></li><li><a href="global.html#loadTiles">loadTiles</a></li><li><a href="global.html#loadTileSprite">loadTileSprite</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#nightTime">nightTime</a></li><li><a href="global.html#ninja">ninja</a></li><li><a href="global.html#ninjaLoadCounter">ninjaLoadCounter</a></li><li><a href="global.html#obstacle">obstacle</a></li><li><a href="global.html#physicsHandler">physicsHandler</a></li><li><a href="global.html#physicsUpdate">physicsUpdate</a></li><li><a href="global.html#playMode">playMode</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#soundLoadCounter">soundLoadCounter</a></li><li><a href="global.html#sounds">sounds</a></li><li><a href="global.html#soundsLoaded">soundsLoaded</a></li><li><a href="global.html#spikeImgs">spikeImgs</a></li><li><a href="global.html#spikeLoadCounter">spikeLoadCounter</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#startMode">startMode</a></li><li><a href="global.html#startScreen">startScreen</a></li><li><a href="global.html#tileImgs">tileImgs</a></li><li><a href="global.html#tileLoadCounter">tileLoadCounter</a></li><li><a href="global.html#tilesLoaded">tilesLoaded</a></li><li><a href="global.html#totalAssets">totalAssets</a></li><li><a href="global.html#totalNinjaAssets">totalNinjaAssets</a></li><li><a href="global.html#totalSoundAssets">totalSoundAssets</a></li><li><a href="global.html#totalSpikeAssets">totalSpikeAssets</a></li><li><a href="global.html#totalTileAssets">totalTileAssets</a></li><li><a href="global.html#windowResized">windowResized</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun May 08 2022 10:39:44 GMT+0100 (BST)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun May 08 2022 12:05:07 GMT+0100 (BST)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
