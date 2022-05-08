@@ -555,26 +555,22 @@ function endScreen() {
 * score for every frame of animation.
 */
 function gameLoop() {
-	if(nightTime) {
-		if(BGNightLoaded) {
-			bgx += bgScrollSpeed;
-			bgx %= width;
+	if(nightTime && BGNightLoaded) {
+		bgx += bgScrollSpeed;
+		bgx %= width;
 
-			image(bgNightTile, bgx, 0, width, height);
-			image(bgNightTile, bgx + width, 0, width, height);
-		} else {
-			background(66, 53, 111);
-		}
-	} else {
-		if(BGLoaded) {
-			bgx += bgScrollSpeed;
-			bgx %= width;
+		image(bgNightTile, bgx, 0, width, height);
+		image(bgNightTile, bgx + width, 0, width, height);
+	} else if(nightTime && !BGNightLoaded){
+		background(66, 53, 111);
+	} else	if(!nightTime && BGLoaded) {
+		bgx += bgScrollSpeed;
+		bgx %= width;
 
-			image(bgTile, bgx, 0, width, height);
-			image(bgTile, bgx + width, 0, width, height);
-		} else {
-			background(221, 248, 255);
-		}
+		image(bgTile, bgx, 0, width, height);
+		image(bgTile, bgx + width, 0, width, height);
+	} else if(!nightTime && !BGLoaded) {
+		background(221, 248, 255);
 	}
 
 	if(tilesLoaded) {
