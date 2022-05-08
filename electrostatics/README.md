@@ -15,9 +15,27 @@ An animation of a few simple electrostatic configurations
 
 ## TODO
 
+- [ ]   Change strength of charge
+
+- [ ]   Change density of field lines
+
+- [ ]   Maximal length for field lines?
+
 - [ ]   Add Line Charge
 
 - [ ]   Add Dipole
+
+- [ ]   Add moving test charge - with trajectory
+
+- [ ]   Add control panel
+
+- [ ]   Add description to index.html
+
+- [ ]   Field contours?
+
+- [ ]   Field potential
+
+- [ ]   Field Energy
 
 
 ## Contact Details
