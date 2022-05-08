@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: obstacle.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,47 +17,116 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: obstacle.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>Ninja Game</h1>
-<p>Once again I have gotten bored and have decided to relieve my boredom by making a game.  Check out the <a href="https://omareq.github.io/ninja-game">Demo</a></p>
-<p>Created using <a href="https://p5js.org/">p5.js</a></p>
-<h2>Todo</h2>
-<p>-[ ]    Docs</p>
-<p>-[ ]	Make class for game control</p>
-<p>-[ ]	Make class for data loading</p>
-<p>-[ ]    Have work with touch so can be played on mobile</p>
-<h2>Assests</h2>
-<p>Ninja Sprites and Tile set from <a href="https://www.gameart2d.com">gameart2d</a></p>
-<p>Spikes from <a href="https://www.graphic-buffet.com">graphic-buffet</a></p>
-<p>Sound Effects from <a href="https://www.soundbible.com/">soundbible</a></p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+*	@file       Obstacle.js contains the obstacle class
+* 	@author     Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+* 	@version    1.0
+* 	@date 		24-Aug-2018
+*
+*******************************************************************************/
+
+/**
+ * This class describes an obstacle.
+ *
+ * @class      Obstacle ()
+ * @author     Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ */
+class Obstacle {
+
+	/**
+	 * Constructs a new obstacle.
+	 *
+	 * @param      {number}  x       The x position of the obstacle
+	 * @param      {number}  y       The y position of the obstacle
+	 * @param      {number}  vx      The horizontal velocity of the obstacle
+	 * @param      {number}  w       The width of the obstacle
+	 * @param      {number}  h       The height of the obstacle
+	 */
+	constructor(x, y, vx, w, h) {
+		this.x = x;
+		this.y = y;
+		this.vx = vx;
+		this.w = w;
+		this.h = h;
+		this.img = null;
+		this.spriteLoaded = false;
+	}
+
+	/**
+	 * Resets the obstacle
+	 */
+	reset() {
+		this.setPos(width);
+		this.setVel(fgScrollSpeed);
+	}
+
+	/**
+	 * Sets the horizontal position of the obstacle.
+	 *
+	 * @param      {number}  x       The new horizontal position
+	 */
+	setPos(x) {
+		this.x = x;
+	}
+
+	/**
+	 * Sets the horizontal velocity of the obstacle.
+	 *
+	 * @param      {number}  vx      The new horizontal velocity
+	 */
+	setVel(vx) {
+		this.vx = vx;
+	}
+
+	/**
+	 * Updates the object during the physics loop by moving it to the side.  If
+	 * The object goes off the canvas it will be wrapped around to the other
+	 * side.
+	 */
+	update() {
+		this.x += this.vx;
+
+		if(this.x &lt; 0) {
+			this.x = width;
+		}
+	}
+
+	/**
+	 * Sets the sprite image for the obstacle.
+	 *
+	 * @param      {p5.Image}  img     The new sprite image
+	 */
+	setSprite(img) {
+		this.sprite = img;
+		this.spriteLoaded = true;
+	}
+
+	/**
+	 * Draws the obstacle at the correct location on the canvas.  If the
+	 * obstacle image was not loaded correctly a rectangle will be drawn in its
+	 * place.
+	 */
+	draw() {
+		if(this.spriteLoaded) {
+			image(this.sprite, this.x, this.y, this.w, this.h);
+		} else {
+			stroke(255, 0, 0);
+			fill(0);
+			rect(this.x, this.y, this.w, this.h);
+		}
+	}
+}</code></pre>
+        </article>
     </section>
-
-
 
 
 

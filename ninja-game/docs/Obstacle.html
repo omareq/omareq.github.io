@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Ninja</title>
+    <title>JSDoc: Class: Obstacle</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Ninja</h1>
+    <h1 class="page-title">Class: Obstacle</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Ninja<span class="signature">(x, y, w, h, floorHeight, g)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Obstacle<span class="signature">(x, y, vx, w, h)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Ninja ()</div>
+            <div class="class-description">Obstacle ()</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Ninja"><span class="type-signature"></span>new Ninja<span class="signature">(x, y, w, h, floorHeight, g)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Obstacle"><span class="type-signature"></span>new Obstacle<span class="signature">(x, y, vx, w, h)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Constructs an instance of a Ninja object
+    Constructs a new obstacle.
 </div>
 
 
@@ -105,7 +105,7 @@
 
             
 
-            <td class="description last">The x position of the ninja</td>
+            <td class="description last">The x position of the obstacle</td>
         </tr>
 
     
@@ -128,7 +128,30 @@
 
             
 
-            <td class="description last">The y position of the ninja</td>
+            <td class="description last">The y position of the obstacle</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>vx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The horizontal velocity of the obstacle</td>
         </tr>
 
     
@@ -151,7 +174,7 @@
 
             
 
-            <td class="description last">The width of the ninja</td>
+            <td class="description last">The width of the obstacle</td>
         </tr>
 
     
@@ -174,53 +197,7 @@
 
             
 
-            <td class="description last">The height of the ninja</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>floorHeight</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The floor height</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>g</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The strength of gravity on the ninja</td>
+            <td class="description last">The height of the obstacle</td>
         </tr>
 
     
@@ -268,7 +245,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line27">line 27</a>
+        <a href="obstacle.js.html">obstacle.js</a>, <a href="obstacle.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -324,165 +301,6 @@
     
 
     
-    <h4 class="name" id="collideWith"><span class="type-signature"></span>collideWith<span class="signature">(obstacle)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Checks to see if the ninja has collided with a specified obstacle.  Thisis done by checking to see if any boundaries overlap.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obstacle</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Obstacle.html">Obstacle</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The obstacle to check for collision</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line135">line 135</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    True when the objects has collided with the ninja
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -491,7 +309,7 @@
 
 
 <div class="description">
-    Draws the ninja on the canvas in the appropriate position.  If the spriteimages have not loaded properly this will adjust and just draw a simplerectangle in it's place.
+    Draws the obstacle at the correct location on the canvas.  If theobstacle image was not loaded correctly a rectangle will be drawn in itsplace.
 </div>
 
 
@@ -535,183 +353,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line194">line 194</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="drop"><span class="type-signature"></span>drop<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Drops the ninja back down to the ground from a jump faster than usual.This is done by setting a large downward velocity of 25.  Gravity andother physics will then act as normal to bring the ninja to the ground.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line185">line 185</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="jump"><span class="type-signature"></span>jump<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Makes the ninja jump.  This is done by giving the ninja an upwardsvelocity of 15.<br>Also plays the sound file for jumping.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line161">line 161</a>
+        <a href="obstacle.js.html">obstacle.js</a>, <a href="obstacle.js.html#line90">line 90</a>
     </li></ul></dd>
     
 
@@ -755,7 +397,7 @@
 
 
 <div class="description">
-    Resets the ninja.
+    Resets the obstacle
 </div>
 
 
@@ -799,7 +441,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line54">line 54</a>
+        <a href="obstacle.js.html">obstacle.js</a>, <a href="obstacle.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -835,7 +477,7 @@
     
 
     
-    <h4 class="name" id="setSounds"><span class="type-signature"></span>setSounds<span class="signature">(sounds)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setPos"><span class="type-signature"></span>setPos<span class="signature">(x)</span><span class="type-signature"></span></h4>
     
 
     
@@ -843,7 +485,7 @@
 
 
 <div class="description">
-    Sets the sounds for the ninja.
+    Sets the horizontal position of the obstacle.
 </div>
 
 
@@ -879,13 +521,13 @@
 
         <tr>
             
-                <td class="name"><code>sounds</code></td>
+                <td class="name"><code>x</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;p5.SoundFile></span>
+<span class="param-type">number</span>
 
 
             
@@ -895,7 +537,7 @@
 
             
 
-            <td class="description last">The sounds the ninja makes</td>
+            <td class="description last">The new horizontal position</td>
         </tr>
 
     
@@ -936,7 +578,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line87">line 87</a>
+        <a href="obstacle.js.html">obstacle.js</a>, <a href="obstacle.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -972,7 +614,7 @@
     
 
     
-    <h4 class="name" id="setSprites"><span class="type-signature"></span>setSprites<span class="signature">(spriteIdle, spriteRun, spriteJump)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setSprite"><span class="type-signature"></span>setSprite<span class="signature">(img)</span><span class="type-signature"></span></h4>
     
 
     
@@ -980,7 +622,7 @@
 
 
 <div class="description">
-    Sets the sprite images for the idle, running an jumping positions.
+    Sets the sprite image for the obstacle.
 </div>
 
 
@@ -1016,13 +658,13 @@
 
         <tr>
             
-                <td class="name"><code>spriteIdle</code></td>
+                <td class="name"><code>img</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;p5.Image></span>
+<span class="param-type">p5.Image</span>
 
 
             
@@ -1032,53 +674,7 @@
 
             
 
-            <td class="description last">The sprite idle images</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>spriteRun</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;p5.Image></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The sprite run images</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>spriteJump</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;p5.Image></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The sprite jump images</td>
+            <td class="description last">The new sprite image</td>
         </tr>
 
     
@@ -1119,7 +715,144 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line75">line 75</a>
+        <a href="obstacle.js.html">obstacle.js</a>, <a href="obstacle.js.html#line80">line 80</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setVel"><span class="type-signature"></span>setVel<span class="signature">(vx)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sets the horizontal velocity of the obstacle.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>vx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new horizontal velocity</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="obstacle.js.html">obstacle.js</a>, <a href="obstacle.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -1163,7 +896,7 @@
 
 
 <div class="description">
-    Updates the objects location during the physics loop.  This function willcalculate the height of the object during jumps as well as the spin angle
+    Updates the object during the physics loop by moving it to the side.  IfThe object goes off the canvas it will be wrapped around to the otherside.
 </div>
 
 
@@ -1207,7 +940,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line97">line 97</a>
+        <a href="obstacle.js.html">obstacle.js</a>, <a href="obstacle.js.html#line67">line 67</a>
     </li></ul></dd>
     
 
