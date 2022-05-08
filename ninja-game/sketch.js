@@ -26,6 +26,8 @@ let spikeLoadCounter = 0;
 let bgx = 0;
 let bgScrollSpeed = -2;
 let BGLoaded = false;
+let BGNightLoaded = false;
+let nightTime = false;
 let tileImgs = [];
 let tilesLoaded = false;
 let totalTileAssets = 19;
@@ -195,12 +197,22 @@ function loadTiles() {
 		BGLoaded = true;
 	}
 
+	function bgNightLoadComplete(img) {
+		bgNightTile = img;
+		tileLoadCounter++;
+		BGNightLoaded = true;
+	}
+
 	function error(err) {
 		console.log(err);
 	}
 
 	loadImage("assets/tileset/BG/BG.png",
 	  bgLoadComplete,
+	  error);
+
+	loadImage("assets/tileset/BG/BG-Night.png",
+	  bgNightLoadComplete,
 	  error);
 
 	let folder = "assets/tileset/Tiles/";
@@ -334,14 +346,26 @@ function endScreen() {
 * score for every frame of animation.
 */
 function gameLoop() {
-	if(BGLoaded) {
-		bgx += bgScrollSpeed;
-		bgx %= width;
+	if(nightTime) {
+		if(BGNightLoaded) {
+			bgx += bgScrollSpeed;
+			bgx %= width;
 
-		image(bgTile, bgx, 0, width, height);
-		image(bgTile, bgx + width, 0, width, height);
+			image(bgNightTile, bgx, 0, width, height);
+			image(bgNightTile, bgx + width, 0, width, height);
+		} else {
+			background(66, 53, 111);
+		}
 	} else {
-		background(255);
+		if(BGLoaded) {
+			bgx += bgScrollSpeed;
+			bgx %= width;
+
+			image(bgTile, bgx, 0, width, height);
+			image(bgTile, bgx + width, 0, width, height);
+		} else {
+			background(221, 248, 255);
+		}
 	}
 
 	if(tilesLoaded) {
@@ -366,6 +390,10 @@ function gameLoop() {
 	textSize(floor(0.06*height));
 	textAlign(CENTER);
 	text("Score: " + gameScore, 0.2 * width, 0.95 * height);
+
+	if(gameScore % 5000 == 0) {
+		nightTime = !nightTime;
+	}
 }
 
 /**
