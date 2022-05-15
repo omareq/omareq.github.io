@@ -8,19 +8,20 @@
   <meta property="og:url" content="https://omareq.github.io/multiple-canvas/">
   <meta property="og:site_name" content="Omar EQ Githubio">
 
-	<link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
-	<script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
   <script language="javascript" type="text/javascript" src="../libraries/p5.js"></script>
   <script language="javascript" type="text/javascript" src="../libraries/p5.dom.js"></script>
   <script language="javascript" type="text/javascript" src="sketch.js"></script>
 
-    <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../libraries/run_prettify.js"></script>
 
   <link type="text/css" rel="stylesheet" href="../main.css">
-  <title>Multiple Canvas</title>
+    <title>Multiple Canvas</title>
 </head>
 
 <body style="width:100%; text-align:center">
@@ -30,6 +31,9 @@
         <div class="row text-center">
           <h1>Multiple Canvas</h1>
         </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
+        </div>
       </div>
     </section>
     <div>
@@ -38,36 +42,143 @@
     </div>
   </div>
 
+  <section class="container" style="padding-top:10px">
+    <div class="row text-center">
+      <div class="col-sm-12">
+        Github Repo
+        <a href="https://github.com/omareq/omareq.github.io/tree/master/multiple-canvas/">
+          <img src="../imgs/github-logo.png" alt="Link to github repository"
+          style="max-width:75px">
+        </a>
+        Docs
+        <a href="./docs/">
+          <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
+          style="max-width:75px">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2> Multi canvas. But why?</h2>
+        <p>
+          The general usage for the canvas is to draw a single animation on a
+          web page.  In this scenario the canvas is already perfectly created.
+          For some web pages more complicated layout with multiple animations
+          explaining the same thing may be required.  In this scenario, the
+          usage of multiple canvases is required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2> p5.js Instance Mode - The Secret to Success</h2>
+        <p>
+          The usage of p5.js usually happens in the global scope.  Instance mode
+          allows for the specific instance of p5.js in usage to be given a
+          handler and all variables used are retained within a limited scope.
+          This means that 2 instances can be set up with the same setup and draw
+          functions but they will not interfere with each other.  Its is now
+          possible to use these instances to control 2 separate canvases.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2> Code Example</h2>
+        <pre>
+          <code class="prettyprint lang-js">
+  /**
+  *   Function for the first instance of the p5js object.
+  */
+  let sketch1 = function(p) {
+    p.setup = function() {
+      p.createCanvas(512, 512);
+    };
+
+    p.draw = function() {
+      p.background(0);
+    };
+  };
+
+  /**
+  *   Function for the second instance of the p5js object.
+  */
+  let sketch2 = function(p) {
+    p.setup = function() {
+      p.createCanvas(512, 512);
+    };
+
+    p.draw = function() {
+      p.background(255);
+    };
+  };
+
+  /**
+  *   Handler for first p5 object
+  */
+  let mcanvas1 = new p5(sketch1);
+
+  /**
+  *   Handler for second p5 object
+  */
+  let mcanvas2 = new p5(sketch2);
+          </code>
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <a id="external_link" href="../projects.html" >
+          <img src="../imgs/all-projects-button.jpg" style="max-width: 11em;">
+        </a>
+      </div>
+      <div class="col-sm-4"></div>
+    </div>
+  </section>
+
   <section class="container">
     <div class="row">
       <div class="col-sm-3">
         <div class="project-card" id="previous">
           <h5 id="prev-title">Antenna Calculator</h5>
-          <a id="prev-url" href="../antenna-calculator" class="project-demo">
-            <img id="prev-img" src="../imgs/p_004.jpg">
-          </a>
-        </div>
-      </div>
+          <a id="prev-url" href="../antenna-calculator/" class="project-demo">
+           <img id="prev-img" src="../imgs/p_004.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
+         </a>
+       </div>
+     </div>
 
-      <div class="col-sm-6"></div>
+     <div class="col-sm-6"></div>
 
-      <div class="col-sm-3">
-        <div class="project-card" id="next">
-          <h5 id="next-title">Ninja Game</h5>
-          <a id="next-url" href="../ninja-game" class="project-demo">
-            <img id="next-img" src="../imgs/p_006.jpg">
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+     <div class="col-sm-3">
+      <div class="project-card" id="next">
+        <h5 id="next-title">Ninja Game</h5>
+        <a id="next-url" href="../ninja-game/" class="project-demo">
+         <img id="next-img" src="../imgs/p_006.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
+       </a>
+     </div>
+   </div>
+ </div>
+</section>
 
-    <footer>
-    <div class="links">
-        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
-        <a href="../" class="githubio"><span>Github.io Home</span></a>
-        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
-    </div>
-  </footer>
+<footer>
+  <div class="links">
+    <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+    <a href="../" class="githubio"><span>Github.io Home</span></a>
+    <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+  </div>
+</footer>
 </body>
 </html>

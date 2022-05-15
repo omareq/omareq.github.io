@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: obstacle.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: obstacle.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+*	@file       Obstacle.js contains the obstacle class
+* 	@author     Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+* 	@version    1.0
+* 	@date 		24-Aug-2018
+*
+*******************************************************************************/
+
+/**
+ * This class describes an obstacle.
+ *
+ * @class      Obstacle ()
+ * @author     Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ */
+class Obstacle {
+
+	/**
+	 * Constructs a new obstacle.
+	 *
+	 * @param      {number}  x       The x position of the obstacle
+	 * @param      {number}  y       The y position of the obstacle
+	 * @param      {number}  vx      The horizontal velocity of the obstacle
+	 * @param      {number}  w       The width of the obstacle
+	 * @param      {number}  h       The height of the obstacle
+	 */
+	constructor(x, y, vx, w, h) {
+		this.x = x;
+		this.y = y;
+		this.vx = vx;
+		this.w = w;
+		this.h = h;
+		this.img = null;
+		this.spriteLoaded = false;
+	}
+
+	/**
+	 * Resets the obstacle
+	 */
+	reset() {
+		this.setPos(width);
+		this.setVel(fgScrollSpeed);
+	}
+
+	/**
+	 * Sets the horizontal position of the obstacle.
+	 *
+	 * @param      {number}  x       The new horizontal position
+	 */
+	setPos(x) {
+		this.x = x;
+	}
+
+	/**
+	 * Sets the horizontal velocity of the obstacle.
+	 *
+	 * @param      {number}  vx      The new horizontal velocity
+	 */
+	setVel(vx) {
+		this.vx = vx;
+	}
+
+	/**
+	 * Updates the object during the physics loop by moving it to the side.  If
+	 * The object goes off the canvas it will be wrapped around to the other
+	 * side.
+	 */
+	update() {
+		this.x += this.vx;
+
+		if(this.x &lt; 0) {
+			this.x = width;
+		}
+	}
+
+	/**
+	 * Sets the sprite image for the obstacle.
+	 *
+	 * @param      {p5.Image}  img     The new sprite image
+	 */
+	setSprite(img) {
+		this.sprite = img;
+		this.spriteLoaded = true;
+	}
+
+	/**
+	 * Draws the obstacle at the correct location on the canvas.  If the
+	 * obstacle image was not loaded correctly a rectangle will be drawn in its
+	 * place.
+	 */
+	draw() {
+		if(this.spriteLoaded) {
+			image(this.sprite, this.x, this.y, this.w, this.h);
+		} else {
+			stroke(255, 0, 0);
+			fill(0);
+			rect(this.x, this.y, this.w, this.h);
+		}
+	}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ninja.html">Ninja</a></li><li><a href="Obstacle.html">Obstacle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BGLoaded">BGLoaded</a></li><li><a href="global.html#BGNightLoaded">BGNightLoaded</a></li><li><a href="global.html#bgScrollSpeed">bgScrollSpeed</a></li><li><a href="global.html#bgx">bgx</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#endGame">endGame</a></li><li><a href="global.html#endMode">endMode</a></li><li><a href="global.html#endScreen">endScreen</a></li><li><a href="global.html#fgScrollSpeed">fgScrollSpeed</a></li><li><a href="global.html#fgx">fgx</a></li><li><a href="global.html#floorHeight">floorHeight</a></li><li><a href="global.html#gameLoop">gameLoop</a></li><li><a href="global.html#gameMode">gameMode</a></li><li><a href="global.html#gameScore">gameScore</a></li><li><a href="global.html#idle">idle</a></li><li><a href="global.html#jump">jump</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loading">loading</a></li><li><a href="global.html#loadingAnimation">loadingAnimation</a></li><li><a href="global.html#loadNinjaSprites">loadNinjaSprites</a></li><li><a href="global.html#loadSounds">loadSounds</a></li><li><a href="global.html#loadSpikes">loadSpikes</a></li><li><a href="global.html#loadSprite">loadSprite</a></li><li><a href="global.html#loadTiles">loadTiles</a></li><li><a href="global.html#loadTileSprite">loadTileSprite</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#nightTime">nightTime</a></li><li><a href="global.html#ninja">ninja</a></li><li><a href="global.html#ninjaLoadCounter">ninjaLoadCounter</a></li><li><a href="global.html#obstacle">obstacle</a></li><li><a href="global.html#physicsHandler">physicsHandler</a></li><li><a href="global.html#physicsUpdate">physicsUpdate</a></li><li><a href="global.html#playMode">playMode</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#soundLoadCounter">soundLoadCounter</a></li><li><a href="global.html#sounds">sounds</a></li><li><a href="global.html#soundsLoaded">soundsLoaded</a></li><li><a href="global.html#spikeImgs">spikeImgs</a></li><li><a href="global.html#spikeLoadCounter">spikeLoadCounter</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#startMode">startMode</a></li><li><a href="global.html#startScreen">startScreen</a></li><li><a href="global.html#tileImgs">tileImgs</a></li><li><a href="global.html#tileLoadCounter">tileLoadCounter</a></li><li><a href="global.html#tilesLoaded">tilesLoaded</a></li><li><a href="global.html#totalAssets">totalAssets</a></li><li><a href="global.html#totalNinjaAssets">totalNinjaAssets</a></li><li><a href="global.html#totalSoundAssets">totalSoundAssets</a></li><li><a href="global.html#totalSpikeAssets">totalSpikeAssets</a></li><li><a href="global.html#totalTileAssets">totalTileAssets</a></li><li><a href="global.html#windowResized">windowResized</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun May 08 2022 13:05:04 GMT+0100 (BST)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

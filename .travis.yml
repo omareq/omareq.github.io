@@ -1,5 +1,6 @@
 language: node_js
-sudo: required
+os: linux
+dist: xenial
 node_js:
 - 8
 before_install:
@@ -13,7 +14,7 @@ script:
 notifications:
   email:
     recipients:
-    - omareq08@gmail.com
+    - omareq08+travisci@gmail.com
     on_success: change
     on_failure: always
   slack:
