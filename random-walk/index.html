@@ -34,11 +34,20 @@
 
     <section class="container">
       <div class="row">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
+        <!-- <div class="col-sm-3"></div> -->
+        <div class="col-sm-8">
   	     <div id="sketch"></div>
         </div>
-        <div class="col-sm-3"></div>
+        <div class="col-sm-4" style="border: 2px solid purple; border-radius: 10px; margin-top: 10px">
+          <p style="font-weight: bold"> Settings <p>
+          <div id="control-panel">
+            <p id="vertical-grid-points-val"></p>
+            <div id="vertical-grid-points" style="margin-top: 10px"></div>
+            <p id="refresh-time-val"></p>
+            <div id="refresh-time" style="margin-top: 10px"></div>
+            <div id="reset-button" style="margin-top: 10px"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -56,6 +65,90 @@
                    style="max-width:75px">
           </a>
         </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <h2>Random Walk</h2>
+          <p>
+            A random walk is a process that describes a series of random steps
+            that when put together create a random path.  One of the most common
+            examples of a random path is the path that a molecule traces through
+            a gas or a liquid.  This is known as
+            <a href="https://en.wikipedia.org/wiki/Brownian_motion"> Brownian Motion </a>.
+          </p>
+
+          <p>
+            Random walks can be defined in a continuous space, such as in
+            Brownian motion, or it can be defined on a strict lattice.  The
+            motion of a particle on a lattice is restricted to neighbouring
+            lattice nodes.  At each node a random direction is chosen to travel
+            in, even if this node has already been visited.
+          </p>
+        </div>
+
+        <div class="col-sm-4"></div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <h2>Self Avoiding Walk</h2>
+          <p>
+            The key difference between a random walk and a self avoiding walk
+            is that the self avoiding walk never goes to the same node twice.
+            There is no known method or formula to calculate every self avoiding
+            walk for a given lattice or to calculate a self avoiding walk that
+            travels through every point in the lattice.
+          </p>
+          <p>
+            A self avoiding walk that travels through every point in the lattice
+            is also known as a space filling walk.  It is a computational hard
+            problem to solve for this.  One possible means of searching for a
+            solution numerically is the pivot algorithm.
+          </p>
+        </div>
+        <div class="col-sm-4"></div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <h2>Pivot Algorithm</h2>
+          <p>
+            The pivot algorithm is used to take an existing random walk and
+            changes it to get a new one.  This is done using a sequence of steps
+            as describe below.  These steps can be repeated as many time as
+            desirable to get the required outcome.  It should be noted that a
+            common initial configuration for the walk is a straight line.
+          </p>
+          <ul class="list-group">
+            <li class="list-group-item"> <b>1)</b> Prepare a random walk on
+              the lattice that has <strong><em>N</em></strong> steps.
+            </li>
+            <li class="list-group-item"> <b>2)</b> Randomly pick a location
+              along the walk to act as a <strong><em>Pivot Site</em></strong>.
+            </li>
+            <li class="list-group-item"> <b>3)</b> Select a new random rotation
+              operation.  This will be lattice dependent.
+            </li>
+            <li class="list-group-item"> <b>4)</b> Apply this rotation operation
+              to all points after the selected <strong><em>Pivot Site</em></strong>.
+            </li>
+            <li class="list-group-item"> <b>5)</b> If the rotated part of the chain
+              overlaps with the rest of the chain reject the rotation.  If there
+              is no overlap accept the rotation.
+            </li>
+            <li class="list-group-item"> <b>6)</b> If reached the number of
+              desired iterations break. Otherwise return to step 2.
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-4"></div>
       </div>
     </section>
 

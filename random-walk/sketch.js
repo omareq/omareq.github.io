@@ -6,12 +6,97 @@
  *	@author Omar Essilfie-Quaye <omareq08@gmail.com>
  *	@version 1.0
  *	@date 11-June-2021
+ *  @link https://omareq.github.io/random-walk/
  *
  *****************************************************************************/
 
-let spacing;
+/**
+ * Monitors how often the reset button is pushed.  This helps provide debouncing
+ * of the reset button when it is used on mobile devices.
+ *
+ * @type       {Float}
+ */
+let lastResetTime = 0;
+
+/**
+ * The number of lattice nodes on the vertical axis of the grid.
+ *
+ * @type       {Integer}
+ */
+let verticalGridPoints = 10;
+
+/**
+ * Handler for the number of grid points slider.
+ *
+ * @type       {p5.element}
+ */
+let verticalGridPointsSlider = undefined;
+
+/**
+ * Handler for the paragraphs that displays the current grid size.
+ *
+ * @type       {p5.element}
+ */
+let verticalGridPointsDisplay = undefined;
+
+/**
+ * The number of seconds to wait before auto reset.
+ *
+ * @type       {Integer}
+ */
+let refreshTime = 5;
+
+/**
+ * Handler for the refresh time slider.
+ *
+ * @type       {p5.element}
+ */
+let refreshTimeSlider = undefined;
+
+/**
+ * Handler for the paragraphs that displays the current refresh time.
+ *
+ * @type       {p5.element}
+ */
+let refreshTimeDisplay = undefined;
+
+/**
+ * The pixel spacing between lattice nodes on the canvas.
+ *
+ * @type       {Integer}
+ */
+let spacing = undefined;
+
+/**
+ * The generated lattice nodes
+ *
+ * @type       {Array<GraphNodes>}
+ */
 let nodes = [];
 
+/**
+ * The generated random self avoiding walk
+ *
+ * @type       {Array<GraphNode>}
+ */
+let walk = [];
+
+/**
+ * Handler for the reset button
+ *
+ * @type       {p5.element}
+ */
+let resetButton = undefined;
+
+/**
+ * Checks to see if a GraphNode list contains a given node.
+ *
+ * @param      {Array<GraphNode>}  nodesList     The list of nodes
+ * @param      {Array<Integer>}  nodeIndecies  The lattice indecies.  Should not
+ *                               have more than 2 elements representing the
+ *                               components for each lattice vector.
+ * @return     {boolean}  Boolean true if the node is in the list.
+ */
 function contains(nodesList, nodeIndecies) {
     for(let nodeIndex = 0; nodeIndex < nodesList.length; nodeIndex++) {
         const node = nodesList[nodeIndex];
@@ -20,6 +105,24 @@ function contains(nodesList, nodeIndecies) {
         }
     }
     return false;
+}
+
+/**
+ * Gets the node specified by the lattice indecies from the list.
+ *
+ * @param      {Array<GraphNode>}  nodesList     The list of nodes
+ * @param      {Array<Integer>}  nodeIndecies  The lattice indecies.  Should not
+ *                               have more than 2 elements representing the
+ *                               components for each lattice vector.
+ * @return     {GraphNode}  The node from list.
+ */
+function getNodeFromList(nodesList, nodeIndecies) {
+    for(let nodeIndex = 0; nodeIndex < nodesList.length; nodeIndex++) {
+        const node = nodesList[nodeIndex];
+        if(node.i == nodeIndecies[0] && node.j == nodeIndecies[1]) {
+            return node;
+        }
+    }
 }
 
 /**
@@ -36,7 +139,7 @@ function generateTriangleGrid() {
             let pnt = r1.copy().mult(i).add(r2.copy().mult(j));
             pnt.x = pnt.x + 0.5 * spacing;
             pnt.y = pnt.y + 0.5 * spacing;
-            if(pnt.y <= 0 || pnt.x >= width || pnt.y >= height) {
+            if(pnt.x <= 0.5 || pnt.y <= 0.5 || pnt.x >= width-0.5 || pnt.y >= height-0.5) {
                 continue;
             }
             nodes.push(new GraphNode(i, j, pnt.x, pnt.y));
@@ -63,6 +166,68 @@ function generateTriangleGrid() {
     }
 }
 
+
+/**
+ * Generates a random walk given a list of nodes in a grid
+ */
+function generateWalk() {
+    randomNodeIndex = floor(random(nodes.length));
+    let currentNode = nodes[randomNodeIndex];
+    currentNode.visited = true;
+    walk = [];
+    walk.push(currentNode);
+    let watchdog = nodes.length;
+    console.log("watchdog: " + watchdog);
+    while(watchdog > 0) {
+        watchdog--;
+
+        orderedNeighbours = currentNode.neighbours;
+        neighbours = shuffle(orderedNeighbours);
+        let foundUnvisitedNeighbour = false;
+
+        for(let n = 0; n < neighbours.length; n++) {
+            if(!contains(nodes, neighbours[n])) {
+                continue;
+            }
+            currentNeighbour = getNodeFromList(nodes, neighbours[n]);
+            if(!currentNeighbour.visited) {
+                currentNode = currentNeighbour;
+                currentNode.visited = true;
+                foundUnvisitedNeighbour = true;
+                walk.push(currentNode);
+                break;
+            }
+        }
+
+        if(!foundUnvisitedNeighbour) {
+            console.log("No more unvisited neighbours");
+            console.log("watchdog: " + watchdog);
+            break;
+        }
+    }
+}
+
+/**
+ * Resets the canvas and draws a new random walk.
+ */
+function reset() {
+    if(millis() - lastResetTime < 275) {
+        return;
+    }
+
+    for(let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
+        let currentNode = nodes[nodeIndex];
+        currentNode.visited = false;
+    }
+    spacing = height / verticalGridPoints;
+    walk = [];
+    nodes = [];
+    generateTriangleGrid();
+    generateWalk();
+
+    lastResetTime = millis();
+}
+
 /**
  * p5.js setup function, creates canvas.
  */
@@ -73,12 +238,33 @@ function setup() {
 	} else {
 		cnvSize = windowWidth;
 	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
+	let cnv = createCanvas(0.9 * cnvSize, 0.9 * cnvSize);
 	cnv.parent('sketch');
 
-    spacing = height / 10;
+    spacing = height / verticalGridPoints;
     generateTriangleGrid();
- }
+    generateWalk();
+    console.log("Generated Walk:");
+    console.log(walk);
+
+    verticalGridPointsDisplay = createP("No. of Vertical Grid Points: " +
+        str(verticalGridPoints));
+    verticalGridPointsDisplay.parent("vertical-grid-points-val");
+
+    verticalGridPointsSlider = createSlider(4, 25, verticalGridPoints, 1);
+    verticalGridPointsSlider.parent("vertical-grid-points");
+
+    refreshTimeDisplay = createP("Refresh Time (s): " +
+        str(refreshTime));
+    refreshTimeDisplay.parent("refresh-time-val");
+
+    refreshTimeSlider = createSlider(1, 60, refreshTime, 1);
+    refreshTimeSlider.parent("refresh-time");
+
+    resetButton = createButton("Reset", "value");
+    resetButton.parent("reset-button");
+    resetButton.mousePressed(reset);
+}
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
@@ -86,9 +272,44 @@ function setup() {
 function draw() {
 	background(0);
     stroke(255);
+    fill(255);
     for(let i = 0; i < nodes.length; i++) {
         ellipse(nodes[i].x, nodes[i].y, spacing / 8, spacing / 8);
     }
-    noLoop();
+
+    fill(255, 0, 0);
+    stroke(255, 0, 0);
+    ellipse(walk[0].x, walk[0].y, spacing / 8, spacing / 8);
+    for(let i = 1; i < walk.length; i++) {
+        noStroke();
+        ellipse(walk[i].x, walk[i].y, spacing / 8, spacing / 8);
+        stroke(0, 255, 0);
+        strokeWeight(2);
+        line(walk[i].x, walk[i].y, walk[i-1].x, walk[i-1].y);
+    }
+        stroke(0, 0, 255);
+        fill(0, 0, 255);
+        ellipse(walk[walk.length - 1].x, walk[walk.length - 1].y,
+            spacing / 8, spacing / 8);
+
+    let sliderVal = verticalGridPointsSlider.value();
+    if(sliderVal != verticalGridPoints) {
+        verticalGridPoints = sliderVal;
+        verticalGridPointsDisplay.elt.innerText = "No. of Vertical Grid Points: " +
+            str(verticalGridPoints);
+        reset();
+    }
+
+    sliderVal = refreshTimeSlider.value();
+    if(sliderVal != refreshTime) {
+        refreshTime = sliderVal;
+        refreshTimeDisplay.elt.innerText = "Refresh Time (s): " +
+            str(refreshTime);
+        reset();
+    }
+
+    if(millis() - lastResetTime > refreshTime * 1000) {
+        reset();
+    }
 }
 

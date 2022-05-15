@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: Ninja</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: Ninja</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>Ninja<span class="signature">(x, y, w, h, floorHeight, g)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Ninja ()</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="Ninja"><span class="type-signature"></span>new Ninja<span class="signature">(x, y, w, h, floorHeight, g)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Constructs an instance of a Ninja object
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The x position of the ninja</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The y position of the ninja</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>w</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The width of the ninja</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>h</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The height of the ninja</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>floorHeight</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The floor height</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>g</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The strength of gravity on the ninja</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:omareq08+githubio@gmail.com">Omar Essilfie-Quaye</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="collideWith"><span class="type-signature"></span>collideWith<span class="signature">(obstacle)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks to see if the ninja has collided with a specified obstacle.  Thisis done by checking to see if any boundaries overlap.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>obstacle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Obstacle.html">Obstacle</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The obstacle to check for collision</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line135">line 135</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True when the objects has collided with the ninja
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Draws the ninja on the canvas in the appropriate position.  If the spriteimages have not loaded properly this will adjust and just draw a simplerectangle in it's place.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line194">line 194</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="drop"><span class="type-signature"></span>drop<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Drops the ninja back down to the ground from a jump faster than usual.This is done by setting a large downward velocity of 25.  Gravity andother physics will then act as normal to bring the ninja to the ground.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line185">line 185</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="jump"><span class="type-signature"></span>jump<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Makes the ninja jump.  This is done by giving the ninja an upwardsvelocity of 15.<br>Also plays the sound file for jumping.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line161">line 161</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Resets the ninja.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setSounds"><span class="type-signature"></span>setSounds<span class="signature">(sounds)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sets the sounds for the ninja.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sounds</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;p5.SoundFile></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The sounds the ninja makes</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line87">line 87</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setSprites"><span class="type-signature"></span>setSprites<span class="signature">(spriteIdle, spriteRun, spriteJump)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sets the sprite images for the idle, running an jumping positions.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>spriteIdle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;p5.Image></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The sprite idle images</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>spriteRun</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;p5.Image></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The sprite run images</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>spriteJump</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;p5.Image></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The sprite jump images</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line75">line 75</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates the objects location during the physics loop.  This function willcalculate the height of the object during jumps as well as the spin angle
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ninja.js.html">ninja.js</a>, <a href="ninja.js.html#line97">line 97</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ninja.html">Ninja</a></li><li><a href="Obstacle.html">Obstacle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BGLoaded">BGLoaded</a></li><li><a href="global.html#BGNightLoaded">BGNightLoaded</a></li><li><a href="global.html#bgScrollSpeed">bgScrollSpeed</a></li><li><a href="global.html#bgx">bgx</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#endGame">endGame</a></li><li><a href="global.html#endMode">endMode</a></li><li><a href="global.html#endScreen">endScreen</a></li><li><a href="global.html#fgScrollSpeed">fgScrollSpeed</a></li><li><a href="global.html#fgx">fgx</a></li><li><a href="global.html#floorHeight">floorHeight</a></li><li><a href="global.html#gameLoop">gameLoop</a></li><li><a href="global.html#gameMode">gameMode</a></li><li><a href="global.html#gameScore">gameScore</a></li><li><a href="global.html#idle">idle</a></li><li><a href="global.html#jump">jump</a></li><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#loading">loading</a></li><li><a href="global.html#loadingAnimation">loadingAnimation</a></li><li><a href="global.html#loadNinjaSprites">loadNinjaSprites</a></li><li><a href="global.html#loadSounds">loadSounds</a></li><li><a href="global.html#loadSpikes">loadSpikes</a></li><li><a href="global.html#loadSprite">loadSprite</a></li><li><a href="global.html#loadTiles">loadTiles</a></li><li><a href="global.html#loadTileSprite">loadTileSprite</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#nightTime">nightTime</a></li><li><a href="global.html#ninja">ninja</a></li><li><a href="global.html#ninjaLoadCounter">ninjaLoadCounter</a></li><li><a href="global.html#obstacle">obstacle</a></li><li><a href="global.html#physicsHandler">physicsHandler</a></li><li><a href="global.html#physicsUpdate">physicsUpdate</a></li><li><a href="global.html#playMode">playMode</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#soundLoadCounter">soundLoadCounter</a></li><li><a href="global.html#sounds">sounds</a></li><li><a href="global.html#soundsLoaded">soundsLoaded</a></li><li><a href="global.html#spikeImgs">spikeImgs</a></li><li><a href="global.html#spikeLoadCounter">spikeLoadCounter</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#startMode">startMode</a></li><li><a href="global.html#startScreen">startScreen</a></li><li><a href="global.html#tileImgs">tileImgs</a></li><li><a href="global.html#tileLoadCounter">tileLoadCounter</a></li><li><a href="global.html#tilesLoaded">tilesLoaded</a></li><li><a href="global.html#totalAssets">totalAssets</a></li><li><a href="global.html#totalNinjaAssets">totalNinjaAssets</a></li><li><a href="global.html#totalSoundAssets">totalSoundAssets</a></li><li><a href="global.html#totalSpikeAssets">totalSpikeAssets</a></li><li><a href="global.html#totalTileAssets">totalTileAssets</a></li><li><a href="global.html#windowResized">windowResized</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun May 08 2022 13:05:04 GMT+0100 (BST)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
