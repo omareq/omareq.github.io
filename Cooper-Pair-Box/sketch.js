@@ -289,7 +289,7 @@ function draw() {
     if(sliderVal != setChargingEnergy && sliderVal > setTunnellingEnergy) {
         setChargingEnergy = sliderVal;
         chargingEnergyDisplay.elt.innerText = "Charging Energy (Ec): " +
-            str(setChargingEnergy)
+            str(setChargingEnergy);
         chartUpdate();
     }
 
@@ -297,7 +297,7 @@ function draw() {
     if(sliderVal != setTunnellingEnergy && sliderVal < setChargingEnergy) {
         setTunnellingEnergy = sliderVal;
         tunnellingEnergyDisplay.elt.innerText = "Tunnelling (Ej): " +
-            str(setTunnellingEnergy)
+            str(setTunnellingEnergy);
         chartUpdate();
     }
 
