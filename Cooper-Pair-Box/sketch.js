@@ -69,7 +69,7 @@ function chartSetup() {
         },
         options: {
             animation: {
-                duration: 0 // general animation time
+                duration: 500 // general animation time
             },
             elements: {
                 line: {
