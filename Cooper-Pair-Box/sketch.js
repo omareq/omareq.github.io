@@ -10,8 +10,18 @@
  *
  *****************************************************************************/
 
+/**
+ * Handler for the chart js canvas context.
+ *
+ * @type       {Chart}
+ */
  let energyScatterChart;
 
+/**
+ * The charging energy set by the slider in the control panel.
+ *
+ * @type       {number}
+ */
  let setChargingEnergy = 70;
 
  /**
@@ -28,7 +38,11 @@ let chargingEnergySlider = undefined;
  */
 let chargingEnergyDisplay = undefined;
 
-
+/**
+ * The tunnelling energy set by the slider in the control panel.
+ *
+ * @type       {number}
+ */
 let setTunnellingEnergy = 20;
 
 /**
@@ -45,7 +59,10 @@ let tunnellingEnergySlider = undefined;
  */
 let tunnellingEnergyisplay = undefined;
 
-
+/**
+ * Function to setup chart js canvases to plot the energy levels of the cooper
+ * pair box.
+ */
 function chartSetup() {
     let ctx = document.getElementById('EnergyChart');
     energyScatterChart = new Chart(ctx, {
@@ -137,7 +154,9 @@ function chartSetup() {
     });
 }
 
-
+/**
+ * Function to plot the energy levels of the cooper pair box.
+ */
 function chartUpdate() {
     let numEigenVals = 5;
     let x = [];
