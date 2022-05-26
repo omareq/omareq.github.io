@@ -1,0 +1,15 @@
+# Cooper-Pair-Box
+
+Calculate the energy levels of a cooper pair box Quantum Bit (Qubit)
+
+Check out the [Demo](https://omareq.github.io/Cooper-Pair-Box/).
+
+Check out the [Docs](https://omareq.github.io/Cooper-Pair-Box/docs/).
+
+Created using [p5.js](https://p5js.org/)
+
+## Contact Details
+__Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
+
+
+(This is an auto-generated document, not all links will necessarily work)
