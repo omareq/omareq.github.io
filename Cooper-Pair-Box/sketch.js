@@ -44,7 +44,8 @@ function chartSetup() {
                     pointRadius: 0,
                     backgroundColor: 'rgba(0, 0, 255, 0.2)',
                     borderColor: 'rgba(0, 0, 255, 0.65)',
-                    fill: false
+                    fill: false,
+                    hidden: true
                 },
                 {
                     label: 'State 4',
@@ -52,7 +53,8 @@ function chartSetup() {
                     pointRadius: 0,
                     backgroundColor: 'rgba(255, 0, 255, 0.2)',
                     borderColor: 'rgba(255, 0, 255, 0.65)',
-                    fill: false
+                    fill: false,
+                    hidden: true
                 },
                 {
                     label: 'State 5',
@@ -60,7 +62,8 @@ function chartSetup() {
                     pointRadius: 0,
                     backgroundColor: 'rgba(0, 255, 255, 0.2)',
                     borderColor: 'rgba(0, 255, 255, 0.65)',
-                    fill: false
+                    fill: false,
+                    hidden: true
                 }
             ]
         },
