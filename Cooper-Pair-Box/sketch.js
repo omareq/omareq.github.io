@@ -90,7 +90,7 @@ function chartSetup() {
                     // max: 100,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Eigen Values'
+                        labelString: 'Energy'
                       }}],
             },
             // showLines: false // disable for all datasets
