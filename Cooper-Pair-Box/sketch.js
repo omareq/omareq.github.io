@@ -101,11 +101,15 @@ function chartUpdate() {
     let x = [];
     let xMin = 0;
     let xMax = 1.2 * numEigenVals;
-    let num_elements = 25 * numEigenVals;
+    let num_elements = 30 * numEigenVals;
     let itt = (xMax - xMin) / num_elements;
     let eigValues = [];
     let i = 0;
     energyScatterChart.data.datasets[0].data = [];
+    energyScatterChart.data.datasets[1].data = [];
+    energyScatterChart.data.datasets[2].data = [];
+    energyScatterChart.data.datasets[3].data = [];
+    energyScatterChart.data.datasets[4].data = [];
 
     for(let n = xMin; n < xMax; n += itt) {
         let h = hamiltonian(setChargingEnergy,
@@ -119,24 +123,24 @@ function chartUpdate() {
         eigValues.push(eig);
         energyScatterChart.data.datasets[0].data.push({
             x:n,
-            y:eigValues[i]._data[0]
+            y:eigValues[i].get([0])
         });
         energyScatterChart.data.datasets[1].data.push({
             x:n,
-            y:eigValues[i]._data[1]
+            y:eigValues[i].get([1])
         });
         energyScatterChart.data.datasets[2].data.push({
             x:n,
-            y:eigValues[i]._data[2]}
-        );
+            y:eigValues[i].get([2])
+        });
         energyScatterChart.data.datasets[3].data.push({
             x:n,
-            y:eigValues[i]._data[3]}
-        );
+            y:eigValues[i].get([3])
+        });
         energyScatterChart.data.datasets[4].data.push({
             x:n,
-            y:eigValues[i]._data[4]}
-        );
+            y:eigValues[i].get([4])
+        });
         i++;
     }
     energyScatterChart.update(0);
@@ -166,7 +170,7 @@ function hamiltonian(charging_energy, tunneling_energy, n=0, states=5) {
         row = [];
         for(let x = 0; x < states; x++) {
             if(x ==y) {
-                row.push(ec * (states - x - n) ** 2);
+                row.push(ec * pow(states - x - n, 2));
             } else if (x == (y + 1) || y == (x + 1)) {
                 row.push(-0.5 * ej);
             } else {
