@@ -91,8 +91,17 @@ function chartSetup() {
                     scaleLabel: {
                         display: true,
                         labelString: 'Energy'
-                      }}],
+                    },
+                    tooltips: {
+                        mode: 'x'
+                    }
+                }]
             },
+            title: {
+                display: true,
+                text: 'Energy Levels Ec:' + setChargingEnergy
+                    + " Ej: " + setTunnelingEnergy
+            }
             // showLines: false // disable for all datasets
         }
     });
@@ -108,6 +117,11 @@ function chartUpdate() {
     let itt = (xMax - xMin) / num_elements;
     let eigValues = [];
     let i = 0;
+
+    energyScatterChart.options.title.text = 'Energy Levels Ec:' +
+        setChargingEnergy +
+        " Ej: " + setTunnelingEnergy;
+
     energyScatterChart.data.datasets[0].data = [];
     energyScatterChart.data.datasets[1].data = [];
     energyScatterChart.data.datasets[2].data = [];

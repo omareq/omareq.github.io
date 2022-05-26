@@ -14,7 +14,7 @@ Created using [ChartJs](https://www.chartjs.org/)
 
 ## Todo
 
-- [ ]   Add title to graph
+- [x]   Add title to graph
 
 - [ ]   Created control panel
 
