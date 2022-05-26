@@ -23,7 +23,7 @@ function chartSetup() {
         data: {
             datasets: [
                 {
-                    label: 'State 1',
+                    label: '|0>',
                     data: [],
                     pointRadius: 0,
                     backgroundColor: 'rgba(255, 0, 0, 0.2)',
@@ -31,7 +31,7 @@ function chartSetup() {
                     fill: false
                 },
                 {
-                    label: 'State 2',
+                    label: '|1>',
                     data: [],
                     pointRadius: 0,
                     backgroundColor: 'rgba(0, 255, 0, 0.2)',
@@ -39,7 +39,7 @@ function chartSetup() {
                     fill: false
                 },
                 {
-                    label: 'State 3',
+                    label: '|2>',
                     data: [],
                     pointRadius: 0,
                     backgroundColor: 'rgba(0, 0, 255, 0.2)',
@@ -48,7 +48,7 @@ function chartSetup() {
                     hidden: true
                 },
                 {
-                    label: 'State 4',
+                    label: '|3>',
                     data: [],
                     pointRadius: 0,
                     backgroundColor: 'rgba(255, 0, 255, 0.2)',
@@ -57,7 +57,7 @@ function chartSetup() {
                     hidden: true
                 },
                 {
-                    label: 'State 5',
+                    label: '|4>',
                     data: [],
                     pointRadius: 0,
                     backgroundColor: 'rgba(0, 255, 255, 0.2)',
