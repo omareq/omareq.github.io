@@ -38,6 +38,139 @@
  *
  *****************************************************************************/
 
+ let energyScatterChart;
+
+ let setChargingEnergy = 70;
+
+ let setTunnelingEnergy = 20;
+
+function chartSetup() {
+    let ctx = document.getElementById('EnergyChart');
+    energyScatterChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [
+                {
+                    label: 'State 1',
+                    data: [],
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                    borderColor: 'rgba(255, 0, 0, 0.65)',
+                    fill: false
+                },
+                {
+                    label: 'State 2',
+                    data: [],
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                    borderColor: 'rgba(0, 255, 0, 0.65)',
+                    fill: false
+                },
+                {
+                    label: 'State 3',
+                    data: [],
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    borderColor: 'rgba(0, 0, 255, 0.65)',
+                    fill: false
+                },
+                {
+                    label: 'State 4',
+                    data: [],
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(255, 0, 255, 0.2)',
+                    borderColor: 'rgba(255, 0, 255, 0.65)',
+                    fill: false
+                },
+                {
+                    label: 'State 5',
+                    data: [],
+                    pointRadius: 0,
+                    backgroundColor: 'rgba(0, 255, 255, 0.2)',
+                    borderColor: 'rgba(0, 255, 255, 0.65)',
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            animation: {
+                duration: 0 // general animation time
+            },
+            elements: {
+                line: {
+                    tension: 0 // disables bezier curves float value 0 to 1
+                }
+            },
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Gate Induced Charge'
+                      }
+                }],
+                yAxes: [{
+                    // min: -10,
+                    // max: 100,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Eigen Values'
+                      }}],
+            },
+            // showLines: false // disable for all datasets
+        }
+    });
+}
+
+
+function chartUpdate() {
+    let numEigenVals = 5;
+    let x = [];
+    let xMin = 0;
+    let xMax = 1.2 * numEigenVals;
+    let num_elements = 25 * numEigenVals;
+    let itt = (xMax - xMin) / num_elements;
+    let eigValues = [];
+    let i = 0;
+    energyScatterChart.data.datasets[0].data = [];
+
+    for(let n = xMin; n &lt; xMax; n += itt) {
+        let h = hamiltonian(setChargingEnergy,
+            setTunnelingEnergy,
+            n,
+            numEigenVals);
+
+        let ans = math.eigs(h);
+        let eig = ans.values;
+        let vec = ans.vectors;
+        eigValues.push(eig);
+        energyScatterChart.data.datasets[0].data.push({
+            x:n,
+            y:eigValues[i]._data[0]
+        });
+        energyScatterChart.data.datasets[1].data.push({
+            x:n,
+            y:eigValues[i]._data[1]
+        });
+        energyScatterChart.data.datasets[2].data.push({
+            x:n,
+            y:eigValues[i]._data[2]}
+        );
+        energyScatterChart.data.datasets[3].data.push({
+            x:n,
+            y:eigValues[i]._data[3]}
+        );
+        energyScatterChart.data.datasets[4].data.push({
+            x:n,
+            y:eigValues[i]._data[4]}
+        );
+        i++;
+    }
+    energyScatterChart.update(0);
+    return eigValues;
+}
+
 /**
  * Function to calculate the Hamiltonian matrix for a cooper pair box qubit with
  * a given charging energy and tunnelling energy
@@ -61,7 +194,7 @@ function hamiltonian(charging_energy, tunneling_energy, n=0, states=5) {
         row = [];
         for(let x = 0; x &lt; states; x++) {
             if(x ==y) {
-                row.push(ec * (states - x - n)**2);
+                row.push(ec * (states - x - n) ** 2);
             } else if (x == (y + 1) || y == (x + 1)) {
                 row.push(-0.5 * ej);
             } else {
@@ -70,7 +203,7 @@ function hamiltonian(charging_energy, tunneling_energy, n=0, states=5) {
         }
         matrix.push(row);
     }
-    return math.matrix();
+    return math.matrix(matrix);
 }
 
 /**
@@ -83,8 +216,11 @@ function setup() {
 	} else {
 		cnvSize = windowWidth;
 	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
+	let cnv = createCanvas(0,0);//cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
+
+    chartSetup();
+    noLoop();
 }
 
 /**
@@ -92,6 +228,7 @@ function setup() {
  */
 function draw() {
 	background(0);
+    chartUpdate();
 }
 
 </code></pre>
@@ -109,7 +246,7 @@ function draw() {
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed May 25 2022 21:39:47 GMT+0100 (BST)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu May 26 2022 07:45:30 GMT+0100 (BST)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

@@ -8,6 +8,20 @@ Check out the [Docs](https://omareq.github.io/Cooper-Pair-Box/docs/).
 
 Created using [p5.js](https://p5js.org/)
 
+Created using [MathJs](https://mathjs.org/)
+
+Created using [ChartJs](https://www.chartjs.org/)
+
+## Todo
+
+- [ ]   Add title to graph
+
+- [ ]   Created control panel
+
+- [ ]   Add description to index.html
+
+- [ ]   Add cooper pair box animation to canvas
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
 
