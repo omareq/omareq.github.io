@@ -16,7 +16,7 @@ Created using [ChartJs](https://www.chartjs.org/)
 
 - [x]   Add title to graph
 
-- [ ]   Created control panel
+- [x]   Created control panel
 
 - [ ]   Add description to index.html
 

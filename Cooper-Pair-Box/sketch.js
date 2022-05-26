@@ -14,7 +14,37 @@
 
  let setChargingEnergy = 70;
 
- let setTunnelingEnergy = 20;
+ /**
+ * Handler for the charging energy slider.
+ *
+ * @type       {p5.element}
+ */
+let chargingEnergySlider = undefined;
+
+/**
+ * Handler for the paragraphs that displays the current charging energy.
+ *
+ * @type       {p5.element}
+ */
+let chargingEnergyDisplay = undefined;
+
+
+let setTunnellingEnergy = 20;
+
+/**
+ * Handler for the tunnelling energy slider.
+ *
+ * @type       {p5.element}
+ */
+let tunnellingEnergySlider = undefined;
+
+/**
+ * Handler for the paragraphs that displays the current tunnelling energy.
+ *
+ * @type       {p5.element}
+ */
+let tunnellingEnergyisplay = undefined;
+
 
 function chartSetup() {
     let ctx = document.getElementById('EnergyChart');
@@ -100,7 +130,7 @@ function chartSetup() {
             title: {
                 display: true,
                 text: 'Energy Levels Ec:' + setChargingEnergy
-                    + " Ej: " + setTunnelingEnergy
+                    + " Ej: " + setTunnellingEnergy
             }
             // showLines: false // disable for all datasets
         }
@@ -120,7 +150,7 @@ function chartUpdate() {
 
     energyScatterChart.options.title.text = 'Energy Levels Ec:' +
         setChargingEnergy +
-        " Ej: " + setTunnelingEnergy;
+        " Ej: " + setTunnellingEnergy;
 
     energyScatterChart.data.datasets[0].data = [];
     energyScatterChart.data.datasets[1].data = [];
@@ -130,7 +160,7 @@ function chartUpdate() {
 
     for(let n = xMin; n < xMax; n += itt) {
         let h = hamiltonian(setChargingEnergy,
-            setTunnelingEnergy,
+            setTunnellingEnergy,
             n,
             numEigenVals);
 
@@ -170,7 +200,7 @@ function chartUpdate() {
  *
  * @param      {number}  charging_energy   The charging energy - The energy
  * reuired to either add or subtract a cooper pair from the system
- * @param      {number}  tunneling_energy  The tunneling energy - The energy
+ * @param      {number}  tunnelling_energy  The tunnelling energy - The energy
  * required for a cooper pair to transition form one energy level to another.
  * @param      {number}  [n=0]             The gate induced charge for the
  * cooper pair box.
@@ -178,9 +208,9 @@ function chartUpdate() {
  * box can take.
  * @return     {Array | Matrix}  The Hamiltonian matrix
  */
-function hamiltonian(charging_energy, tunneling_energy, n=0, states=5) {
+function hamiltonian(charging_energy, tunnelling_energy, n=0, states=5) {
     ec = charging_energy;
-    ej = tunneling_energy;
+    ej = tunnelling_energy;
     matrix = [];
 
     for(let y = 0; y < states; y++) {
@@ -212,8 +242,22 @@ function setup() {
 	let cnv = createCanvas(0,0);//cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
 
+    chargingEnergyDisplay = createP("Charging Energy (Ec): " +
+        str(setChargingEnergy));
+    chargingEnergyDisplay.parent("charging-energy-val");
+
+    chargingEnergySlider = createSlider(5, 1000, setChargingEnergy, 5);
+    chargingEnergySlider.parent("charging-energy");
+
+    tunnellingEnergyDisplay = createP("Tunnelling Energy (Ej): " +
+        str(setTunnellingEnergy));
+    tunnellingEnergyDisplay.parent("tunnelling-energy-val");
+
+    tunnellingEnergySlider = createSlider(0, 1000, setTunnellingEnergy, 5);
+    tunnellingEnergySlider.parent("tunnelling-energy");
+
     chartSetup();
-    noLoop();
+    chartUpdate();
 }
 
 /**
@@ -221,6 +265,22 @@ function setup() {
  */
 function draw() {
 	background(0);
-    chartUpdate();
+
+    let sliderVal = chargingEnergySlider.value();
+    if(sliderVal != setChargingEnergy && sliderVal > setTunnellingEnergy) {
+        setChargingEnergy = sliderVal;
+        chargingEnergyDisplay.elt.innerText = "Charging Energy (Ec): " +
+            str(setChargingEnergy)
+        chartUpdate();
+    }
+
+    sliderVal = tunnellingEnergySlider.value();
+    if(sliderVal != setTunnellingEnergy && sliderVal < setChargingEnergy) {
+        setTunnellingEnergy = sliderVal;
+        tunnellingEnergyDisplay.elt.innerText = "Tunnelling (Ej): " +
+            str(setTunnellingEnergy)
+        chartUpdate();
+    }
+
 }
 
