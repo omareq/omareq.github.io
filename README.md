@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/omareq/omareq.github.io.svg?branch=master)](https://app.travis-ci.com/github/omareq/omareq.github.io)
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fomareq.github.io)
 ![GitHub repo size](https://img.shields.io/github/repo-size/omareq/omareq.github.io)
-[![GitHub](https://img.shields.io/github/license/omareq/omareq.github.io?style=plastic)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![GitHub](https://img.shields.io/github/license/omareq/omareq.github.io)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 Over the years I have made a lot of very small and fun programs on my computer.  I have decided to start converting a lot of them to use JavaScript so that I can leave it online for people to enjoy.  I have never been officially taught how to program so if you see anything that could be improved let me know and I will give it a go.
 
