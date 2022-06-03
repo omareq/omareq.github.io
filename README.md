@@ -1,6 +1,6 @@
 # Github.io
 
-[![Build Status](https://travis-ci.com/omareq/omareq.github.io.svg?branch=master)](https://travis-ci.com/omareq/omareq.github.io)
+[![Build Status](https://travis-ci.com/omareq/omareq.github.io.svg?branch=master)](https://app.travis-ci.com/github/omareq/omareq.github.io)
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fomareq.github.io)
 ![GitHub repo size](https://img.shields.io/github/repo-size/omareq/omareq.github.io)
 
