@@ -173,6 +173,7 @@
             "prev-id": "p_009",
             "status": "active",
             "tags": [
+                "physics",
                 "science"
             ],
             "vid-url": "vids/p_010.mp4"
@@ -334,7 +335,9 @@
             "pic-url": "imgs/p_020.jpg",
             "prev-id": "p_019",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "algorithm"
+            ],
             "vid-url": "vids/p_020.mp4"
         },
         "p_021": {
@@ -348,7 +351,11 @@
             "pic-url": "imgs/p_021.jpg",
             "prev-id": "p_020",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "physics",
+                "quantum",
+                "science"
+            ],
             "vid-url": "vids/p_021.mp4"
         }
     }
