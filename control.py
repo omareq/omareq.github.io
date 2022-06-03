@@ -471,7 +471,8 @@ def usage():
                            USAGE:\t./control.py add new_project project_description\n\
             archive    Remove a project from active view but do not delete files\n\
             remove     Remove all files associated with a project\n\
-            restore    Returns a project to an active state from the archive\n\n"
+            restore    Returns a project to an active state from the archive\n\
+            id         Returns a project ID given the folder name\n\n"
     )
     exit(0)
 
@@ -510,5 +511,7 @@ if __name__ == "__main__":
     elif command == "restore":
         print("Restoring project: " + project_name)
         restore_project(project_name)
+    elif command == "id":
+        print("ID: " + project_id_from_name(project_name))
     else:
         usage()
