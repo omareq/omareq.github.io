@@ -15,6 +15,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Add "/" to end of links in README files so that Google doesn't ignore them during indexing due to file redirect protocols, redo docs.  Also add "/" to end of links to docs in project index.html files
 - [ ]   Adjusting mailto links with subject line for each project
 - [ ]   Add links to automated documentation generator at the top of each code file
+- [ ]   Check for license at the top of all code files
 - [ ]   Local mathjax install with proper fonts etc
 - [ ]   alternate js sources
 - [ ]   Adjust bootstrap containers to be container-fluid for responsive design
@@ -22,20 +23,15 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Finish Ninja Game
 - [ ]   Finish texType Docs and rest of texType/todo
 - [ ]   Add Caesar Cipher
-- [x]   Add Simon Memory Game
 - [ ]	Add Sliding Puzzle Game
-- [x]	Add Towers of Hanoi
 - [ ]	Turtle Draw Program
 - [ ]	Super Hexagon
 - [ ]	Brick Breaker
 - [ ]	Minesweeper
 - [ ]	Checkers
-- [x]	Conway's Game of Life
 - [ ]	Crazy 8's Card Game
 - [ ]	Knight's Tour Using Warnsdorff's Rule
 - [ ]	PDE Solver
-- [ ]	Cooper Pair Box Hamiltonian Solver
-- [x]	Convex Hull Gift Wrapping
 - [ ]	Mesh Generation Delaunay Triangles
 - [ ]	Tic Tac Toe
 - [ ]	Connect Four
@@ -50,6 +46,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Missile Command Arcade Game
 - [ ]   Perlin noise generation
 - [ ]   Hangman Game
+- [ ]   Ising Model
 
 ## License
 
