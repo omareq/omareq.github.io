@@ -1,8 +1,9 @@
 # Random-walk
 
-Generate a random walk within a grid based on the work of Dan from the coding
-train.  The difference between this random walk and normal ones is that it is
-self avoiding.  This means that the path does not cross itself.
+Generate a random walk within a grid based on the [coding challenge](https://thecodingtrain.com/CodingChallenges/162-self-avoiding-walk.html)
+of Dan from the [coding train](https://thecodingtrain.com/).  The difference
+between this random walk and normal ones is that it is self avoiding.  This
+means that the path does not cross itself.
 
 ## Example
 Here's an image of an example self avoiding walk:
@@ -12,6 +13,8 @@ Here's an image of an example self avoiding walk:
 This self avoiding walk differs from others by being on a non rectangular
 lattice.  This is implemented by creating lattice vectors to represent the grid
 points.  Other lattices can be implemented by changing the lattice vectors.
+
+Inspiration [coding challenge](https://thecodingtrain.com/CodingChallenges/162-self-avoiding-walk.html)
 
 Lattice Vectors [picture](https://mpb.readthedocs.io/en/latest/Data_Analysis_Tutorial/)
 
@@ -27,8 +30,12 @@ Created using [p5.js](https://p5js.org/)
 
 [ ] Add Backtracking
 
+[ ] Add pivot algorithm animation
+
+[ ] Add reference to protein folding
+
 ## Contact Details
-__Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)
+__Programmer:__ [Omar Essilfie-Quaye](mailto:omareq08+githubio@gmail.com)
 
 
 (This is an auto-generated document, not all links will necessarily work)

@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_020",
+            "prev-id": "p_021",
             "status": "active",
             "tags": [
                 "fun"
@@ -173,6 +173,7 @@
             "prev-id": "p_009",
             "status": "active",
             "tags": [
+                "physics",
                 "science"
             ],
             "vid-url": "vids/p_010.mp4"
@@ -330,12 +331,32 @@
             "gif-url": "imgs/p_020.gif",
             "id": "p_020",
             "name": "Random-walk",
-            "next-id": "p_000",
+            "next-id": "p_021",
             "pic-url": "imgs/p_020.jpg",
             "prev-id": "p_019",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "algorithm"
+            ],
             "vid-url": "vids/p_020.mp4"
+        },
+        "p_021": {
+            "brief": "Calculate the energy levels of a cooper pair box Quantum Bit (Qubit)",
+            "demo-url": "/cooper-pair-box/",
+            "docs-url": "/cooper-pair-box/docs/",
+            "gif-url": "imgs/p_021.gif",
+            "id": "p_021",
+            "name": "Cooper-pair-box",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_021.jpg",
+            "prev-id": "p_020",
+            "status": "active",
+            "tags": [
+                "physics",
+                "quantum",
+                "science"
+            ],
+            "vid-url": "vids/p_021.mp4"
         }
     }
 }
