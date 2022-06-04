@@ -342,8 +342,8 @@
         },
         "p_021": {
             "brief": "Calculate the energy levels of a cooper pair box Quantum Bit (Qubit)",
-            "demo-url": "/Cooper-Pair-Box/",
-            "docs-url": "/Cooper-Pair-Box/docs/",
+            "demo-url": "/cooper-pair-box/",
+            "docs-url": "/cooper-pair-box/docs/",
             "gif-url": "imgs/p_021.gif",
             "id": "p_021",
             "name": "Cooper-pair-box",
