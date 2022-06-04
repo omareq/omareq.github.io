@@ -18,7 +18,7 @@ Created using [ChartJs](https://www.chartjs.org/)
 
 - [x]   Created control panel
 
-- [ ]   Add description to index.html
+- [x]   Add description to index.html
 
 - [ ]   Add cooper pair box animation to canvas
 
