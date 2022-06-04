@@ -9,6 +9,7 @@ from datetime import date
 projects_json_file = "projects.json"
 projects_json = ""
 
+
 def create_project(name, description):
     global projects_json
     if os.path.isdir(name):
@@ -37,7 +38,9 @@ def create_project(name, description):
 
     next_id = projects_json["projects"][obj_id]["next-id"]
     next_name = projects_json["projects"][next_id]["name"]
-    print("Updating project " + next_name + "/index.html with new previous project card")
+    print(
+        "Updating project " + next_name + "/index.html with new previous project card"
+    )
     replace_prev_project_in(next_id, obj_id)
 
     print("Creating " + name + "/docs")
@@ -50,10 +53,11 @@ def create_project(name, description):
     return
 
 
-
 def readme(name, description):
     f = open(name + "/README.md", "w+")
     capsName = name.strip()[0].capitalize() + name.strip()[1:]
+    capsName = capsName.replace("-", " ")
+    capsName = capsName.replace("_", " ")
     f.write("# " + capsName + "\n\n")
     f.write(description + "\n\n")
     f.write("Check out the [Demo](https://omareq.github.io/" + name + "/).\n\n")
@@ -61,9 +65,12 @@ def readme(name, description):
     f.write("Created using [p5.js](https://p5js.org/)\n\n")
     f.write("## Contact Details\n")
     f.write("__Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)\n")
-    f.write("\n\n(This is an auto-generated document, not all links will necessarily work)\n")
+    f.write(
+        "\n\n(This is an auto-generated document, not all links will necessarily work)\n"
+    )
     f.close()
     return
+
 
 def index_html(name, project_id, description="Project Description"):
     global projects_json
@@ -73,9 +80,11 @@ def index_html(name, project_id, description="Project Description"):
     next_key = projects_json["projects"][project_id]["next-id"]
 
     for line in template:
-        newline = line;
+        newline = line
         if "/**TITLE**/" in line:
             capsName = name.strip()[0].capitalize() + name.strip()[1:]
+            capsName = capsName.replace("-", " ")
+            capsName = capsName.replace("_", " ")
             newline = line.replace("/**TITLE**/", capsName)
         elif "/**URL**/" in line:
             newline = line.replace("/**URL**/", name + "/")
@@ -86,17 +95,28 @@ def index_html(name, project_id, description="Project Description"):
         elif "/**NEXT IMG**/" in line:
             newline = line.replace("/**NEXT IMG**/", next_key + ".jpg")
         elif "/**NEXT TITLE**/" in line:
-            newline = line.replace("/**NEXT TITLE**/", projects_json["projects"][next_key]["name"])
+            newline = line.replace(
+                "/**NEXT TITLE**/", projects_json["projects"][next_key]["name"]
+            )
         elif "/**PREV TITLE**/" in line:
-            newline = line.replace("/**PREV TITLE**/", projects_json["projects"][prev_key]["name"])
+            newline = line.replace(
+                "/**PREV TITLE**/", projects_json["projects"][prev_key]["name"]
+            )
         elif "/**NEXT URL**/" in line:
-            newline = line.replace("/**NEXT URL**/", projects_json["projects"][next_key]["demo-url"][1:])
+            newline = line.replace(
+                "/**NEXT URL**/", projects_json["projects"][next_key]["demo-url"][1:]
+            )
         elif "/**PREV URL**/" in line:
-            newline = line.replace("/**PREV URL**/", projects_json["projects"][prev_key]["demo-url"][1:])
+            newline = line.replace(
+                "/**PREV URL**/", projects_json["projects"][prev_key]["demo-url"][1:]
+            )
         elif "/**DESCRIPTION**/" in line:
-            newline = line.replace("/**DESCRIPTION**/", description +
-                ".  This is a project created by Omar Essilfie-Quaye on " +
-                date.today().strftime("%d %B %Y."));
+            newline = line.replace(
+                "/**DESCRIPTION**/",
+                description
+                + ".  This is a project created by Omar Essilfie-Quaye on "
+                + date.today().strftime("%d %B %Y."),
+            )
 
         output.write(newline)
 
@@ -104,23 +124,62 @@ def index_html(name, project_id, description="Project Description"):
     output.close()
     return
 
+
 def sketch_js(name, description):
     today = date.today()
     date_str = today.strftime("%d-%B-%Y")
+    year_str = today.strftime("%Y")
     date_str = "*\t@date " + date_str
     f = open(name + "/sketch.js", "w+")
-    f.write("/" + "*" * 79 + "\n\
+    f.write(
+        "/"
+        + "*" * 79
+        + "\n\
  *\n\
- *\t@file sketch.js " + description + "\n\
+ *\t@file sketch.js "
+        + description
+        + "\n\
  *\n\
  *\t@author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>\n\
- *\t@version 1.0\n " + date_str + "\n\
- *\t@link https://omareq.github.io/" + name + "/\n\
- *\t@link https://omareq.github.io/" + name + "/docs/\n\
- *\n " + "*" * 77 + "/\n\n")
+ *\t@version 1.0\n "
+        + date_str
+        + "\n\
+ *\t@link https://omareq.github.io/"
+        + name
+        + "/\n\
+ *\t@link https://omareq.github.io/"
+        + name
+        + "/docs/\n\
+ *\n "
+        + "*" * 79
+        + "\n\
+ *\n\
+ *                   GNU General Public License V3.0                         \n\
+ *                   --------------------------------                        \n\
+ *\n\
+ *   Copyright (C) "
+        + year_str
+        + " Omar Essilfie-Quaye\n\
+ *\n\
+ *   This program is free software: you can redistribute it and/or modify\n\
+ *   it under the terms of the GNU General Public License as published by\n\
+ *   the Free Software Foundation, either version 3 of the License, or\n\
+ *   (at your option) any later version.\n\
+ *\n\
+ *   This program is distributed in the hope that it will be useful,\n\
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+ *   GNU General Public License for more details.\n\
+ *\n\
+ *   You should have received a copy of the GNU General Public License\n\
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.\n\
+ *\n "
+        + "*" * 77
+        + "/\n\n"
+    )
 
-
-    f.write("/**\n\
+    f.write(
+        "/**\n\
  * p5.js setup function, creates canvas.\n\
  */\n\
 function setup() {\n\
@@ -132,13 +191,16 @@ function setup() {\n\
 \t}\n\
 \tlet cnv = createCanvas(cnvSize, 0.7 * cnvSize);\n\
 \tcnv.parent('sketch');\n\
-}\n\n")
+}\n\n"
+    )
 
-    f.write("/**\n\
+    f.write(
+        "/**\n\
  * p5.js draw function, is run every frame to create the desired animation\n\
  */\n\
 function draw() {\n\
-\tbackground(0);\n}\n\n")
+\tbackground(0);\n}\n\n"
+    )
     f.close()
     return
 
@@ -146,7 +208,7 @@ function draw() {\n\
 def add_image(project_id):
     img_path = "imgs/" + project_id + ".jpg"
     if not os.path.isdir("imgs"):
-        print("The images folder has been removed please create the folder \"imgs/\"")
+        print('The images folder has been removed please create the folder "imgs/"')
         return
 
     if os.path.exists(img_path):
@@ -156,6 +218,7 @@ def add_image(project_id):
     shutil.copy("imgs/p_default.jpg", ".")
     os.rename("p_default.jpg", img_path)
     return
+
 
 # what if project is archived
 def get_highest_key(filter_archived_values=False):
@@ -169,6 +232,7 @@ def get_highest_key(filter_archived_values=False):
 
     return high_key
 
+
 # what if project is archived
 def get_lowest_key(filter_archived_values=False):
     global projects_json
@@ -181,21 +245,26 @@ def get_lowest_key(filter_archived_values=False):
 
     return low_key
 
+
 def new_project(name, project_id, prev_id, description):
+    capsName = name.strip()[0].capitalize() + name.strip()[1:]
+    capsName = capsName.replace("-", " ")
+    capsName = capsName.replace("_", " ")
     return {
-        "id":project_id,
-        "name":name.capitalize(),
-        "demo-url":"/" + name + "/",
-        "docs-url":"/" + name + "/docs/",
-        "pic-url":"imgs/" + project_id + ".jpg",
-        "gif-url":"imgs/" + project_id + ".gif",
-        "vid-url":"vids/" + project_id + ".mp4",
-        "prev-id":prev_id,
-        "next-id":"p_000",
-        "status":"active",
-        "brief":description,
-        "tags":[]
+        "id": project_id,
+        "name": capsName,
+        "demo-url": "/" + name + "/",
+        "docs-url": "/" + name + "/docs/",
+        "pic-url": "imgs/" + project_id + ".jpg",
+        "gif-url": "imgs/" + project_id + ".gif",
+        "vid-url": "vids/" + project_id + ".mp4",
+        "prev-id": prev_id,
+        "next-id": "p_000",
+        "status": "active",
+        "brief": description,
+        "tags": [],
     }
+
 
 def add_project_to_json(name, description):
     global projects_json, projects_json_file
@@ -208,7 +277,10 @@ def add_project_to_json(name, description):
 
     current_project_json = new_project(name, current_key, prev_key, description)
 
-    print("New JSON Object: \n", json.dumps(current_project_json, sort_keys=True, indent=4))
+    print(
+        "New JSON Object: \n",
+        json.dumps(current_project_json, sort_keys=True, indent=4),
+    )
 
     projects_json["projects"][current_key] = current_project_json
     projects_json["projects"][prev_key]["next-id"] = current_key
@@ -219,6 +291,7 @@ def add_project_to_json(name, description):
         json.dump(projects_json, json_file, sort_keys=True, indent=4)
 
     return current_key
+
 
 def replace_prev_project_in(project_id, new_prev_id):
     global projects_json
@@ -231,18 +304,27 @@ def replace_prev_project_in(project_id, new_prev_id):
     with open(url + "index.html") as old_index:
         for line in old_index:
             newline = line
-            if "id=\"prev-title\"" in line:
-                newline = "\t\t\t\t\t\t<h5 id=\"prev-title\">" + new_prev_name + "</h5>\n"
-            elif "id=\"prev-url\"" in line:
-                newline = "\t\t\t\t\t\t<a id=\"prev-url\" href=\"../" + new_prev_url + "\" class=\"project-demo\">\n"
-            elif "id=\"prev-img\"" in line:
-                newline = "\t\t\t\t\t\t\t<img id=\"prev-img\" src=\"../imgs/" + new_prev_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
+            if 'id="prev-title"' in line:
+                newline = '\t\t\t\t\t\t<h5 id="prev-title">' + new_prev_name + "</h5>\n"
+            elif 'id="prev-url"' in line:
+                newline = (
+                    '\t\t\t\t\t\t<a id="prev-url" href="../'
+                    + new_prev_url
+                    + '" class="project-demo">\n'
+                )
+            elif 'id="prev-img"' in line:
+                newline = (
+                    '\t\t\t\t\t\t\t<img id="prev-img" src="../imgs/'
+                    + new_prev_id
+                    + '.jpg" onerror="this.onerror=null; this.src=\'../imgs/p_default.jpg\'">\n'
+                )
 
             new_index.write(newline)
     new_index.close()
     print("Replacing " + url + "index.html")
     os.rename("tmp_index.html", url + "index.html")
     return
+
 
 def replace_next_project_in(project_id, new_next_id):
     global projects_json
@@ -255,12 +337,20 @@ def replace_next_project_in(project_id, new_next_id):
     with open(url + "index.html") as old_index:
         for line in old_index:
             newline = line
-            if "id=\"next-title\"" in line:
-                newline = "\t\t\t\t\t\t<h5 id=\"next-title\">" + new_next_name + "</h5>\n"
-            elif "id=\"next-url\"" in line:
-                newline = "\t\t\t\t\t\t<a id=\"next-url\" href=\"../" + new_next_url + "\" class=\"project-demo\">\n"
-            elif "id=\"next-img\"" in line:
-                newline = "\t\t\t\t\t\t\t<img id=\"next-img\" src=\"../imgs/" + new_next_id + ".jpg\" onerror=\"this.onerror=null; this.src='../imgs/p_default.jpg'\">\n"
+            if 'id="next-title"' in line:
+                newline = '\t\t\t\t\t\t<h5 id="next-title">' + new_next_name + "</h5>\n"
+            elif 'id="next-url"' in line:
+                newline = (
+                    '\t\t\t\t\t\t<a id="next-url" href="../'
+                    + new_next_url
+                    + '" class="project-demo">\n'
+                )
+            elif 'id="next-img"' in line:
+                newline = (
+                    '\t\t\t\t\t\t\t<img id="next-img" src="../imgs/'
+                    + new_next_id
+                    + '.jpg" onerror="this.onerror=null; this.src=\'../imgs/p_default.jpg\'">\n'
+                )
 
             new_index.write(newline)
     new_index.close()
@@ -268,21 +358,23 @@ def replace_next_project_in(project_id, new_next_id):
     os.rename("tmp_index.html", url + "index.html")
     return
 
+
 def project_id_from_name(name):
     global projects_json
-    name = name.replace('/', '')
-    name = name.replace('.', '')
+    name = name.replace("/", "")
+    name = name.replace(".", "")
 
     projects = projects_json["projects"]
     for key, value in projects.items():
         # print("Demo url: " + value["demo-url"][1:].replace('/',''))
         # print("Name: " + name)
-        if value["demo-url"][1:].lower().replace('/','') == name.lower():
+        if value["demo-url"][1:].lower().replace("/", "") == name.lower():
             return key
 
     print("There is no project with the url " + name + " in projects.json")
     exit(0)
     return
+
 
 def archive_project(name):
     global projects_json, projects_json_file
@@ -313,6 +405,7 @@ def archive_project(name):
 
     return
 
+
 def restore_project(name):
     global projects_json
     if not os.path.isdir(name):
@@ -324,7 +417,7 @@ def restore_project(name):
         print("The project " + name + " is already active")
         return
 
-# these while loops need to be replaced by traversing the project id list manually
+    # these while loops need to be replaced by traversing the project id list manually
     next_id = projects_json["projects"][project_id]["next-id"]
     while projects_json["projects"][next_id]["status"] == "archived":
         next_id = projects_json["projects"][next_id]["next-id"]
@@ -348,6 +441,7 @@ def restore_project(name):
     with open(projects_json_file, "w+") as json_file:
         json.dump(projects_json, json_file, sort_keys=True, indent=4)
     return
+
 
 # what about removing from git by git deletion
 def remove_project(name):
@@ -374,15 +468,19 @@ def remove_project(name):
     with open(projects_json_file, "w+") as json_file:
         json.dump(projects_json, json_file, sort_keys=True, indent=4)
 
+
 def usage():
-    print("Usage:\t control [OPTION] [PROJECT]\n\n\
+    print(
+        "Usage:\t control [OPTION] [PROJECT]\n\n\
             [OPTIONS]\n\
             add        Add a new project to the web page\n\
                            -- Additional Argument Description\n\
                            USAGE:\t./control.py add new_project project_description\n\
             archive    Remove a project from active view but do not delete files\n\
             remove     Remove all files associated with a project\n\
-            restore    Returns a project to an active state from the archive\n\n")
+            restore    Returns a project to an active state from the archive\n\
+            id         Returns a project ID given the folder name\n\n"
+    )
     exit(0)
 
 
@@ -391,7 +489,8 @@ def load_projects_json():
     with open(projects_json_file) as json_file:
         projects_json = json.load(json_file)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     argv = sys.argv
 
     if len(argv) < 3:
@@ -400,7 +499,7 @@ if __name__=="__main__":
     command = argv[1]
     project_name = argv[2]
 
-    load_projects_json();
+    load_projects_json()
 
     if command == "add":
         if len(argv) != 4:
@@ -419,5 +518,7 @@ if __name__=="__main__":
     elif command == "restore":
         print("Restoring project: " + project_name)
         restore_project(project_name)
+    elif command == "id":
+        print("ID: " + project_id_from_name(project_name))
     else:
         usage()
