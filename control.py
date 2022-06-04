@@ -56,6 +56,8 @@ def create_project(name, description):
 def readme(name, description):
     f = open(name + "/README.md", "w+")
     capsName = name.strip()[0].capitalize() + name.strip()[1:]
+    capsName = capsName.replace("-", " ")
+    capsName = capsName.replace("_", " ")
     f.write("# " + capsName + "\n\n")
     f.write(description + "\n\n")
     f.write("Check out the [Demo](https://omareq.github.io/" + name + "/).\n\n")
@@ -81,6 +83,8 @@ def index_html(name, project_id, description="Project Description"):
         newline = line
         if "/**TITLE**/" in line:
             capsName = name.strip()[0].capitalize() + name.strip()[1:]
+            capsName = capsName.replace("-", " ")
+            capsName = capsName.replace("_", " ")
             newline = line.replace("/**TITLE**/", capsName)
         elif "/**URL**/" in line:
             newline = line.replace("/**URL**/", name + "/")
@@ -243,9 +247,12 @@ def get_lowest_key(filter_archived_values=False):
 
 
 def new_project(name, project_id, prev_id, description):
+    capsName = name.strip()[0].capitalize() + name.strip()[1:]
+    capsName = capsName.replace("-", " ")
+    capsName = capsName.replace("_", " ")
     return {
         "id": project_id,
-        "name": name.capitalize(),
+        "name": capsName,
         "demo-url": "/" + name + "/",
         "docs-url": "/" + name + "/docs/",
         "pic-url": "imgs/" + project_id + ".jpg",
