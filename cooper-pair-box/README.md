@@ -23,7 +23,7 @@ Created using [ChartJs](https://www.chartjs.org/)
 - [ ]   Add cooper pair box animation to canvas
 
 ## Contact Details
-__Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
+__Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com?subject=Omar EQ Github Pages - Cooper Pair Box Project)
 
 
 (This is an auto-generated document, not all links will necessarily work)
