@@ -35,7 +35,7 @@ Created using [p5.js](https://p5js.org/)
 [ ] Add reference to protein folding
 
 ## Contact Details
-__Programmer:__ [Omar Essilfie-Quaye](mailto:omareq08+githubio@gmail.com)
+__Programmer:__ Omar Essilfie-Quaye [omareq08+githubio@gmail.com](mailto:omareq08+githubio@gmail.com?subject=Omar%20EQ%20Github%20Pages%20-%20Random%20Walk%20Project)
 
 
 (This is an auto-generated document, not all links will necessarily work)
