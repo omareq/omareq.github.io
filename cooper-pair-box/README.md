@@ -12,6 +12,10 @@ Created using [MathJs](https://mathjs.org/)
 
 Created using [ChartJs](https://www.chartjs.org/)
 
+## Example
+
+![Animation of how the energy levels of a cooper pair box change when the tunnelling energy increases](https://omareq.github.io/cooper-pair-box/imgs/changing-josephson-energy-gif-medium.gif)
+
 ## Todo
 
 - [x]   Add title to graph
