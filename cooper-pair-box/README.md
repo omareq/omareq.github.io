@@ -26,6 +26,10 @@ Created using [ChartJs](https://www.chartjs.org/)
 
 - [ ]   Add cooper pair box animation to canvas
 
+## Related Projects
+
+- [Cooper_Pair_Box](https://github.com/SolemnShark871/cooper_pair_box) Jupyter notebook written by [SolemnShark871](https://github.com/SolemnShark871)
+
 ## License
 
 This repository is protected under the [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html) license.
