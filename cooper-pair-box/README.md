@@ -26,6 +26,10 @@ Created using [ChartJs](https://www.chartjs.org/)
 
 - [ ]   Add cooper pair box animation to canvas
 
+## License
+
+This repository is protected under the [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html) license.
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye [omareq08+githubio@gmail.com](mailto:omareq08+githubio@gmail.com?subject=Omar%20EQ%20Github%20Pages%20-%20Cooper%20Pair%20Box%20Project)
 
