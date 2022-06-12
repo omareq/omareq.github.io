@@ -16,7 +16,7 @@
 let field;
 
 /**
-*	A variable in the gloabl namespace which stores wether or not the next
+*	A variable in the global namespace which stores whether or not the next
 *	particle added will have a negative charge.
 *
 *	@type {boolean}
@@ -43,7 +43,7 @@ function setup() {
 *	should change.
 *	Checks to see if either a single particle or all particles should be
 *	removed from the field.
-*	Signals a rerendering of the canvas.
+*	Signals a re-rendering of the canvas.
 */
 function keyPressed() {
 	if(keyCode == BACKSPACE) {
@@ -69,12 +69,16 @@ function keyPressed() {
 }
 
 /**
-*	Adds a particle at the pointer position.
-*	The particle will be either positivie or negative depending on the value of
+*	Adds a particle at the pointer position if the pointer is on the canvas.
+*	The particle will be either positive or negative depending on the value of
 *	the chargeIsNegative variable.
-*	Signals a rerendering of the canvas.
+*	Signals a re-rendering of the canvas.
 */
 function mousePressed() {
+	if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
+		return;
+	}
+
 	let radius = 10;
 	let pos = createVector(mouseX, mouseY);
 	let charge = 2;
