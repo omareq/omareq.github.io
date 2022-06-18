@@ -84,8 +84,8 @@ class Level {
             // bottom edge
             let xCond = (ball.x + ball.r) > this.bricks[i].x &&
                 (ball.x - ball.r) < this.bricks[i].x + this.bricks[i].w;
-            let yCond = (ball.y + ball.r) > this.bricks[i].y + this.bricks[i].h  &&
-                (ball.y - ball.r) < this.bricks[i].y + this.bricks[i].h;
+            let yCond = (ball.y + ball.r) > this.bricks[i].y + this.bricks[i].h
+            && (ball.y - ball.r) < this.bricks[i].y + this.bricks[i].h;
             if(xCond && yCond) {
                 this.bricks[i].hits -= 1;
                 this.bricks[i].setColourByHits();

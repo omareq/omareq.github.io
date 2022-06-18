@@ -54,7 +54,7 @@ class Ball {
     }
 
     /**
-    *   Applies a single force to the Ball.
+    *   Applies the velocity to the Ball.
     */
     update() {
         this.x += this.vx;
