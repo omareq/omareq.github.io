@@ -30,24 +30,49 @@
  *
  *****************************************************************************/
 
+let gameMode = {
+    start: 1,
+    play: 2,
+    newLevel: 3,
+    end: 4
+}
+
+let currentGameMode = gameMode.play;
+
+let level;
+
+
 /**
  * p5.js setup function, creates canvas.
  */
 function setup() {
 	let cnvSize;
 	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
+		cnvSize = 0.9 * windowHeight;
 	} else {
 		cnvSize = windowWidth;
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
+    level = new Level(cols1, rows1, layout1);
 }
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(0);
+	background(255);
+    switch(currentGameMode) {
+        case gameMode.start:
+
+        break;
+        case gameMode.play: {
+            level.draw();
+        }
+        break;
+        case gameMode.end:
+
+        break;
+    }
 }
 
