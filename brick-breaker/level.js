@@ -58,7 +58,6 @@ class Level {
         for(let row = 0; row < this.rows; row++) {
             let widthCounter = 0;
             for(let brick = 0; brick < layout[row].length; brick++) {
-                console.log("Layout - Row: " + row + " Brick: " + brick);
                 let currentWidth = layout[row][brick].width;
                 let currentHits = layout[row][brick].hits;
 
