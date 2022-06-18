@@ -39,7 +39,7 @@ class Paddle {
         this.y = 0.95 * height;
         this.r = 0.2 * this.h;
         this.dx = 0.1 * this.w;
-        this.col = color(29, 3, 51)
+        this.col = color(29, 3, 51);
     }
 
     moveLeft() {
