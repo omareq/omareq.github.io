@@ -62,6 +62,7 @@ class Level {
                 let currentHits = layout[row][brick].hits;
 
                 if(currentHits == 0) {
+                    widthCounter += currentWidth;
                     continue;
                 }
 
@@ -73,6 +74,75 @@ class Level {
                     currentHits));
 
                 widthCounter += currentWidth;
+            }
+        }
+    }
+
+    checkBricksHitBy(ball) {
+
+        for(let i = this.bricks.length - 1; i >= 0 ; i--) {
+            // bottom edge
+            let xCond = (ball.x + ball.r) > this.bricks[i].x &&
+                (ball.x - ball.r) < this.bricks[i].x + this.bricks[i].w;
+            let yCond = (ball.y + ball.r) > this.bricks[i].y + this.bricks[i].h  &&
+                (ball.y - ball.r) < this.bricks[i].y + this.bricks[i].h;
+            if(xCond && yCond) {
+                this.bricks[i].hits -= 1;
+                this.bricks[i].setColourByHits();
+                ball.vy *= -1;
+                ball.y = this.bricks[i].y + this.bricks[i].h + ball.r + 1;
+                if(this.bricks[i].hits == 0) {
+                    let deleted = this.bricks.splice(i, 1);
+                }
+                break;
+            }
+
+            // left edge
+            xCond = (ball.x + ball.r) > this.bricks[i].x &&
+                (ball.x - ball.r) < this.bricks[i].x;
+            yCond = (ball.y + ball.r) > this.bricks[i].y &&
+                (ball.y - ball.r) < this.bricks[i].y + this.bricks[i].h;
+            if(xCond && yCond) {
+                this.bricks[i].hits -= 1;
+                this.bricks[i].setColourByHits();
+                ball.vx*= -1;
+                ball.x = this.bricks[i].x - ball.r - 1;
+                if(this.bricks[i].hits == 0) {
+                    let deleted = this.bricks.splice(i, 1);
+                }
+                break;
+            }
+
+            // right edge
+            xCond = (ball.x + ball.r) > this.bricks[i].x + this.bricks[i].w &&
+                (ball.x - ball.r) < this.bricks[i].x + this.bricks[i].w;
+            yCond = (ball.y + ball.r) > this.bricks[i].y &&
+                (ball.y - ball.r) < this.bricks[i].y + this.bricks[i].h;
+            if(xCond && yCond) {
+                this.bricks[i].hits -= 1;
+                this.bricks[i].setColourByHits();
+                ball.vx*= -1;
+                ball.x = this.bricks[i].x + this.bricks[i].w + ball.r + 1;
+                if(this.bricks[i].hits == 0) {
+                    let deleted = this.bricks.splice(i, 1);
+                }
+                break;
+            }
+
+            // top edge
+            xCond = (ball.x + ball.r) > this.bricks[i].x &&
+                (ball.x - ball.r) < this.bricks[i].x + this.bricks[i].w;
+            yCond = (ball.y + ball.r) > this.bricks[i].y &&
+                (ball.y - ball.r) < this.bricks[i].y;
+            if(xCond && yCond) {
+                this.bricks[i].hits -= 1;
+                this.bricks[i].setColourByHits();
+                ball.vy *= -1;
+                ball.y = this.bricks[i].y - ball.r - 1;
+                if(this.bricks[i].hits == 0) {
+                    let deleted = this.bricks.splice(i, 1);
+                }
+                break;
             }
         }
     }

@@ -41,6 +41,7 @@ let currentGameMode = gameMode.play;
 
 let level;
 
+let ball;
 
 /**
  * p5.js setup function, creates canvas.
@@ -55,6 +56,11 @@ function setup() {
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
     level = new Level(cols1, rows1, layout1);
+
+    let ballR = 7;
+    ball = new Ball(width/2, height - ballR / 2,
+        random(-2, 0), random(-3, -2),
+        ballR);
 }
 
 /**
@@ -67,7 +73,10 @@ function draw() {
 
         break;
         case gameMode.play: {
+            level.checkBricksHitBy(ball);
             level.draw();
+            ball.update();
+            ball.draw();
         }
         break;
         case gameMode.end:
