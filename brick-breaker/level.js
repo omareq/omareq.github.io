@@ -38,8 +38,8 @@ let layout1 = [
     [{width: 16, hits: 0}],
     [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
     [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
-    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
-    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 2}, {width: 2, hits: 2}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 2}, {width: 2, hits: 2}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
     [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
     [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
     [{width: 16, hits: 0}]

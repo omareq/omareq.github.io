@@ -61,7 +61,7 @@ function setup() {
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(255);
+	background(225);
     switch(currentGameMode) {
         case gameMode.start:
 

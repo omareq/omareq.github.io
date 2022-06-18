@@ -40,9 +40,10 @@ class Brick {
         this.hits = hits;
         this.showNumbers = true;
 
-        this.col = color(255, 0, 0);
         if(col != null) {
             this.col = col;
+        } else {
+            this.setColourByHits();
         }
     }
 
@@ -56,6 +57,34 @@ class Brick {
 
     showNumbersOff() {
         this.showNumbers = false;
+    }
+
+    setColourByHits() {
+        switch(this.hits) {
+                case 1:
+                // Change colour to blue
+                this.col = color(41, 103, 204);
+                break;
+                case 2:
+                // Change colour to red
+                this.col = color(204, 41, 52);
+                break;
+                case 3:
+                // Change colour to green
+                this.col = color(41, 204, 74);
+                break;
+                case 4:
+                // Change colour to yellow
+                this.col = color(204, 199, 41);
+                break;
+                case 5:
+                // Change colour to orange
+                this.col = color(204, 109, 41);
+                break;
+                default:
+                    this.col = color(135, 81, 153);
+                break;
+            }
     }
 
     draw() {
