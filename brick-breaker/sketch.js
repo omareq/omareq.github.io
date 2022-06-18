@@ -43,6 +43,8 @@ let level;
 
 let ball;
 
+let paddle;
+
 /**
  * p5.js setup function, creates canvas.
  */
@@ -58,9 +60,11 @@ function setup() {
     level = new Level(cols1, rows1, layout1);
 
     let ballR = 7;
-    ball = new Ball(width/2, height - ballR / 2,
+    ball = new Ball(width/2, 0.94 * height - ballR / 2,
         random(-2, 0), random(-3, -2),
         ballR);
+
+    paddle = new Paddle();
 }
 
 /**
@@ -75,6 +79,15 @@ function draw() {
         case gameMode.play: {
             level.checkBricksHitBy(ball);
             level.draw();
+
+            if(keyIsDown(LEFT_ARROW)) {
+                paddle.moveLeft();
+            } else if(keyIsDown(RIGHT_ARROW)) {
+                paddle.moveRight();
+            }
+            paddle.isHitBy(ball);
+            paddle.draw();
+
             ball.update();
             ball.draw();
         }
