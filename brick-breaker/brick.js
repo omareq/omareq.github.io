@@ -90,7 +90,7 @@ class Brick {
     draw() {
         push();
         fill(this.col);
-        rect(this.x, this.y, this.w, this.h);
+        rect(this.x, this.y, this.w, this.h, 0.2 * this.h);
         pop();
 
         if(this.showNumbers) {
