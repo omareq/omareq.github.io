@@ -10,8 +10,8 @@
  *
  *******************************************************************************
  *
- *                   GNU General Public License V3.0                         
- *                   --------------------------------                        
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
  *
  *   Copyright (C) 2022 Omar Essilfie-Quaye
  *
@@ -35,7 +35,7 @@ let gameMode = {
     play: 2,
     newLevel: 3,
     end: 4
-}
+};
 
 let currentGameMode = gameMode.play;
 
