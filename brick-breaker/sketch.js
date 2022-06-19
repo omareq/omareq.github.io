@@ -32,18 +32,51 @@
 
 let gameMode = {
     start: 1,
-    play: 2,
-    newLevel: 3,
+    newLevel: 2,
+    play: 3,
     end: 4
 };
 
-let currentGameMode = gameMode.play;
+let currentGameMode = gameMode.start;
+
+let newLevelStartTime;
 
 let level;
+
+let selectedLevel = 0;
 
 let ball;
 
 let paddle;
+
+let lives = 3;
+
+let cheatMode = false;
+
+let cheatModeToggleTime = 0;
+
+function showLives() {
+    push();
+    fill(255);
+    textSize(0.03 * height);
+    textAlign(LEFT, BOTTOM);
+    text("Lives: " + lives, 10, height);
+    pop();
+}
+
+function loadNextLevel() {
+    if(selectedLevel >= levelLayouts.length) {
+        currentGameMode = gameMode.end;
+        return;
+    }
+    level = new Level(cols1, rows1, levelLayouts[selectedLevel]);
+    let ballR = 7;
+    ball = new Ball(width/2, 0.94 * height - ballR / 2,
+        random(-2, 0), random(-3, -2),
+        ballR);
+
+    paddle = new Paddle();
+}
 
 /**
  * p5.js setup function, creates canvas.
@@ -57,14 +90,7 @@ function setup() {
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
-    level = new Level(cols1, rows1, layout1);
-
-    let ballR = 7;
-    ball = new Ball(width/2, 0.94 * height - ballR / 2,
-        random(-2, 0), random(-3, -2),
-        ballR);
-
-    paddle = new Paddle();
+    loadNextLevel();
 }
 
 /**
@@ -73,10 +99,36 @@ function setup() {
 function draw() {
 	background(225);
     switch(currentGameMode) {
-        case gameMode.start:
-
+        case gameMode.start: {
+            push();
+            fill(135, 81, 153);
+            textAlign(CENTER, CENTER);
+            textSize(0.1 * height);
+            text("Press Enter to Start", width / 2, height / 2);
+            textSize(0.05 * height);
+            text("Press Left Arrow and Right Arrow to move paddle",
+                width / 2, 3 * height / 4);
+            pop();
+            if(keyIsPressed && (keyCode == ENTER)) {
+                currentGameMode = gameMode.newLevel;
+                newLevelStartTime = millis();
+            }
+        }
+        break;
+        case gameMode.newLevel: {
+            level.draw();
+            paddle.draw();
+            ball.draw();
+            showLives();
+            if(keyIsPressed && (keyCode == ENTER)) {
+                if(millis() - newLevelStartTime > 1000) {
+                    currentGameMode = gameMode.play;
+                }
+            }
+        }
         break;
         case gameMode.play: {
+            showLives();
             level.checkBricksHitBy(ball);
             level.draw();
 
@@ -85,15 +137,55 @@ function draw() {
             } else if(keyIsDown(RIGHT_ARROW)) {
                 paddle.moveRight();
             }
+
+            if(keyIsPressed && key.toLowerCase() == "c") {
+                if(millis() - cheatModeToggleTime > 1000) {
+                    cheatMode = !cheatMode;
+                }
+            }
+
+            if(cheatMode) {
+                paddle.x = ball.x - paddle.w / 2;
+                paddle.checkEdges();
+            }
             paddle.isHitBy(ball);
             paddle.draw();
 
             ball.update();
             ball.draw();
+
+            if(ball.y > paddle.y) {
+                lives--;
+
+                if(lives == 0) {
+                    currentGameMode = gameMode.end;
+                    return;
+                }
+
+                currentGameMode = gameMode.newLevel;
+                newLevelStartTime = millis();
+                paddle = new Paddle();
+                let ballR = 7;
+                ball = new Ball(width/2, 0.94 * height - ballR / 2,
+                    random(-2, 0), random(-3, -2),
+                    ballR);
+            }
+
+            if(level.win()) {
+                currentGameMode = gameMode.newLevel;
+                selectedLevel++;
+                loadNextLevel();
+            }
         }
         break;
-        case gameMode.end:
-
+        case gameMode.end: {
+            push();
+            fill(135, 81, 153);
+            textAlign(CENTER, CENTER);
+            textSize(0.1 * height);
+            text("Game Over", width / 2, height / 2);
+            pop();
+        }
         break;
     }
 }

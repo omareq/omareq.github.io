@@ -30,21 +30,6 @@
  *
  *****************************************************************************/
 
-let cols1 = 16;
-
-let rows1 = 8;
-
-let layout1 = [
-    [{width: 16, hits: 0}],
-    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
-    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
-    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 2}, {width: 2, hits: 2}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
-    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 2}, {width: 2, hits: 2}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
-    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
-    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
-    [{width: 16, hits: 0}]
-];
-
 class Level {
     constructor(cols, rows, layout) {
         this.cols = cols;
@@ -55,7 +40,7 @@ class Level {
 
         this.bricks = [];
 
-        for(let row = 0; row < this.rows; row++) {
+        for(let row = 0; row < layout.length; row++) {
             let widthCounter = 0;
             for(let brick = 0; brick < layout[row].length; brick++) {
                 let currentWidth = layout[row][brick].width;
@@ -147,9 +132,72 @@ class Level {
         }
     }
 
+    win() {
+        return this.bricks.length == 0;
+    }
+
     draw() {
         for(let i = 0; i < this.bricks.length; i++) {
             this.bricks[i].draw();
         }
     }
 }
+
+let cols1 = 16;
+
+let rows1 = 8;
+
+// Author: Omar Essilfie-Quaye
+let layout1 = [
+    [{width: 16, hits: 0}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 2}, {width: 2, hits: 2}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 2}, {width: 2, hits: 2}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 16, hits: 0}]
+];
+
+// Author: Omar Essilfie-Quaye
+let layout2 = [
+    [{width: 16, hits: 0}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 4}, {width: 2, hits: 5}, {width: 2, hits: 5}, {width: 2, hits: 4}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 4}, {width: 2, hits: 5}, {width: 2, hits: 5}, {width: 2, hits: 4}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 16, hits: 0}]
+];
+
+// Author: Naomi
+let layout3 = [
+    [{width: 16, hits: 0}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 5}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 5}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 5}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 5}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 4}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 4}],
+    [{width: 2, hits: 1}, {width: 2, hits: 4}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 4}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 16, hits: 0}]
+];
+
+// Author: Naomi
+let layout4 = [
+    [{width: 16, hits: 0}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 16, hits: 0}]
+];
+
+let levelLayouts = [
+    layout1,
+    layout2,
+    layout3,
+    layout4
+];

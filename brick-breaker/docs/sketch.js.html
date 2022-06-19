@@ -38,8 +38,8 @@
  *
  *******************************************************************************
  *
- *                   GNU General Public License V3.0                         
- *                   --------------------------------                        
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
  *
  *   Copyright (C) 2022 Omar Essilfie-Quaye
  *
@@ -58,25 +58,164 @@
  *
  *****************************************************************************/
 
+let gameMode = {
+    start: 1,
+    newLevel: 2,
+    play: 3,
+    end: 4
+};
+
+let currentGameMode = gameMode.start;
+
+let newLevelStartTime;
+
+let level;
+
+let selectedLevel = 0;
+
+let ball;
+
+let paddle;
+
+let lives = 3;
+
+let cheatMode = false;
+
+let cheatModeToggleTime = 0;
+
+function showLives() {
+    push();
+    fill(255);
+    textSize(0.03 * height);
+    textAlign(LEFT, BOTTOM);
+    text("Lives: " + lives, 10, height);
+    pop();
+}
+
+function loadNextLevel() {
+    if(selectedLevel >= levelLayouts.length) {
+        currentGameMode = gameMode.end;
+        return;
+    }
+    level = new Level(cols1, rows1, levelLayouts[selectedLevel]);
+    let ballR = 7;
+    ball = new Ball(width/2, 0.94 * height - ballR / 2,
+        random(-2, 0), random(-3, -2),
+        ballR);
+
+    paddle = new Paddle();
+}
+
 /**
  * p5.js setup function, creates canvas.
  */
 function setup() {
 	let cnvSize;
 	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
+		cnvSize = 0.9 * windowHeight;
 	} else {
 		cnvSize = windowWidth;
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
+    loadNextLevel();
 }
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(0);
+	background(225);
+    switch(currentGameMode) {
+        case gameMode.start: {
+            push();
+            fill(135, 81, 153);
+            textAlign(CENTER, CENTER);
+            textSize(0.1 * height);
+            text("Press Enter to Start", width / 2, height / 2);
+            textSize(0.05 * height);
+            text("Press Left Arrow and Right Arrow to move paddle",
+                width / 2, 3 * height / 4);
+            pop();
+            if(keyIsPressed &amp;&amp; (keyCode == ENTER)) {
+                currentGameMode = gameMode.newLevel;
+                newLevelStartTime = millis();
+            }
+        }
+        break;
+        case gameMode.newLevel: {
+            level.draw();
+            paddle.draw();
+            ball.draw();
+            showLives();
+            if(keyIsPressed &amp;&amp; (keyCode == ENTER)) {
+                if(millis() - newLevelStartTime > 1000) {
+                    currentGameMode = gameMode.play;
+                }
+            }
+        }
+        break;
+        case gameMode.play: {
+            showLives();
+            level.checkBricksHitBy(ball);
+            level.draw();
+
+            if(keyIsDown(LEFT_ARROW)) {
+                paddle.moveLeft();
+            } else if(keyIsDown(RIGHT_ARROW)) {
+                paddle.moveRight();
+            }
+
+            if(keyIsPressed &amp;&amp; key.toLowerCase() == "c") {
+                if(millis() - cheatModeToggleTime > 1000) {
+                    cheatMode = !cheatMode;
+                }
+            }
+
+            if(cheatMode) {
+                paddle.x = ball.x - paddle.w / 2;
+                paddle.checkEdges();
+            }
+            paddle.isHitBy(ball);
+            paddle.draw();
+
+            ball.update();
+            ball.draw();
+
+            if(ball.y > paddle.y) {
+                lives--;
+
+                if(lives == 0) {
+                    currentGameMode = gameMode.end;
+                    return;
+                }
+
+                currentGameMode = gameMode.newLevel;
+                newLevelStartTime = millis();
+                paddle = new Paddle();
+                let ballR = 7;
+                ball = new Ball(width/2, 0.94 * height - ballR / 2,
+                    random(-2, 0), random(-3, -2),
+                    ballR);
+            }
+
+            if(level.win()) {
+                currentGameMode = gameMode.newLevel;
+                selectedLevel++;
+                loadNextLevel();
+            }
+        }
+        break;
+        case gameMode.end: {
+            push();
+            fill(135, 81, 153);
+            textAlign(CENTER, CENTER);
+            textSize(0.1 * height);
+            text("Game Over", width / 2, height / 2);
+            pop();
+        }
+        break;
+    }
 }
 
 </code></pre>
@@ -89,12 +228,12 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ball.html">Ball</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Jun 18 2022 19:55:31 GMT+0100 (BST)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Jun 19 2022 14:35:51 GMT+0100 (BST)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
