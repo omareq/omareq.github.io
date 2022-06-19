@@ -71,7 +71,7 @@ class Paddle {
 
         if(xCond && yCond) {
             ball.setVelY(-ball.vy);
-            ball.setX(this.y - ball.r - 1);
+            ball.setY(this.y - ball.r - 1);
         }
     }
 
