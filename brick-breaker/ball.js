@@ -62,6 +62,24 @@ class Ball {
         this.checkEdges();
     }
 
+    setX(newX) {
+        this.x = newX;
+    }
+
+
+    setY(newY) {
+        this.y = newY;
+    }
+
+    setVelX(newVelX) {
+        this.vx = newVelX;
+    }
+
+
+    setVelY(newVelY) {
+        this.vy = newVelY;
+    }
+
     /**
     *   Checks to see if the Ball has left the boundaries of the canvas. If
     *   they have the ball will bounce back with 90% of it's original speed.

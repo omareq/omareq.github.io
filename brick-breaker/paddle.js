@@ -70,8 +70,8 @@ class Paddle {
             ball.y - ball.r < this.y;
 
         if(xCond && yCond) {
-            ball.vy *= -1;
-            ball.y = this.y - ball.r - 1;
+            ball.setVelY(-ball.vy);
+            ball.setX(this.y - ball.r - 1);
         }
     }
 

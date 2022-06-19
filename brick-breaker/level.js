@@ -74,8 +74,8 @@ class Level {
             if(xCond && yCond) {
                 this.bricks[i].hits -= 1;
                 this.bricks[i].setColourByHits();
-                ball.vy *= -1;
-                ball.y = this.bricks[i].y + this.bricks[i].h + ball.r + 1;
+                ball.setVelY(-ball.vy);
+                ball.setY(this.bricks[i].y + this.bricks[i].h + ball.r + 1);
                 if(this.bricks[i].hits == 0) {
                     let deleted = this.bricks.splice(i, 1);
                 }
@@ -90,8 +90,8 @@ class Level {
             if(xCond && yCond) {
                 this.bricks[i].hits -= 1;
                 this.bricks[i].setColourByHits();
-                ball.vx*= -1;
-                ball.x = this.bricks[i].x - ball.r - 1;
+                ball.setVelX(-ball.vx);
+                ball.setX(this.bricks[i].x - ball.r - 1);
                 if(this.bricks[i].hits == 0) {
                     let deleted = this.bricks.splice(i, 1);
                 }
@@ -106,8 +106,8 @@ class Level {
             if(xCond && yCond) {
                 this.bricks[i].hits -= 1;
                 this.bricks[i].setColourByHits();
-                ball.vx*= -1;
-                ball.x = this.bricks[i].x + this.bricks[i].w + ball.r + 1;
+                ball.setVelX(-ball.vx);
+                ball.setX(this.bricks[i].x + this.bricks[i].w + ball.r + 1);
                 if(this.bricks[i].hits == 0) {
                     let deleted = this.bricks.splice(i, 1);
                 }
@@ -122,8 +122,8 @@ class Level {
             if(xCond && yCond) {
                 this.bricks[i].hits -= 1;
                 this.bricks[i].setColourByHits();
-                ball.vy *= -1;
-                ball.y = this.bricks[i].y - ball.r - 1;
+                ball.setVelY(-ball.vy);
+                ball.setY(this.bricks[i].y - ball.r - 1);
                 if(this.bricks[i].hits == 0) {
                     let deleted = this.bricks.splice(i, 1);
                 }
