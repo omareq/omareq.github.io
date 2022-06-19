@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_021",
+            "prev-id": "p_022",
             "status": "active",
             "tags": [
                 "fun"
@@ -347,7 +347,7 @@
             "gif-url": "imgs/p_021.gif",
             "id": "p_021",
             "name": "Cooper-pair-box",
-            "next-id": "p_000",
+            "next-id": "p_022",
             "pic-url": "imgs/p_021.jpg",
             "prev-id": "p_020",
             "status": "active",
@@ -357,6 +357,22 @@
                 "science"
             ],
             "vid-url": "vids/p_021.mp4"
+        },
+        "p_022": {
+            "brief": "A quick brick breaker game",
+            "demo-url": "/brick-breaker/",
+            "docs-url": "/brick-breaker/docs/",
+            "gif-url": "imgs/p_022.gif",
+            "id": "p_022",
+            "name": "Brick breaker",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_022.jpg",
+            "prev-id": "p_021",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_022.mp4"
         }
     }
 }
