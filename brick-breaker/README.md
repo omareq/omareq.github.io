@@ -53,7 +53,7 @@ purple.
 
 Finally place the layout at the bottom of the level.js file and add it to the
 ```levelLayouts``` array.  Don't forget to update the readme with your awesome
-new level design/
+new level design.
 
 ```js
 /**
