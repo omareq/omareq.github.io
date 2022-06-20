@@ -19,7 +19,7 @@ by 8 row brick layout.  Each object contains two variables ```width``` and
 The ```hits``` describes how many times that brick needs to be hit by a ball
 before it is destroyed.
 
-```
+```js
 {width: 2, hits: 1}
 ```
 
@@ -28,13 +28,18 @@ corner of the canvas.  Each row in the array represents a new row of bricks.
 This can be seen below.  Pay attention to the usage of 0 hit bricks as spacers.
 This will allow for more flexibility in level design.
 
-```
+```js
+/**
+ * The layout of the bricks in the example
+ *
+ * @type       {Array<Array<Object>>}
+ */
 let exampleLayout = [
-    [{width: 16, hits: 0}],
+    [{width: 16, hits: 0}], // blank row
     [{width: 16, hits: 1}],
     [{width: 4, hits: 0}, {width: 8, hits: 2}, {width: 4, hits: 0}],
-    [{width: 4, hits: 0}, {width: 4, hits: 3}, {width: 4, hits: 3}],
-    [{width: 16, hits: 0}]
+    [{width: 4, hits: 0}, {width: 4, hits: 3}, {width: 4, hits: 3}], // row is only 12 cols wide
+    [{width: 16, hits: 0}]  // blank row
 ];
 ```
 
@@ -45,6 +50,24 @@ brick.  This is determined up to 5 hits, after that the default colour is
 purple.
 
 ![Example layout](https://omareq.github.io/brick-breaker/imgs/example-layout.png)
+
+Finally place the layout at the bottom of the level.js file and add it to the
+```levelLayouts``` array.  Don't forget to update the readme with your awesome
+new level design/
+
+```js
+/**
+ * An array of all level layouts.
+ *
+ * @type       {Array}
+ */
+let levelLayouts = [
+    layout0,
+    layout1,
+    layout2,
+    layout3
+];
+````
 
 ### Level 1
 

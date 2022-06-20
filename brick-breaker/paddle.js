@@ -30,8 +30,15 @@
  *
  *****************************************************************************/
 
+/**
+ * @class      Paddle () This class describes a paddle as controlled by a player
+ *             to bounce the ball.
+ */
 class Paddle {
 
+    /**
+     * Constructs a new instance of Paddle.
+     */
     constructor() {
         this.w = 0.15 * width;
         this.h = 0.025 * height;
@@ -42,16 +49,27 @@ class Paddle {
         this.col = color(29, 3, 51);
     }
 
+    /**
+     * A function to move the paddle to the left
+     */
     moveLeft() {
         this.x -= this.dx;
         this.checkEdges();
     }
 
+    /**
+     * A function to move the paddle to the right
+     */
     moveRight() {
         this.x += this.dx;
         this.checkEdges();
     }
 
+    /**
+     * A function to check if the paddle has gone off the edge of the screen.
+     * Stops the paddle at the edge of the screen once it goes goes past the
+     * boundaries.
+     */
     checkEdges() {
         if(this.x < 0) {
             this.x = 0;
@@ -63,6 +81,13 @@ class Paddle {
         }
     }
 
+    /**
+     * Determines whether the paddle is hit by the ball.  If it is it will
+     * reposition the ball so that it hasn't gone beyond the top surface of the
+     * paddle.
+     *
+     * @param      {Ball}  ball    The ball object
+     */
     isHitBy(ball) {
         let xCond = ball.x + ball.r > this.x &&
             ball.x - ball.r < this.x + this.w;
@@ -75,6 +100,9 @@ class Paddle {
         }
     }
 
+    /**
+     * A function to draw the paddle on the canvas.
+     */
     draw() {
         push();
         fill(this.col);

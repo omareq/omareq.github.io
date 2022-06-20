@@ -31,7 +31,7 @@
  *****************************************************************************/
 
 /**
-*   Class representing a Ball
+*   @class Ball() Class representing a Ball
 */
 class Ball {
     /**
@@ -42,7 +42,6 @@ class Ball {
     *   @param {number} vx - The initial x velocity of the Ball.
     *   @param {number} vy - The initial y velocity of the Ball.
     *   @param {number} r  - The radius of the Ball.
-    *   @param {number} m  - The mass of the Ball.
     */
     constructor(x, y, vx, vy, r) {
         this.x = x;
@@ -62,20 +61,39 @@ class Ball {
         this.checkEdges();
     }
 
+    /**
+     * Sets the x position of the ball
+     *
+     * @param      {number}  newX    The new x position of the ball
+     */
     setX(newX) {
         this.x = newX;
     }
 
-
+    /**
+     * Sets the y position of the ball
+     *
+     * @param      {number}  newY    The new y position of the ball
+     */
     setY(newY) {
         this.y = newY;
     }
 
+    /**
+     * Sets the x component of the velocity of the ball.
+     *
+     * @param      {number}  newVelX  The new x velocity of the ball
+     */
     setVelX(newVelX) {
         this.vx = newVelX;
     }
 
 
+    /**
+     * Sets the y component of the velocity of the ball.
+     *
+     * @param      {number}  newVelY  The new y velocity of the ball
+     */
     setVelY(newVelY) {
         this.vy = newVelY;
     }

@@ -30,6 +30,19 @@
  *
  *****************************************************************************/
 
+/**
+ * Enum of the possible game states
+ *
+ * @type       {Enum}
+ *
+ * @example
+ * let gameMode = {
+ *    start: 1,
+ *    newLevel: 2,
+ *    play: 3,
+ *    end: 4
+ *};
+ */
 let gameMode = {
     start: 1,
     newLevel: 2,
@@ -37,24 +50,96 @@ let gameMode = {
     end: 4
 };
 
+/**
+ * The current game mode
+ *
+ * @type       {gameMode}
+ *
+ * @see gameMode
+ *
+ * @example
+ * let currentGameMode = gameMode.start;
+ */
 let currentGameMode = gameMode.start;
 
+/**
+ * Saves the start of a new level in milliseconds to provide debouncing of key
+ * presses
+ *
+ * @type       {number}
+ */
 let newLevelStartTime;
 
+/**
+ * Stores the current level object
+ *
+ * @type       {Level}
+ *
+ * @see level
+ */
 let level;
 
+/**
+ * The current level number.  Used to select the correct layout at the start of
+ * each new level.
+ *
+ * @type       {number}
+ *
+ * @see levelLayouts
+ * @see Level
+ * @see loadNextLevel
+ */
 let selectedLevel = 0;
 
+/**
+ * The ball object
+ *
+ * @type       {Ball}
+ *
+ * @see Ball
+ */
 let ball;
 
+/**
+ * The paddle object
+ *
+ * @type       {Paddle}
+ *
+ * @see Paddle
+ */
 let paddle;
 
+/**
+ * The number of lives remaining
+ *
+ * @type       {number}
+ *
+ * @see showLives
+ */
 let lives = 3;
 
+/**
+ * Flag to see if cheat mode is on.  When true the paddle will automatically
+ * position itself under the ball so that the user doesn't have to.  This is a
+ * useful debugging tool when the game needs to be played for long periods.
+ *
+ * @type       {boolean}
+ */
 let cheatMode = false;
 
+/**
+ * Saves the start time of cheat mode in milliseconds to provide debouncing to
+ * key presses.
+ *
+ * @type       {number}
+ */
 let cheatModeToggleTime = 0;
 
+/**
+ * Shows the number of lives remaining on the canvas.
+ *
+ * @see lives
+ */
 function showLives() {
     push();
     fill(255);
@@ -64,6 +149,13 @@ function showLives() {
     pop();
 }
 
+/**
+ * Loads the next level from the levelLayouts array and resets the ball and
+ * paddle to the centre.
+ *
+ * @see levelLayouts
+ * @see Level
+ */
 function loadNextLevel() {
     if(selectedLevel >= levelLayouts.length) {
         currentGameMode = gameMode.end;
