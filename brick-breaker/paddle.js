@@ -84,9 +84,17 @@ class Paddle {
     /**
      * Determines whether the paddle is hit by the ball.  If it is it will
      * reposition the ball so that it hasn't gone beyond the top surface of the
-     * paddle.
+     * paddle.  The angle the ball leaves the paddle is determined by the
+     * position it strikes the paddle.  This goes from -45 to 45 degrees.
+     *
      *
      * @param      {Ball}  ball    The ball object
+     *
+     * @example
+     *  let xDiff = this.x + this.w / 2 - ball.x;
+     *  let angle = map(xDiff,
+     *      -this.w/2, this.w/2,
+     *      QUARTER_PI, -QUARTER_PI);
      */
     isHitBy(ball) {
         let xCond = ball.x + ball.r > this.x &&
@@ -95,7 +103,19 @@ class Paddle {
             ball.y - ball.r < this.y;
 
         if(xCond && yCond) {
-            ball.setVelY(-ball.vy);
+            let currentSpeed = ball.getSpeed();
+            let xDiff = this.x + this.w / 2 - ball.x;
+            let angle = map(xDiff,
+                -this.w/2, this.w/2,
+                QUARTER_PI, -QUARTER_PI);
+
+            let newVelX = currentSpeed * sin(angle);
+            let newVelY = -currentSpeed * cos(angle);
+            console.log("new vel y: " + newVelY);
+            console.log("ball.vy: " + ball.vy);
+            ball.setVelX(newVelX);
+            ball.setVelY(newVelY);
+
             ball.setY(this.y - ball.r - 1);
         }
     }

@@ -136,6 +136,16 @@ let cheatMode = false;
 let cheatModeToggleTime = 0;
 
 /**
+ * Noise offset for paddle position when it is cheat mode.  This stops the
+ * paddle from always sending the ball straight up.
+ *
+ * @type       {number}
+ *
+ * @see Paddle
+ */
+let noiseOffset = 0;
+
+/**
  * Shows the number of lives remaining on the canvas.
  *
  * @see lives
@@ -237,7 +247,9 @@ function draw() {
             }
 
             if(cheatMode) {
-                paddle.x = ball.x - paddle.w / 2;
+                let n = noise(noiseOffset) * paddle.w;
+                noiseOffset += 0.01;
+                paddle.x = ball.x - n;
                 paddle.checkEdges();
             }
             paddle.isHitBy(ball);

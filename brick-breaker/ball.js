@@ -99,6 +99,15 @@ class Ball {
     }
 
     /**
+     * Gets the speed of the ball.
+     *
+     * @return     {number}  The speed.
+     */
+    getSpeed() {
+        return sqrt(pow(this.vx, 2) + pow(this.vy, 2));
+    }
+
+    /**
     *   Checks to see if the Ball has left the boundaries of the canvas. If
     *   they have the ball will bounce back with 90% of it's original speed.
     */
