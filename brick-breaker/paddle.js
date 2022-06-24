@@ -111,8 +111,6 @@ class Paddle {
 
             let newVelX = currentSpeed * sin(angle);
             let newVelY = -currentSpeed * cos(angle);
-            console.log("new vel y: " + newVelY);
-            console.log("ball.vy: " + ball.vy);
             ball.setVelX(newVelX);
             ball.setVelY(newVelY);
 
