@@ -247,9 +247,30 @@ function draw() {
             }
 
             if(cheatMode) {
-                let n = noise(noiseOffset) * paddle.w;
+                let noiseAmp = 0.3;
+                let n = noise(noiseOffset) * noiseAmp * paddle.w;
                 noiseOffset += 0.01;
-                paddle.x = ball.x - n;
+
+                let goalBrickPos = level.posHighestBrick();
+                let goalAngle = atan2(ball.x - goalBrickPos.x,
+                    ball.y - goalBrickPos.y);
+
+                goalAngle = constrain(goalAngle, -QUARTER_PI, QUARTER_PI);
+
+                let goalPaddleOffset = map(goalAngle,
+                    QUARTER_PI, -QUARTER_PI,
+                    0, paddle.w);
+
+                let goalPaddleX = ball.x - goalPaddleOffset - n;
+                goalPaddleX = constrain(goalPaddleX,
+                    ball.x - paddle.w,
+                    ball.x + paddle.w);
+
+                let errorPaddleX = paddle.x - goalPaddleX;
+                let kp = 0.2;
+                let deltaPaddleX = -kp * errorPaddleX;
+
+                paddle.setX(paddle.x + deltaPaddleX);
                 paddle.checkEdges();
             }
             paddle.isHitBy(ball);

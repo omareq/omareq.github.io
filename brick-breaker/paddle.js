@@ -66,6 +66,26 @@ class Paddle {
     }
 
     /**
+     * Sets the x position of the paddle.  Will limit the movement of the paddle
+     * to Paddle.dx which is the maximum distanced the paddle can move in the
+     * x direction.
+     *
+     * @param      {number}  newX    The new x position of the paddle
+     */
+    setX(newX) {
+        let diff = this.x - newX;
+        let goalX = newX;
+        if(abs(diff) > this.dx) {
+            let signDiff = -1;
+            if(diff < 0) {
+                signDiff = 1;
+            }
+            goalX = this.x + this.dx * signDiff;
+        }
+        this.x = goalX;
+    }
+
+    /**
      * A function to check if the paddle has gone off the edge of the screen.
      * Stops the paddle at the edge of the screen once it goes goes past the
      * boundaries.

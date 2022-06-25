@@ -169,6 +169,28 @@ class Level {
         return this.bricks.length == 0;
     }
 
+    /**
+     * { function_description }
+     *
+     * @return     {Object}  { description_of_the_return_value }
+     */
+    posHighestBrick() {
+        let recordHits = 0;
+        let recordPosX;
+        let recordPosY;
+        for(let i = 0; i < this.bricks.length; i++) {
+            if(this.bricks[i].hits > recordHits) {
+                recordHits = this.bricks[i].hits;
+                recordPosX = this.bricks[i].x;
+                recordPosY = this.bricks[i].y;
+            }
+        }
+        return {x: recordPosX, y: recordPosY};
+    }
+
+    /**
+     * Draw all the bricks on the canvas.
+     */
     draw() {
         for(let i = 0; i < this.bricks.length; i++) {
             this.bricks[i].draw();
