@@ -266,7 +266,7 @@ function draw() {
                     push();
                     noFill();
                     stroke(225, 20, 20);
-                    strokeWeight(0.2 * ball.r);
+                    strokeWeight(0.5 * ball.r);
                     ellipse(goalBrickPos.x, goalBrickPos.y,
                         4 * ball.r, 4 * ball.r);
                     line(goalBrickPos.x - 4 * ball.r, goalBrickPos.y,
