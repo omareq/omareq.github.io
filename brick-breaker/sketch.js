@@ -136,6 +136,13 @@ let cheatMode = false;
 let cheatModeToggleTime = 0;
 
 /**
+ * Show the aim point that the AI for the cheat mode wants to hit
+ *
+ * @type       {boolean}
+ */
+let showAimPoint = true;
+
+/**
  * Noise offset for paddle position when it is cheat mode.  This stops the
  * paddle from always sending the ball straight up.
  *
@@ -254,6 +261,20 @@ function draw() {
                 let goalBrickPos = level.posHighestBrick();
                 let goalAngle = atan2(ball.x - goalBrickPos.x,
                     ball.y - goalBrickPos.y);
+
+                if(showAimPoint) {
+                    push();
+                    noFill();
+                    stroke(225, 20, 20);
+                    strokeWeight(0.2 * ball.r);
+                    ellipse(goalBrickPos.x, goalBrickPos.y,
+                        4 * ball.r, 4 * ball.r);
+                    line(goalBrickPos.x - 4 * ball.r, goalBrickPos.y,
+                        goalBrickPos.x + 4 * ball.r, goalBrickPos.y);
+                    line(goalBrickPos.x, goalBrickPos.y - 4 * ball.r,
+                        goalBrickPos.x, goalBrickPos.y + 4 * ball.r);
+                    pop();
+                }
 
                 goalAngle = constrain(goalAngle, -QUARTER_PI, QUARTER_PI);
 
