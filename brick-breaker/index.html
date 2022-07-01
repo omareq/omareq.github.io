@@ -64,6 +64,123 @@
     </section>
 
     <div>
+      <section class="container" style="padding-top: 10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> It's Just Another Game</h2>
+            <p>
+              Brick breaker is a classic game that his been created many times
+              by many programmers over the years.  This is just my quick and
+              dirty attempt to replicate it.  No fancy bells and whistles, just
+              plain old simple Brick Breaker.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container" style="padding-top: 10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> Game Play</h2>
+            <p>
+              It is really simple use the arrows to move the paddle left and
+              right at the bottom of the screen.  Do not let the ball fall below
+              the paddle or you loose a life.  You only have 3 lives to destroy
+              every brick in the level.
+            </p>
+
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container" style="padding-top: 10px">
+        <div class="row text-left">
+          <div class="col-sm-8">
+            <h5> Bricks </h5>
+            <p>
+              It's not hard hit a brick with the ball to destroy it.  If the
+              brick has a higher number on it then it means you need to hit it
+              more to destroy it.
+            </p>
+          </div>
+
+          <div class="col-sm-4">
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container" style="padding-top: 10px">
+        <div class="row text-left">
+          <div class="col-sm-8">
+            <h5> Paddle </h5>
+            <p>
+              When the ball hits the paddle it goes up.  Well ish...
+            </p>
+            <p>
+              If you hit the ball with the left side of the paddle then it will
+              go to the left.  If you hit it with the right side of the paddle
+              it will go to the right.  This gives you some ability to aim the
+              ball.
+            </p>
+          </div>
+
+          <div class="col-sm-4">
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container" style="padding-top: 10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> Too Lazy to Play? Me too! </h2>
+            <p>
+              If you don't feel like actually moving the paddle about with your
+              hands that's okay I didn't feel like doing that either.  If press
+              the "c" key then you will activate cheat mode and the paddle will
+              move itself under the ball.
+            </p>
+            <h5> Aim Point </h5>
+             <p>
+              The paddle will aim for a particular brick.  The current mode is
+              to aim for the brick with the highest number of hits required to
+              destroy it.  If there is more than one then it will priorities
+              based on position on the screen.  Starting from the top row the
+              AI will prefer bricks from left to right then go down the rows.
+              If the brick is hit and no longer has the highest value it will
+              move on to another brick.
+            </p>
+            <h5> AI Limits </h5>
+            <p>
+              There are a few limits placed on the AI.  It can only move the
+              paddle at the same speed as a human, just to make it fair.  When
+              the aim point of the ball moves then the paddle will smoothly
+              transition from it's current position to it's goal position using
+              a PID loop.  In this case only the proportional term is used.
+            </p>
+            <p>
+              Also it can't perfectly aim for for the desired brick.  Some
+              Perlin noise is added to the position of the paddle to make it
+              wobble around the goal position.  This is to make it slightly more
+              human.  If the Perlin noise moves the paddle so that the ball will
+              no longer hit the paddle then it is constrained.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
       <section class="container" style="padding-top:10px">
         <div class="row text-left">
           <div class="col-sm-12">
