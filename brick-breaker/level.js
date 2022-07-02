@@ -170,9 +170,10 @@ class Level {
     }
 
     /**
-     * { function_description }
+     * Find the pixel location of the brick with the highest value.  Prefers
+     * leftmost bricks in the highest rows first.
      *
-     * @return     {Object}  { description_of_the_return_value }
+     * @return     {p5.Vector}  The pixel location of the brick found
      */
     posHighestBrick() {
         let recordHits = 0;
@@ -185,7 +186,7 @@ class Level {
                 recordPosY = this.bricks[i].y;
             }
         }
-        return {x: recordPosX, y: recordPosY};
+        return createVector(recordPosX, recordPosY);
     }
 
     /**

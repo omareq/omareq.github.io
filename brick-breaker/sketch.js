@@ -143,6 +143,13 @@ let cheatModeToggleTime = 0;
 let showAimPoint = true;
 
 /**
+ * The position vector for the AI target location
+ *
+ * @type       {p5.Vector}
+ */
+let goalAimPoint;
+
+/**
  * Noise offset for paddle position when it is cheat mode.  This stops the
  * paddle from always sending the ball straight up.
  *
@@ -259,20 +266,30 @@ function draw() {
                 noiseOffset += 0.01;
 
                 let goalBrickPos = level.posHighestBrick();
-                let goalAngle = atan2(ball.x - goalBrickPos.x,
-                    ball.y - goalBrickPos.y);
+
+                if(goalAimPoint == undefined) {
+                    goalAimPoint = goalBrickPos;
+                }
+
+                let aimPointError = goalBrickPos.sub(goalAimPoint);
+                let aimPointKp = 0.05;
+                let deltaAimpoint = aimPointError.mult(aimPointKp);
+                goalAimPoint = goalAimPoint.add(deltaAimpoint);
+
+                let goalAngle = atan2(ball.x - goalAimPoint.x,
+                    ball.y - goalAimPoint.y);
 
                 if(showAimPoint) {
                     push();
                     noFill();
                     stroke(225, 20, 20);
                     strokeWeight(0.5 * ball.r);
-                    ellipse(goalBrickPos.x, goalBrickPos.y,
+                    ellipse(goalAimPoint.x, goalAimPoint.y,
                         4 * ball.r, 4 * ball.r);
-                    line(goalBrickPos.x - 4 * ball.r, goalBrickPos.y,
-                        goalBrickPos.x + 4 * ball.r, goalBrickPos.y);
-                    line(goalBrickPos.x, goalBrickPos.y - 4 * ball.r,
-                        goalBrickPos.x, goalBrickPos.y + 4 * ball.r);
+                    line(goalAimPoint.x - 4 * ball.r, goalAimPoint.y,
+                        goalAimPoint.x + 4 * ball.r, goalAimPoint.y);
+                    line(goalAimPoint.x, goalAimPoint.y - 4 * ball.r,
+                        goalAimPoint.x, goalAimPoint.y + 4 * ball.r);
                     pop();
                 }
 
