@@ -43,6 +43,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Quadruped Robot IK
 - [ ]   Recursive Integration
 - [ ]	Super Hexagon
+- [ ]	Tetris
 - [ ]	Tic Tac Toe
 - [ ]	Turtle Draw Program
 
