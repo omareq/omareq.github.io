@@ -22,31 +22,29 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]	Finish Antenna Calculator
 - [ ]	Finish Ninja Game
 - [ ]   Finish texType Docs and rest of texType/todo
-- [ ]   Add Caesar Cipher
-- [ ]	Add Sliding Puzzle Game
-- [ ]	Turtle Draw Program
-- [ ]	Super Hexagon
-- [ ]	Brick Breaker
-- [ ]	Minesweeper
-- [ ]	Checkers
-- [ ]	Crazy 8's Card Game
-- [ ]	Knight's Tour Using Warnsdorff's Rule
-- [ ]	PDE Solver
-- [ ]	Mesh Generation Delaunay Triangles
-- [ ]	Tic Tac Toe
-- [ ]	Connect Four
-- [ ]   Optics ABCD Matrix
-- [ ]   Optical resonator stability
-- [ ]   Monte Carlo Integration
-- [ ]   Implicit iterative integration
-- [ ]   Recursive Integration
 - [ ]   Black Body Radiance calculator
-- [ ]   Interpolation Methods
-- [ ]   Quadruped Robot IK
-- [ ]   Missile Command Arcade Game
-- [ ]   Perlin noise generation
+- [ ]   Caesar Cipher
+- [ ]	Checkers
+- [ ]	Connect Four
+- [ ]	Crazy 8's Card Game
 - [ ]   Hangman Game
+- [ ]   Implicit iterative integration
+- [ ]   Interpolation Methods
 - [ ]   Ising Model
+- [ ]	Knight's Tour Using Warnsdorff's Rule
+- [ ]	Mesh Generation Delaunay Triangles
+- [ ]	Minesweeper
+- [ ]   Missile Command Arcade Game
+- [ ]   Monte Carlo Integration
+- [ ]   Optical resonator stability
+- [ ]   Optics ABCD Matrix
+- [ ]	PDE Solver
+- [ ]   Perlin noise generation
+- [ ]   Quadruped Robot IK
+- [ ]   Recursive Integration
+- [ ]	Super Hexagon
+- [ ]	Tic Tac Toe
+- [ ]	Turtle Draw Program
 
 ## License
 
