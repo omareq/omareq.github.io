@@ -33,10 +33,10 @@
 class Tile {
     constructor(north, east, south, west, gridSize) {
         this.north = new Wall(north, false, gridSize);
-        this.east  = new Wall(east , false, gridSize);
+        this.east = new Wall(east , false, gridSize);
         this.south = new Wall(south, false, gridSize);
-        this.west  = new Wall(west , false, gridSize);
-        this.gridSize  = gridSize;
+        this.west = new Wall(west , false, gridSize);
+        this.gridSize = gridSize;
         this.visit = 0;
         this.order = 0;
         this.isBlack = false;
@@ -87,9 +87,9 @@ class Tile {
 
     randomiseVictims(probability) {
         const randNorth = this.north.getIsWall() && ! boolean(int(random(0, probability)));
-        const randEast  = this.east.getIsWall()  && ! boolean(int(random(0, probability)));
+        const randEast = this.east.getIsWall() && ! boolean(int(random(0, probability)));
         const randSouth = this.south.getIsWall() && ! boolean(int(random(0, probability)));
-        const randWest  = this.west.getIsWall()  && ! boolean(int(random(0, probability)));
+        const randWest = this.west.getIsWall() && ! boolean(int(random(0, probability)));
 
         this.north.setVictim(randNorth);
         this.east.setVictim(randEast);

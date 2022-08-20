@@ -40,7 +40,7 @@ class Room {
 
         // let emptyTile = Tile(false, false, false, false, this.gridSize);
         for(let x = 0; x < this.mapX; x++) {
-            let emptyCol= []
+            let emptyCol= [];
             for(let y = 0; y < this.mapY; y++) {
                 emptyCol.push(new Tile(false, false, false, false,
                     this.gridSize));
@@ -107,13 +107,13 @@ class Room {
     resetOrder(pos) {
         const x = int(pos.x);
         const y = int(pos.y);
-        this.grid[x][y].resetOrder()
+        this.grid[x][y].resetOrder();
     }
 
     getOrder(pos) {
         const x = int(pos.x);
         const y = int(pos.y);
-        return this.grid[x][y].getOrder()
+        return this.grid[x][y].getOrder();
     }
 
 
@@ -121,9 +121,9 @@ class Room {
         for(let y = 0; y < this.mapY; y++) {
             for(let x = 0; x < this.mapX; x++) {
                 let randNorth = ! boolean(int(random(0, probability)));
-                let randEast  = ! boolean(int(random(0, probability)));
+                let randEast = ! boolean(int(random(0, probability)));
                 let randSouth = ! boolean(int(random(0, probability)));
-                let randWest  = ! boolean(int(random(0, probability)));
+                let randWest = ! boolean(int(random(0, probability)));
 
                 if(x==0 || this.grid[x - 1][y].hasWall("east")) {
                     randWest = true;
