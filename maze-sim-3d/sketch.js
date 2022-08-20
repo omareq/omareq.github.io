@@ -79,10 +79,10 @@ function setup() {
     robot.setMaze(arena);
 
 
-    // camera(gridSize * arena.mapX * 0.5, gridSize * arena.mapY * 0.5,
-    //    250, gridSize * arena.mapX * 0.5, gridSize * arena.mapY * 0.5,
-    //    0, 0, 1, 0);
-    // cameraUpdate(robot, gridSize);
+    camera(gridSize * arena.mapX * 0.5, gridSize * arena.mapY * 0.5,
+       250, gridSize * arena.mapX * 0.5, gridSize * arena.mapY * 0.5,
+       0, 0, 1, 0);
+    cameraUpdate(robot, gridSize);
     // thread.start_new_thread(runSimulation, ());
     runSimulation();
 
@@ -98,7 +98,7 @@ function draw() {
     const lightZ = lightX;
     pointLight(255, 255, 255, lightX, lightY, lightZ);
     ambientLight(100, 100, 100);
-    // cameraUpdate(robot, gridSize);
+    cameraUpdate(robot, gridSize);
     arena.show();
     robot.show();
     console.log(frameRate());
