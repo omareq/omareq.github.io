@@ -213,16 +213,21 @@ class Tile {
     }
 
     show() {
+        let pg = createGraphics(this.gridSize, this.gridSize);
+
         const grey = 225;
         const black = 0;
         const white = 255;
         push();
         if(this.isBlack) {
+            pg.background(black);
             fill(black);
         } else if(this.isSilver) {
             fill(grey);
+            pg.background(grey);
         } else {
             fill(white);
+            pg.background(white);
         }
 
         stroke(white);
@@ -256,51 +261,43 @@ class Tile {
             pop();
         }
 
+
         if(this.visit > 0) {
             push();
             translate(0, 0, 1);
-            let pg = createGraphics(this.gridSize, this.gridSize);
             pg.textSize(this.gridSize / 2);
             pg.textAlign(CENTER, CENTER);
 
             if(this.isBlack) {
-                fill(white);
+                pg.fill(white);
             } else {
-                fill(black);
+                pg.fill(black);
             }
 
             pg.text(str(this.visit), this.gridSize / 2, this.gridSize / 2);
-            texture(pg);
-            noStroke();
-
-            plane(this.gridSize);
             pop();
         }
 
         if(this.order > 0) {
             push();
-            translate(-this.gridSize/4, -this.gridSize/4, 2);
-            // textSize(this.gridSize/4);
-            // textAlign(CENTER, CENTER);
-            // let pg_order = createGraphics(this.gridSize, this.gridSize);
-            // pg_order.textSize(this.gridSize / 8);
-            // pg_order.textAlign(CENTER, CENTER);
+            translate(0, 0, 2);
+            pg.textSize(this.gridSize / 4);
+            pg.textAlign(CENTER, CENTER);
 
             if(this.isBlack) {
-                fill(white);
+                pg.fill(white);
             } else {
-                fill(black);
+                pg.fill(black);
             }
 
-            // pg_order.text(str(this.order), -this.gridSize/4, -this.gridSize/4);
-            // texture(pg_order);
-            // noStroke();
-
-            // plane(this.gridSize);
-
-            // text(str(this.order), 0 , 0);
+            pg.text(str(this.order), this.gridSize / 4, this.gridSize / 4);
             pop();
         }
+            translate(0, 0, 1);
+            texture(pg);
+            noStroke();
+
+            plane(this.gridSize - 4);
         pop();
     }
 }

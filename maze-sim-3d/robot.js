@@ -419,7 +419,7 @@ class Robot {
         stroke(0);
         // box(this.breadth, this.breadth, this.depth);
         push();
-        fill(225);
+        fill(125);
         noStroke();
 
         scale(this.scale);
