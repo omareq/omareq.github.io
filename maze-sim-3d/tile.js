@@ -258,9 +258,10 @@ class Tile {
 
         if(this.visit > 0) {
             push();
-            translate(0,0, 1);
-            textSize(this.gridSize/2);
-            textAlign(CENTER, CENTER);
+            translate(0, 0, 1);
+            let pg = createGraphics(this.gridSize, this.gridSize);
+            pg.textSize(this.gridSize / 2);
+            pg.textAlign(CENTER, CENTER);
 
             if(this.isBlack) {
                 fill(white);
@@ -268,15 +269,22 @@ class Tile {
                 fill(black);
             }
 
-            text(str(this.visit), 0 , 0);
+            pg.text(str(this.visit), this.gridSize / 2, this.gridSize / 2);
+            texture(pg);
+            noStroke();
+
+            plane(this.gridSize);
             pop();
         }
 
         if(this.order > 0) {
             push();
-            translate(-this.gridSize/4, -this.gridSize/4, 1);
-            textSize(this.gridSize/4);
-            textAlign(CENTER, CENTER);
+            translate(-this.gridSize/4, -this.gridSize/4, 2);
+            // textSize(this.gridSize/4);
+            // textAlign(CENTER, CENTER);
+            // let pg_order = createGraphics(this.gridSize, this.gridSize);
+            // pg_order.textSize(this.gridSize / 8);
+            // pg_order.textAlign(CENTER, CENTER);
 
             if(this.isBlack) {
                 fill(white);
@@ -284,7 +292,13 @@ class Tile {
                 fill(black);
             }
 
-            text(str(this.order), 0 , 0);
+            // pg_order.text(str(this.order), -this.gridSize/4, -this.gridSize/4);
+            // texture(pg_order);
+            // noStroke();
+
+            // plane(this.gridSize);
+
+            // text(str(this.order), 0 , 0);
             pop();
         }
         pop();

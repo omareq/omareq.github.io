@@ -57,7 +57,7 @@ class Room {
 
     hasVictim(pos, direction) {
         const x = int(pos.x);
-        const y = int(pos.y);;
+        const y = int(pos.y);
         return this.grid[x][y].hasVictim(direction);
     }
 

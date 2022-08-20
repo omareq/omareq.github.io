@@ -31,7 +31,7 @@
  *****************************************************************************/
 
 
-let speedUp = 3;
+let speedUp = 10;
 
 class RescueKit {
     constructor(pos, kitSize) {
@@ -52,10 +52,10 @@ class RescueKit {
         box(this.kitSize, this.kitSize, 2);
         push();
         translate(0,0, 2);
-        textSize(this.kitSize);
-        textAlign(CENTER, CENTER);
+        // textSize(this.kitSize);
+        // textAlign(CENTER, CENTER);
         fill(0);
-        text(str(this.kitNum), 0 , 0);
+        // text(str(this.kitNum), 0 , 0);
         pop();
         pop();
     }
@@ -69,6 +69,8 @@ class Robot {
         this.depth = 0.2 * this.gridSize;
         this.bearing = 180;
         this.rescueKits = [];
+        this.robotChasis = loadModel("assets/robot-chasis.obj");
+        this.scale = this.gridSize * 0.0027;
     }
 
     setMaze(maze) {
@@ -97,6 +99,12 @@ class Robot {
         } else if (this.bearing == 270) {
             return "west";
         }
+
+        if(this.bearing < 0) {
+            this.bearing = 360 + this.bearing;
+        }
+        this.bearing = Math.round(this.bearing%360 / 90) % 4 * 90;
+        return this.getBearing();
     }
 
     hasWallFront() {
@@ -275,42 +283,48 @@ class Robot {
         }
     }
 
-    turnLeft() {
+    async turnLeft() {
         let endBearing = this.bearing - 90;
         let pError = 90;
         while(abs(this.bearing - endBearing) > 0.01) {
             let error = this.bearing - endBearing;
-            let kp = 0.3 * error;
+            let kp = 0.8 * error;
             let kd = 0.15 * pError;
             let turnIncrement = kp - kd;
             this.bearing -= turnIncrement;
             pError = error;
-            delay(10 / speedUp);
+            await delay(10 / speedUp);
         }
 
         this.bearing = endBearing;
         this.bearing %= 360;
+        if(this.bearing < 0) {
+            this.bearing = 360 + this.bearing;
+        }
     }
 
-    turnRight() {
+    async turnRight() {
         let endBearing = this.bearing + 90;
         let pError = 90;
 
         while(abs(this.bearing - endBearing) > 0.01) {
             let error = this.bearing - endBearing;
-            let kp = 0.3 * error;
+            let kp = 0.8 * error;
             let kd = 0.15 * pError;
             let turnIncrement = kp - kd;
             this.bearing -= turnIncrement;
             pError = error;
-            delay(10 / speedUp);
+            await delay(10 / speedUp);
         }
 
         this.bearing = endBearing;
         this.bearing %= 360;
+        if(this.bearing < 0) {
+            this.bearing = 360 + this.bearing;
+        }
     }
 
-    moveForward() {
+    async moveForward() {
         // startPos = this.pos
         let kpTile = 3.5;
         this.maze.incrementVist(this.pos);
@@ -318,33 +332,37 @@ class Robot {
         if(this.hasWallFront()) {
             return false;
         }
+
+        let incrementPercent = 0.02 * speedUp;
+
         if(this.bearing == 0) {
-            this.posIncrement = createVector(0, -0.02);
+            this.posIncrement = createVector(0, -incrementPercent);
             this.endPos = createVector(this.pos.x, this.pos.y - 1);
         } else if (this.bearing == 90) {
-            this.posIncrement = createVector(0.02, 0);
+            this.posIncrement = createVector(incrementPercent, 0);
             this.endPos = createVector(this.pos.x + 1, this.pos.y);
         } else if (this.bearing == 180) {
-            this.posIncrement = createVector(0, 0.02);
+            this.posIncrement = createVector(0, incrementPercent);
             this.endPos = createVector(this.pos.x, this.pos.y + 1);
         } else if (this.bearing == 270) {
-            this.posIncrement = createVector(-0.02, 0);
+            this.posIncrement = createVector(-incrementPercent, 0);
             this.endPos = createVector(this.pos.x - 1, this.pos.y);
         }
 
         while(true) {
             this.pos.add(this.posIncrement);
-            // delay(10/speedUp)
             let distance = dist(this.pos.x, this.pos.y, this.endPos.x, this.endPos.y);
             if(distance < 0.05) {
                 this.pos.x = this.endPos.x;
                 this.pos.y = this.endPos.y;
                 break;
             }
-            delay(int(1 / (distance * speedUp) * kpTile));
+            await delay(int(1 / (distance * speedUp) * kpTile));
         }
         this.pos = this.endPos;
-        delay(250 / speedUp);
+        this.pos.x = int(this.pos.x);
+        this.pos.y = int(this.pos.y);
+        await delay(250 / speedUp);
         return true;
     }
 
@@ -352,8 +370,8 @@ class Robot {
         return this.maze.hasVictim(this.pos, direction);
     }
 
-    dropRescueKit(direction) {
-        delay(1500 / speedUp);
+    async dropRescueKit(direction) {
+        await delay(1500 / speedUp);
         let xOffset = 0;
         let yOffset = 0;
 
@@ -370,17 +388,17 @@ class Robot {
         let kitPos = createVector(this.pos.x * this.gridSize + xOffset,
             this.pos.y * this.gridSize + yOffset);
         let kitSize = this.gridSize / 8;
-        let newKit = RescueKit(kitPos, kitSize);
+        let newKit = new RescueKit(kitPos, kitSize);
 
         for(let i = 0; i < this.rescueKits.length; i++) {
             const xMatch = this.rescueKits[i].pos.x == newKit.pos.x;
             const yMatch = this.rescueKits[i].pos.y == newKit.pos.y;
             if(xMatch && yMatch) {
-                kit.incrementKitNum();
+                this.rescueKits[i].incrementKitNum();
                 return;
             }
         }
-        this.rescueKits.append(newKit);
+        this.rescueKits.push(newKit);
 
         console.log("Dropped rescue kit: (" + str(this.pos.x) + ", " +
             str(this.pos.y) + ") " + direction);
@@ -399,7 +417,15 @@ class Robot {
         rotateZ(radians(this.bearing));
         fill(150);
         stroke(0);
-        box(this.breadth, this.breadth, this.depth);
+        // box(this.breadth, this.breadth, this.depth);
+        push();
+        fill(225);
+        noStroke();
+
+        scale(this.scale);
+        translate(-3.15* this.breadth, -4.2*this.breadth, -35);
+        model(this.robotChasis);
+        pop();
         stroke(10);
         line(0,0,this.depth/2, 0, -this.breadth/2, this.depth/2);
         pop();

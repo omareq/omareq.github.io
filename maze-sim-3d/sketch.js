@@ -30,7 +30,7 @@
  *
  *****************************************************************************/
 
-let gridSize = 35;
+let gridSize = 45;
 let mapSizeX = 7;
 let mapSizeY = 5;
 // let speedUp = 2; // make this a global variable to control delay times in robot.js
@@ -50,7 +50,7 @@ function delay(delayInms) {
 async function runSimulation() {
     console.log("Opening Maze Solver Thread");
     await delay(1000);
-    // let result = await solve(robot);
+    let result = await solve(robot);
     console.log("Closing Maze Solver Thread");
     await delay(250);
 }
@@ -83,7 +83,6 @@ function setup() {
        250, gridSize * arena.mapX * 0.5, gridSize * arena.mapY * 0.5,
        0, 0, 1, 0);
     cameraUpdate(robot, gridSize);
-    // thread.start_new_thread(runSimulation, ());
     runSimulation();
 
 }
@@ -101,6 +100,6 @@ function draw() {
     cameraUpdate(robot, gridSize);
     arena.show();
     robot.show();
-    console.log(frameRate());
+    // console.log(frameRate());
 }
 
