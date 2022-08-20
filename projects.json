@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_022",
+            "prev-id": "p_023",
             "status": "active",
             "tags": [
                 "fun"
@@ -365,7 +365,7 @@
             "gif-url": "imgs/p_022.gif",
             "id": "p_022",
             "name": "Brick breaker",
-            "next-id": "p_000",
+            "next-id": "p_023",
             "pic-url": "imgs/p_022.jpg",
             "prev-id": "p_021",
             "status": "active",
@@ -373,6 +373,20 @@
                 "game"
             ],
             "vid-url": "vids/p_022.mp4"
+        },
+        "p_023": {
+            "brief": "A simulation of a robot solving a maze",
+            "demo-url": "/maze-sim-3d/",
+            "docs-url": "/maze-sim-3d/docs/",
+            "gif-url": "imgs/p_023.gif",
+            "id": "p_023",
+            "name": "Maze sim 3d",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_023.jpg",
+            "prev-id": "p_022",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_023.mp4"
         }
     }
 }
