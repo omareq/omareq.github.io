@@ -219,16 +219,16 @@ class Tile {
         const black = 0;
         const white = 255;
         push();
-        if(this.isBlack) {
-            pg.background(black);
-            fill(black);
-        } else if(this.isSilver) {
-            fill(grey);
-            pg.background(grey);
-        } else {
-            fill(white);
-            pg.background(white);
-        }
+        // if(this.isBlack) {
+        //     pg.background(black);
+        //     fill(black);
+        // } else if(this.isSilver) {
+        //     fill(grey);
+        //     pg.background(grey);
+        // } else {
+        //     fill(white);
+        //     pg.background(white);
+        // }
 
         stroke(white);
         rect(0,0,this.gridSize, this.gridSize);
@@ -293,11 +293,11 @@ class Tile {
             pg.text(str(this.order), this.gridSize / 4, this.gridSize / 4);
             pop();
         }
-            translate(0, 0, 1);
-            texture(pg);
-            noStroke();
+        translate(0, 0, 1);
+        texture(pg);
+        noStroke();
 
-            plane(this.gridSize - 4);
+        plane(this.gridSize - 4);
         pop();
     }
 }
