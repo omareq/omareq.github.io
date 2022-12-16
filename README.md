@@ -41,6 +41,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Optics ABCD Matrix
 - [ ]	PDE Solver
 - [ ]   Perlin noise generation
+- [ ]   Projectile Motion - with and without drag
 - [ ]   Quadruped Robot IK
 - [ ]   Recursive Integration
 - [ ]	Super Hexagon
