@@ -25,6 +25,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 - [ ]   Black Body Radiance calculator
 - [ ]   Caesar Cipher
 - [ ]	Checkers
+- [ ]   Computational Fluid Dynamics https://www.youtube.com/watch?v=iKAVRgIrUOU
 - [ ]	Connect Four
 - [ ]	Crazy 8's Card Game
 - [ ]   Hangman Game
