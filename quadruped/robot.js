@@ -55,10 +55,15 @@ class Robot {
         this.servoHeight = 0.0361;
         this.servoWidth = 0.02;
         this.servoLength = 0.0405;
+        // Double check lengths
         this.coxa_length = 0.0591;
         this.upper_leg_length = 0.13;
         this.lower_leg_length = 0.13;
         this.under_base_width = 0.138;
+
+        this.homeX = 0.08;
+        this.homeY = 0.06;
+        this.homeZ = 0.07;
         this.scale_val = scale;
         this.currentGaitStep = this.gaitStep.RIGHT_FRONT_UP;
         this.partsLoaded = false;
@@ -470,6 +475,65 @@ class Robot {
             return start;
         }
 
+        for(let i = 0; i < 3; i++) {
+            if(start[i] < 0 || start[i] > PI) {
+                console.log("The element " + str(i) + " in the input params " +
+                    "\"start\" of the \"lerp_angles()\" method " +
+                    "should be between 0 and PI");
+                return;
+            }
+        }
+
+        for(let i = 0; i < 3; i++) {
+            if(end[i] < 0 || end[i] > PI) {
+                console.log("The element " + str(i) + " in the input params " +
+                    "\"end\" of the \"lerp_angles()\" method " +
+                    "should be between 0 and PI");
+                return;
+            }
+        }
+
+        let lerp_0 = lerp(start[0], end[0], i);
+        let lerp_1 = lerp(start[1], end[1], i);
+        let lerp_2 = lerp(start[2], end[2], i);
+        let lerp_vals = [lerp_0, lerp_1, lerp_2];
+
+        return lerp_vals;
+    }
+
+    /**
+     * Function to calculate the linear interpolation of a set of (x, y, z)
+     * Cartesian coordinates.
+     * This is calculated between the start and end sets using the given
+     * increment.  The i parameter is the amount to interpolate between the
+     * two sets where 0.0 equal to the first set, 0.1 is very near the first
+     * set, 0.5 is half-way in between them, and 1.0 is equal to the second set.
+     * If the value of i is more than 1.0 or less than 0.0, the number will be
+     * calculated accordingly in the ratio of the two given numbers.  This usage
+     * however is not recommended as it may lead to servo values that the exceed
+     * the specification and are impossible to reach.
+     *
+     * @param      {Array<number>}  start   The start set of Cartesian
+     *                                      coordinates (x, y, z) in metres
+     * @param      {Array<number>}  end     The end set of Cartesian
+     *                                      coordinates (x, y, z) in metres.
+     * @param      {number}         i       The increment value, it is suggested
+     *                                      that this remains between 0 and 1.
+     * @return     {Array<number>}  An array of interpolated angle values.
+     */
+    lerp_IK(start, end, i) {
+        if(start.length != end.length) {
+            console.log("\"lerp_IK()\" param float[] \"start\" and params" +
+            " float[] \"end\" need to have the same dimensions");
+            return start;
+        }
+
+        if(start.length != 3) {
+            console.log("\"lerp_IK()\" param float[] \"start\" and params" +
+            " float[] \"end\" need to have 3 elements");
+            return start;
+        }
+
         let lerp_0 = lerp(start[0], end[0], i);
         let lerp_1 = lerp(start[1], end[1], i);
         let lerp_2 = lerp(start[2], end[2], i);
@@ -563,36 +627,54 @@ class Robot {
 
         let delta_theta = control[0] * 0.15 * PI;
 
-        let rf_start = this.rf_servos_read();
-        let lb_start = this.lb_servos_read();
-        let lf_start = this.lf_servos_read();
-        let rb_start = this.rb_servos_read();
+        let rf_start, lb_start, lf_start, rb_start;
+        lb_start = [-this.homeX + staticX,
+                    -this.homeY + staticY,
+                    this.homeZ + staticZ];
+        lf_start = [-this.homeX + staticX,
+                    this.homeY + staticY,
+                    this.homeZ + staticZ];
+        rb_start = [this.homeX + staticX,
+                    -this.homeY + staticY,
+                    this.homeZ + staticZ]
 
         let rf_end, lb_end, lf_end, rb_end;
 
-        if (control[0] != 0) {
+        if (control[1] != 0) {
             switch(this.currentGaitStep) {
                 //right front
                 case this.gaitStep.RIGHT_FRONT_UP:
-                    rf_end = [HALF_PI + staticYaw,
-                        3 * QUARTER_PI,
-                        QUARTER_PI];
+                    rf_start = [this.homeX + staticX,
+                                this.homeY + staticY,
+                                this.homeZ + staticZ];
+                    rf_end = [this.homeX + staticX,
+                              this.homeY + staticY,
+                              0];
+                    console.log("RIGHT_FRONT_UP");
 
-                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                    this.rf_servos_write(this.lerp_IK(rf_start, rf_end, i));
                     break;
                 case this.gaitStep.RIGHT_FRONT_TRAVEL:
-                    rf_end = [HALF_PI + staticYaw - delta_theta,
-                        3 * QUARTER_PI,
-                        QUARTER_PI];
+                    rf_start =[this.homeX + staticX,
+                              this.homeY + staticY,
+                              0];
+                    rf_end = [this.homeX + staticX + walkX,
+                        this.homeY + staticY + walkY,
+                        0];
 
-                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                    console.log("RIGHT_FRONT_TRAVEL");
+                    this.rf_servos_write(this.lerp_IK(rf_start, rf_end, i));
                     break;
                 case this.gaitStep.RIGHT_FRONT_DOWN:
-                    rf_end = [HALF_PI + staticYaw - delta_theta,
-                        HALF_PI,
-                        HALF_PI];
+                    rf_start = [this.homeX + staticX + walkX,
+                        this.homeY + staticY + walkY,
+                        0];
+                    rf_end = [this.homeX + staticX + walkX,
+                        this.homeY + staticY + walkY,
+                        this.homeZ + staticZ];
 
-                    this.rf_servos_write(this.lerp_angles(rf_start, rf_end, i));
+                    console.log("RIGHT_FRONT_DOWN");
+                    this.rf_servos_write(this.lerp_IK(rf_start, rf_end, i));
                     break;
                 // left back
                 case this.gaitStep.LEFT_BACK_UP:

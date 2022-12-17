@@ -46,9 +46,9 @@ let pitchInc = 0.25;
  *
  *   @type      {Array<number>}
  **/
-walkArray = [0.5, 0, 0,
-               0, 0, 0,
-               0, 0, 0];
+walkArray = [0, 0.04, 0,
+             0, 0, 0,
+             0, 0, 0];
 
 let lfScatterChart;
 let rfScatterChart;
@@ -417,7 +417,7 @@ function draw() {
     } else if(state == 1) {
         natalya.stand90(i);
     } else if(state == 2) {
-        i+=0.09;
+        i+=0.02;
         natalya.walk(walkArray, i);
         if(i >= 1) {
             gaitCounter++;
