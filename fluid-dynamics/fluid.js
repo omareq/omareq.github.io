@@ -53,6 +53,11 @@ class Fluid {
         this.velY = ;
         this.newVelX = ;
         this.newVelY = ;
+
+        this.showFieldLines = true;
+        this.showStreamLines = false;
+        this.showPressure = false;
+        this.showSmoke = false;
     }
 
     /**
