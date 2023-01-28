@@ -39,9 +39,7 @@ class Fluid {
      * Constructs a new instance of a Fluid
      *
      * @param      {number}  numX       The number of horizontal cells in the
-     *                                  fluid
      * @param      {number}  numY       The number of vertical cells in the
-     *                                  fluid
      * @param      {number}  density    The density of the fluid
      */
     constructor(numX, numY, density) {
@@ -54,6 +52,7 @@ class Fluid {
         this.newVelX = [];
         this.newVelY = [];
         this.pressure = [];
+        this.boundary =[]; // 1 if no wall and 0 if there is a wall
 
         const startXVal = 10;
         const startYVal = 0;
@@ -63,19 +62,46 @@ class Fluid {
             this.velY[col] = new Array(this.numY).fill(startYVal);
             this.newVelX[col] = new Array(this.numX).fill(startXVal);
             this.newVelY[col] = new Array(this.numY).fill(startYVal);
-            this.pressure[col] = new Array(this.numY).fill(startYVal);
+            this.pressure[col] = new Array(this.numY).fill(0);
+            this.boundary[col] = new Array(this.numY).fill(1);
         }
 
         this.showFieldLines = true;
         this.showStreamLines = false;
         this.showPressure = false;
         this.showSmoke = false;
+        this.showBoundary = false;
+    }
+
+    /**
+     * Applies the force of gravity to the fluid
+     *
+     * @param      {number}  dt       The simulation time step
+     * @param      {number}  gravity  The acceleration due to gravity
+     */
+    applyGravity(dt, gravity) {
+        for(let col = 0; col < this.numX; col++) {
+            for(let row = 1; row < this.numY; row++) {
+                if(this.boundary[col][row] != 0 && this.boundary[col][row - 1]) {
+                    this.velY += gravity * dt;
+                }
+            }
+        }
+    }
+
+    update(dt) {
+        this.applyGravity(dt, 9.81);
     }
 
     /**
      * Draws the brick on the canvas
+     *
+     * @param   {number}    Space   The space between the drawn field lines
+     * @param   {number}    Scale   The scale factor to change the length of
+     *                              the field lines
      */
     draw(space, scale) {
+        push();
         stroke(0);
         fill(0);
         if(this.showFieldLines) {
@@ -104,5 +130,20 @@ class Fluid {
         if(this.showPressure) {
 
         }
+
+        stroke(155);
+        fill(155);
+
+        // replace this with drawing contours as this will be faster to render
+        if(this.showBoundary) {
+            for(let col = 0; col < this.numX; col++) {
+                for(let row = 0; row < this.numY; row++) {
+                    if(this.boundary[col][row] == 0) {
+                        rect(col, row, 1, 1);
+                    }
+                }
+            }
+        }
+        pop();
     }
 }

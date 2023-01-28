@@ -53,7 +53,7 @@ function setup() {
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(225);
+	background(255);
     air.draw(40, 1);
 }
 
