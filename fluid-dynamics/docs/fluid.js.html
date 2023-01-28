@@ -1,8 +1,36 @@
-/*******************************************************************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: fluid.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: fluid.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
  *  @file fluid.js File containing a fluid class that simulates fluid dynamics
  *
- *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
  *  @date 17-December-2022
  *  @link https://omareq.github.io/fluid-dynamics/
@@ -26,7 +54,7 @@
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
 
@@ -57,7 +85,7 @@ class Fluid {
         const startXVal = 10;
         const startYVal = 0;
 
-        for (let col = 0; col < numX; col++) {
+        for (let col = 0; col &lt; numX; col++) {
             this.velX[col] = new Array(this.numX).fill(startXVal);
             this.velY[col] = new Array(this.numY).fill(col/100);
             this.newVelX[col] = new Array(this.numX).fill(startXVal);
@@ -80,9 +108,9 @@ class Fluid {
      * @param      {number}  gravity  The acceleration due to gravity
      */
     applyGravity(dt, gravity) {
-        for(let col = 0; col < this.numX; col++) {
-            for(let row = 1; row < this.numY; row++) {
-                if(this.boundary[col][row] != 0 && this.boundary[col][row - 1]) {
+        for(let col = 0; col &lt; this.numX; col++) {
+            for(let row = 1; row &lt; this.numY; row++) {
+                if(this.boundary[col][row] != 0 &amp;&amp; this.boundary[col][row - 1]) {
                     this.velY += gravity * dt;
                 }
             }
@@ -130,24 +158,24 @@ class Fluid {
             finalCol = this.numX;
         }
 
-        for(let col = 0; col <= finalCol; col+=space) {
-            for(let row = 0; row < this.numY; row+=space) {
+        for(let col = 0; col &lt;= finalCol; col+=space) {
+            for(let row = 0; row &lt; this.numY; row+=space) {
                 x = col;
                 y = row;
 
                 beginShape();
-                for(let i = 0; i < numSegments; i++) {
+                for(let i = 0; i &lt; numSegments; i++) {
                     velX = this.velX[floor(x)][floor(y)];
                     velY = this.velY[floor(x)][floor(y)];
                     length = sqrt(sq(velX) + sq(velY));
                     x += velX * segmentLength / length;
                     y += velY * segmentLength / length;
 
-                    if(x >= width - 1 || x < 0) {
+                    if(x >= width - 1 || x &lt; 0) {
                         break;
                     }
 
-                    if(y >= height - 1 || y < 0) {
+                    if(y >= height - 1 || y &lt; 0) {
                         break;
                     }
 
@@ -171,8 +199,8 @@ class Fluid {
         stroke(0);
         fill(0);
         if(this.showFieldLines) {
-            for(let col = 0; col < this.numX; col+=space) {
-                for(let row = 0; row < this.numY; row+=space) {
+            for(let col = 0; col &lt; this.numX; col+=space) {
+                for(let row = 0; row &lt; this.numY; row+=space) {
                     const length = sqrt(sq(this.velX[col][row]) +
                         sq(this.velY[col][row]));
 
@@ -202,8 +230,8 @@ class Fluid {
 
         // replace this with drawing contours as this will be faster to render
         if(this.showBoundary) {
-            for(let col = 0; col < this.numX; col++) {
-                for(let row = 0; row < this.numY; row++) {
+            for(let col = 0; col &lt; this.numX; col++) {
+                for(let row = 0; row &lt; this.numY; row++) {
                     if(this.boundary[col][row] == 0) {
                         rect(col, row, 1, 1);
                     }
@@ -213,3 +241,31 @@ class Fluid {
         pop();
     }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Fluid.html">Fluid</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Jan 28 2023 20:05:28 GMT+0000 (GMT)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

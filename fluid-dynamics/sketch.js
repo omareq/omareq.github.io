@@ -54,6 +54,6 @@ function setup() {
  */
 function draw() {
 	background(255);
-    air.draw(40, 1);
+    air.draw(40);
 }
 
