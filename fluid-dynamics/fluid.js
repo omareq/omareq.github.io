@@ -59,15 +59,15 @@ class Fluid {
 
         for (let col = 0; col < numX; col++) {
             this.velX[col] = new Array(this.numX).fill(startXVal);
-            this.velY[col] = new Array(this.numY).fill(startYVal);
+            this.velY[col] = new Array(this.numY).fill(col/100);
             this.newVelX[col] = new Array(this.numX).fill(startXVal);
             this.newVelY[col] = new Array(this.numY).fill(startYVal);
             this.pressure[col] = new Array(this.numY).fill(0);
             this.boundary[col] = new Array(this.numY).fill(1);
         }
 
-        this.showFieldLines = true;
-        this.showStreamLines = false;
+        this.showFieldLines = false;
+        this.showStreamLines = true;
         this.showPressure = false;
         this.showSmoke = false;
         this.showBoundary = false;
@@ -124,7 +124,45 @@ class Fluid {
 
 
         } else if(this.showStreamLines) {
+            const numSegments = 15;
+            push();
+            noFill();
 
+            // initialised outside of the loop to save on multiple
+            // reinitialisations within a critical loop
+            let x = 0;
+            let y = 0;
+            let velX = 0;
+            let velY = 0;
+            let length = 0;
+
+            for(let col = 0; col < this.numX; col+=space) {
+                for(let row = 0; row < this.numY; row+=space) {
+                    x = col;
+                    y = row;
+
+                    beginShape();
+                    for(let i = 0; i < numSegments; i++) {
+                        velX = floor(this.velX[x][y]);
+                        velY = floor(this.velY[x][y]);
+                        length = sqrt(sq(velX) + sq(velY));
+                        x += velX;
+                        y += velY;
+
+                        if(x >= width - 1 || x < 0) {
+                            break;
+                        }
+
+                        if(y >= height - 1 || y < 0) {
+                            break;
+                        }
+
+                        vertex(x, y);
+                    }
+                    endShape();
+                }
+            }
+            pop();
         }
 
         if(this.showPressure) {
