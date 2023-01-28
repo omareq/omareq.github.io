@@ -49,10 +49,22 @@ class Fluid {
         this.numX = numX;
         this.numY = numY;
         this.numCells = this.numX * this.numY;
-        this.velX = ;
-        this.velY = ;
-        this.newVelX = ;
-        this.newVelY = ;
+        this.velX = [];
+        this.velY = [];
+        this.newVelX = [];
+        this.newVelY = [];
+        this.pressure = [];
+
+        const startXVal = 10;
+        const startYVal = 0;
+
+        for (let col = 0; col < numX; col++) {
+            this.velX[col] = new Array(this.numX).fill(startXVal);
+            this.velY[col] = new Array(this.numY).fill(startYVal);
+            this.newVelX[col] = new Array(this.numX).fill(startXVal);
+            this.newVelY[col] = new Array(this.numY).fill(startYVal);
+            this.pressure[col] = new Array(this.numY).fill(startYVal);
+        }
 
         this.showFieldLines = true;
         this.showStreamLines = false;
@@ -63,7 +75,34 @@ class Fluid {
     /**
      * Draws the brick on the canvas
      */
-    draw() {
+    draw(space, scale) {
+        stroke(0);
+        fill(0);
+        if(this.showFieldLines) {
+            for(let col = 0; col < this.numX; col+=space) {
+                for(let row = 0; row < this.numY; row+=space) {
+                    const length = sqrt(sq(this.velX[col][row]) +
+                        sq(this.velY[col][row]));
 
+                    const theta = atan2(this.velY[col][row],
+                        this.velX[col][row]);
+
+                    const x = scale * length * cos(theta);
+                    const y = scale * length * sin(theta);
+
+                    line(col, row, col + x, row + y);
+                    ellipse(col, row, space * 0.05, space * 0.05);
+
+                }
+            }
+
+
+        } else if(this.showStreamLines) {
+
+        }
+
+        if(this.showPressure) {
+
+        }
     }
 }

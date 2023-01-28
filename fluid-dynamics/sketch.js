@@ -10,8 +10,8 @@
  *
  *******************************************************************************
  *
- *                   GNU General Public License V3.0                         
- *                   --------------------------------                        
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
  *
  *   Copyright (C) 2022 Omar Essilfie-Quaye
  *
@@ -30,6 +30,8 @@
  *
  *****************************************************************************/
 
+let air;
+
 /**
  * p5.js setup function, creates canvas.
  */
@@ -41,6 +43,9 @@ function setup() {
 		cnvSize = windowWidth;
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
+
+    let airDensity = 1.293;
+    air = new Fluid(floor(width), floor(height), airDensity);
 	cnv.parent('sketch');
 }
 
@@ -48,6 +53,7 @@ function setup() {
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(0);
+	background(225);
+    air.draw(40, 1);
 }
 
