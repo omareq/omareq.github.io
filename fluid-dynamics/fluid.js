@@ -58,12 +58,16 @@ class Fluid {
         const startYVal = 0;
 
         for (let col = 0; col < numX; col++) {
-            this.velX[col] = new Array(this.numX).fill(startXVal);
-            this.velY[col] = new Array(this.numY).fill(col/100);
-            this.newVelX[col] = new Array(this.numX).fill(startXVal);
+            this.velX[col] = new Array(this.numY).fill(startXVal);
+            this.velY[col] = new Array(this.numY).fill(startYVal);
+            this.newVelX[col] = new Array(this.numY).fill(startXVal);
             this.newVelY[col] = new Array(this.numY).fill(startYVal);
             this.pressure[col] = new Array(this.numY).fill(0);
             this.boundary[col] = new Array(this.numY).fill(1);
+        }
+
+        for(let i = floor(0.25 * height); i < floor(0.75 * height); i++) {
+            this.boundary[300][i] = 0;
         }
 
         this.showFieldLines = false;
@@ -71,6 +75,7 @@ class Fluid {
         this.showPressure = false;
         this.showSmoke = false;
         this.showBoundary = false;
+        console.info("Creating a Fluid Class: ", this);
     }
 
     /**
@@ -89,13 +94,71 @@ class Fluid {
         }
     }
 
+    solveIncompressibility(dt, numItterations=1, overRelaxation=1.8) {
+        let cp = this.density / dt;
+
+        for(let i = 0; i < numItterations; i++) {
+            for(let col = 1; col < this.numX - 1; col++) {
+                for(let row = 1; row < this.numY - 1; row++) {
+                    if(this.boundary[col][row] == 0) {
+                        continue;
+                    }
+
+                    const sx0 = this.boundary[col - 1][row];
+                    const sx1 = this.boundary[col + 1][row];
+                    const sy0 = this.boundary[col][row - 1];
+                    const sy1 = this.boundary[col][row + 1];
+                    const s = sx0 + sx1 + sy0 + sy1;
+
+                    if(s == 0) {
+                        continue;
+                    }
+
+                    const div = this.velX[col + 1][row] - this.velX[col][row] +
+                        this.velY[col][ row + 1] - this.velY[col][row];
+
+                    let p = -div / s;
+                    p *= overRelaxation;
+                    this.pressure[col][row] += cp * p;
+
+                    this.velX[col][row] -= sx0 * p;
+                    this.velX[col + 1][row] += sx1 * p;
+                    this.velY[col][row] -= sy0 * p;
+                    this.velY[col][row + 1] += sy1 * p;
+
+                }
+            }
+        }
+    }
+
+    extrapolate() {
+        for(let col = 0; col < this.numX; col++) {
+            this.velX[col][0] = this.velX[col][1];
+            this.velX[col][this.numY - 1] = this.velX[col][this.numY - 2];
+        }
+
+        for(let row = 0; row < this.numY; row++) {
+            this.velY[0][row] = this.velY[1][row];
+            this.velY[this.numX - 1][row] = this.velY[this.numX - 2][row];
+        }
+    }
+
+    advectVelocity(dt) {
+
+    }
+
     /**
      * Updates the physics of the fluid for a given time step
      *
      * @param      {number}  dt      The time step
      */
     update(dt) {
-        this.applyGravity(dt, 9.81);
+        // this.applyGravity(dt, 9.81);
+        this.solveIncompressibility(dt);
+
+        this.extrapolate();
+
+        this.advectVelocity(dt);
     }
 
     /**

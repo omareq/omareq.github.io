@@ -54,6 +54,7 @@ function setup() {
  */
 function draw() {
 	background(255);
+    air.update();
     air.draw(40);
 }
 
