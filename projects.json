@@ -276,20 +276,6 @@
             ],
             "vid-url": "vids/p_016.mp4"
         },
-        "p_017": {
-            "brief": "A program looking into the various methods of missile targeting",
-            "demo-url": "/missile-guidance/",
-            "docs-url": "/missile-guidance/docs/",
-            "gif-url": "imgs/p_017.gif",
-            "id": "p_017",
-            "name": "Missile-guidance",
-            "next-id": "p_018",
-            "pic-url": "imgs/p_017.jpg",
-            "prev-id": "p_016",
-            "status": "archived",
-            "tags": [],
-            "vid-url": "vids/p_017.mp4"
-        },
         "p_018": {
             "brief": "A Simple strategy game where you have to flood the whole board with one colour",
             "demo-url": "/flood-it/",
