@@ -36,11 +36,49 @@ let letters;
 
 let word;
 
+let startGame = false;
+
 let gameOver = false;
 
 let wonGame = false;
 
-let i =0;
+let i = 0;
+
+let wordList;
+
+let wordListKeys;
+
+let randWord;
+
+function preload() {
+  let url = 'word-list.json';
+  wordList = loadJSON(url, setupGame);
+}
+
+function setupGame() {
+
+	const drawWidth = 0.75 * width;
+	const drawHeight = 0.75 * height;
+	const leftPosVal = (width - drawWidth) / 2;
+	const topPosVal = (height - drawHeight) / 2 - 5;
+	const topLeftPosition = createVector(leftPosVal, topPosVal);
+
+	hangman = new Hangman(topLeftPosition, drawWidth, drawHeight);
+	letters = new LettersInterface(createVector(0, 0), 0.1 * width, height);
+
+	wordListKeys = Object.keys(wordList);
+	randomIndex = floor(random(wordListKeys.length));
+	randomWord = wordListKeys[randomIndex];
+
+	word = new Word(randomWord,
+		createVector(0.2*width, 0.875*height),
+		0.6*width, 0.1*height);
+
+	// console.log("Hangman: ", hangman);
+	// console.log("Letters: ", letters);
+	// console.log("Word: ", word);
+	startGame = true;
+}
 
 /**
  * p5.js setup function, creates canvas.
@@ -54,22 +92,7 @@ function setup() {
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
-
-	const drawWidth = 0.75 * width;
-	const drawHeight = 0.75 * height;
-	const leftPosVal = (width - drawWidth) / 2;
-	const topPosVal = (height - drawHeight) / 2 - 5;
-	const topLeftPosition = createVector(leftPosVal, topPosVal);
-
-	hangman = new Hangman(topLeftPosition, drawWidth, drawHeight);
-	letters = new LettersInterface(createVector(0, 0), 0.1 * width, height);
-	word = new Word("LoremIpsum",
-		createVector(0.2*width, 0.875*height),
-		0.6*width, 0.1*height);
-
-	console.log("Hangman: ", hangman);
-	console.log("Letters: ", letters);
-	console.log("Word: ", word);
+	setupDone = true;
 }
 
 function keyPressed() {
@@ -99,6 +122,9 @@ function keyPressed() {
  */
 function draw() {
 	background(0);
+	if(startGame && hangman.width == 0) {
+		setupGame();
+	}
 
 	if(gameOver) {
 		push();
@@ -107,7 +133,7 @@ function draw() {
 		strokeWeight(1);
 		textSize(0.1 * width);
 		textAlign(CENTER, CENTER);
-		text("Game Over!!!", width / 2, height / 2);
+		text("Game Over!!!\n" + word.word, width / 2, height / 2);
 		pop();
 	} else if (wonGame) {
 		push();
@@ -116,7 +142,16 @@ function draw() {
 		strokeWeight(1);
 		textSize(0.1 * width);
 		textAlign(CENTER, CENTER);
-		text("You Won!!!", width / 2, height / 2);
+		text("You Won!!!\n" + word.word, width / 2, height / 2);
+		pop();
+	} else if (!startGame) {
+		push();
+		fill(255);
+		stroke(255);
+		strokeWeight(1);
+		textSize(0.1 * width);
+		textAlign(CENTER, CENTER);
+		text("Loading Word List", width / 2, height / 2);
 		pop();
 	} else {
 		hangman.draw(i);
