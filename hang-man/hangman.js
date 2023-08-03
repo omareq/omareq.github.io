@@ -188,10 +188,18 @@ class Hangman {
         line(this.hangX, this.torsoY, this.armRight, this.legBottom);
     }
 
+    /**
+     * Decreases the lives by one.
+     */
     decreaseLives() {
         this.numberOfLinesToDraw++;
     }
 
+    /**
+     * Checks if the player is dead
+     *
+     * @return     {boolean}  True if dead, False otherwise.
+     */
     isDead() {
         return this.numberOfLinesToDraw >= this.maximumNumLinesToDraw;
     }
@@ -238,7 +246,5 @@ class Hangman {
           case 0:
         }
         pop();
-
     }
-
 }

@@ -30,31 +30,74 @@
  *
  *****************************************************************************/
 
+/**
+ * The handler to control and draw the hangman
+ *
+ * @type       {Hangman}
+ */
 let hangman;
 
+/**
+ * The handler to control and draw the letter interface
+ *
+ * @type       {LetterInterface}
+ */
 let letters;
 
+/**
+ * The handler to control and draw the guessed word
+ *
+ * @type       {Word}
+ */
 let word;
 
+/**
+ * State flag to see if the game has started yet after the wordlist has started
+ * loading
+ *
+ * @type       {boolean}
+ */
 let startGame = false;
 
+/**
+ * State flag to see if the game is over via loss from the player
+ *
+ * @type       {boolean}
+ */
 let gameOver = false;
 
+/**
+ * State flag to see if the player has won the game
+ *
+ * @type       {boolean}
+ */
 let wonGame = false;
 
-let i = 0;
-
+/**
+ * A json list of words
+ *
+ * @type       {Object}
+ */
 let wordList;
 
+/**
+ * Array of keys for the json word list
+ *
+ * @type       {Array}
+ */
 let wordListKeys;
 
-let randWord;
-
+/**
+ * asynchronously loads the word list
+ */
 function preload() {
   let url = 'word-list.json';
   wordList = loadJSON(url, setupGame);
 }
 
+/**
+ * Handles the creation of all the objects needed for the game
+ */
 function setupGame() {
 
 	const drawWidth = 0.75 * width;
@@ -67,8 +110,8 @@ function setupGame() {
 	letters = new LettersInterface(createVector(0, 0), 0.1 * width, height);
 
 	wordListKeys = Object.keys(wordList);
-	randomIndex = floor(random(wordListKeys.length));
-	randomWord = wordListKeys[randomIndex];
+	const randomIndex = floor(random(wordListKeys.length));
+	const randomWord = wordListKeys[randomIndex];
 
 	word = new Word(randomWord,
 		createVector(0.2*width, 0.875*height),
@@ -95,6 +138,9 @@ function setup() {
 	setupDone = true;
 }
 
+/**
+ * Handles key pressed events
+ */
 function keyPressed() {
 	if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
 		return;
