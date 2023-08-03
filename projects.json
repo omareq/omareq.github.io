@@ -413,7 +413,9 @@
             "pic-url": "imgs/p_026.jpg",
             "prev-id": "p_025",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "game"
+            ],
             "vid-url": "vids/p_026.mp4"
         }
     }
