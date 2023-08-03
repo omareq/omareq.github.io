@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- *  @file sketch.js My take of on the classic hang man word guessing game
+ *  @file hangman.js This file implements the hangman class
  *
  *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *  @version 1.0
@@ -8,8 +8,33 @@
  *  @link https://omareq.github.io/hang-man/
  *  @link https://omareq.github.io/hang-man/docs/
  *
-*******************************************************************************/
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2023 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
 
+/**
+ * This class describes a hangman.
+ *
+ * @class      Hangman (name)
+ */
 class Hangman {
 
     /**
@@ -29,6 +54,13 @@ class Hangman {
         this.calculateLocations();
     }
 
+    /**
+     * Resize the drawing of the hangman
+     *
+     * @param      {p5.Vector}  pos     The top left position
+     * @param      {number}  width   The width in pixels
+     * @param      {number}  height  The height in pixels
+     */
     resize(pos, width, height) {
         this.pos = pos;
         this.width = width;
@@ -36,6 +68,10 @@ class Hangman {
         this.calculateLocations();
     }
 
+    /**
+     * Calculates the locations of the parts of the drawing.  Is called on
+     * instantiation of the class as well as during resizing events.
+     */
     calculateLocations() {
         this.centreX = this.pos.x + 0.5 * this.width;
         this.centreY = this.pos.y + 0.5 * this.height;
@@ -59,64 +95,110 @@ class Hangman {
         this.legBottom = this.top + 0.7 * this.height;
     }
 
+    /**
+     * Draws a base.
+     */
     drawBase() {
         line(this.left, this.bottom, this.right, this.bottom);
     }
 
+    /**
+     * Draws a vertical pole.
+     */
     drawVerticalPole() {
         line(this.verticalPoleX, this.bottom, this.verticalPoleX, this.top);
     }
 
+    /**
+     * Draws a horizontal pole.
+     */
     drawHorizontalPole() {
         line(this.verticalPoleX, this.top, this.hangX, this.top);
     }
 
+    /**
+     * Draws a triangle support lower left.
+     */
     drawTriangleSupportLowerLeft() {
         line(this.left, this.bottom, this.verticalPoleX, this.lowerSupprtY);
     }
 
+    /**
+     * Draws a triangle support lower right.
+     */
     drawTriangleSupportLowerRight() {
         line(this.centreX, this.bottom, this.verticalPoleX, this.lowerSupprtY);
     }
 
+    /**
+     * Draws a triangle support upper.
+     */
     drawTriangleSupportUpper() {
         line(this.centreX, this.top, this.verticalPoleX, this.upperSupprtY);
     }
 
+    /**
+     * Draws a hanging vertical.
+     */
     drawHangingVertical() {
         line(this.hangX, this.top, this.hangX, this.hangY);
     }
 
+    /**
+     * Draws a head.
+     */
     drawHead() {
         ellipse(this.hangX, this.hangY, this.headSize, this.headSize);
     }
 
+    /**
+     * Draws a torso.
+     */
     drawTorso() {
         line(this.hangX, this.hangY, this.hangX, this.torsoY);
     }
 
+    /**
+     * Draws a left arm.
+     */
     drawLeftArm() {
         line(this.hangX, this.armTopY, this.armLeft, this.armBottomY);
     }
 
+    /**
+     * Draws a right arm.
+     */
     drawRightArm() {
         line(this.hangX, this.armTopY, this.armRight, this.armBottomY);
     }
 
+    /**
+     * Draws a left leg.
+     */
     drawLeftLeg() {
         line(this.hangX, this.torsoY, this.armLeft, this.legBottom);
     }
 
+    /**
+     * Draws a right leg.
+     */
     drawRightLeg() {
         line(this.hangX, this.torsoY, this.armRight, this.legBottom);
     }
 
+    /**
+     * Draws elements of the hangman based on the input arguments.  Uses the
+     * fall through feature of the switch case to draw all the elements needed.
+     *
+     * @param      {number}  numberOfLinesToDraw  The number of lines to draw
+     */
     draw(numberOfLinesToDraw) {
         push();
         strokeWeight(this.strokeWeight);
         stroke(this.strokeCol);
         switch(numberOfLinesToDraw) {
           default:
+            // Used for debugging
             console.log("Default Draw All Lines In Hangman");
           case 13:
             this.drawRightLeg();
