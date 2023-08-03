@@ -108,11 +108,9 @@ function keyPressed() {
 				gameOver = true;
 				console.log("Game Over!!!");
 			}
-		} else {
-			if(word.isComplete()) {
-				console.log("You Won!!!");
-				wonGame = true;
-			}
+		} else if(word.isComplete()) {
+			console.log("You Won!!!");
+			wonGame = true;
 		}
 	}
 }
