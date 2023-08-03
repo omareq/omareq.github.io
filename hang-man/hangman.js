@@ -56,7 +56,7 @@ class Hangman {
         this.armRight = this.hangX + 0.15 * this.height;
         this.armTopY = this.top + 0.25 * this.height;
         this.armBottomY = this.top + 0.4 * this.height;
-        this.legBottom = this.top + 0.7 * this.height
+        this.legBottom = this.top + 0.7 * this.height;
     }
 
     drawBase() {

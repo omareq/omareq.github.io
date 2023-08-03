@@ -48,7 +48,7 @@ function setup() {
 	cnv.parent('sketch');
 
 	const drawWidth = 0.75 * width;
-	const drawHeight = 0.85 * height;
+	const drawHeight = 0.75 * height;
 	const leftPosVal = (width - drawWidth) / 2;
 	const rightPosVal = (height - drawHeight) / 2;
 	const topLeftPosition = createVector(leftPosVal, rightPosVal);
