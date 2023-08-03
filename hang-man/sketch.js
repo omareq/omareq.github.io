@@ -34,6 +34,12 @@ let hangman;
 
 let letters;
 
+let word;
+
+let gameOver = false;
+
+let wonGame = false;
+
 let i =0;
 
 /**
@@ -52,13 +58,40 @@ function setup() {
 	const drawWidth = 0.75 * width;
 	const drawHeight = 0.75 * height;
 	const leftPosVal = (width - drawWidth) / 2;
-	const rightPosVal = (height - drawHeight) / 2;
-	const topLeftPosition = createVector(leftPosVal, rightPosVal);
+	const topPosVal = (height - drawHeight) / 2 - 5;
+	const topLeftPosition = createVector(leftPosVal, topPosVal);
+
 	hangman = new Hangman(topLeftPosition, drawWidth, drawHeight);
-	letters = new LettersInterface(createVector(0, 0), 0.1*width, height);
+	letters = new LettersInterface(createVector(0, 0), 0.1 * width, height);
+	word = new Word("LoremIpsum",
+		createVector(0.2*width, 0.875*height),
+		0.6*width, 0.1*height);
+
 	console.log("Hangman: ", hangman);
 	console.log("Letters: ", letters);
-	frameRate(2);
+	console.log("Word: ", word);
+}
+
+function keyPressed() {
+	if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
+		return;
+	}
+
+	if(letters.pickLetter(key.toLowerCase())) {
+		let gotItRight = word.pickLetter(key.toLowerCase());
+		if(!gotItRight) {
+			hangman.decreaseLives();
+			if(hangman.isDead()) {
+				gameOver = true;
+				console.log("Game Over!!!");
+			}
+		} else {
+			if(word.isComplete()) {
+				console.log("You Won!!!");
+				wonGame = true;
+			}
+		}
+	}
 }
 
 /**
@@ -66,12 +99,29 @@ function setup() {
  */
 function draw() {
 	background(0);
-	hangman.draw(i);
-	letters.draw();
-	i++;
 
-	if(i > 13) {
-		i = 0;
+	if(gameOver) {
+		push();
+		fill(255);
+		stroke(255);
+		strokeWeight(1);
+		textSize(0.1 * width);
+		textAlign(CENTER, CENTER);
+		text("Game Over!!!", width / 2, height / 2);
+		pop();
+	} else if (wonGame) {
+		push();
+		fill(255);
+		stroke(255);
+		strokeWeight(1);
+		textSize(0.1 * width);
+		textAlign(CENTER, CENTER);
+		text("You Won!!!", width / 2, height / 2);
+		pop();
+	} else {
+		hangman.draw(i);
+		letters.draw();
+		word.draw();
 	}
 }
 

@@ -49,6 +49,8 @@ class Hangman {
     constructor(pos, width, height, strokeWeight=5, strokeCol=255) {
         this.strokeWeight = strokeWeight;
         this.strokeCol = strokeCol;
+        this.numberOfLinesToDraw = 0;
+        this.maximumNumLinesToDraw = 13;
 
         this.resize(pos, width, height);
         this.calculateLocations();
@@ -186,17 +188,24 @@ class Hangman {
         line(this.hangX, this.torsoY, this.armRight, this.legBottom);
     }
 
+    decreaseLives() {
+        this.numberOfLinesToDraw++;
+    }
+
+    isDead() {
+        return this.numberOfLinesToDraw >= this.maximumNumLinesToDraw;
+    }
+
     /**
      * Draws elements of the hangman based on the input arguments.  Uses the
      * fall through feature of the switch case to draw all the elements needed.
      *
-     * @param      {number}  numberOfLinesToDraw  The number of lines to draw
      */
-    draw(numberOfLinesToDraw) {
+    draw() {
         push();
         strokeWeight(this.strokeWeight);
         stroke(this.strokeCol);
-        switch(numberOfLinesToDraw) {
+        switch(this.numberOfLinesToDraw) {
           default:
             // Used for debugging
             console.log("Default Draw All Lines In Hangman");
