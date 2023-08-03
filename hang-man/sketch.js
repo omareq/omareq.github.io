@@ -32,6 +32,8 @@
 
 let hangman;
 
+let letters;
+
 let i =0;
 
 /**
@@ -53,7 +55,9 @@ function setup() {
 	const rightPosVal = (height - drawHeight) / 2;
 	const topLeftPosition = createVector(leftPosVal, rightPosVal);
 	hangman = new Hangman(topLeftPosition, drawWidth, drawHeight);
+	letters = new LettersInterface(createVector(0, 0), 0.1*width, height);
 	console.log("Hangman: ", hangman);
+	console.log("Letters: ", letters);
 	frameRate(2);
 }
 
@@ -63,6 +67,7 @@ function setup() {
 function draw() {
 	background(0);
 	hangman.draw(i);
+	letters.draw();
 	i++;
 
 	if(i > 13) {
