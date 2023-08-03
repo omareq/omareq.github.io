@@ -371,7 +371,10 @@
             "pic-url": "imgs/p_023.jpg",
             "prev-id": "p_022",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "robot",
+                "science"
+            ],
             "vid-url": "vids/p_023.mp4"
         },
         "p_024": {
@@ -385,7 +388,10 @@
             "pic-url": "imgs/p_024.jpg",
             "prev-id": "p_023",
             "status": "archived",
-            "tags": [],
+            "tags": [
+                "physics",
+                "science"
+            ],
             "vid-url": "vids/p_024.mp4"
         },
         "p_025": {
@@ -399,7 +405,10 @@
             "pic-url": "imgs/p_025.jpg",
             "prev-id": "p_023",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "maths",
+                "science"
+            ],
             "vid-url": "vids/p_025.mp4"
         }
     }
