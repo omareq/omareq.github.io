@@ -67,7 +67,7 @@ class LettersInterface {
             "x":false,
             "y":false,
             "z":false
-        }
+        };
 
         this.alphabetKeys = Object.keys(this.alphabet);
         this.alphabetSize = this.alphabetKeys.length;
@@ -106,8 +106,8 @@ class LettersInterface {
         this.halfRowSpacing = 0.5 * this.rowSpacing;
         this.fontSize = 0.75 * this.rowSpacing;
 
-        this.leftTextX =  this.left + this.halfBoxWidth;
-        this.rightTextX =  this.centreX + this.halfBoxWidth;
+        this.leftTextX = this.left + this.halfBoxWidth;
+        this.rightTextX = this.centreX + this.halfBoxWidth;
     }
 
     /**
