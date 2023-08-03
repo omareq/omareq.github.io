@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_025",
+            "prev-id": "p_026",
             "status": "active",
             "tags": [
                 "fun"
@@ -395,12 +395,26 @@
             "gif-url": "imgs/p_025.gif",
             "id": "p_025",
             "name": "Mandelbrot set",
-            "next-id": "p_000",
+            "next-id": "p_026",
             "pic-url": "imgs/p_025.jpg",
             "prev-id": "p_023",
             "status": "active",
             "tags": [],
             "vid-url": "vids/p_025.mp4"
+        },
+        "p_026": {
+            "brief": "My take of on the classic hang man word guessing game",
+            "demo-url": "/hang-man/",
+            "docs-url": "/hang-man/docs/",
+            "gif-url": "imgs/p_026.gif",
+            "id": "p_026",
+            "name": "Hang man",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_026.jpg",
+            "prev-id": "p_025",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_026.mp4"
         }
     }
 }
