@@ -106,7 +106,7 @@ class GameControl {
      * @return     {boolean}  True if over, False otherwise.
      */
     isOver() {
-        return this.gameOver;
+        return this.gameOver || this.wonGame;
     }
 
     /**
@@ -121,7 +121,7 @@ class GameControl {
             textSize(0.1 * width);
             textAlign(CENTER, CENTER);
             text("Game Over!!!\n" + this.word.word + "\nClick To Restart",
-             width / 2, height / 2);
+                width / 2, height / 2);
             pop();
         } else if (this.wonGame) {
             push();
@@ -130,7 +130,8 @@ class GameControl {
             strokeWeight(1);
             textSize(0.1 * width);
             textAlign(CENTER, CENTER);
-            text("You Won!!!\n" + this.word.word, width / 2, height / 2);
+            text("You Won!!!\n" + this.word.word + "\nClick To Restart",
+                width / 2, height / 2);
             pop();
         } else if (!this.startGame) {
             push();
