@@ -81,11 +81,15 @@ function setup() {
 /**
  * Handles key pressed events
  */
+// let i = 0;
 function keyPressed() {
 	if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
 		return;
 	}
 	game.pickLetter(key.toLowerCase());
+	// saveName = "Word-04-" + String(i).padStart(3, "0") + ".png";
+	// saveCanvas(saveName, 'png');
+	// i++;
 }
 
 /**
