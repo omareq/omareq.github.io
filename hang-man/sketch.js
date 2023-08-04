@@ -198,7 +198,7 @@ function draw() {
 		text("Loading Word List", width / 2, height / 2);
 		pop();
 	} else {
-		hangman.draw(i);
+		hangman.draw();
 		letters.draw();
 		word.draw();
 	}
