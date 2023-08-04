@@ -31,50 +31,14 @@
  *****************************************************************************/
 
 class GameControl {
-    /**
-     * The handler to control and draw the hangman
-     *
-     * @type       {Hangman}
-     */
-    #hangman;
 
     /**
-     * The handler to control and draw the letter interface
-     *
-     * @type       {LetterInterface}
+     * Constructs a new instance of GameControl
      */
-    #letters;
-
-    /**
-     * The handler to control and draw the guessed word
-     *
-     * @type       {Word}
-     */
-    #word;
-
-    /**
-     * State flag to see if the game has started yet after the wordlist has started
-     * loading
-     *
-     * @type       {boolean}
-     */
-    #startGame = false;
-
-    /**
-     * State flag to see if the game is over via loss from the player
-     *
-     * @type       {boolean}
-     */
-    #gameOver = false;
-
-    /**
-     * State flag to see if the player has won the game
-     *
-     * @type       {boolean}
-     */
-    #wonGame = false;
-
     constructor() {
+        this.startGame = false;
+        this.gameOver = false;
+        this.wonGame = false;
         this.setupGame();
     }
 
@@ -82,28 +46,27 @@ class GameControl {
      * Handles the creation of all the objects needed for the game
      */
     setupGame() {
-
         const drawWidth = 0.75 * width;
         const drawHeight = 0.75 * height;
         const leftPosVal = (width - drawWidth) / 2;
         const topPosVal = (height - drawHeight) / 2 - 5;
         const topLeftPosition = createVector(leftPosVal, topPosVal);
 
-        this.#hangman = new Hangman(topLeftPosition, drawWidth, drawHeight);
-        this.#letters = new LettersInterface(createVector(0, 0), 0.1 * width, height);
+        this.hangman = new Hangman(topLeftPosition, drawWidth, drawHeight);
+        this.letters = new LettersInterface(createVector(0, 0), 0.1 * width, height);
 
         wordListKeys = Object.keys(wordList);
         const randomIndex = floor(random(wordListKeys.length));
         const randomWord = wordListKeys[randomIndex];
 
-        this.#word = new Word(randomWord,
+        this.word = new Word(randomWord,
             createVector(0.2*width, 0.875*height),
             0.6*width, 0.1*height);
 
-        // console.log("Hangman: ", this.#hangman);
-        // console.log("Letters: ", this.#letters);
-        // console.log("Word: ", this.#word);
-        this.#startGame = true;
+        // console.log("Hangman: ", this.hangman);
+        // console.log("Letters: ", this.letters);
+        // console.log("Word: ", this.word);
+        this.startGame = true;
     }
 
     /**
@@ -112,17 +75,17 @@ class GameControl {
      * @param      {string}  letter  The guessed letter
      */
     pickLetter(letter) {
-        if(this.#letters.pickLetter(letter.toLowerCase())) {
-            const gotItRight = this.#word.pickLetter(letter.toLowerCase());
+        if(this.letters.pickLetter(letter.toLowerCase())) {
+            const gotItRight = this.word.pickLetter(letter.toLowerCase());
             if(!gotItRight) {
-                this.#hangman.decreaseLives();
-                if(this.#hangman.isDead()) {
-                    this.#gameOver = true;
+                this.hangman.decreaseLives();
+                if(this.hangman.isDead()) {
+                    this.gameOver = true;
                     console.log("Game Over!!!");
                 }
-            } else if(this.#word.isComplete()) {
+            } else if(this.word.isComplete()) {
                 console.log("You Won!!!");
-                this.#wonGame = true;
+                this.wonGame = true;
             }
         }
     }
@@ -133,32 +96,32 @@ class GameControl {
      * @return     {boolean}  True if not ready, False otherwise.
      */
     isNotReady() {
-        return this.#startGame && this.#hangman.width == 0;
+        return this.startGame && this.hangman.width == 0;
     }
 
     /**
      * Draw the game
      */
     draw() {
-        if(this.#gameOver) {
+        if(this.gameOver) {
             push();
             fill(255);
             stroke(255);
             strokeWeight(1);
             textSize(0.1 * width);
             textAlign(CENTER, CENTER);
-            text("Game Over!!!\n" + this.#word.word, width / 2, height / 2);
+            text("Game Over!!!\n" + this.word.word, width / 2, height / 2);
             pop();
-        } else if (this.#wonGame) {
+        } else if (this.wonGame) {
             push();
             fill(255);
             stroke(255);
             strokeWeight(1);
             textSize(0.1 * width);
             textAlign(CENTER, CENTER);
-            text("You Won!!!\n" + this.#word.word, width / 2, height / 2);
+            text("You Won!!!\n" + this.word.word, width / 2, height / 2);
             pop();
-        } else if (!this.#startGame) {
+        } else if (!this.startGame) {
             push();
             fill(255);
             stroke(255);
@@ -168,9 +131,9 @@ class GameControl {
             text("Loading Word List", width / 2, height / 2);
             pop();
         } else {
-            this.#hangman.draw();
-            this.#letters.draw();
-            this.#word.draw();
+            this.hangman.draw();
+            this.letters.draw();
+            this.word.draw();
         }
     }
 }
