@@ -160,11 +160,11 @@ class LettersInterface {
 
             fill(this.strokeCol);
 
-            text(letters.alphabetKeys[i],
+            text(this.alphabetKeys[i],
                 this.leftTextX,
                 y + this.halfRowSpacing);
 
-            text(letters.alphabetKeys[i+1],
+            text(this.alphabetKeys[i+1],
                 this.rightTextX,
                 y + this.halfRowSpacing);
         }

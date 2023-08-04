@@ -31,47 +31,11 @@
  *****************************************************************************/
 
 /**
- * The handler to control and draw the hangman
+ * The handler for the game control class
  *
- * @type       {Hangman}
+ * @type       {GameControl}
  */
-let hangman;
-
-/**
- * The handler to control and draw the letter interface
- *
- * @type       {LetterInterface}
- */
-let letters;
-
-/**
- * The handler to control and draw the guessed word
- *
- * @type       {Word}
- */
-let word;
-
-/**
- * State flag to see if the game has started yet after the wordlist has started
- * loading
- *
- * @type       {boolean}
- */
-let startGame = false;
-
-/**
- * State flag to see if the game is over via loss from the player
- *
- * @type       {boolean}
- */
-let gameOver = false;
-
-/**
- * State flag to see if the player has won the game
- *
- * @type       {boolean}
- */
-let wonGame = false;
+let game;
 
 /**
  * A json list of words
@@ -95,32 +59,9 @@ function preload() {
   wordList = loadJSON(url, setupGame);
 }
 
-/**
- * Handles the creation of all the objects needed for the game
- */
 function setupGame() {
-
-	const drawWidth = 0.75 * width;
-	const drawHeight = 0.75 * height;
-	const leftPosVal = (width - drawWidth) / 2;
-	const topPosVal = (height - drawHeight) / 2 - 5;
-	const topLeftPosition = createVector(leftPosVal, topPosVal);
-
-	hangman = new Hangman(topLeftPosition, drawWidth, drawHeight);
-	letters = new LettersInterface(createVector(0, 0), 0.1 * width, height);
-
-	wordListKeys = Object.keys(wordList);
-	const randomIndex = floor(random(wordListKeys.length));
-	const randomWord = wordListKeys[randomIndex];
-
-	word = new Word(randomWord,
-		createVector(0.2*width, 0.875*height),
-		0.6*width, 0.1*height);
-
-	// console.log("Hangman: ", hangman);
-	// console.log("Letters: ", letters);
-	// console.log("Word: ", word);
-	startGame = true;
+	game = new GameControl();
+	game.setupGame();
 }
 
 /**
@@ -135,7 +76,6 @@ function setup() {
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
-	setupDone = true;
 }
 
 /**
@@ -145,20 +85,7 @@ function keyPressed() {
 	if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
 		return;
 	}
-
-	if(letters.pickLetter(key.toLowerCase())) {
-		let gotItRight = word.pickLetter(key.toLowerCase());
-		if(!gotItRight) {
-			hangman.decreaseLives();
-			if(hangman.isDead()) {
-				gameOver = true;
-				console.log("Game Over!!!");
-			}
-		} else if(word.isComplete()) {
-			console.log("You Won!!!");
-			wonGame = true;
-		}
-	}
+	game.pickLetter(key.toLowerCase());
 }
 
 /**
@@ -166,41 +93,11 @@ function keyPressed() {
  */
 function draw() {
 	background(0);
-	if(startGame && hangman.width == 0) {
-		setupGame();
-	}
 
-	if(gameOver) {
-		push();
-		fill(255);
-		stroke(255);
-		strokeWeight(1);
-		textSize(0.1 * width);
-		textAlign(CENTER, CENTER);
-		text("Game Over!!!\n" + word.word, width / 2, height / 2);
-		pop();
-	} else if (wonGame) {
-		push();
-		fill(255);
-		stroke(255);
-		strokeWeight(1);
-		textSize(0.1 * width);
-		textAlign(CENTER, CENTER);
-		text("You Won!!!\n" + word.word, width / 2, height / 2);
-		pop();
-	} else if (!startGame) {
-		push();
-		fill(255);
-		stroke(255);
-		strokeWeight(1);
-		textSize(0.1 * width);
-		textAlign(CENTER, CENTER);
-		text("Loading Word List", width / 2, height / 2);
-		pop();
-	} else {
-		hangman.draw();
-		letters.draw();
-		word.draw();
-	}
+	if(game.isNotReady()) {
+        game.setupGame();
+    }
+
+	game.draw();
 }
 
