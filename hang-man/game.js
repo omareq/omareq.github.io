@@ -36,9 +36,6 @@ class GameControl {
      * Constructs a new instance of GameControl
      */
     constructor() {
-        this.startGame = false;
-        this.gameOver = false;
-        this.wonGame = false;
         this.setupGame();
     }
 
@@ -46,6 +43,10 @@ class GameControl {
      * Handles the creation of all the objects needed for the game
      */
     setupGame() {
+        this.startGame = false;
+        this.gameOver = false;
+        this.wonGame = false;
+
         const drawWidth = 0.75 * width;
         const drawHeight = 0.75 * height;
         const leftPosVal = (width - drawWidth) / 2;
@@ -100,6 +101,15 @@ class GameControl {
     }
 
     /**
+     * Determines if the game is over
+     *
+     * @return     {boolean}  True if over, False otherwise.
+     */
+    isOver() {
+        return this.gameOver;
+    }
+
+    /**
      * Draw the game
      */
     draw() {
@@ -110,7 +120,8 @@ class GameControl {
             strokeWeight(1);
             textSize(0.1 * width);
             textAlign(CENTER, CENTER);
-            text("Game Over!!!\n" + this.word.word, width / 2, height / 2);
+            text("Game Over!!!\n" + this.word.word + "\nClick To Restart",
+             width / 2, height / 2);
             pop();
         } else if (this.wonGame) {
             push();
