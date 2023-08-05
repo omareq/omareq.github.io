@@ -128,7 +128,9 @@ class LettersInterface {
      * @return     {boolean}  If the letter was in the alphabet return true
      */
     pickLetter(letter) {
-        if(this.alphabetKeys.includes(letter.toLowerCase())) {
+        if(this.alphabetKeys.includes(letter.toLowerCase()) &&
+            !this.alphabet[letter.toLowerCase()] ) {
+
             this.alphabet[letter.toLowerCase()] = true;
             return true;
         }

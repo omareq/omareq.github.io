@@ -89,6 +89,7 @@ function keyPressed() {
 
 	if(game.isOver()) {
 		game.setupGame();
+		return;
 	}
 	game.pickLetter(key.toLowerCase());
 	// saveName = "Word-04-" + String(i).padStart(3, "0") + ".png";

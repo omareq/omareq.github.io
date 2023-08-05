@@ -76,18 +76,20 @@ class GameControl {
      * @param      {string}  letter  The guessed letter
      */
     pickLetter(letter) {
-        if(this.letters.pickLetter(letter.toLowerCase())) {
-            const gotItRight = this.word.pickLetter(letter.toLowerCase());
-            if(!gotItRight) {
-                this.hangman.decreaseLives();
-                if(this.hangman.isDead()) {
-                    this.gameOver = true;
-                    console.log("Game Over!!!");
-                }
-            } else if(this.word.isComplete()) {
-                console.log("You Won!!!");
-                this.wonGame = true;
+        if(!this.letters.pickLetter(letter.toLowerCase())) {
+            return;
+        }
+
+        const gotItRight = this.word.pickLetter(letter.toLowerCase());
+        if(!gotItRight) {
+            this.hangman.decreaseLives();
+            if(this.hangman.isDead()) {
+                this.gameOver = true;
+                console.log("Game Over!!!");
             }
+        } else if(this.word.isComplete()) {
+            console.log("You Won!!!");
+            this.wonGame = true;
         }
     }
 
