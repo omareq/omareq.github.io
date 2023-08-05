@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: level.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: level.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *  @file level.js A file describing the Level class
+ *
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 18-June-2022
+ *  @link https://omareq.github.io/brick-breaker/
+ *  @link https://omareq.github.io/brick-breaker/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2022 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+
+/**
+ * @class      Level() This class describes a level in the game.
+ */
+class Level {
+    /**
+     * Constructs a new instance of the level in the game.
+     *
+     * @example
+     * let exampleLayout = [
+     *     [{width: 16, hits: 0}],
+     *     [{width: 16, hits: 1}],
+     *     [{width: 4, hits: 0}, {width: 8, hits: 2}, {width: 4, hits: 0}],
+     *     [{width: 4, hits: 0}, {width: 4, hits: 3}, {width: 4, hits: 3}],
+     *     [{width: 16, hits: 0}]
+     * ];*
+     *
+     * let newLevel = (numCols, numRows, exampleLayout);
+     *
+     * @param      {number}  cols    The number of cols
+     * @param      {number}  rows    The number of rows
+     * @param      {Array&lt;Array&lt;Object>>}  layout  The layout of the bricks
+     */
+    constructor(cols, rows, layout) {
+        this.cols = cols;
+        this.rows = rows;
+
+        const bricksWidth = (width - 2) / cols;
+        const bricksHeight = 0.65 * height / rows;
+
+        this.bricks = [];
+
+        for(let row = 0; row &lt; layout.length; row++) {
+            let widthCounter = 0;
+            for(let brick = 0; brick &lt; layout[row].length; brick++) {
+                let currentWidth = layout[row][brick].width;
+                let currentHits = layout[row][brick].hits;
+
+                if(currentHits == 0) {
+                    widthCounter += currentWidth;
+                    continue;
+                }
+
+                let x = widthCounter * bricksWidth;
+                let y = row * bricksHeight;
+
+                this.bricks.push(new Brick(x, y,
+                    currentWidth * bricksWidth, bricksHeight,
+                    currentHits));
+
+                widthCounter += currentWidth;
+            }
+        }
+    }
+
+    /**
+     * Checks to see if any of the bricks in the layout are hit by the ball. If
+     * they are then the ball will bounce from the edge of the brick that it
+     * hits.
+     *
+     * @param      {Ball}  ball    The ball
+     */
+    checkBricksHitBy(ball) {
+
+        for(let i = this.bricks.length - 1; i >= 0 ; i--) {
+            // bottom edge
+            let xCond = (ball.x + ball.r) > this.bricks[i].x &amp;&amp;
+                (ball.x - ball.r) &lt; this.bricks[i].x + this.bricks[i].w;
+            let yCond = (ball.y + ball.r) > this.bricks[i].y + this.bricks[i].h
+            &amp;&amp; (ball.y - ball.r) &lt; this.bricks[i].y + this.bricks[i].h;
+            if(xCond &amp;&amp; yCond) {
+                this.bricks[i].hits -= 1;
+                this.bricks[i].setColourByHits();
+                ball.setVelY(-ball.vy);
+                ball.setY(this.bricks[i].y + this.bricks[i].h + ball.r + 1);
+                if(this.bricks[i].hits == 0) {
+                    let deleted = this.bricks.splice(i, 1);
+                }
+                break;
+            }
+
+            // left edge
+            xCond = (ball.x + ball.r) > this.bricks[i].x &amp;&amp;
+                (ball.x - ball.r) &lt; this.bricks[i].x;
+            yCond = (ball.y + ball.r) > this.bricks[i].y &amp;&amp;
+                (ball.y - ball.r) &lt; this.bricks[i].y + this.bricks[i].h;
+            if(xCond &amp;&amp; yCond) {
+                this.bricks[i].hits -= 1;
+                this.bricks[i].setColourByHits();
+                ball.setVelX(-ball.vx);
+                ball.setX(this.bricks[i].x - ball.r - 1);
+                if(this.bricks[i].hits == 0) {
+                    let deleted = this.bricks.splice(i, 1);
+                }
+                break;
+            }
+
+            // right edge
+            xCond = (ball.x + ball.r) > this.bricks[i].x + this.bricks[i].w &amp;&amp;
+                (ball.x - ball.r) &lt; this.bricks[i].x + this.bricks[i].w;
+            yCond = (ball.y + ball.r) > this.bricks[i].y &amp;&amp;
+                (ball.y - ball.r) &lt; this.bricks[i].y + this.bricks[i].h;
+            if(xCond &amp;&amp; yCond) {
+                this.bricks[i].hits -= 1;
+                this.bricks[i].setColourByHits();
+                ball.setVelX(-ball.vx);
+                ball.setX(this.bricks[i].x + this.bricks[i].w + ball.r + 1);
+                if(this.bricks[i].hits == 0) {
+                    let deleted = this.bricks.splice(i, 1);
+                }
+                break;
+            }
+
+            // top edge
+            xCond = (ball.x + ball.r) > this.bricks[i].x &amp;&amp;
+                (ball.x - ball.r) &lt; this.bricks[i].x + this.bricks[i].w;
+            yCond = (ball.y + ball.r) > this.bricks[i].y &amp;&amp;
+                (ball.y - ball.r) &lt; this.bricks[i].y;
+            if(xCond &amp;&amp; yCond) {
+                this.bricks[i].hits -= 1;
+                this.bricks[i].setColourByHits();
+                ball.setVelY(-ball.vy);
+                ball.setY(this.bricks[i].y - ball.r - 1);
+                if(this.bricks[i].hits == 0) {
+                    let deleted = this.bricks.splice(i, 1);
+                }
+                break;
+            }
+        }
+    }
+
+    /**
+     * Checks if there are any bricks left in the layout
+     *
+     * @return     {Boolean}  True when all bricks are destroyed
+     */
+    win() {
+        return this.bricks.length == 0;
+    }
+
+    /**
+     * Find the pixel location of the brick with the highest value.  Prefers
+     * leftmost bricks in the highest rows first.
+     *
+     * @return     {p5.Vector}  The pixel location of the brick found
+     */
+    posHighestBrick() {
+        let recordHits = 0;
+        let recordPosX;
+        let recordPosY;
+        for(let i = 0; i &lt; this.bricks.length; i++) {
+            if(this.bricks[i].hits > recordHits) {
+                recordHits = this.bricks[i].hits;
+                recordPosX = this.bricks[i].x;
+                recordPosY = this.bricks[i].y;
+            }
+        }
+        return createVector(recordPosX, recordPosY);
+    }
+
+    /**
+     * Draw all the bricks on the canvas.
+     */
+    draw() {
+        for(let i = 0; i &lt; this.bricks.length; i++) {
+            this.bricks[i].draw();
+        }
+    }
+}
+
+/**
+ * The number of columns in the brick layout.
+ *
+ * @type       {number}
+ */
+let cols1 = 16;
+
+/**
+ * The number of rows in the brick layout.
+ *
+ * @type       {number}
+ */
+let rows1 = 8;
+
+// Author: Omar Essilfie-Quaye
+/**
+ * The layout of the bricks in level 0
+ *
+ * @type       {Array&lt;Array&lt;Object>>}
+ */
+let layout0 = [
+    [{width: 16, hits: 0}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 2}, {width: 2, hits: 2}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 2}, {width: 2, hits: 2}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 16, hits: 0}]
+];
+
+// Author: Omar Essilfie-Quaye
+/**
+ * The layout of the bricks in level 1
+ *
+ * @type       {Array&lt;Array&lt;Object>>}
+ */
+let layout1 = [
+    [{width: 16, hits: 0}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 4}, {width: 2, hits: 5}, {width: 2, hits: 5}, {width: 2, hits: 4}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 4}, {width: 2, hits: 5}, {width: 2, hits: 5}, {width: 2, hits: 4}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 1}],
+    [{width: 16, hits: 0}]
+];
+
+// Author: Naomi
+/**
+ * The layout of the bricks in level 2
+ *
+ * @type       {Array&lt;Array&lt;Object>>}
+ */
+let layout2 = [
+    [{width: 16, hits: 0}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 5}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 5}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 5}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 5}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 4}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 4}],
+    [{width: 2, hits: 1}, {width: 2, hits: 4}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 4}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 4}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 16, hits: 0}]
+];
+
+// Author: Naomi
+/**
+ * The layout of the bricks in level 3
+ *
+ * @type       {Array&lt;Array&lt;Object>>}
+ */
+let layout3 = [
+    [{width: 16, hits: 0}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 3}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}, {width: 2, hits: 1}],
+    [{width: 16, hits: 0}]
+];
+
+/**
+ * An array of all level layouts.
+ *
+ * @type       {Array}
+ *
+ * @see Level
+ */
+let levelLayouts = [
+    layout0,
+    layout1,
+    layout2,
+    layout3
+];</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ball.html">Ball</a></li><li><a href="Brick.html">Brick</a></li><li><a href="Level.html">Level</a></li><li><a href="Paddle.html">Paddle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ball">ball</a></li><li><a href="global.html#cheatMode">cheatMode</a></li><li><a href="global.html#cheatModeToggleTime">cheatModeToggleTime</a></li><li><a href="global.html#cols1">cols1</a></li><li><a href="global.html#currentGameMode">currentGameMode</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#gameMode">gameMode</a></li><li><a href="global.html#goalAimPoint">goalAimPoint</a></li><li><a href="global.html#layout0">layout0</a></li><li><a href="global.html#layout1">layout1</a></li><li><a href="global.html#layout2">layout2</a></li><li><a href="global.html#layout3">layout3</a></li><li><a href="global.html#level">level</a></li><li><a href="global.html#levelLayouts">levelLayouts</a></li><li><a href="global.html#lives">lives</a></li><li><a href="global.html#loadNextLevel">loadNextLevel</a></li><li><a href="global.html#newLevelStartTime">newLevelStartTime</a></li><li><a href="global.html#noiseOffset">noiseOffset</a></li><li><a href="global.html#paddle">paddle</a></li><li><a href="global.html#rows1">rows1</a></li><li><a href="global.html#selectedLevel">selectedLevel</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#showAimPoint">showAimPoint</a></li><li><a href="global.html#showLives">showLives</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Jul 02 2022 09:28:00 GMT+0100 (BST)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

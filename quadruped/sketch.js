@@ -28,7 +28,7 @@ let firstState = 0;
 let lastState = 2;
 let state = firstState;
 let gaitCounter = 0;
-let x = 1;
+let x = 7;
 let y = 1;
 let yInc = 0.1;
 let roll = 0;
@@ -440,7 +440,7 @@ function draw() {
 
         y+= yInc;
         x = 5;
-        if(y > 20 || y <=-20){
+        if(y > 5 || y <=-5){
             yInc *=-1;
         }
         i-=0.01;
@@ -453,10 +453,10 @@ function draw() {
         let lbz = z + deltaRoll - deltaPitch;
         let rbz = z - deltaRoll - deltaPitch;
 
-        let rf_angles = natalya.rf_IK([x, x, rfz]);
-        let lf_angles = natalya.lf_IK([-x, x, lfz]);
-        let rb_angles = natalya.rb_IK([x, -x, rbz]);
-        let lb_angles = natalya.lb_IK([-x, x, lbz]);
+        let rf_angles = natalya.rf_IK([x, y, rfz]);
+        let lf_angles = natalya.lf_IK([-x, y, lfz]);
+        let rb_angles = natalya.rb_IK([x, y, rbz]);
+        let lb_angles = natalya.lb_IK([-x, y, lbz]);
         natalya.rf_servos_write(rf_angles);
         natalya.lf_servos_write(lf_angles);
         natalya.rb_servos_write(rb_angles);

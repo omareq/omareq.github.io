@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_021",
+            "prev-id": "p_026",
             "status": "active",
             "tags": [
                 "fun"
@@ -276,20 +276,6 @@
             ],
             "vid-url": "vids/p_016.mp4"
         },
-        "p_017": {
-            "brief": "A program looking into the various methods of missile targeting",
-            "demo-url": "/missile-guidance/",
-            "docs-url": "/missile-guidance/docs/",
-            "gif-url": "imgs/p_017.gif",
-            "id": "p_017",
-            "name": "Missile-guidance",
-            "next-id": "p_018",
-            "pic-url": "imgs/p_017.jpg",
-            "prev-id": "p_016",
-            "status": "archived",
-            "tags": [],
-            "vid-url": "vids/p_017.mp4"
-        },
         "p_018": {
             "brief": "A Simple strategy game where you have to flood the whole board with one colour",
             "demo-url": "/flood-it/",
@@ -347,7 +333,7 @@
             "gif-url": "imgs/p_021.gif",
             "id": "p_021",
             "name": "Cooper-pair-box",
-            "next-id": "p_000",
+            "next-id": "p_022",
             "pic-url": "imgs/p_021.jpg",
             "prev-id": "p_020",
             "status": "active",
@@ -357,6 +343,89 @@
                 "science"
             ],
             "vid-url": "vids/p_021.mp4"
+        },
+        "p_022": {
+            "brief": "A quick brick breaker game",
+            "demo-url": "/brick-breaker/",
+            "docs-url": "/brick-breaker/docs/",
+            "gif-url": "imgs/p_022.gif",
+            "id": "p_022",
+            "name": "Brick breaker",
+            "next-id": "p_023",
+            "pic-url": "imgs/p_022.jpg",
+            "prev-id": "p_021",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_022.mp4"
+        },
+        "p_023": {
+            "brief": "A simulation of a robot solving a maze",
+            "demo-url": "/maze-sim-3d/",
+            "docs-url": "/maze-sim-3d/docs/",
+            "gif-url": "imgs/p_023.gif",
+            "id": "p_023",
+            "name": "Maze sim 3d",
+            "next-id": "p_025",
+            "pic-url": "imgs/p_023.jpg",
+            "prev-id": "p_022",
+            "status": "active",
+            "tags": [
+                "robot",
+                "science"
+            ],
+            "vid-url": "vids/p_023.mp4"
+        },
+        "p_024": {
+            "brief": "Basic fluid dynamics simulation of objects in a laminar flow",
+            "demo-url": "/fluid-dynamics/",
+            "docs-url": "/fluid-dynamics/docs/",
+            "gif-url": "imgs/p_024.gif",
+            "id": "p_024",
+            "name": "Fluid dynamics",
+            "next-id": "p_025",
+            "pic-url": "imgs/p_024.jpg",
+            "prev-id": "p_023",
+            "status": "archived",
+            "tags": [
+                "physics",
+                "science"
+            ],
+            "vid-url": "vids/p_024.mp4"
+        },
+        "p_025": {
+            "brief": "A script to generate the mandelbrot-set",
+            "demo-url": "/mandelbrot-set/",
+            "docs-url": "/mandelbrot-set/docs/",
+            "gif-url": "imgs/p_025.gif",
+            "id": "p_025",
+            "name": "Mandelbrot set",
+            "next-id": "p_026",
+            "pic-url": "imgs/p_025.jpg",
+            "prev-id": "p_023",
+            "status": "active",
+            "tags": [
+                "maths",
+                "science"
+            ],
+            "vid-url": "vids/p_025.mp4"
+        },
+        "p_026": {
+            "brief": "My take of on the classic hang man word guessing game",
+            "demo-url": "/hang-man/",
+            "docs-url": "/hang-man/docs/",
+            "gif-url": "imgs/p_026.gif",
+            "id": "p_026",
+            "name": "Hang man",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_026.jpg",
+            "prev-id": "p_025",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_026.mp4"
         }
     }
 }
