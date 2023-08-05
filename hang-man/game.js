@@ -30,6 +30,11 @@
  *
  *****************************************************************************/
 
+/**
+ * This class describes the functionality to control the game.
+ *
+ * @class      GameControl (name)
+ */
 class GameControl {
 
     /**

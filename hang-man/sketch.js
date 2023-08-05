@@ -59,6 +59,10 @@ function preload() {
   wordList = loadJSON(url, setupGame);
 }
 
+/**
+ * This is the callback function to setup the game for the first time after the
+ * wordlist is loaded
+ */
 function setupGame() {
 	game = new GameControl();
 	game.setupGame();
@@ -97,6 +101,10 @@ function keyPressed() {
 	// i++;
 }
 
+/**
+ * handles the mouse click events.  Currently this function only restarts the
+ * game.
+ */
 function mousePressed() {
 	if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
 		return;
