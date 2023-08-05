@@ -41,6 +41,14 @@ class GameControl {
      * Constructs a new instance of GameControl
      */
     constructor() {
+        /** @member {Hangman} */
+        this.hangman = undefined;
+
+        /** @member {LettersInterface} */
+        this.letters = undefined;
+
+        /** @member {Word} */
+        this.word = undefined;
         this.setupGame();
     }
 

@@ -49,6 +49,7 @@ class LettersInterface {
         this.strokeWeight = strokeWeight;
         this.strokeCol = strokeCol;
 
+        /** @member {Object} */
         this.alphabet = {
             "a":false,
             "b":false,
