@@ -74,37 +74,36 @@ class Face {
 		return true;
 	}
 
-	getCCWVertexList() {
+	getCCWVertexList(sharedVerticies=[]) {
 		// what is the chance that the top most vertex is also inline with the
 		// right most vertex of the remaining pair
-		vertexList = [];
-		options = [this.v1, this.v2, this.v3];
+		let vertexList = [this.v1, this.v2, this.v3];
 
-		// find top most vertex
-		// do checks for equal y values first
-		if(options[0].y < options[1].y && options[0].y < options[2].y) {
-			vertexList.push(options[0]);
-			options.splice(0, 1);
-		} else if(options[1].y < options[2].y) {
-			vertexList.push(options[1]);
-			options.splice(1, 1);
-		} else {
-			vertexList.push(options[2]);
-			options.splice(2, 1);
+		const mid = this.midPoint();
+		// sort into counter clockwise order
+		vertexList.sort((a, b) => atan2(b.y - mid.y, b.x - mid.x) - atan2(a.y - mid.y, a.x - mid.x) );
+
+		if(sharedVerticies.length == 0) {
+			return vertexList;
 		}
 
-		// find left vertex from remaining pair
-		if(options[0] < options[1]) {
-			vertexList.push(options[0]);
-			options.splice(0, 1);
-		} else {
-			vertexList.push(options[1]);
-			options.splice(1, 1);
-		}
+		// make sure that the shared vertices are the first and last element
+		let vl = vertexList;
+		const permuteVal = 1;
 
-		// add last vertex
-		vertexList.push(options[0]);
-		return vertexList;
+		for(let i = 0; i < 4; i++) {
+			const v1isShared = sharedVerticies.includes(vl[0]);
+			const v2isShared = sharedVerticies.includes(vl[2]);
+
+			if(v1isShared && v2isShared) {
+				// console.log("CCW vertexorder");
+				// console.log(vl);
+				return vl;
+			}
+
+			vl = vl.slice(permuteVal).concat(vl.slice(0, permuteVal));
+		}
+		return vl;
 	}
 
 	bounds(vertex) {
@@ -145,6 +144,19 @@ class Face {
 			return true;
 		}
 		return false;
+	}
+
+	sharedVerticies(face) {
+		let sharedVerticies = [];
+		const f1vertexList = [this.v1, this.v2, this.v3];
+		const f2vertexList = [face.v1, face.v2, face.v3];
+
+		for(let i = 0; i < 3; i++) {
+			if(f2vertexList.includes(f1vertexList[i])) {
+				sharedVerticies = sharedVerticies.concat(f1vertexList[i]);
+			}
+		}
+		return sharedVerticies;
 	}
 
 	draw(fillAlpha = 0) {
@@ -194,6 +206,12 @@ class Mesh {
 	}
 
 	addVertex(vertex) {
+		if(this.verticies.includes(vertex)) {
+			console.log("This vertex is already in the mesh");
+			console.log(vertex);
+			return;
+		}
+
 		for (let i = this.faces.length - 1; i >= 0; i--) {
 			if(this.faces[i].bounds(vertex)) {
 				const oldFace = this.faces[i];
@@ -228,8 +246,54 @@ class Mesh {
 		}
 	}
 
+	testCheck(face1, face2) {
+		console.log("Start Test Check----------------------------------------");
+		console.log("Face 1:");
+		console.log(face1);
+		console.log("Face 2:");
+		console.log(face2);
+
+		//---------------------------------------------------------------------
+		const sharedVerticies = face1.sharedVerticies(face2);
+
+		const verticies1 = face1.getCCWVertexList(sharedVerticies);
+		const verticies2 = face2.getCCWVertexList(sharedVerticies);
+
+		const allVerticies = verticies1.concat(verticies2);
+		const setOfVerticies = [...verticies1, verticies2[1]];
+		//---------------------------------------------------------------------
+
+		console.log("Face 1 CCW List: ");
+		console.log(verticies1);
+		console.log("Face 2 CCW List: ");
+		console.log(verticies2);
+
+		console.log("sharedVerticies: ");
+		console.log(sharedVerticies);
+
+		console.log("CCW Ordered Set of Verticies: ");
+		console.log(setOfVerticies);
+
+		console.log("End Test Check------------------------------------------");
+	}
+
+	isLastVertexInCircumCircle(verticies) {
+		const a = verticies[0];
+		const b = verticies[1];
+		const c = verticies[2];
+		const d = verticies[3];
+		let matrix = [
+			[a.x, a.y, a.x**2 + a.y**2, 1],
+			[b.x, b.y, b.x**2 + b.y**2, 1],
+			[c.x, c.y, c.x**2 + c.y**2, 1],
+			[d.x, d.y, d.x**2 + d.y**2, 1]
+			]
+
+		return math.det(matrix) > 0;
+	}
+
 	delaunayFlip() {
-		if(flipIndex > this.verticies.length) {
+		if(this.flipIndex >= this.verticies.length) {
 			this.flipIndex = 0;
 			return;
 		}
@@ -244,7 +308,37 @@ class Mesh {
 				}
 
 				if(faces[i].sharesEdge(faces[j])) {
-					//check delaunay and flip if necssary
+					//check delaunay and flip if necssaryo
+					const sharedVerticies = faces[i].sharedVerticies(faces[j]);
+
+					const verticies1 = faces[i].getCCWVertexList(sharedVerticies);
+					const verticies2 = faces[j].getCCWVertexList(sharedVerticies);
+
+					const allVerticies = verticies1.concat(verticies2);
+					const setOfVerticies = [...verticies1, verticies2[1]];
+
+					// testCheck(face[i], face[j]);
+
+					if(this.isLastVertexInCircumCircle(setOfVerticies)) {
+						//flip edge;
+						console.log("Flip Edge");
+						console.log(sharedVerticies);
+						push();
+						stroke("#ff0000");
+						line(sharedVerticies[0].x, sharedVerticies[0].y,
+							sharedVerticies[1].x, sharedVerticies[1].y);
+						pop();
+
+						// return;
+					} else {
+						console.log("No Flip");
+						push();
+						stroke("#00ff00");
+						line(sharedVerticies[0].x, sharedVerticies[0].y,
+							sharedVerticies[1].x, sharedVerticies[1].y);
+						pop();
+						noLoop();
+					}
 				}
 			}
 		}
@@ -260,5 +354,6 @@ class Mesh {
 				this.faces[i].draw();
 			}
 		}
+		this.delaunayFlip();
 	}
 }
