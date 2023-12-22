@@ -36,6 +36,7 @@ class Tile {
         this.east = new Wall(east , false, gridSize);
         this.south = new Wall(south, false, gridSize);
         this.west = new Wall(west , false, gridSize);
+        this.hasWalls = north || east || south || west;
         this.gridSize = gridSize;
         this.visit = 0;
         this.order = 0;
@@ -260,41 +261,49 @@ class Tile {
     }
 
     show() {
+        if(!this.hasWalls && this.visit == 0) {
+            return;
+        }
+
         push();
 
-        if(this.north.getIsWall()) {
-            push();
-            translate(0, -this.gridSize / 2, 0);
-            this.north.show();
-            pop();
-        }
-        if(this.east.getIsWall()) {
-            push();
-            translate(this.gridSize / 2, 0, 0);
-            rotateZ(HALF_PI);
-            this.east.show();
-            pop();
-        }
-        if(this.south.getIsWall()) {
-            push();
-            translate(0, this.gridSize / 2, 0);
-            rotateZ(PI);
-            this.south.show();
-            pop();
-        }
-        if(this.west.getIsWall()) {
-            push();
-            translate(-this.gridSize / 2, 0, 0);
-            rotateZ(3 * HALF_PI);
-            this.west.show();
-            pop();
+        if(this.hasWalls) {
+            if(this.north.getIsWall()) {
+                push();
+                translate(0, -this.gridSize / 2, 0);
+                this.north.show();
+                pop();
+            }
+            if(this.east.getIsWall()) {
+                push();
+                translate(this.gridSize / 2, 0, 0);
+                rotateZ(HALF_PI);
+                this.east.show();
+                pop();
+            }
+            if(this.south.getIsWall()) {
+                push();
+                translate(0, this.gridSize / 2, 0);
+                rotateZ(PI);
+                this.south.show();
+                pop();
+            }
+            if(this.west.getIsWall()) {
+                push();
+                translate(-this.gridSize / 2, 0, 0);
+                rotateZ(3 * HALF_PI);
+                this.west.show();
+                pop();
+            }
         }
 
-        translate(0, 0, 1);
-        texture(this.pg);
-        noStroke();
+        if(this.visit > 0) {
+            translate(0, 0, 1);
+            texture(this.pg);
+            noStroke();
+            plane(this.gridSize - 4);
+        }
 
-        plane(this.gridSize - 4);
         pop();
     }
 }
