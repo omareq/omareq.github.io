@@ -30,6 +30,10 @@
  *
  *****************************************************************************/
 
+// https://github.com/processing/p5.js/wiki/Optimizing-p5.js-Code-for-Performance#p5-performance-tips
+// In this case it doesn't appear to make and difference
+p5.disableFriendlyErrors = true; // disables FES
+
 let gridSize = 45;
 let mapSizeX = 7;
 let mapSizeY = 5;

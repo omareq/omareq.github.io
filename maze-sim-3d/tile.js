@@ -41,6 +41,10 @@ class Tile {
         this.order = 0;
         this.isBlack = false;
         this.isSilver = false;
+        this.pg = createGraphics(this.gridSize, this.gridSize);
+        this.grey = 225;
+        this.black = 0;
+        this.white = 255;
     }
 
     resetTile() {
@@ -104,6 +108,45 @@ class Tile {
         this.west.setVictim(false);
     }
 
+    updatePg() {
+        // visit information
+        this.pg.background(this.white);
+        if(this.visit > 0) {
+            push();
+            translate(0, 0, 1);
+            this.pg.textSize(this.gridSize / 2);
+            this.pg.textAlign(CENTER, CENTER);
+
+            // text colour
+            if(this.isBlack) {
+                this.pg.fill(this.white);
+            } else {
+                this.pg.fill(this.black);
+            }
+
+            this.pg.text(str(this.visit), this.gridSize / 2, this.gridSize / 2);
+            pop();
+        }
+
+        // order information
+        if(this.order > 0) {
+            push();
+            translate(0, 0, 2);
+            this.pg.textSize(this.gridSize / 4);
+            this.pg.textAlign(CENTER, CENTER);
+
+            // text colour
+            if(this.isBlack) {
+                this.pg.fill(this.white);
+            } else {
+                this.pg.fill(this.black);
+            }
+
+            this.pg.text(str(this.order), this.gridSize / 4, this.gridSize / 4);
+            pop();
+        }
+    }
+
 
     getVisit() {
         return this.visit;
@@ -111,15 +154,18 @@ class Tile {
 
     incrementVist() {
         this.visit += 1;
+        this.updatePg();
         return this.visit;
     }
 
     resetVisit() {
         this.vist = 0;
+        this.pg.background(this.white);
     }
 
     setOrder(newVisitOrder) {
         this.order = newVisitOrder;
+        this.updatePg();
     }
 
     getOrder() {
@@ -128,6 +174,7 @@ class Tile {
 
     resetOrder() {
         this.order = 0;
+        this.pg.background(this.white);
     }
 
     hasVictim(direction) {
@@ -212,26 +259,8 @@ class Tile {
         this.west.resetWall();
     }
 
-    show() {
-        let pg = createGraphics(this.gridSize, this.gridSize);
-
-        const grey = 225;
-        const black = 0;
-        const white = 255;
+    show() {       
         push();
-        // if(this.isBlack) {
-        //     pg.background(black);
-        //     fill(black);
-        // } else if(this.isSilver) {
-        //     fill(grey);
-        //     pg.background(grey);
-        // } else {
-        //     fill(white);
-        //     pg.background(white);
-        // }
-
-        stroke(white);
-        rect(0,0,this.gridSize, this.gridSize);
 
         if(this.north.getIsWall()) {
             push();
@@ -260,41 +289,9 @@ class Tile {
             this.west.show();
             pop();
         }
-
-
-        if(this.visit > 0) {
-            push();
-            translate(0, 0, 1);
-            pg.textSize(this.gridSize / 2);
-            pg.textAlign(CENTER, CENTER);
-
-            if(this.isBlack) {
-                pg.fill(white);
-            } else {
-                pg.fill(black);
-            }
-
-            pg.text(str(this.visit), this.gridSize / 2, this.gridSize / 2);
-            pop();
-        }
-
-        if(this.order > 0) {
-            push();
-            translate(0, 0, 2);
-            pg.textSize(this.gridSize / 4);
-            pg.textAlign(CENTER, CENTER);
-
-            if(this.isBlack) {
-                pg.fill(white);
-            } else {
-                pg.fill(black);
-            }
-
-            pg.text(str(this.order), this.gridSize / 4, this.gridSize / 4);
-            pop();
-        }
+        
         translate(0, 0, 1);
-        texture(pg);
+        texture(this.pg);
         noStroke();
 
         plane(this.gridSize - 4);

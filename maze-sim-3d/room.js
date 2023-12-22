@@ -62,6 +62,14 @@ class Room {
     }
 
     show() {
+        stroke(255);
+        fill(255);
+        push();
+        translate(0.5 * this.mapX * this.gridSize - 0.5 * this.gridSize,
+            0.5 * this.mapY * this.gridSize - 0.5 * this.gridSize, 0);
+        rect(0,0, this.mapX * this.gridSize, this.mapY * this.gridSize);
+        pop();
+
         for(let y = 0; y < this.mapY; y++) {
             for(let x = 0; x < this.mapX; x++) {
                 push();
