@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: fluid.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: fluid.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *  @file fluid.js File containing a fluid class that simulates fluid dynamics
+ *
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 17-December-2022
+ *  @link https://omareq.github.io/fluid-dynamics/
+ *  @link https://omareq.github.io/fluid-dynamics/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2022 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+
+
+/**
+ * @class      Fluid () This class describes a fluid.
+ */
+class Fluid {
+    /**
+     * Constructs a new instance of a Fluid
+     *
+     * @param      {number}  numX       The number of horizontal cells in the
+     * @param      {number}  numY       The number of vertical cells in the
+     * @param      {number}  density    The density of the fluid
+     */
+    constructor(numX, numY, density) {
+        this.density = density;
+        this.numX = numX;
+        this.numY = numY;
+        this.numCells = this.numX * this.numY;
+        this.velX = [];
+        this.velY = [];
+        this.newVelX = [];
+        this.newVelY = [];
+        this.pressure = [];
+        this.boundary =[]; // 1 if no wall and 0 if there is a wall
+
+        const startXVal = 10;
+        const startYVal = 0;
+
+        for (let col = 0; col &lt; numX; col++) {
+            this.velX[col] = new Array(this.numX).fill(startXVal);
+            this.velY[col] = new Array(this.numY).fill(col/100);
+            this.newVelX[col] = new Array(this.numX).fill(startXVal);
+            this.newVelY[col] = new Array(this.numY).fill(startYVal);
+            this.pressure[col] = new Array(this.numY).fill(0);
+            this.boundary[col] = new Array(this.numY).fill(1);
+        }
+
+        this.showFieldLines = false;
+        this.showStreamLines = true;
+        this.showPressure = false;
+        this.showSmoke = false;
+        this.showBoundary = false;
+    }
+
+    /**
+     * Applies the force of gravity to the fluid
+     *
+     * @param      {number}  dt       The simulation time step
+     * @param      {number}  gravity  The acceleration due to gravity
+     */
+    applyGravity(dt, gravity) {
+        for(let col = 0; col &lt; this.numX; col++) {
+            for(let row = 1; row &lt; this.numY; row++) {
+                if(this.boundary[col][row] != 0 &amp;&amp; this.boundary[col][row - 1]) {
+                    this.velY += gravity * dt;
+                }
+            }
+        }
+    }
+
+    /**
+     * Updates the physics of the fluid for a given time step
+     *
+     * @param      {number}  dt      The time step
+     */
+    update(dt) {
+        this.applyGravity(dt, 9.81);
+    }
+
+    /**
+     * Draws fluid stream lines
+     *
+     * @param      {number}   space               The space between stream lines
+     * @param      {boolean}  [showAsGrid=false]  If set to true the streamlines
+     *                                            will be initiated in a grid
+     *                                            otherwise they will only start
+     *                                            on the left hand side of the
+     *                                            canvas.
+     */
+    drawStreamLines(space, showAsGrid=false) {
+        let numSegments = 1000;
+        let segmentLength = 1;
+        push();
+        noFill();
+
+        // initialised outside of the loop to save on multiple
+        // reinitialisations within a critical loop
+        let x = 0;
+        let y = 0;
+        let velX = 0;
+        let velY = 0;
+        let length = 0;
+
+        let finalCol = 0;
+
+        if(showAsGrid) {
+            numSegments = 35;
+            segmentLength = 4;
+            finalCol = this.numX;
+        }
+
+        for(let col = 0; col &lt;= finalCol; col+=space) {
+            for(let row = 0; row &lt; this.numY; row+=space) {
+                x = col;
+                y = row;
+
+                beginShape();
+                for(let i = 0; i &lt; numSegments; i++) {
+                    velX = this.velX[floor(x)][floor(y)];
+                    velY = this.velY[floor(x)][floor(y)];
+                    length = sqrt(sq(velX) + sq(velY));
+                    x += velX * segmentLength / length;
+                    y += velY * segmentLength / length;
+
+                    if(x >= width - 1 || x &lt; 0) {
+                        break;
+                    }
+
+                    if(y >= height - 1 || y &lt; 0) {
+                        break;
+                    }
+
+                    curveVertex(x, y);
+                }
+                endShape();
+            }
+        }
+        pop();
+    }
+
+    /**
+     * Draws the brick on the canvas
+     *
+     * @param   {number}    Space   The space between the drawn field lines
+     * @param   {number}    Scale   The scale factor to change the length of
+     *                              the field lines
+     */
+    draw(space, scale=1) {
+        push();
+        stroke(0);
+        fill(0);
+        if(this.showFieldLines) {
+            for(let col = 0; col &lt; this.numX; col+=space) {
+                for(let row = 0; row &lt; this.numY; row+=space) {
+                    const length = sqrt(sq(this.velX[col][row]) +
+                        sq(this.velY[col][row]));
+
+                    const theta = atan2(this.velY[col][row],
+                        this.velX[col][row]);
+
+                    const x = scale * length * cos(theta);
+                    const y = scale * length * sin(theta);
+
+                    line(col, row, col + x, row + y);
+                    ellipse(col, row, space * 0.05, space * 0.05);
+
+                }
+            }
+
+
+        } else if(this.showStreamLines) {
+            this.drawStreamLines(space);
+        }
+
+        if(this.showPressure) {
+
+        }
+
+        stroke(155);
+        fill(155);
+
+        // replace this with drawing contours as this will be faster to render
+        if(this.showBoundary) {
+            for(let col = 0; col &lt; this.numX; col++) {
+                for(let row = 0; row &lt; this.numY; row++) {
+                    if(this.boundary[col][row] == 0) {
+                        rect(col, row, 1, 1);
+                    }
+                }
+            }
+        }
+        pop();
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Fluid.html">Fluid</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Jan 28 2023 20:05:28 GMT+0000 (GMT)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

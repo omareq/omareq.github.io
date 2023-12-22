@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_023",
+            "prev-id": "p_026",
             "status": "active",
             "tags": [
                 "fun"
@@ -367,12 +367,65 @@
             "gif-url": "imgs/p_023.gif",
             "id": "p_023",
             "name": "Maze sim 3d",
-            "next-id": "p_000",
+            "next-id": "p_025",
             "pic-url": "imgs/p_023.jpg",
             "prev-id": "p_022",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "robot",
+                "science"
+            ],
             "vid-url": "vids/p_023.mp4"
+        },
+        "p_024": {
+            "brief": "Basic fluid dynamics simulation of objects in a laminar flow",
+            "demo-url": "/fluid-dynamics/",
+            "docs-url": "/fluid-dynamics/docs/",
+            "gif-url": "imgs/p_024.gif",
+            "id": "p_024",
+            "name": "Fluid dynamics",
+            "next-id": "p_025",
+            "pic-url": "imgs/p_024.jpg",
+            "prev-id": "p_023",
+            "status": "archived",
+            "tags": [
+                "physics",
+                "science"
+            ],
+            "vid-url": "vids/p_024.mp4"
+        },
+        "p_025": {
+            "brief": "A script to generate the mandelbrot-set",
+            "demo-url": "/mandelbrot-set/",
+            "docs-url": "/mandelbrot-set/docs/",
+            "gif-url": "imgs/p_025.gif",
+            "id": "p_025",
+            "name": "Mandelbrot set",
+            "next-id": "p_026",
+            "pic-url": "imgs/p_025.jpg",
+            "prev-id": "p_023",
+            "status": "active",
+            "tags": [
+                "maths",
+                "science"
+            ],
+            "vid-url": "vids/p_025.mp4"
+        },
+        "p_026": {
+            "brief": "My take of on the classic hang man word guessing game",
+            "demo-url": "/hang-man/",
+            "docs-url": "/hang-man/docs/",
+            "gif-url": "imgs/p_026.gif",
+            "id": "p_026",
+            "name": "Hang man",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_026.jpg",
+            "prev-id": "p_025",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_026.mp4"
         }
     }
 }
