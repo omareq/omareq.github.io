@@ -46,8 +46,8 @@ async function checkForVictim(robot) {
 }
 
 async function solve(robot) {
-    // hybrid_5(robot)
+    // hybrid_5(robot);
     // await leftHandRule(robot);
-    await rightHandRule(robot)
+    await rightHandRule(robot);
 }
 

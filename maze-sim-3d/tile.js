@@ -259,7 +259,7 @@ class Tile {
         this.west.resetWall();
     }
 
-    show() {       
+    show() {
         push();
 
         if(this.north.getIsWall()) {
@@ -289,7 +289,7 @@ class Tile {
             this.west.show();
             pop();
         }
-        
+
         translate(0, 0, 1);
         texture(this.pg);
         noStroke();
