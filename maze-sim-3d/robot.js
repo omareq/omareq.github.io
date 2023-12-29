@@ -287,6 +287,10 @@ class Robot {
         let endBearing = this.bearing - 90;
         let pError = 90;
         while(abs(this.bearing - endBearing) > 0.01) {
+            if(endSimulationFlag) {
+                console.debug("robot.turnLeft: endSimulationFlag");
+                return;
+            }
             let error = this.bearing - endBearing;
             let kp = 0.8 * error;
             let kd = 0.15 * pError;
@@ -308,6 +312,10 @@ class Robot {
         let pError = 90;
 
         while(abs(this.bearing - endBearing) > 0.01) {
+            if(endSimulationFlag) {
+                console.debug("robot.turnRight: endSimulationFlag");
+                return;
+            }
             let error = this.bearing - endBearing;
             let kp = 0.8 * error;
             let kd = 0.15 * pError;
@@ -350,6 +358,10 @@ class Robot {
         }
 
         while(true) {
+            if(endSimulationFlag) {
+                console.debug("robot.moveForward: endSimulationFlag");
+                return;
+            }
             this.pos.add(this.posIncrement);
             let distance = dist(this.pos.x, this.pos.y, this.endPos.x, this.endPos.y);
             if(distance < 0.05) {
@@ -371,7 +383,6 @@ class Robot {
     }
 
     async dropRescueKit(direction) {
-        await delay(1500 / speedUp);
         let xOffset = 0;
         let yOffset = 0;
 
@@ -402,6 +413,15 @@ class Robot {
 
         console.log("Dropped rescue kit: (" + str(this.pos.x) + ", " +
             str(this.pos.y) + ") " + direction);
+
+        const totalDelayTime = 1500 / speedUp;
+        for(let i = 0; i < totalDelayTime; i += 10) {
+            if(endSimulationFlag) {
+                console.debug("robot.dropRescueKit: endSimulationFlag");
+                return;
+            }
+            await delay(10);
+        }
     }
 
     showRescueKits() {

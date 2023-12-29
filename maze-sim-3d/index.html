@@ -1,3 +1,4 @@
+<!-- <!DOCTYPE html> -->
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8">
@@ -38,7 +39,42 @@
 
     <section class="container">
       <div class="row">
-        <div class="col-sm-3"></div>
+        <div id="control-panel" class="col-sm-3" style="margin-bottom:10px; border: 2px solid purple; border-radius: 10px; visibility:hidden;">
+          <p style="font-weight: bold"> Control Panel <p>
+            <div id="time-val"> </div>
+            <div>
+              <div>
+                <p><b> Map Control </b><p>
+              <p id="map-x-val"></p>
+              <div id="map-x-slider"></div>
+
+              <p id="map-y-val"></p>
+              <div id="map-y-slider"></div>
+              </div>
+
+              <p id="map-seed-val" style="margin-top:5px;"> </p>
+              <div id="map-seed-input" style="margin-top:5px;"> </div>
+
+              <div>
+                <p><b> Camera Control </b></p>
+                <div id="camera-view-display"></div>
+                <div id="camera-prev-button" style="margin-top: 10px; display: inline-block"></div>
+                <div id="camera-next-button" style="margin-top: 10px; display: inline-block"></div>
+                <div></div>
+                <div id="camera-zoom-val" style="   display: inline-block"></div>
+                <div id="camera-zoom-slider" style="   display: inline-block"></div>
+              </div>
+
+              <div>
+                <p><b> Algorithm </b></p>
+                <div id="algorithm-selector" style="margin-top: 10px;"></div>
+              </div>
+
+              <div id="reset-button" style="margin-bottom: 10px; margin-top: 10px"></div>
+            </div>
+
+
+        </div>
         <div class="col-sm-6">
   	     <div id="sketch"></div>
         </div>
@@ -62,6 +98,199 @@
         </div>
       </div>
     </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h2>Introduction</h2>
+
+          <p>
+            Danger! Danger! Danger!
+          </p>
+
+          <p>
+            There has been a natural disaster and people have been trapped in an
+            urban environment with no way to get them out.  Your challenge, if
+            you choose to accept it, is to design and build a robot that can
+            enter a dangerous collapsed building and provide aid to people in
+            distress.  Once the robot goes in there will be no means to
+            communicate with it so it needs to be able to operate autonomously.
+            Are you up to the challenge?
+          </p>
+
+          <p>
+            The above paragraph is a mission statement for a small challenge.
+            The disaster scenario is represented by a maze.  As a robot designer
+            the goal is to build a robot that can navigate and complete the
+            maze in an autonomous fashion.
+          </p>
+
+          <h5> Rules </h5>
+
+          <div>
+          <ul class="list-group">
+            <li class="list-group-item"> <b>1)</b> The robot must visit every
+            tile in the maze.</li>
+            <li class="list-group-item"> <b>2)</b> The robot must end the maze
+            at the location it started at.</li>
+            <li class="list-group-item"> <b>3)</b> If the robot visits a tile
+            with a victim (flashing red box) the robot must drop a rescue kit
+          (green box). </li>
+            <li class="list-group-item"> <b>4)</b> If the robot enters a black
+            square it is in danger and it must leave in the same direction that
+          it entered without turning around. </li>
+            <li class="list-group-item"> <b>5)</b> The robot is not allowed to
+            pre map the environment and must navigate using internal knowledge
+          of the map as discovered throughout the journey. </li>
+            <li class="list-group-item"> <b>6)</b> The faster the rescue run the
+             better. </li>
+        </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+
+          <h2>How to solve a maze - Algorithm Style</h2>
+
+          <p>
+            There are many algorithms designed to complete many problems to do
+            with maze traversal.  They have their pros and their cons depending
+            on the situation at hand.  Some require prior knowledge of the maze,
+            others only have limited memory capacity and others only focus on
+            finding short routes from one location to another.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <h5> Left Hand Rule (Or Right Hand, if you are normal...) </h5>
+
+          <p>
+            The left hand rule is quite simple, always keep your left hand on
+            the wall.  If the maze is fully connected and is not disjoint as
+            shown in the image on the right hand side the robot is guaranteed to
+            end back at the start location having traversed the entire maze. An
+            example of some pseudo code to accomplish something along these
+            lines can be seen in the section below.
+          </p>
+
+          <p>
+            In the case that the walls of the maze are disjoint then the
+            following scenario will occur.  The robot will traverse the maze and
+            return to the starting location but will not be able "to reach" the
+            locations on the disjoint wall.  This violates rule 1.  In order to
+            attempt to address this problem I came up with the Hybrid 4
+            algorithm.
+          </p>
+        </div>
+
+        <div class="col-sm-4">
+          <h5> Image showing a disjoint maze </h5>
+          <img src="./imgs/maze-example-both-small-labelled.png" style="max-width: 95%">
+
+          <p><em>
+            a) Shows a maze where all walls are connected to the exterior wall.
+            b) Shows a maze were the wall circled in red is "disjoint" from the
+            other walls.
+          </em></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <pre>
+          <code class="prettyprint lang-js">
+function leftHandRule(robot) {
+    startPos = robot.getPos();
+
+    while(true) {
+        if(!robot.hasWallLeft()) {
+            robot.turnLeft();
+        } else if (!robot.hasWallFront()) {
+            // do nothing
+            delay(1);
+        } else if (!robot.hasWallRight()) {
+            robot.turnRight();
+        } else if (!robot.hasWallBack()) {
+            robot.turnLeft();
+            robot.turnLeft();
+        } else {
+          // boxed in
+          break;
+        }
+
+        robot.moveForward();
+
+        if(robot.getPos() == startPos) {
+            break;
+        }
+    }
+}
+          </code>
+        </pre>
+      </div>
+    </div>
+  </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h5> Hybrid 4 Solver (1, 2 and 3???)</h5>
+
+          <p>
+            The Hybrid 4 maze solver is an algorithm that I developed to try and
+            enforce full traversal of a maze.  It stems from a simple wall
+            following algorithm but with a twist.  Instead of blindly following
+            the left most wall the robot chooses to go to the left most
+            unvisited tile.  If there are no tiles to choose from check if any
+            of the previously traversed tiles have an unvisited tile adjacent to
+            them and go to the corresponding tile.  If no tiles can be found
+            return to the start.
+          </p>
+
+          <p>
+            There are two options that can be tweaked to produce different
+            algorithmic behaviour: the search for a tile with unvisited
+            neighbours, and route finding algorithm to travel between locations.
+            Various changes to these options led to the current version of the
+            algorithm hence the name Hybrid 4.
+          </p>
+
+          <p>
+            The current tile search method goes backwards through the list of
+            tiles that have been traversed in visit order.  This can lead to
+            behaviours where the desired tile isn't necessarily the closest
+            tile to the robots current position.  Additionally it might be
+            beneficial to add greater weightings to tiles that have a high
+            number of neighbours that are also unvisited, this will lead to
+            exploring clumps of unvisited tiles before single unvisited tiles.
+            Again this is limited by only deciding where to explore after the
+            robot is stuck in a location with no unvisited tiles.  Planning
+            prior to this would prevent unwanted travel.
+          </p>
+
+          <p>
+            The route finding algorithm currently doesn't use any knowledge of
+            maze structure to find an optimal path to the goal tile.  The
+            current method is to follow the tiles backwards by visit order until
+            the robot is at the desired tile. This can lead to the robot going
+            around in a large spiral to return to the previous location.
+            Implementing a simple A* path finding algorithm would be trivial to
+            add to this method.
+          </p>
+        </div>
+      </div>
+    </section>
+
 
     <section class="container">
         <div class="row">
@@ -118,6 +347,7 @@
   <script language="javascript" type="text/javascript" src="solver-lhr.js"></script>
   <script language="javascript" type="text/javascript" src="solver-rhr.js"></script>
   <script language="javascript" type="text/javascript" src="tile.js"></script>
+  <script language="javascript" type="text/javascript" src="ui.js"></script>
   <script language="javascript" type="text/javascript" src="wall.js"></script>
   <script language="javascript" type="text/javascript" src="sketch.js"></script>
 </body>
