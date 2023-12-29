@@ -34,9 +34,31 @@
  // perhaps try using an arrray of possible values and then change the itterator such that
  // the correct value is always in use
 
+const camViewPositions = Object.freeze({
+  SOUTH:        0,
+  SOUTH_EAST:   1,
+  EAST:         2,
+  NORTH_EAST:   3,
+  NORTH:        4,
+  NORTH_WEST:   5,
+  WEST:         6,
+  SOUTH_WEST:   7,
+  TOP:          8,
+
+});
+
+function searchCamPositions(currentPosition) {
+    for (let key in camViewPositions) {
+        var value = camViewPositions[key];
+        if (value === currentPosition) {
+            return key;
+        }
+    }
+}
+
 let unitX = 0;
 let unitY = 1;
-let viewPos = 0;
+let viewPos = camViewPositions.SOUTH;
 let axisX = 0;
 let axisY = 1;
 let axisZ = 0;
@@ -44,52 +66,77 @@ let maxZoom = 10;
 let minZoom = 1;
 let zoom = 3;
 
+function cameraPreviousView() {
+    viewPos--;
+    if(viewPos < 0) {
+        viewPos = 8;
+    }
+    const viewPosKey = searchCamPositions(viewPos);
+    cameraPosDisplay.elt.innerText = "View: " + str(viewPosKey);
+    console.debug("Camera switch to previous view pos: ", viewPosKey);
+    cameraUpdateViewPos(viewPos);
+}
+
+function cameraNextView() {
+    viewPos++;
+    if(viewPos > 8) {
+        viewPos = 0;
+    }
+    const viewPosKey = searchCamPositions(viewPos);
+    cameraPosDisplay.elt.innerText = "View: " + str(viewPosKey);
+    console.debug("Camera switch to next view pos: ", viewPosKey);
+    cameraUpdateViewPos(viewPos);
+}
+
+
+function cameraUpdateViewPos(newViewPos) {
+    if(newViewPos == camViewPositions.SOUTH_EAST) {
+        unitX = 1;
+        unitY = 1;
+    } else if (newViewPos == camViewPositions.EAST) {
+        unitX = 1;
+        unitY = 0;
+    } else if (newViewPos == camViewPositions.NORTH_EAST) {
+        unitX = 1;
+        unitY = -1;
+    } else if (newViewPos == camViewPositions.NORTH) {
+        unitX = 0;
+        unitY = -1;
+    } else if (newViewPos == camViewPositions.NORTH_WEST) {
+        unitX = -1;
+        unitY = -1;
+    } else if (newViewPos == camViewPositions.WEST) {
+        unitX = -1;
+        unitY = 0;
+    } else if (newViewPos == camViewPositions.SOUTH_WEST) {
+        unitX = -1;
+        unitY = 1;
+    } else if (newViewPos == camViewPositions.TOP) {
+        unitX = 0;
+        unitY = 0;
+    } else if (newViewPos == camViewPositions.SOUTH) {
+        unitX = 0;
+        unitY = 1;
+    }
+
+    if(!(viewPos==8)) {
+        axisX = unitX;
+        axisY = unitY;
+        axisZ = 0;
+    } else {
+        axisX = 0;
+        axisY = 1;
+        axisZ = 0;
+    }
+}
+
 function cameraUpdate(robot, gridSize) {
     const centreX = robot.pos.x * gridSize;
     const centreY = robot.pos.y * gridSize;
     const centreZ = 0;
 
     if(keyIsPressed && (key == 'c' || key == 'C')) {
-        if(viewPos == 0) {
-            viewPos = 1;
-            unitX = 1;
-        } else if (viewPos == 1) {
-            viewPos = 2;
-            unitY = 0;
-        } else if (viewPos == 2) {
-            viewPos = 3;
-            unitY = -1;
-        } else if (viewPos == 3) {
-            viewPos = 4;
-            unitX = 0;
-        } else if (viewPos == 4) {
-            viewPos = 5;
-            unitX = -1;
-        } else if (viewPos == 5) {
-            viewPos = 6;
-            unitY = 0;
-        } else if (viewPos == 6) {
-            viewPos = 7;
-            unitY = 1;
-        } else if (viewPos == 7) {
-            viewPos = 8;
-            unitX = 0;
-            unitY = 0;
-        } else if (viewPos == 8) {
-            viewPos = 0;
-            unitX = 0;
-            unitY = 1;
-        }
-
-        if(!(viewPos==8)) {
-            axisX = unitX;
-            axisY = unitY;
-            axisZ = 0;
-        } else {
-            axisX = 0;
-            axisY = 1;
-            axisZ = 0;
-        }
+        cameraNextView();
     }
 
     if(keyIsPressed && (key == 'z' || key == 'Z')) {
@@ -98,6 +145,9 @@ function cameraUpdate(robot, gridSize) {
         if(zoom < 1.5) {
             zoom = 10;
         }
+        // let a = document.getElementById("camera-zoom-slider");
+        // let b = a.getElementsByTagName("input")[0];
+        // b.value = zoom;
         // console.log(zoom);
     }
 

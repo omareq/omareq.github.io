@@ -44,9 +44,9 @@ let arena;
 let robot;
 
 function delay(delayInms) {
-  return new Promise(resolve => {
+    return new Promise(resolve => {
     setTimeout(() => {
-      resolve(2);
+        resolve(2);
     }, delayInms);
   });
 }
@@ -56,6 +56,7 @@ async function runSimulation() {
     await delay(1000);
     let result = await solve(robot);
     console.log("Closing Maze Solver Thread");
+    confirmEndOfSimulationFlag = true;
     await delay(250);
 }
 
@@ -64,38 +65,29 @@ async function runSimulation() {
  * p5.js setup function, creates canvas.
  */
 function setup() {
-	let cnvSize;
-	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
-	} else {
-		cnvSize = windowWidth;
-	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize, WEBGL);
-	cnv.parent('sketch');
+  	let cnvSize;
+  	if(windowWidth > windowHeight) {
+  		cnvSize = windowHeight;
+  	} else {
+  		cnvSize = windowWidth;
+  	}
+  	let cnv = createCanvas(cnvSize, 0.7 * cnvSize, WEBGL);
+  	cnv.parent('sketch');
+
+    uiSetup();
 
     rectMode(CENTER);
     ellipseMode(CENTER);
 
-    arena = new Room(mapSizeX, mapSizeY, gridSize);
-    arena.randomise(6);
-
-    robot = new Robot(createVector(0,0), gridSize);
-    robot.setMaze(arena);
-
-
-    camera(gridSize * arena.mapX * 0.5, gridSize * arena.mapY * 0.5,
-       250, gridSize * arena.mapX * 0.5, gridSize * arena.mapY * 0.5,
-       0, 0, 1, 0);
-    cameraUpdate(robot, gridSize);
-    runSimulation();
-
+    reset();
 }
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(127);
+    uiPoll();
+    background(127);
     const lightX = gridSize * mapSizeX / 2;
     const lightY = gridSize * mapSizeY / 2;
     const lightZ = lightX;

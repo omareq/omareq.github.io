@@ -1,3 +1,4 @@
+<!-- <!DOCTYPE html> -->
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8">
@@ -38,7 +39,42 @@
 
     <section class="container">
       <div class="row">
-        <div class="col-sm-3"></div>
+        <div id="control-panel" class="col-sm-3" style="margin-bottom:10px; border: 2px solid purple; border-radius: 10px; visibility:hidden;">
+          <p style="font-weight: bold"> Control Panel <p>
+            <div id="time-val"> </div>
+            <div>
+              <div>
+                <p><b> Map Control </b><p>
+              <p id="map-x-val"></p>
+              <div id="map-x-slider"></div>
+
+              <p id="map-y-val"></p>
+              <div id="map-y-slider"></div>
+              </div>
+
+              <p id="map-seed-val" style="margin-top:5px;"> </p>
+              <div id="map-seed-input" style="margin-top:5px;"> </div>
+
+              <div>
+                <p><b> Camera Control </b></p>
+                <div id="camera-view-display"></div>
+                <div id="camera-prev-button" style="margin-top: 10px; display: inline-block"></div>
+                <div id="camera-next-button" style="margin-top: 10px; display: inline-block"></div>
+                <div></div>
+                <div id="camera-zoom-val" style="   display: inline-block"></div>
+                <div id="camera-zoom-slider" style="   display: inline-block"></div>
+              </div>
+
+              <div>
+                <p><b> Algorithm </b></p>
+                <div id="algorithm-selector" style="margin-top: 10px;"></div>
+              </div>
+
+              <div id="reset-button" style="margin-bottom: 10px; margin-top: 10px"></div>
+            </div>
+
+
+        </div>
         <div class="col-sm-6">
   	     <div id="sketch"></div>
         </div>
@@ -311,6 +347,7 @@ function leftHandRule(robot) {
   <script language="javascript" type="text/javascript" src="solver-lhr.js"></script>
   <script language="javascript" type="text/javascript" src="solver-rhr.js"></script>
   <script language="javascript" type="text/javascript" src="tile.js"></script>
+  <script language="javascript" type="text/javascript" src="ui.js"></script>
   <script language="javascript" type="text/javascript" src="wall.js"></script>
   <script language="javascript" type="text/javascript" src="sketch.js"></script>
 </body>

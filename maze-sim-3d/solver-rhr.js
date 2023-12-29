@@ -36,6 +36,10 @@ async function rightHandRule(robot) {
     finished = false;
 
     while(!finished) {
+        if(endSimulationFlag) {
+            console.debug("left hand rule: end endSimulationFlag");
+            return;
+        }
         await checkForVictim(robot);
 
         if(!robot.hasWallRight()) {

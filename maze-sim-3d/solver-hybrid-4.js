@@ -2,6 +2,7 @@ let goalX = -1;
 let goalY = -1;
 
 async function checkForZero(robot) {
+
 	if(!robot.hasWallLeft() && !robot.checkLeftVisit()) {
 		await robot.turnLeft();
 		return true;
@@ -89,6 +90,10 @@ async function goTo(robot, x, y) {
 	console.debug("Go TO: (", x,",", y,")");
 	const goalPos = createVector(x, y);
 	for(let goal = arena.tileCount; goal > arena.getOrder(goalPos) - 1; goal--) {
+		if(endSimulationFlag) {
+			console.debug("goTO: end endSimulationFlag");
+			return;
+		}
 		if(!robot.hasWallLeft() && robot.checkLeftOrder() == goal) {
 			await robot.turnLeft();
 			await robot.moveForward();
@@ -113,6 +118,10 @@ async function hybrid4(robot) {
 	console.log("Starting Hybrid 4 Algorithm");
 
 	while(!finished) {
+		if(endSimulationFlag) {
+			console.debug("hybrid4: end endSimulationFlag");
+			return;
+		}
 		if(await checkForZero(robot)) {
 			console.debug("Check for zero is true");
 			await robot.moveForward();
