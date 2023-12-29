@@ -61,7 +61,7 @@ function linspace(start, stop, numPts=100) {
  * @param      {number}  [yNumPts=150]            The number of y points
  * @param      {Array(2)}  [xLimits=[-2, 0.5]]      The x limits
  * @param      {Array(2)}  [yLimits=[-1.15, 1.15]]  The y limits
- * @param      {number}  [maxSteps=100]           The maximum steps
+ * @param      {number}  [maxSteps=255]           The maximum steps
  * @param      {number}  [threshold=4]            The threshold
  * @return     {p5.Image}  Image of the Mandelbrot set in the given location
  */
@@ -70,7 +70,7 @@ function generateMandelbrotSet(
     yNumPts = 150,
     xLimits = [-2,0.5],
     yLimits = [-1.15, 1.15],
-    maxSteps = 100,
+    maxSteps = 255,
     threshold = 4 ) {
 
     let xx = linspace(xLimits[0], xLimits[1], xNumPts);
