@@ -163,11 +163,11 @@ async function reset() {
 
     if(mapRandomSeed == '') {
         mapRandomSeed = undefined;
-        mapSeedDisplay.elt.innerText = "Random Seed: "
+        mapSeedDisplay.elt.innerText = "Random Seed: ";
     }
 
     if(mapRandomSeed != undefined) {
-        console.debug("RESET: use random seed: ", mapRandomSeed)
+        console.debug("RESET: use random seed: ", mapRandomSeed);
         randomSeed(mapRandomSeed);
         mapSeedDisplay.elt.innerText = "Random Seed: " + str(mapRandomSeed);
     }
