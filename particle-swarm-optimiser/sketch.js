@@ -9,7 +9,7 @@
 *******************************************************************************/
 
 /**
-*   A gloabl vairable that stores a 2d array representing the function to be
+*   A global variable that stores a 2d array representing the function to be
 *   optimised
 *
 *   @type{Array<Array<number>>}
@@ -17,21 +17,28 @@
 let surface = [];
 
 /**
-*   A gloabl vairable that stores the number of pixels in the x direction
+ * A global variable to store a rendered version of the function to be optimised
+ *
+ * @type{p5.Image}
+ */
+let img = undefined;
+
+/**
+*   A global variable that stores the number of pixels in the x direction
 *
 *   @type{number}
 */
 let x_num = 100;
 
 /**
-*   A gloabl vairable that stores the number of pixels in the y direction
+*   A global variable that stores the number of pixels in the y direction
 *
 *   @type{number}
 */
 let y_num = 100;
 
 /**
-*   A gloabl vairable that stores the number step size between pixels in the
+*   A global variable that stores the number step size between pixels in the
 *   x direction
 *
 *   @type{number}
@@ -39,7 +46,7 @@ let y_num = 100;
 let x_step;
 
 /**
-*   A gloabl vairable that stores the number step size between pixels in the
+*   A global variable that stores the number step size between pixels in the
 *   y direction
 *
 *   @type{number}
@@ -47,7 +54,7 @@ let x_step;
 let y_step;
 
 /**
-*   A gloabl vairable that stores the minimum value of the optimsed function
+*   A global variable that stores the minimum value of the optimised function
 *   that is displayed on the screen
 *
 *   @type{number}
@@ -55,7 +62,7 @@ let y_step;
 let min_val;
 
 /**
-*   A gloabl vairable that stores the maximum value of the optimsed function
+*   A global variable that stores the maximum value of the optimised function
 *   that is displayed on the screen
 *
 *   @type{number}
@@ -63,7 +70,7 @@ let min_val;
 let max_val;
 
 /**
-*   A gloabl vairable that stores the optimser object
+*   A global variable that stores the optimiser object
 *
 *   @type{object}
 */
@@ -77,7 +84,7 @@ let the_swarm;
 *   @param {number} y - The y coordinate at which the function will be
 *     evaluated
 *
-*   @returns {number} A sinlge number providing the value of the function at
+*   @returns {number} A single number providing the value of the function at
 *     x and y
 */
 function func(x, y) {
@@ -116,19 +123,10 @@ function setup () {
     }
     surface.push(surf_strip);
   }
-  xbds=[0, width];
-  ybds=[0, height];
-  the_swarm = new Swarm(25, xbds, ybds, 100, func);
-  console.log(the_swarm);
-}
 
+  img = createImage(x_num, y_num);
+  img.loadPixels();
 
-/**
-* p5.js draw function, used to draw the color plot of the surface and to
-* evaluate the next generation for the swarm.
-*/
-function draw () {
-  background(255);
   let half = 0.5 * (max_val + min_val);
   // console.log("Half: " + str(half));
   for(let x = 0; x < x_num; x+= 1) {
@@ -148,10 +146,26 @@ function draw () {
 
       // console.log("x: " + str(x) + " y: " + str(y) + " red: " + str(r) + " blue: " + str(b));
       noStroke();
-      fill(r, 0, b);
-      rect(x * x_step, y * y_step, x_step, y_step);
+      const c = color(r, 0, b);
+      img.set(x, y, c);
     }
   }
+
+  img.updatePixels();
+
+  xbds=[0, width];
+  ybds=[0, height];
+  the_swarm = new Swarm(25, xbds, ybds, 100, func);
+  console.log(the_swarm);
+}
+
+
+/**
+* p5.js draw function, used to draw the color plot of the surface and to
+* evaluate the next generation for the swarm.
+*/
+function draw () {
+  image(img, 0, 0, width, height);
 
   the_swarm.run();
   the_swarm.show();
