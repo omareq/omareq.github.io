@@ -106,8 +106,8 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 		}
 		this.add_history();
 
-		// console.log("generation: " + this.counter +
-		// 	" best fitness: " + this.best_fitness +
-		// 	" x: " + this.best_pos.x + " y" + this.best_pos.y);
+		console.debug("generation: " + this.counter +
+			" best fitness: " + this.best_fitness +
+			" x: " + this.best_pos.x + " y: " + this.best_pos.y);
 	};
 }

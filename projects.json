@@ -168,7 +168,7 @@
             "gif-url": "imgs/p_010.gif",
             "id": "p_010",
             "name": "Lissajous",
-            "next-id": "p_010",
+            "next-id": "p_011",
             "pic-url": "imgs/p_010.jpg",
             "prev-id": "p_009",
             "status": "active",
@@ -188,7 +188,7 @@
             "next-id": "p_012",
             "pic-url": "imgs/p_011.jpg",
             "prev-id": "p_010",
-            "status": "archived",
+            "status": "active",
             "tags": [
                 "science"
             ],
