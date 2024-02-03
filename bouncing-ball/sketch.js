@@ -11,24 +11,33 @@
 let balls = [];
 let dt;
 let maxNumBalls;
+let updatesPerFrame = 1;
 
 /**
-*	Generates a ball with a random velocity and a random radius positiones at
+*	Generates a ball with a random velocity and a random radius positions at
 *	the current location of the mouse.
 *
 *	@returns {Ball} Ball Object with random velocity at the pointer location.
 */
 function randBall() {
-	let randvx = random(-5, 5);
-	let randvy = 0 //random(-50, 50);
+	let randvx = random(-50, 50);
+	let randvy = random(-50, 50);
 	let randr = random(3, 20);
-	return new Ball(mouseX, height - mouseY, randvx, randvy, randr, 0.1*randr**2);
+	return new Ball(mouseX, height - mouseY, randvx, randvy, randr, 1);
 }
 
 /**
 *	When the mouse is pressed a new ball is added to the balls array.
 */
 function mousePressed() {
+	if(mouseX < 0 || mouseX > width) {
+		return;
+	}
+
+	if(mouseY < 0 || mouseY > height) {
+		return;
+	}
+
 	if(balls.length < maxNumBalls) {
 		balls.push(randBall());
 	}
@@ -53,26 +62,28 @@ function setup() {
 */
 function draw() {
 	background(0);
-	for(let i = 0; i < balls.length; i++) {
-		let ball = balls[i];
-		ball.show();
 
-		for(let updates = 0; updates < 1; updates++) {
+	for(let updates = 0; updates < updatesPerFrame; updates++) {
+		for(let i = 0; i < balls.length; i++) {
+			let ball = balls[i];
+			ball.show();
+
 			ball.checkEdges();
-			// ball.applyForce(0, -10, dt);
-			ball.applyForce(0, 0, dt);
+			const gravity = 10;
+			ball.applyForce(0, -gravity, dt);
+			// ball.applyForce(0, 0, dt);
 
-			for(let j = 0; j < balls.length; j++) {
-				if(i == j) {
-					continue;
-				}
+			// for(let j = 0; j < balls.length; j++) {
+			// 	if(i == j) {
+			// 		continue;
+			// 	}
 
-				target = balls[j];
-				if(ball.hits(target)) {
-					ball.collidePhysics(target);
-				}
+			// 	target = balls[j];
+			// 	if(ball.hits(target)) {
+			// 		ball.collidePhysics(target);
+			// 	}
 
-			}
+			// }
 		}
 	}
 	//console.log(ball.y)

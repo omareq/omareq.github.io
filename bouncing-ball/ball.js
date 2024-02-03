@@ -12,7 +12,7 @@
 *	Class representing a Ball
 */
 class Ball {
-	/**
+	/**``
 	*	Create a Ball
 	*
 	*	@param {number} x  - The initial x location of the Ball.
@@ -72,10 +72,6 @@ class Ball {
 		if(this.y - this.r < 0) {
 			this.y = this.r;
 			this.vy *= -0.9;
-			if(random() <= 0.25) {
-				this.vy += 3.0;
-				this.vy *= 1.2;
-			}
 			this.colour = color(255, 255, 255);
 		}
 	}
