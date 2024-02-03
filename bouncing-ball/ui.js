@@ -12,7 +12,32 @@ let controlPanel;
 
 let resetButton;
 
+let maxNumBallsSlider;
+let maxNumBallsDisplay;
+let maxNumBalls = 50;
 
+let numBallsDisplay;
+
+function maxNumBallsSliderSetup() {
+    maxNumBallsSlider = createSlider(25, 200, maxNumBalls, 25);
+    maxNumBallsSlider.parent("max-num-balls-slider");
+
+    maxNumBallsDisplay = createP(maxNumBalls);
+    maxNumBallsDisplay.parent("max-num-balls-display");
+    maxNumBallsDisplay.elt.innerText = "Max Num of Balls: " +
+        str(maxNumBalls);
+}
+
+function showNumBalls() {
+    numBallsDisplay.elt.innerText = "Num of Balls: " +
+        str(balls.length) + " / " + str(maxNumBalls);
+}
+
+function numBallsDisplaySetup() {
+    numBallsDisplay = createP(str(balls.length));
+    numBallsDisplay.parent("num-balls-display");
+    showNumBalls();
+}
 
 function controlPanelSetup() {
     controlPanel = document.getElementById("control-panel");
@@ -37,13 +62,24 @@ function reset() {
     console.debug("Reset");
     balls = [];
     balls.push(randBall());
+    showNumBalls();
 }
 
 function uiSetup() {
     controlPanelSetup();
     resetButtonSetup();
+    numBallsDisplaySetup();
+    maxNumBallsSliderSetup();
 }
 
 function uiPoll() {
-
+    let sliderVal = maxNumBallsSlider.value();
+    if(sliderVal != maxNumBalls) {
+        console.debug("uiPoll: Maximum Number of Balls slider value has" +
+         "changed to: ", sliderVal);
+        maxNumBalls = sliderVal;
+        maxNumBallsDisplay.elt.innerText = "Max Num of Balls: " +
+            str(maxNumBalls);
+        reset();
+    }
 }

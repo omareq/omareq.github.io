@@ -10,7 +10,6 @@
 
 let balls = [];
 let dt;
-let maxNumBalls;
 let updatesPerFrame = 1;
 
 /**
@@ -40,6 +39,7 @@ function mousePressed() {
 
 	if(balls.length < maxNumBalls) {
 		balls.push(randBall());
+		showNumBalls();
 	}
 }
 
@@ -53,7 +53,6 @@ function setup() {
 	background(0);
 	balls.push(randBall());
 	dt = 0.1;
-	maxNumBalls = 25;
 
 	uiSetup();
 }
@@ -69,8 +68,6 @@ function draw() {
 	for(let updates = 0; updates < updatesPerFrame; updates++) {
 		for(let i = 0; i < balls.length; i++) {
 			let ball = balls[i];
-			ball.show();
-
 			ball.checkEdges();
 			const gravity = 10;
 			ball.applyForce(0, -gravity, dt);
@@ -89,7 +86,13 @@ function draw() {
 			// }
 		}
 	}
-	//console.log(ball.y)
+
+	for(let i = 0; i < balls.length; i++) {
+		let ball = balls[i];
+		// add option to show ball trail or ghost of previous locations
+		ball.show();
+	}
+
 	push();
 	fill(255, 155);
 	textSize(0.05 * height);
