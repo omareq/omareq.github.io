@@ -54,6 +54,8 @@ function setup() {
 	balls.push(randBall());
 	dt = 0.1;
 	maxNumBalls = 25;
+
+	uiSetup();
 }
 
 /**
@@ -61,6 +63,7 @@ function setup() {
 *	frame
 */
 function draw() {
+	uiPoll();
 	background(0);
 
 	for(let updates = 0; updates < updatesPerFrame; updates++) {
