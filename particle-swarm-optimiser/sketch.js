@@ -152,11 +152,8 @@ function setup () {
   }
 
   img.updatePixels();
-
-  xbds=[0, width];
-  ybds=[0, height];
-  the_swarm = new Swarm(25, xbds, ybds, 100, func);
-  console.log(the_swarm);
+  uiSetup();
+  reset();
 }
 
 
@@ -165,8 +162,9 @@ function setup () {
 * evaluate the next generation for the swarm.
 */
 function draw () {
+  uiPoll();
   image(img, 0, 0, width, height);
 
-  the_swarm.run();
-  the_swarm.show();
+  theSwarm.run(stepsPerFrame);
+  theSwarm.show();
 }
