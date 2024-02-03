@@ -1,0 +1,265 @@
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Omar Essilfie-Quaye">
+  <meta name="description" content="My take of on the classic hang man word guessing game.  This is a project created by Omar Essilfie-Quaye on 03 August 2023.">
+  <meta property="og:title" content="Hang man">
+  <meta property="og:description" content="My take of on the classic hang man word guessing game.  This is a project created by Omar Essilfie-Quaye on 03 August 2023.">
+  <meta property="og:image" content="https://omareq.github.io/imgs/p_026.jpg">
+  <meta property="og:url" content="https://omareq.github.io/hang-man/">
+  <meta property="og:site_name" content="Omar EQ Githubio">
+  <meta property="og:locale" content="en_GB" />
+
+  <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script>
+  <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
+  <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../libraries/run_prettify.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="../main.css">
+
+  <title>Hang man</title>
+
+</head>
+
+<body style="width:100%; text-align:center">
+  <div id="main">
+    <section class="jumbotron jumbotron-main">
+      <div class="container">
+        <div class="row text-center">
+          <h1>Hang man</h1>
+        </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+  	     <div id="sketch"></div>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          Github Repo
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/hang-man/">
+              <img src="../imgs/github-logo.png" alt="Link to github repository"
+                   style="max-width:75px">
+          </a>
+          Docs
+          <a href="./docs/">
+              <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
+                   style="max-width:75px">
+          </a>
+        </div>
+      </div>
+    </section>
+
+     <section class="container-fluid">
+        <div class="row text-left">
+            <div class="col-sm-12">
+                <h2>Hangman - Old School</h2>
+                <p>
+                  The game hangman is a classic played throughout history (or
+                  at the very least schools in the early 2000s).  It as always
+                  is a great past time and is a great method to test your
+                  vocabulary.  The goal is to find out what the hidden word is.
+                </p>
+
+                <p>
+                  The player is presented with a series of blank spaces
+                  representing the letters in the word that need to be found.
+                  The player can use the keyboard to guess letters (the mouse
+                  needs to be over the canvas).  If the letter is correct then
+                  it shall be revealed.
+                </p>
+                <p>
+                  Every letter that is guessed is shown
+                  on the left hand side in red.  If the letter is incorrect the
+                  player will loose a life.  When a life is lost another line of
+                  the hangman is drawn.  The word needs to be guessed before the
+                  whole hangman is drawn otherwise the player looses.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid">
+        <div class="row text-left">
+            <div class="col-sm-8">
+                <h2>Ahhhhh I'm Stuck - What Letter Should You Choose?</h2>
+                <p>
+                  There are lots of recommended strategies for trying to get the
+                  answer as quickly as possible.  A common favourite is to guess
+                  the vowels first.  This is generally a decent strategy as this
+                  is likely to reveal at least a few letters.  The more letters
+                  that are revealed the more likely the player will be able to
+                  guess the actual word.
+                </p>
+            </div>
+
+            <div class="col-sm-4">
+                <div>
+                  <img src="./imgs/English_letter_frequency.png" style="max-width: 97%;" alt="Graph Showing how certain letters are more frequent than others in the english language">
+                  <a href="https://commons.wikimedia.org/wiki/File:English_letter_frequency_%28frequency%29.svg">  Wikimedia Commons</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid">
+        <div class="row text-left">
+            <div class="col-sm-12">
+                <p>
+                  A better strategy would be to guess characters that are more
+                  likely to appear in the English language.  Every language
+                  has certain letters that appear more frequently than others,
+                  this can be seen in the graph on the right.  Whilst most of
+                  the vowels are extremely frequent other letters such as "t",
+                  "n", "s" and "h" are also rather frequent.  Following the
+                  frequency order will allow for more guesses when the player
+                  has less lives.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> See Also - Games</h2>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="container" style="padding-top:10px">
+        <div class="row text-left">
+          <div class="col-sm-4">
+            <div class="project-card" id="previous">
+              <h5 id="prev-title">TexType Game</h5>
+              <a id="prev-url" href="../texType/" class="project-demo">
+                <img id="prev-img" src="../imgs/p_002.jpg">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+           <div class="project-card" id="previous">
+            <h5 id="prev-title">Towers of Hanoi</h5>
+            <a id="prev-url" href="../towers-of-hanoi/" class="project-demo">
+              <img id="prev-img" src="../imgs/p_012.jpg">
+            </a>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="project-card" id="previous">
+            <h5 id="prev-title">Simon Memory Game</h5>
+            <a id="prev-url" href="../simon/" class="project-demo">
+              <img id="prev-img" src="../imgs/p_013.jpg">
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+      <div class="col-sm-4">
+        <div class="project-card" id="previous">
+          <h5 id="prev-title">Flood It Game</h5>
+          <a id="prev-url" href="../flood-it/" class="project-demo">
+            <img id="prev-img" src="../imgs/p_018.jpg">
+          </a>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="project-card" id="previous">
+          <h5 id="prev-title">Ninja Game</h5>
+          <a id="prev-url" href="../ninja-game/" class="project-demo">
+            <img id="prev-img" src="../imgs/p_006.jpg">
+          </a>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="project-card" id="previous">
+          <h5 id="prev-title">Brick Breaker</h5>
+          <a id="prev-url" href="../brick-breaker/" class="project-demo">
+            <img id="prev-img" src="../imgs/p_022.jpg">
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+    <section class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <a id="external_link" href="../projects.html" >
+                    <img src="../imgs/all-projects-button.jpg" style="max-width: 70%;" alt="Link to all projects page">
+                </a>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </section>
+
+    <section class="container">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="project-card" id="previous">
+            <h5 id="prev-title">Mandelbrot set</h5>
+            <a id="prev-url" href="../mandelbrot-set/" class="project-demo">
+              <img id="prev-img" src="../imgs/p_025.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the previous project, /**PREV TITLE**/">
+            </a>
+          </div>
+        </div>
+
+        <div class="col-sm-6"></div>
+
+        <div class="col-sm-3">
+          <div class="project-card" id="next">
+            <h5 id="next-title">Snowman</h5>
+            <a id="next-url" href="../snowman/" class="project-demo">
+              <img id="next-img" src="../imgs/p_000.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the next project, /**NEXT TITLE**/">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+  </footer>
+
+  <script language="javascript" type="text/javascript" src="../libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="../libraries/p5.dom.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+  <script language="javascript" type="text/javascript" src="hangman.js"></script>
+  <script language="javascript" type="text/javascript" src="letters.js"></script>
+  <script language="javascript" type="text/javascript" src="word.js"></script>
+  <script language="javascript" type="text/javascript" src="game.js"></script>
+</body>
+</html>

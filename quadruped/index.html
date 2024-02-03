@@ -13,6 +13,7 @@
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
   <script src="../libraries/chartjs-2.7.3.min.js"></script>
+  <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script>
   <link type="text/css" rel="stylesheet" href="../main.css">
 
   <title>Quadruped Robot</title>
@@ -242,35 +243,249 @@
 
     </div>
 
-<!--     <div>
+    <div>
       <section class="container" style="padding-top:10px">
         <div class="row text-left">
           <div class="col-sm-12">
             <div>
               <h2> Forward Kinematics </h2>
               <p>
+                <a href="https://en.wikipedia.org/wiki/Forward_kinematics">
+                Forward kinematics</a> (FK) is a term used to describe the position
+                of a robot's end effector given a series of join angles.  In the
+                case of a quadruped robot the end effector would be the end of
+                the leg.  For other robots, such as robot arms, the end effector
+                could be anything from a gripper to a drill bit.
+              </p>
 
+              <p>
+                In practical terms the usage of forward kinematics means that
+                the control system of the robot works by controlling the joints
+                of the robot without necessarily needing the end effector to
+                follow a particular path to get to the goal location.  This is
+                the preferred behaviour when an end effector needs to get to the
+                goal location as quickly as possible.  Three animations showing
+                the FK of the different servos on the quadruped robot can be
+                seen below.
               </p>
             </div>
           </div>
         </div>
-      </section>
-    </div> -->
 
-  <!--   <div>
+        <div class="row text-center">
+          <div class="col-sm-4">
+            <img src="./imgs/quad-FK-hip-axis-1200px.gif" alt="Gif animation of the quadruped rotating all hip yaw joints in unison" style="max-width: 11em;">
+            <p><em>
+              Forward Kinematics of the quadruped hip yaw servo rotation
+              through 180 degrees.
+            </em></p>
+          </div>
+
+          <div class="col-sm-4">
+            <img src="./imgs/quad-FK-tibia-axis-1200px.gif" alt="Gif animation of the quadruped rotating all hip elevation joints in unison" style="max-width: 11em;">
+            <p><em>
+              Forward Kinematics of the quadruped hip elevation servo rotation
+              through 180 degrees.
+            </em></p>
+          </div>
+
+          <div class="col-sm-4">
+            <img src="./imgs/quad-FK-knee-axis-1200px.gif" alt="Gif animation of the quadruped rotating all knee extension joints in unison" style="max-width: 11em;">
+            <p><em>
+              Forward Kinematics of the quadruped knee extension servo rotation
+              through 180 degrees.
+            </em></p>
+          </div>
+        </div>
+
+
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <div>
+              <p>
+                It should be noted that the paths that all of the legs in the
+                animations above is curved.  This is because servos are rotary
+                joints.  The simple usage of servos in this manner will always
+                create circularly curved paths, if more complex paths are needed
+                then the servos will need to be controlled in a more complex
+                manner.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <div>
       <section class="container" style="padding-top:10px">
         <div class="row text-left">
           <div class="col-sm-12">
             <div>
               <h2> Inverse Kinematics </h2>
               <p>
-
+                If forward kinematics is calculating the position of an end
+                effector given the joint positions the
+                <a href="https://en.wikipedia.org/wiki/Inverse_kinematics">Inverse Kinematics (IK)
+                </a>
+                is the opposite.  This means that the desired location or path
+                for an end effector is chosen then the appropriate joint
+                positions are calculated to get there.  In this manner it is
+                possible to obtain any desired path for an end effector, from
+                straight lines to a helix.
+                Despite the ability for IK to generate almost any desired path
+                it should be noted that there are limitations.  A non exclusive
+                list of these limitations include, singularities and infinite
+                numbers of solutions.
               </p>
+
+              <p>
+                Whilst the end effector will be
+                able to reach all locations within the working envelope they
+                will not necessarily be smooth transitions between adjacent
+                points.  For example travelling through the origin my make a
+                motor go from 0 to 180 for a very small change in position.
+                This discontinuity is known as a
+                <a href="https://en.wikipedia.org/wiki/Singularity_(mathematics)">
+                  singularity,
+                </a> some may be removed
+                through a coordinate transform and some can't be removed at all.
+              </p>
+
+              <!-- Singularity Gif  -->
+
+              <p>
+                In a simple case there will be three servos trying to manipulate
+                an end effector in three dimensions: x, y and z.  In this case
+                there should always be a solution to the problem however, if
+                there are more actuators than dimensions to move in then there
+                may be an infinite number of ways for an end effector to get to
+                a desired location.
+              </p>
+              <p>
+                For example if you have a robot arm with
+                three axes and a tool which can change orientation, such as a screwdriver.  It may be possible to place the tip of the
+                screwdriver on the head of a screw but you can do so from:
+                directly above, from the side or any angle in-between.  In this
+                case it may be beneficial to know what the end use case is so
+                that the correct solution (directly above) can be selected.
+                This is not always an option and there are
+                <a href="https://en.wikipedia.org/wiki/Inverse_kinematics#Numerical_solutions_to_IK_problems">
+                  numerical algorithms
+                </a>
+                that can search for a solution, this comes at the expense of
+                taking longer to calculate.
+              </p>
+
+              <p>
+                Quadrupeds, and all walking robots, needs IK in order to walk
+                in a straight line.  The smooth motion on a leg backwards allows
+                for the robot to generate a smooth walking gait without expending
+                excess energy fighting friction which will occur if the motion
+                is curved.  This increases the torque requirements of the motor
+                and this will draw more power.  This incorrect motion may also
+                reduce the ability of the robot to maintain it's balance.
+              </P>
             </div>
           </div>
         </div>
+
+        <div class="row text-center">
+          <div class="col-sm-6">
+            <img src="./imgs/quad-ik-horizontal-plane-diagram-v1.png" alt="" style="max-width: 20em;">
+            <p><em>
+              Diagram showing how to calculate the IK for a quadruped leg in the
+              horizontal plane.
+            </em></p>
+          </div>
+
+          <div class="col-sm-6">
+            <img src="./imgs/quad-ik-vertical-plane-diagram-v1.png" alt="" style="max-width: 20em;">
+            <p><em>
+              Diagram showing how to calculate the IK for a quadruped leg in the
+              vertical plane.
+            </em></p>
+          </div>
+        </div>
+
+
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <p>
+              Practically the goal of IK is to take a Cartesian (\(x, y, z\))
+              coordinate and convert it into actuator positions.  In the case
+              of the quadruped robot those actuator positions are three angles
+              (\(\theta_1, \theta_2, \theta_3\)).  The diagrams showing how the
+              IK for a leg can be calculated can be seen above. Using
+              trigonometry it is possible to calculate (\(\theta_1,
+              \theta_2, \theta_3\)) using the known lengths of the linkages
+              between each joint.
+            </p>
+
+            <p>
+              $$
+                \theta_1 =atan(\frac{y}{x})
+              $$
+            </p>
+
+            <p>
+              $$r = \sqrt{x^2 + y^2} ;
+              \alpha = \sqrt{(z + cx)^2 + r^2} ;
+              \theta_2 = acos(\frac{\alpha^2 - fm^2 - tb^2}{-2 \times fm \times tb})$$
+            </p>
+
+            <p>
+              $$\phi_1 = atan(\frac{r}{z+cx});
+              \phi_2 = asin(\frac{tb \times sin(\theta_2)} {\alpha});
+              \theta_3 = \pi - \phi_1 - \phi_2$$
+            </p>
+
+
+            <p>
+              Once the IK angles have been calculated they need to be converted
+              to values for the robot.  Each leg has servos that are mounted in
+              different orientations.  This may require offsets or direction
+              changes to fix.  All offsets in motor orientation with respect to
+              the expected orientation need to be corrected through calibration
+              of the motor orientation.
+            </p>
+            <p>
+              Some of the possible paths that the legs can now take are shown in
+              the animations below.  Complex combinations of these paths can
+              lead to very rich movements of a quadruped robot.  The most
+              obvious of which is walking.
+            </p>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-sm-4">
+            <img src="./imgs/quad-ik-x-axis-1200.gif" alt="Gif animation of the quadruped moving it's legs in a straight line along the x axis" style="max-width: 11em;">
+            <p><em>
+              Inverse Kinematics of the quadruped rotating all servos in the leg
+              to get a smooth motion of the leg along the x axis.
+            </em></p>
+          </div>
+
+          <div class="col-sm-4">
+            <img src="./imgs/quad-ik-y-axis-1200.gif" alt="Gif animation of the quadruped moving it's legs in a straight line along the y axis" style="max-width: 11em;">
+            <p><em>
+              Inverse Kinematics of the quadruped rotating all servos in the leg
+              to get a smooth motion of the leg along the y axis.
+            </em></p>
+          </div>
+
+          <div class="col-sm-4">
+            <img src="./imgs/quad-ik-z-axis-1200.gif" alt="Gif animation of the quadruped moving it's legs in a straight line along the z axis" style="max-width: 11em;">
+            <p><em>
+              Inverse Kinematics of the quadruped rotating all servos in the leg
+              to get a smooth motion of the leg along the z axis.
+            </em></p>
+          </div>
+        </div>
+
       </section>
-    </div> -->
+    </div>
 
    <!--  <div>
       <section class="container" style="padding-top:10px">
@@ -322,7 +537,7 @@
         <div class="row text-left">
           <div class="col-sm-12">
             <div>
-              <h2> Assembely </h2>
+              <h2> Assembly </h2>
               <p>
 
               </p>

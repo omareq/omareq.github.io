@@ -381,14 +381,24 @@ class Robot {
     }
 
     lf_IK(pos) {
-        let angles = this.IK([pos[0], pos[1], pos[2]]);
+        let x = -pos[0];
+        let y = pos[1];
+
+        let r = sqrt(x*x + y*y);
+        let theta = atan2(y, x);
+        theta -= QUARTER_PI;
+
+        x = r * sin(theta);
+        y = r * cos(theta);
+
+        let angles = this.IK([x, y, pos[2]]);
         if(angles == undefined) {
             return(this.lf_servos_read());
         }
         if(angles[0] < 0) {
             angles[0] += TWO_PI;
         }
-        return [PI - angles[0] + QUARTER_PI, angles[1], PI - angles[2]];
+        return [PI - angles[0], angles[1], PI - angles[2]];
 
         // 45 - 180
         // 90 - 135
@@ -405,16 +415,20 @@ class Robot {
         }
 
         return [QUARTER_PI - angles[0], angles[1], PI - angles[2]];
-
-        // -45 - 90
-        // 0   - 45
-        // 45  - 0
-
-        // 45 - theta1
     }
 
     lb_IK(pos) {
-        let angles = this.IK([pos[0], pos[1], pos[2]]);
+        let x = pos[0];
+        let y = -pos[1];
+
+        let r = sqrt(x*x + y*y);
+        let theta = atan2(y, x);
+        theta += PI;
+
+        x = r * sin(theta);
+        y = r * cos(theta);
+
+        let angles = this.IK([x, y, pos[2]]);
         if(angles == undefined) {
             return(this.lb_servos_read());
         }

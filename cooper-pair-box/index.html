@@ -4,10 +4,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Omar Essilfie-Quaye">
   <meta name="description" content="Calculate the energy levels of a cooper pair box Quantum Bit (Qubit).  This is a project created by Omar Essilfie-Quaye on 25 May 2022.">
-  <meta property="og:title" content="Cooper-Pair-Box">
+  <meta property="og:title" content="Cooper Pair Box">
   <meta property="og:description" content="Calculate the energy levels of a cooper pair box Quantum Bit (Qubit).  This is a project created by Omar Essilfie-Quaye on 25 May 2022.">
   <meta property="og:image" content="https://omareq.github.io/imgs/p_021.jpg">
-  <meta property="og:url" content="https://omareq.github.io/Cooper-Pair-Box/">
+  <meta property="og:url" content="https://omareq.github.io/cooper-pair-box/">
   <meta property="og:site_name" content="Omar EQ Githubio">
   <meta property="og:locale" content="en_GB" />
 
@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
   <script src="../libraries/chartjs-2.7.3.min.js"></script>
+  <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script>
   <!-- <script src="../libraries/chartjs-3.8.0.min.js"></script> -->
   <script src="../libraries/mathjs-10.6.0.min.js"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.0/math.js"></script> -->
@@ -54,7 +55,7 @@
       <div class="row text-center">
         <div class="col-sm-8">
           Github Repo
-          <a href="https://github.com/omareq/omareq.github.io/tree/master/Cooper-Pair-Box/">
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/cooper-pair-box/">
               <img src="../imgs/github-logo.png" alt="Link to github repository"
                    style="max-width:75px">
           </a>
@@ -90,6 +91,195 @@
     </div>
 
     <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h2> The Charge Qubit </h2>
+          <p>
+            In Quantum Computing a Cooper pair box is a charge qubit.  This
+            means that the amount of charge in a given location can be used to
+            determine the state of the computer.  In the case of the Cooper pair
+            box the amount of charge that is monitored is the number of Cooper
+            pairs.
+          </p>
+
+          <p>
+            In superconducting physics Cooper pairs, or the more formal
+            Bardeen–Cooper–Schrieffer (BCS) pairs, are a pair of electrons that
+            are bound together at very low temperatures.  These pairs may travel
+            together but they are not necessarily close to each other and can be
+            hundreds of nanometres apart.
+          </p>
+
+          <p>
+            A charge qubit is generally created by forming a small island which
+            is coupled to a reservoir of Cooper pairs through a tunnelling
+            junction known as a Josephson Junction.  The number of Cooper pairs
+            that have tunnelled across the junction into the island gives the
+            state of the qubit.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h2> The Hamiltonian </h2>
+          <p>
+            The energy state of the Cooper Pair Box is described by the
+            Hamiltonian of the system.  This can be seen in Dirac (bra-ket)
+            notation below.
+          </p>
+          <p>
+            $$ H = \Sigma_n (E_c(n - n_g)^2 |n \rangle \langle n| - \frac{E_J}{2} ( |n\rangle \langle n + 1 | + |n+1 \rangle \langle n|) )$$
+          </p>
+
+          <p>
+            Where \( E_C\) is the charging energy as defined by
+            \(E_C = \frac{(2e)^2}{2(C_g + C_J)} \).
+            \(2e\) is the charge of a Cooper pair.
+            \(C_J\) and \(C_g\) are the Josephson junction and gate capacitance
+            respectively.
+          </p>
+
+          <p>
+            \(n_g = \frac{C_gV_g}{2e}\) where \(V_g\) is the gate voltage of the.
+            Finally the Josephson tunnelling energy is given by \(E_J\).
+          </p>
+
+          <p>
+            The Matrix form of the Hamiltonian can be seen below.  Solving for
+            eigen values of the Hamiltonian gives the graph plotted at the top
+            of the page.
+          </p>
+
+          <p>
+            $$
+              H =
+              \begin{pmatrix}
+                E_c(n_0 - n_g)^2 & - \frac{E_J}{2} & 0 & 0 & ... & 0\\
+                - \frac{E_J}{2} & E_c(n_1 - n_g)^2 & - \frac{E_J}{2} & 0 &... & 0\\
+                0 & - \frac{E_J}{2} & E_c(n_2 - n_g)^2 & - \frac{E_J}{2} & ... & 0\\
+                0 & 0 & - \frac{E_J}{2} & E_c(n_3 - n_g)^2 & ... & 0\\
+                \vdots & \vdots & \vdots & \vdots & \ddots & ...\\
+                0 & 0 & 0 & 0 & - \frac{E_J}{2} & E_c(n_n - n_g)^2\\
+              \end{pmatrix}
+            $$
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-8">
+        <h2> Special Solutions </h2>
+          <p>
+            The case where the Josephson energy \(E_J = 0\) is manifests as a
+            series of overlapping quadratic potentials.  The energy difference
+            between one state and the next is zero.  This means that Cooper
+            pairs will travel freely between the Cooper Pair box and the
+            reservoir. Therefore a quantum computer
+            would not be able to do any calculations as it would effectively
+            have no ability to remember it's previous state.
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <img src="./imgs/cooper-pair-box-ec-1000-ej-0.png" style="max-width: 100%;">
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <p>
+            By adding a potential barrier between the reservoir and the Cooper
+            Pair Box, in the form of a superconducting Josephson Junction,
+            energy must be expended to change the state of the system.  This can
+            be seen on the graph as a splitting of the graph or a
+            separation of the energy levels.
+          </p>
+          <p>
+            This means it now has memory.  This process does not last very long
+            and the amount of time that this is possible for is on the order of
+            \(1-2\mu s\).  This time is known as the coherence time.
+            Understanding how to increase the coherence time is an active field
+            of study in quantum physics.
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <img src="./imgs/cooper-pair-box-ec-1000-ej-200.png" style="max-width: 100%;">
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <h2> Related Projects</h2>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-4">
+          <div>
+            <div class="project-card">
+              <h5>Cooper Pair Box by SolemnShark871</h5>
+              <a href="https://github.com/SolemnShark871/cooper_pair_box" class="project-demo">
+                <img src="https://avatars.githubusercontent.com/u/46021567?v=4">
+              </a>
+            </div>
+          </div>
+
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <h2> See Also - Physics Projects </h2>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-4">
+          <div>
+            <div class="project-card" id="previous">
+              <h5 id="prev-title">Antenna Calculator</h5>
+              <a href="../antenna-calculator/" class="project-demo">
+                <img src="../imgs/p_004.jpg">
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div>
+            <div class="project-card" id="previous">
+              <h5 id="prev-title">Electrostatics</h5>
+              <a href="../electrostatics/" class="project-demo">
+                <img src="../imgs/p_008.jpg">
+              </a>
+            </div>
+          </div>
+        </div>
+
+       <div class="col-sm-4">
+          <div>
+            <div class="project-card" id="previous">
+              <h5 id="prev-title">Lissajous</h5>
+              <a href="../lissajous/" class="project-demo">
+                <img src="../imgs/p_010.jpg">
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="container">
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
@@ -116,9 +306,9 @@
 
         <div class="col-sm-3">
           <div class="project-card" id="next">
-            <h5 id="next-title">Snowman</h5>
-            <a id="next-url" href="../snowman/" class="project-demo">
-              <img id="next-img" src="../imgs/p_000.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the next project, /**NEXT TITLE**/">
+						<h5 id="next-title">Brick breaker</h5>
+						<a id="next-url" href="../brick-breaker/" class="project-demo">
+							<img id="next-img" src="../imgs/p_022.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
             </a>
           </div>
         </div>

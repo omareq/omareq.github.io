@@ -115,6 +115,7 @@ function chartSetup() {
             ]
         },
         options: {
+            aspectRatio:1.5,
             animation: {
                 duration: 500 // general animation time
             },

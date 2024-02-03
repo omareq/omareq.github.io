@@ -154,8 +154,8 @@ def sketch_js(name, description):
         + "*" * 79
         + "\n\
  *\n\
- *                   GNU General Public License V3.0                         \n\
- *                   --------------------------------                        \n\
+ *                   GNU General Public License V3.0\n\
+ *                   --------------------------------\n\
  *\n\
  *   Copyright (C) "
         + year_str

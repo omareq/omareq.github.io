@@ -12,9 +12,14 @@ Created using [p5.js](https://p5js.org/).
 
 ## TODO
 
-- [ ]   Code example using [googlearchive/code-prettify](https://github.com/googlearchive/code-prettify)
+- [x]   Code example using [googlearchive/code-prettify](https://github.com/googlearchive/code-prettify)
+
+## License
+
+This repository is protected under the [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html) license.
 
 ## Contact Details
-__Programmer:__ Omar Essilfie-Quaye (omareq08@gmail.com)
+
+__Programmer:__ Omar Essilfie-Quaye [omareq08+githubio@gmail.com](mailto:omareq08+githubio@gmail.com?subject=Omar%20EQ%20Github%20Pages%20-%20Multiple%20Canvas%20Project)
 
 (This is an auto-generated document, not all links will necessarily work)

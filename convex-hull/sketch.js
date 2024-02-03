@@ -9,6 +9,8 @@
 *
 *******************************************************************************/
 
+let controlPanel;
+
 let resetButton;
 
 /**
@@ -297,6 +299,9 @@ function setup() {
 		const newPoint = createVector(x, y);
 		points.push(newPoint);
 	}
+
+	controlPanel = document.getElementById("control-panel");
+	controlPanel.style.visibility = "visible";
 }
 
 /**

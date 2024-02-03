@@ -12,18 +12,30 @@ Created using [MathJs](https://mathjs.org/)
 
 Created using [ChartJs](https://www.chartjs.org/)
 
-## Todo
+## Example
+
+![Animation of how the energy levels of a cooper pair box change when the tunnelling energy increases](https://omareq.github.io/cooper-pair-box/imgs/changing-josephson-energy-gif-medium.gif)
+
+## To do
 
 - [x]   Add title to graph
 
 - [x]   Created control panel
 
-- [ ]   Add description to index.html
+- [x]   Add description to index.html
 
 - [ ]   Add cooper pair box animation to canvas
 
+## Related Projects
+
+- [Cooper_Pair_Box](https://github.com/SolemnShark871/cooper_pair_box) Jupyter notebook written by [SolemnShark871](https://github.com/SolemnShark871)
+
+## License
+
+This repository is protected under the [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html) license.
+
 ## Contact Details
-__Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
+__Programmer:__ Omar Essilfie-Quaye [omareq08+githubio@gmail.com](mailto:omareq08+githubio@gmail.com?subject=Omar%20EQ%20Github%20Pages%20-%20Cooper%20Pair%20Box%20Project)
 
 
 (This is an auto-generated document, not all links will necessarily work)
