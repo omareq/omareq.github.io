@@ -33,6 +33,42 @@ class Ball {
 	}
 
 	/**
+	 * Sets the x position of the ball.
+	 *
+	 * @param {number} newX - The new x value of the ball.
+	 */
+	setX(newX) {
+		this.x = newX;
+	}
+
+	/**
+	 * Sets the y position of the ball.
+	 *
+	 * @param {number} newY - The new y value of the ball.
+	 */
+	setY(newY) {
+		this.y = newY;
+	}
+
+	/**
+	 * Sets the x velocity of the ball.
+	 *
+	 * @param {number} newVelX - The new x velocity of the ball.
+	 */
+	setVelX(newVelX) {
+		this.vx = newVelX;
+	}
+
+	/**
+	 * Sets the y velocity of the ball.
+	 *
+	 * @param {number} newVelY - The new y velocity of the ball.
+	 */
+	setVelY(newVelY) {
+		this.vy = newVelY;
+	}
+
+	/**
 	*	Applies a single force to the Ball.
 	*
 	*	@param {number} fx  - The x component of the force.
@@ -109,8 +145,8 @@ class Ball {
 
 		this.x -= 0.5 * crossoverLen * normalX;
 		this.y -= 0.5 * crossoverLen * normalY;
-		ball.x += 0.5 * crossoverLen * normalX;
-		ball.y += 0.5 * crossoverLen * normalY;
+		ball.setX(ball.x + 0.5 * crossoverLen * normalX);
+		ball.setY(ball.y + 0.5 * crossoverLen * normalY);
 
 		// let collisionPointX = this.x + normalX * this.r;
 		// let collisionPointY = this.y + normalY * this.r;
@@ -137,9 +173,10 @@ class Ball {
 		let d21Recip = 1.0 / (this.r + ball.r)**2;
 		// let d21Recip = 1.0 / ((ball.x - this.x)**2 + (ball.y - this.y)**2);
 
-		ball.vx -= m2Reduced * inner21 * d21Recip * (ball.x - this.x);
-		ball.vy -= m2Reduced * inner21 * d21Recip * (ball.y - this.y);
-
+		ball.setVelX(ball.vx -
+			m2Reduced * inner21 * d21Recip * (ball.x - this.x));
+		ball.setVelY(ball.vy -
+			m2Reduced * inner21 * d21Recip * (ball.y - this.y));
 
 		let keafter = 0.5 * this.m * (this.vx**2 + this.vy**2);
 		keafter += 0.5 + ball.m * (ball.vx**2 + ball.vy**2);
