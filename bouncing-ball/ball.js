@@ -12,7 +12,7 @@
 *	Class representing a Ball
 */
 class Ball {
-	/**``
+	/**
 	*	Create a Ball
 	*
 	*	@param {number} x  - The initial x location of the Ball.

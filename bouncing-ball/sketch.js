@@ -8,10 +8,26 @@
 *
 *******************************************************************************/
 
+/**
+*   A global variable that stores all of the balls being rendered.
+*
+*   @type{Array<Ball>}
+*/
 let balls = [];
+
+/**
+ * A global variable that stores the time step for the physics stimulation.
+ */
 let dt;
+
+/**
+ * A global variable that stores the number of physics updates per frame.
+ */
 let updatesPerFrame = 1;
 
+/**
+ * Draw the gravity vector that is currently being applied to all the balls.
+ */
 function drawGravity() {
 	if(showGravityVector) {
 		push();
