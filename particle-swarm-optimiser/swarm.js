@@ -80,7 +80,7 @@ function Swarm(num_particles, xbounds, ybounds, steps, func) {
 				line(this.history[this.counter - 1][i][0],
 					 this.history[this.counter - 1][i][1],
 					 this.history[this.counter - 2][i][0],
-					 this.history[this.counter - 2][i][1])
+					 this.history[this.counter - 2][i][1]);
 				pop();
 			}
 		}
