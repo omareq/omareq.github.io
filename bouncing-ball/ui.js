@@ -24,6 +24,53 @@ let pseudoBallWallCORSlider;
 let pseudoBallWallCORDisplay;
 let pseudoBallWallCOR = 1;
 
+let showGravityVectorButton;
+let hideGravityVectorButton;
+let showGravityVector = true;
+
+let gravityYSlider;
+let gravityYDisplay;
+let gravityY = 10;
+
+let gravityXSlider;
+let gravityXDisplay;
+let gravityX = 0;
+
+function gravityVectorButtonsSetup() {
+    showGravityVectorButton = createButton("Show", "value");
+    showGravityVectorButton.parent("show-gravity-vector-button");
+    showGravityVectorButton.mousePressed(showGravity);
+
+    hideGravityVectorButton = createButton("Hide", "value");
+    hideGravityVectorButton.parent("hide-gravity-vector-button");
+    hideGravityVectorButton.mousePressed(hideGravity);
+}
+
+function showGravity() {
+    showGravityVector = true;
+}
+
+function hideGravity() {
+    showGravityVector = false;
+}
+
+function gravitySliderSetup() {
+    gravityXSlider = createSlider(-10, 10, gravityX, 1);
+    gravityXSlider.parent("gravity-x-slider");
+
+    gravityXDisplay = createP(gravityX);
+    gravityXDisplay.parent("gravity-x-display");
+    gravityXDisplay.elt.innerText = "Gravity X: " + str(gravityX);
+
+
+    gravityYSlider = createSlider(-10, 10, gravityY, 1);
+    gravityYSlider.parent("gravity-y-slider");
+
+    gravityYDisplay = createP(gravityY);
+    gravityYDisplay.parent("gravity-y-display");
+    gravityYDisplay.elt.innerText = "Gravity Y: " + str(gravityY);
+}
+
 function newBallButtonSetup() {
     newBallButton = createButton("New Ball", "value");
     newBallButton.parent("new-ball-button");
@@ -101,6 +148,8 @@ function uiSetup() {
     maxNumBallsSliderSetup();
     pseudoBallWallCORSliderSetup();
     newBallButtonSetup();
+    gravitySliderSetup();
+    gravityVectorButtonsSetup();
 }
 
 function uiPoll() {
@@ -121,5 +170,21 @@ function uiPoll() {
         pseudoBallWallCOR = sliderVal;
         pseudoBallWallCORDisplay.elt.innerText = "Pseudo Ball Wall Coeff of " +
         "Restitution (COR): " + str(pseudoBallWallCOR);
+    }
+
+    sliderVal = gravityXSlider.value();
+    if(sliderVal != gravityX) {
+        console.debug("uiPoll: Gravity X slider value has" +
+         "changed to: ", sliderVal);
+        gravityX = sliderVal;
+        gravityXDisplay.elt.innerText = "Gravity X: " + str(gravityX);
+    }
+
+    sliderVal = gravityYSlider.value();
+    if(sliderVal != gravityY) {
+        console.debug("uiPoll: Gravity Y slider value has" +
+         "changed to: ", sliderVal);
+        gravityY = sliderVal;
+        gravityYDisplay.elt.innerText = "Gravity Y: " + str(gravityY);
     }
 }

@@ -12,6 +12,22 @@ let balls = [];
 let dt;
 let updatesPerFrame = 1;
 
+function drawGravity() {
+	if(showGravityVector) {
+		push();
+		strokeWeight(2);
+		stroke(155);
+		fill(155);
+		ellipse(0.5 * width, 0.5 * height, 10, 10);
+
+		const scale = 10;
+		line(0.5 * width, 0.5 * height,
+			0.5 * width + gravityX * scale, 0.5 * height + gravityY * scale);
+
+		pop();
+	}
+}
+
 /**
 *	Generates a ball with a random velocity and a random radius positions at
 *	the current location of the mouse.
@@ -62,12 +78,13 @@ function draw() {
 	uiPoll();
 	background(0);
 
+	drawGravity();
+
 	for(let updates = 0; updates < updatesPerFrame; updates++) {
 		for(let i = 0; i < balls.length; i++) {
 			let ball = balls[i];
 			ball.checkEdges(pseudoBallWallCOR);
-			const gravity = 10;
-			ball.applyForce(0, -gravity, dt);
+			ball.applyForce(gravityX, -gravityY, dt);
 			// ball.applyForce(0, 0, dt);
 
 			// for(let j = 0; j < balls.length; j++) {
