@@ -13,6 +13,7 @@ let controlPanel;
 let resetButton;
 
 let newBallButton;
+let deleteBallButton;
 
 let maxNumBallsSlider;
 let maxNumBallsDisplay;
@@ -84,6 +85,19 @@ function newBall() {
     }
 }
 
+function deleteBallButtonSetup() {
+    deleteBallButton = createButton("Delete Ball", "value");
+    deleteBallButton.parent("delete-ball-button");
+    deleteBallButton.mousePressed(deleteBall);
+}
+
+function deleteBall() {
+    if(balls.length > 1) {
+        balls = balls.splice(1);
+        showNumBalls();
+    }
+}
+
 function pseudoBallWallCORSliderSetup() {
     pseudoBallWallCORSlider = createSlider(0, 1, pseudoBallWallCOR, 0.05);
     pseudoBallWallCORSlider.parent("pseudo-ball-wall-cor-slider");
@@ -144,6 +158,7 @@ function reset() {
 function uiSetup() {
     controlPanelSetup();
     resetButtonSetup();
+    deleteBallButtonSetup();
     numBallsDisplaySetup();
     maxNumBallsSliderSetup();
     pseudoBallWallCORSliderSetup();
