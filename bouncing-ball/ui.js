@@ -31,8 +31,10 @@ function newBallButtonSetup() {
 }
 
 function newBall() {
-    balls.push(randBall());
-    showNumBalls();
+    if(balls.length < maxNumBalls) {
+        balls.push(randBall());
+        showNumBalls();
+    }
 }
 
 function pseudoBallWallCORSliderSetup() {

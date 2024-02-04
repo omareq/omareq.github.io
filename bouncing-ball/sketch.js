@@ -38,9 +38,7 @@ function mousePressed() {
 		return;
 	}
 
-	if(balls.length < maxNumBalls) {
-		newBall();
-	}
+	newBall();
 }
 
 /**
