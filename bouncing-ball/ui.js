@@ -18,6 +18,20 @@ let maxNumBalls = 50;
 
 let numBallsDisplay;
 
+let pseudoBallWallCORSlider;
+let pseudoBallWallCORDisplay;
+let pseudoBallWallCOR = 1;
+
+function pseudoBallWallCORSliderSetup() {
+    pseudoBallWallCORSlider = createSlider(0, 1, pseudoBallWallCOR, 0.05);
+    pseudoBallWallCORSlider.parent("pseudo-ball-wall-cor-slider");
+
+    pseudoBallWallCORDisplay = createP(pseudoBallWallCOR);
+    pseudoBallWallCORDisplay.parent("pseudo-ball-wall-cor-display");
+    pseudoBallWallCORDisplay.elt.innerText = "Pseudo Ball Wall Coeff of " +
+        "Restitution (COR): " + str(pseudoBallWallCOR);
+}
+
 function maxNumBallsSliderSetup() {
     maxNumBallsSlider = createSlider(25, 200, maxNumBalls, 25);
     maxNumBallsSlider.parent("max-num-balls-slider");
@@ -70,6 +84,7 @@ function uiSetup() {
     resetButtonSetup();
     numBallsDisplaySetup();
     maxNumBallsSliderSetup();
+    pseudoBallWallCORSliderSetup();
 }
 
 function uiPoll() {
@@ -81,5 +96,14 @@ function uiPoll() {
         maxNumBallsDisplay.elt.innerText = "Max Num of Balls: " +
             str(maxNumBalls);
         reset();
+    }
+
+    sliderVal = pseudoBallWallCORSlider.value();
+    if(sliderVal != pseudoBallWallCOR) {
+        console.debug("uiPoll: Pseudo Ball Wall COR slider value has" +
+         "changed to: ", sliderVal);
+        pseudoBallWallCOR = sliderVal;
+        pseudoBallWallCORDisplay.elt.innerText = "Pseudo Ball Wall Coeff of " +
+        "Restitution (COR): " + str(pseudoBallWallCOR);
     }
 }

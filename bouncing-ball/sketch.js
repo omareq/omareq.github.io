@@ -68,7 +68,7 @@ function draw() {
 	for(let updates = 0; updates < updatesPerFrame; updates++) {
 		for(let i = 0; i < balls.length; i++) {
 			let ball = balls[i];
-			ball.checkEdges();
+			ball.checkEdges(pseudoBallWallCOR);
 			const gravity = 10;
 			ball.applyForce(0, -gravity, dt);
 			// ball.applyForce(0, 0, dt);

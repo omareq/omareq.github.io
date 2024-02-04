@@ -53,25 +53,26 @@ class Ball {
 	*	Checks to see if the Ball has left the boundaries of the canvas. If
 	*	they have the ball will bounce back with 90% of it's original speed.
 	*/
-	checkEdges() {
+	checkEdges(ballWallPseudoCOR) {
+		const cor = constrain(ballWallPseudoCOR, 0, 1);
 		if(this.x + this.r > width) {
 			this.x = width - this.r;
-			this.vx *= -0.9;
+			this.vx *= -cor;
 			this.colour = color(255, 0, 0);
 		}
 		if(this.y + this.r > height) {
 			this.y = height - this.r;
-			this.vy *= -0.9;
+			this.vy *= -cor;
 			this.colour = color(0, 255, 0);
 		}
 		if(this.x - this.r < 0) {
 			this.x = this.r;
-			this.vx *= -0.9;
+			this.vx *= -cor;
 			this.colour = color(0, 0, 255);
 		}
 		if(this.y - this.r < 0) {
 			this.y = this.r;
-			this.vy *= -0.9;
+			this.vy *= -cor;
 			this.colour = color(255, 255, 255);
 		}
 	}
