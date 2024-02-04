@@ -12,6 +12,8 @@ let controlPanel;
 
 let resetButton;
 
+let newBallButton;
+
 let maxNumBallsSlider;
 let maxNumBallsDisplay;
 let maxNumBalls = 50;
@@ -21,6 +23,17 @@ let numBallsDisplay;
 let pseudoBallWallCORSlider;
 let pseudoBallWallCORDisplay;
 let pseudoBallWallCOR = 1;
+
+function newBallButtonSetup() {
+    newBallButton = createButton("New Ball", "value");
+    newBallButton.parent("new-ball-button");
+    newBallButton.mousePressed(newBall);
+}
+
+function newBall() {
+    balls.push(randBall());
+    showNumBalls();
+}
 
 function pseudoBallWallCORSliderSetup() {
     pseudoBallWallCORSlider = createSlider(0, 1, pseudoBallWallCOR, 0.05);
@@ -74,9 +87,9 @@ function resetButtonSetup() {
 
 function reset() {
     console.debug("Reset");
+    dt = 0.1;
     balls = [];
-    balls.push(randBall());
-    showNumBalls();
+    newBall();
 }
 
 function uiSetup() {
@@ -85,6 +98,7 @@ function uiSetup() {
     numBallsDisplaySetup();
     maxNumBallsSliderSetup();
     pseudoBallWallCORSliderSetup();
+    newBallButtonSetup();
 }
 
 function uiPoll() {

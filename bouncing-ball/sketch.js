@@ -19,6 +19,7 @@ let updatesPerFrame = 1;
 *	@returns {Ball} Ball Object with random velocity at the pointer location.
 */
 function randBall() {
+	console.log("New Random Ball");
 	let randvx = random(-50, 50);
 	let randvy = random(-50, 50);
 	let randr = random(3, 20);
@@ -38,8 +39,7 @@ function mousePressed() {
 	}
 
 	if(balls.length < maxNumBalls) {
-		balls.push(randBall());
-		showNumBalls();
+		newBall();
 	}
 }
 
@@ -51,10 +51,9 @@ function setup() {
 	let canvas = createCanvas(500, 500);
 	canvas.parent('sketch');
 	background(0);
-	balls.push(randBall());
-	dt = 0.1;
 
 	uiSetup();
+	reset();
 }
 
 /**
