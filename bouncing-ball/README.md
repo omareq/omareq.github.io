@@ -22,6 +22,8 @@ TODO
 
 - [ ]   Bounding Volume Hierarchies
 
+- [ ]   Graphs showing ball statistics min/max/mean, vel/mv/Ke/PE/temp/entropy
+
 ## License
 
 This repository is protected under the [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html) license.
