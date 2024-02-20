@@ -76,11 +76,11 @@ class Wall {
                 const alphaVal = map(millis() % 2000, 0, 2000, 0, 255);
                 fill(255, alphaVal, alphaVal);
                 box(this.wallHeight/3, 1, this.wallHeight/3);
-                push();
-                translate(0,0, this.wallHeight);
-                box(this.wallHeight / 4, 1, this.wallHeight / 4);
-                pop();
-                line(0,0,0,0,0,this.wallHeight);
+                // push();
+                // translate(0,0, this.wallHeight);
+                // box(this.wallHeight / 4, 1, this.wallHeight / 4);
+                // pop();
+                // line(0,0,0,0,0,this.wallHeight);
                 pop();
             }
             fill(255);
