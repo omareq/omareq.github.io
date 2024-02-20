@@ -89,6 +89,12 @@ function findNode() {
 async function goTo(robot, x, y) {
 	console.debug("Go TO: (", x,",", y,")");
 	const goalPos = createVector(x, y);
+
+	if(robot.getX() == goalPos.x && robot.getY() == goalPos.y) {
+		console.debug("goTo: the start position is the goal position.")
+		return;
+	}
+
 	for(let goal = arena.tileCount; goal > arena.getOrder(goalPos) - 1; goal--) {
 		if(endSimulationFlag) {
 			console.debug("goTO: end endSimulationFlag");
