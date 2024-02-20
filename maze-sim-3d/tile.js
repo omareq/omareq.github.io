@@ -46,6 +46,7 @@ class Tile {
         this.grey = 225;
         this.black = 0;
         this.white = 255;
+        this.isCulled = false;
     }
 
     resetTile() {
@@ -262,6 +263,10 @@ class Tile {
 
     show(showWall=false) {
         if(!this.hasWalls && this.visit == 0) {
+            return;
+        }
+
+        if(this.isCulled) {
             return;
         }
 

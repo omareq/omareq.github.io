@@ -65,6 +65,7 @@ let axisZ = 0;
 let maxZoom = 10;
 let minZoom = 1;
 let zoom = 3;
+let myCamera;
 
 function cameraPreviousView() {
     viewPos--;
@@ -156,6 +157,6 @@ function cameraUpdate(robot, gridSize) {
     const camY = centreY + unit * unitY;
     const camZ = centreZ + 1.5 * unit;
 
-    camera(camX, camY, camZ, centreX, centreY, centreZ, axisX, axisY, axisZ);
+    myCamera = camera(camX, camY, camZ, centreX, centreY, centreZ, axisX, axisY, axisZ);
     // pointLight(255,255, 255, camX, camy, camZ);
 }
