@@ -34,10 +34,11 @@
 let speedUp = 10;
 
 class RescueKit {
-    constructor(pos, kitSize) {
-        this.pos = pos;
+    constructor(worldPos, kitSize, gridPos=createVector(-1, -1)) {
+        this.pos = worldPos;
         this.kitSize = kitSize;
         this.kitNum = 1;
+        this.gridPos = gridPos;
     }
 
     incrementKitNum() {
@@ -46,6 +47,12 @@ class RescueKit {
     }
 
     show() {
+        if(this.gridPos.x >= 0 && this.gridPos.y >= 0) {
+            if(arena.grid[this.gridPos.x][this.gridPos.y].isCulled) {
+                return;
+            }
+        }
+
         push();
         fill(0, 255, 0);
         translate(this.pos.x, this.pos.y, 2);
@@ -399,7 +406,8 @@ class Robot {
         let kitPos = createVector(this.pos.x * this.gridSize + xOffset,
             this.pos.y * this.gridSize + yOffset);
         let kitSize = this.gridSize / 8;
-        let newKit = new RescueKit(kitPos, kitSize);
+        const kitGridPos = createVector(this.pos.x, this.pos.y, 0);
+        let newKit = new RescueKit(kitPos, kitSize, kitGridPos);
 
         for(let i = 0; i < this.rescueKits.length; i++) {
             const xMatch = this.rescueKits[i].pos.x == newKit.pos.x;
