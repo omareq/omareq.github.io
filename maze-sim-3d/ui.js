@@ -60,6 +60,7 @@ let mapXsizeSlider;
 let mapXSizeDisplay;
 let mapYSizeSlider;
 let mapYSizeDisplay;
+let maxMapSize = 25;
 let mapSeedInput;
 let mapSeedDisplay;
 let mapRandomSeed;
@@ -192,14 +193,14 @@ async function reset() {
 }
 
 function mapSizeSliderSetup() {
-    mapXSizeSlider = createSlider(1, 15, mapSizeX, 1);
+    mapXSizeSlider = createSlider(1, maxMapSize, mapSizeX, 1);
     mapXSizeSlider.parent("map-x-slider");
 
     mapXSizeDisplay = createP(mapSizeX);
     mapXSizeDisplay.parent("map-x-val");
     mapXSizeDisplay.elt.innerText = "Map Size X: " + str(mapSizeX);
 
-    mapYSizeSlider = createSlider(1, 15, mapSizeY, 1);
+    mapYSizeSlider = createSlider(1, maxMapSize, mapSizeY, 1);
     mapYSizeSlider.parent("map-y-slider");
 
     mapYSizeDisplay = createP(mapSizeY);
