@@ -260,7 +260,7 @@ class Tile {
         this.west.resetWall();
     }
 
-    show() {
+    show(showWall=false) {
         if(!this.hasWalls && this.visit == 0) {
             return;
         }
@@ -271,28 +271,28 @@ class Tile {
             if(this.north.getIsWall()) {
                 push();
                 translate(0, -this.gridSize / 2, 0);
-                this.north.show();
+                this.north.show(showWall);
                 pop();
             }
             if(this.east.getIsWall()) {
                 push();
                 translate(this.gridSize / 2, 0, 0);
                 rotateZ(HALF_PI);
-                this.east.show();
+                this.east.show(showWall);
                 pop();
             }
             if(this.south.getIsWall()) {
                 push();
                 translate(0, this.gridSize / 2, 0);
                 rotateZ(PI);
-                this.south.show();
+                this.south.show(showWall);
                 pop();
             }
             if(this.west.getIsWall()) {
                 push();
                 translate(-this.gridSize / 2, 0, 0);
                 rotateZ(3 * HALF_PI);
-                this.west.show();
+                this.west.show(showWall);
                 pop();
             }
         }
