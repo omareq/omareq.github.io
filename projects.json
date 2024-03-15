@@ -438,7 +438,9 @@
             "pic-url": "imgs/p_027.jpg",
             "prev-id": "p_026",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "robot",
+                "science"],
             "vid-url": "vids/p_027.mp4"
         }
     }
