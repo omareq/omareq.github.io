@@ -8,6 +8,12 @@ Check out the [Docs](https://omareq.github.io/line-sim-3d/docs/).
 
 Created using [p5.js](https://p5js.org/)
 
+## Todo
+
+- [ ] render in 2d and 3d
+
+- [ ] show and hide grid lines
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
 
