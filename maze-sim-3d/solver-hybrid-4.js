@@ -91,7 +91,7 @@ async function goTo(robot, x, y) {
 	const goalPos = createVector(x, y);
 
 	if(robot.getX() == goalPos.x && robot.getY() == goalPos.y) {
-		console.debug("goTo: the start position is the goal position.")
+		console.debug("goTo: the start position is the goal position.");
 		return;
 	}
 
