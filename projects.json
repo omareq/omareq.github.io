@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_026",
+            "prev-id": "p_027",
             "status": "active",
             "tags": [
                 "fun"
@@ -418,7 +418,7 @@
             "gif-url": "imgs/p_026.gif",
             "id": "p_026",
             "name": "Hang man",
-            "next-id": "p_000",
+            "next-id": "p_027",
             "pic-url": "imgs/p_026.jpg",
             "prev-id": "p_025",
             "status": "active",
@@ -426,6 +426,20 @@
                 "game"
             ],
             "vid-url": "vids/p_026.mp4"
+        },
+        "p_027": {
+            "brief": "A simulation to model a line following robot",
+            "demo-url": "/line-sim-3d/",
+            "docs-url": "/line-sim-3d/docs/",
+            "gif-url": "imgs/p_027.gif",
+            "id": "p_027",
+            "name": "Line sim 3d",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_027.jpg",
+            "prev-id": "p_026",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_027.mp4"
         }
     }
 }
