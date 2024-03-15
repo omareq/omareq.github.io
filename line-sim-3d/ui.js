@@ -41,7 +41,7 @@ UI.controlPanel = undefined;
  * UI control panel setup function that assigns the handler and makes the
  * control panel visible
  */
-UI.controlPanelSetup = () => {
+UI.controlPanelSetup = function() {
     UI.controlPanel = document.getElementById("control-panel");
     UI.controlPanelShow();
 };
@@ -49,14 +49,14 @@ UI.controlPanelSetup = () => {
 /**
  * UI control panel show function makes the control panel visible
  */
-UI.controlPanelShow = () => {
+UI.controlPanelShow = function() {
     UI.controlPanel.style.visibility = "visible";
 };
 
 /**
  * UI control panel hide function makes the control panel hidden
  */
-UI.controlPanelHide = () => {
+UI.controlPanelHide = function() {
     UI.controlPanel.style.visibility = "hidden";
 };
 
@@ -64,7 +64,7 @@ UI.controlPanelHide = () => {
 /**
  * UI setup all UI elements
  */
-UI.setup = () => {
+UI.setup = function() {
     console.debug("UI.setup: Start");
     UI.controlPanelSetup();
     console.debug("UI.setup: End");
@@ -73,7 +73,7 @@ UI.setup = () => {
 /**
  * Poll UI elements that require periodic checks
  */
-UI.poll = () => {
+UI.poll = function() {
     console.debug("UI.poll: Start");
 
     console.debug("UI.poll: End");

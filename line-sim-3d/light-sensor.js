@@ -1,12 +1,12 @@
 /*******************************************************************************
  *
- *	@file sketch.js A simulation to model a line following robot
+ *  @file ui.js A file with the light sensor class
  *
- *	@author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
- *	@version 1.0
- *	@date 15-March-2024
- *	@link https://omareq.github.io/line-sim-3d/
- *	@link https://omareq.github.io/line-sim-3d/docs/
+ *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 15-March-2024
+ *  @link https://omareq.github.io/line-sim-3d/
+ *  @link https://omareq.github.io/line-sim-3d/docs/
  *
  *******************************************************************************
  *
@@ -30,33 +30,7 @@
  *
  *****************************************************************************/
 
-let tile;
-
 /**
- * p5.js setup function, creates canvas.
+ * Robot Namespace Object
  */
-function setup() {
-	let cnvSize;
-	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
-	} else {
-		cnvSize = windowWidth;
-	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
-	cnv.parent('sketch');
-
-	UI.setup();
-	World.TileSetup();
-
-
-	tile = World.Tiles.verticalLine;
-}
-
-/**
- * p5.js draw function, is run every frame to create the desired animation
- */
-function draw() {
-	background(127);
-	// UI.poll();
-}
-
+var Robot = Robot || {};

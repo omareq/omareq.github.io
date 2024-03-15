@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: sketch.js</title>
+    <title>JSDoc: Source: tile.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: sketch.js</h1>
+    <h1 class="page-title">Source: tile.js</h1>
 
     
 
@@ -28,13 +28,13 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *	@file sketch.js A simulation to model a line following robot
+ *  @file ui.js A file with the Tile class
  *
- *	@author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
- *	@version 1.0
- *	@date 15-March-2024
- *	@link https://omareq.github.io/line-sim-3d/
- *	@link https://omareq.github.io/line-sim-3d/docs/
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 15-March-2024
+ *  @link https://omareq.github.io/line-sim-3d/
+ *  @link https://omareq.github.io/line-sim-3d/docs/
  *
  *******************************************************************************
  *
@@ -58,36 +58,73 @@
  *
  *****************************************************************************/
 
-let tile;
-
 /**
- * p5.js setup function, creates canvas.
+ * World Namespace Object
  */
-function setup() {
-	let cnvSize;
-	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
-	} else {
-		cnvSize = windowWidth;
-	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
-	cnv.parent('sketch');
+var World = World || {};
 
-	UI.setup();
-	World.TileSetup();
+World.lineThickness = 5;
+World.maxInterLinePointDist = 5;
+
+World.TileSetup = function() {
+    World.Lines = {};
+
+    World.Lines.verticalLine = [
+                createVector(0.5, 0),
+                createVector(0.5, 1)
+                ];
+
+    World.Lines.horizontalLine = [
+                createVector(0, 0.5),
+                createVector(1, 0.5)
+                ];
 
 
-	tile = World.Tiles.verticalLine;
-}
+    World.Tiles = {};
+    World.Tiles.verticalLine = new World.Tile(World.Lines.verticalLine);
+};
 
-/**
- * p5.js draw function, is run every frame to create the desired animation
- */
-function draw() {
-	background(127);
-	// UI.poll();
-}
+World.Tile = class {
+    constructor(points,
+        maxLinePointDist=World.maxInterLinePointDist) {
 
+        this.linePoints = points;
+        this.maxLinePointDist = maxLinePointDist;
+        this.scaleLinePointsToGridSize();
+        this.checkInterLinePointDistance();
+    }
+
+    scaleLinePointsToGridSize() {
+        this.linePoints.forEach((point) => {
+            point.mult(World.gridSize);
+        });
+    }
+
+    checkInterLinePointDistance() {
+        console.debug("World.Tile.checkInterLinePointDistance(): \
+            Original Tile:\n", this);
+
+        let loopAgain = true;
+        while(loopAgain) {
+            loopAgain = false;
+            for(let i = 0; i &lt; this.linePoints.length - 1; i++) {
+                let v1 = this.linePoints[i].copy();
+                let v2 = this.linePoints[i + 1].copy();
+                const distance = v1.dist(v2);
+
+                if(distance > this.maxLinePointDist) {
+                    const midPoint = v1.add(v2).div(2);
+                    this.linePoints.splice(i + 1, 0, midPoint);
+                    i++;
+                    loopAgain = true;
+                }
+            }
+        }
+
+        console.debug("World.Tile.checkInterLinePointDistance(): \
+            Updated Tile:\n", this);
+    }
+};
 </code></pre>
         </article>
     </section>
