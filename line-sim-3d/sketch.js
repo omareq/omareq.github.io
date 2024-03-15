@@ -31,6 +31,8 @@
  *****************************************************************************/
 
 let tile0, tile1, tile2, tile3;
+let sensor;
+let sensorRadius = 8;
 
 /**
  * p5.js setup function, creates canvas.
@@ -54,6 +56,8 @@ function setup() {
 	tile2 = World.Tiles.horizontalLine;
 	tile3 = World.Tiles.cross;
 
+	sensor = new Robot.AnalogLightSensor(sensorRadius, createVector(0,0));
+
 }
 
 /**
@@ -61,11 +65,22 @@ function setup() {
  */
 function draw() {
 	background(127);
-	image(tile2.tileImage, 50, 50, 100, 100);
-	image(tile2.tileImage, 150, 50, 100, 100);
-	image(tile3.tileImage, 250, 50, 100, 100);
-	image(tile1.tileImage, 250, 150, 100, 100);
-	image(tile0.tileImage, 350, 150, 100, 100);
-	image(tile0.tileImage, 150, 150, 100, 100);
 	// UI.poll();
+
+	image(tile3.tileImage, 0, 0, World.gridSize, World.girdSize);
+	sensor.setPos(createVector(mouseX, mouseY));
+	const brightness = sensor.readRaw(tile3);
+	if(brightness < 1) {
+		console.log(brightness);
+	}
+	const colorVal = floor(brightness * 255);
+
+	push();
+	fill(colorVal);
+	strokeWeight(1);
+	stroke(127, 0, 30);
+	ellipse(mouseX, mouseY, 2 * sensorRadius, 2 * sensorRadius);
+	pop();
+
+
 }

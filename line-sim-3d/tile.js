@@ -35,9 +35,9 @@
  */
 var World = World || {};
 
-World.gridSize = 50;
-World.lineThickness = World.gridSize / 25;
-World.maxInterLinePointDist = 5;
+World.gridSize = 200;
+World.lineThickness = World.gridSize / 10;
+World.maxInterLinePointDist = World.lineThickness / 4;
 
 World.TileSetup = function() {
     World.LineConfigs = {};
@@ -133,7 +133,7 @@ World.Tile = class {
             }
 
             this.tileImage.noFill();
-            this.tileImage.strokeWeight(World.lineThickness);
+            this.tileImage.strokeWeight(0.5 * World.lineThickness);
             this.tileImage.stroke(line.color);
             this.tileImage.beginShape();
 
