@@ -35,50 +35,70 @@
  */
 var World = World || {};
 
-World.lineThickness = 5;
+World.gridSize = 50;
+World.lineThickness = World.gridSize / 25;
 World.maxInterLinePointDist = 5;
 
 World.TileSetup = function() {
-    World.Lines = {};
+    World.LineConfigs = {};
 
-    World.Lines.verticalLine = [
+    World.LineConfigs.BlankLine = [];
+
+    World.LineConfigs.verticalLine = [
                 createVector(0.5, 0),
                 createVector(0.5, 1)
                 ];
 
-    World.Lines.horizontalLine = [
+    World.LineConfigs.horizontalLine = [
                 createVector(0, 0.5),
                 createVector(1, 0.5)
                 ];
 
+    World.Lines = {};
+    World.Lines.blankLine = new World.Line(World.LineConfigs.blankLine);
+    World.Lines.verticalLine = new World.Line(World.LineConfigs.verticalLine);
+    World.Lines.horizontalLine = new World.Line(World.LineConfigs.horizontalLine);
 
     World.Tiles = {};
-    World.Tiles.verticalLine = new World.Tile(World.Lines.verticalLine);
+    World.Tiles.blankLine = new World.Tile([World.Lines.blankLine]);
+    World.Tiles.verticalLine = new World.Tile([World.Lines.verticalLine]);
+    World.Tiles.horizontalLine = new World.Tile([World.Lines.horizontalLine]);
+    World.Tiles.cross = new World.Tile([World.Lines.horizontalLine,
+        World.Lines.verticalLine]);
 };
 
-World.Tile = class {
+World.Line = class {
     constructor(points,
-        maxLinePointDist=World.maxInterLinePointDist) {
-
+        maxLinePointDist = World.maxInterLinePointDist,
+        color = "#000000") {
         this.linePoints = points;
         this.maxLinePointDist = maxLinePointDist;
+        this.color = color;
         this.scaleLinePointsToGridSize();
         this.checkInterLinePointDistance();
     }
 
     scaleLinePointsToGridSize() {
+        if(this.linePoints == undefined) {
+            return;
+        }
         this.linePoints.forEach((point) => {
             point.mult(World.gridSize);
         });
     }
 
     checkInterLinePointDistance() {
-        console.debug("World.Tile.checkInterLinePointDistance(): \
+        if(this.linePoints == undefined) {
+            return;
+        }
+
+        console.debug("World.Line.checkInterLinePointDistance(): \
             Original Tile:\n", this);
 
         let loopAgain = true;
         while(loopAgain) {
             loopAgain = false;
+
             for(let i = 0; i < this.linePoints.length - 1; i++) {
                 let v1 = this.linePoints[i].copy();
                 let v2 = this.linePoints[i + 1].copy();
@@ -93,7 +113,34 @@ World.Tile = class {
             }
         }
 
-        console.debug("World.Tile.checkInterLinePointDistance(): \
+        console.debug("World.Line.checkInterLinePointDistance(): \
             Updated Tile:\n", this);
+    }
+}
+
+World.Tile = class {
+    constructor(lines) {
+        this.lines = lines;
+        this.generatePG();
+    }
+
+    generatePG() {
+        this.tileImage = createGraphics(World.gridSize, World.gridSize);
+        this.tileImage.background(255);
+        this.lines.forEach((line) => {
+            if(line.linePoints == undefined) {
+                return;
+            }
+
+            this.tileImage.noFill();
+            this.tileImage.strokeWeight(World.lineThickness);
+            this.tileImage.stroke(line.color);
+            this.tileImage.beginShape();
+
+            line.linePoints.forEach((point) => {
+                this.tileImage.vertex(point.x - World.gridSize/4, point.y-World.gridSize/4);
+            });
+            this.tileImage.endShape();
+        });
     }
 };

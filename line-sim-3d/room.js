@@ -34,5 +34,3 @@
  * World Namespace Object
  */
 var World = World || {};
-
-World.gridSize = 50;

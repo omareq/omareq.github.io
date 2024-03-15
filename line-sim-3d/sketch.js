@@ -30,7 +30,7 @@
  *
  *****************************************************************************/
 
-let tile;
+let tile0, tile1, tile2, tile3;
 
 /**
  * p5.js setup function, creates canvas.
@@ -49,7 +49,11 @@ function setup() {
 	World.TileSetup();
 
 
-	tile = World.Tiles.verticalLine;
+	tile0 = World.Tiles.blankLine;
+	tile1 = World.Tiles.verticalLine;
+	tile2 = World.Tiles.horizontalLine;
+	tile3 = World.Tiles.cross;
+
 }
 
 /**
@@ -57,6 +61,11 @@ function setup() {
  */
 function draw() {
 	background(127);
+	image(tile2.tileImage, 50, 50, 100, 100);
+	image(tile2.tileImage, 150, 50, 100, 100);
+	image(tile3.tileImage, 250, 50, 100, 100);
+	image(tile1.tileImage, 250, 150, 100, 100);
+	image(tile0.tileImage, 350, 150, 100, 100);
+	image(tile0.tileImage, 150, 150, 100, 100);
 	// UI.poll();
 }
-
