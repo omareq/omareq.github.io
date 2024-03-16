@@ -116,7 +116,7 @@ World.Line = class {
         console.debug("World.Line.checkInterLinePointDistance(): \
             Updated Tile:\n", this);
     }
-}
+};
 
 World.Tile = class {
     constructor(lines) {

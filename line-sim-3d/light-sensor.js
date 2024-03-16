@@ -37,8 +37,7 @@ var Robot = Robot || {};
 
 Robot.AnalogLightSensor = class {
     constructor(sensorRadius, position, bufferLength=1) {
-        this.sensorRadius = sensorRadius;
-        this.circleArea = PI * this.sensorRadius**2;
+        this.setRadius(sensorRadius);
         this.pos = position;
         this.bufferLen = bufferLength;
         if(this.bufferLen < 1) {
@@ -58,6 +57,11 @@ Robot.AnalogLightSensor = class {
 
     setPos(position) {
         this.pos = position;
+    }
+
+    setRadius(radius) {
+        this.sensorRadius = sensorRadius;
+        this.circleArea = PI * this.sensorRadius**2;
     }
 
     findClosestLinePoint(tile) {
@@ -91,77 +95,115 @@ Robot.AnalogLightSensor = class {
         const a = 2 * acos(h / this.sensorRadius);
         const segmentArea = 0.5 * this.sensorRadius**2 * (a - sin(a));
 
-        const circleArea = PI * this.sensorRadius**2;
-        const sensorVal = (circleArea - segmentArea) / circleArea;
+        const sensorVal = (this.circleArea - segmentArea) / this.circleArea;
         return sensorVal;
     }
 
     readRaw(tile) {
-
         const linePoint = this.findClosestLinePoint(tile);
 
-        push()
-        let c = color(0, 187, 35)
+        push();
+        let c = color(0, 187, 35);
         fill(c);
         stroke(c);
         line(linePoint.x, linePoint.y, this.pos.x, this.pos.y);
         ellipse(linePoint.x, linePoint.y, 5,5);
-
         pop();
+
         const dist = this.pos.dist(linePoint);
 
         // sensor is outside of the line return white
-        if(dist > (this.sensorRadius + 0.5 * World.lineThickness)) {
+        if(dist >= (this.sensorRadius + 0.5 * World.lineThickness)) {
             return 1;
         }
 
         // sensor is fully inside the line
-        if((dist + this.sensorRadius) < (0.5 * World.lineThickness)) {
+        if((dist + this.sensorRadius) <= (0.5 * World.lineThickness)) {
             return 0;
         }
 
         // sensor circle is overlapping the line but the centre is external to
         // the line
         if(this.sensorRadius < World.lineThickness) {
-            if ((0.5 * World.lineThickness) < dist && dist < (0.5 * World.lineThickness + this.sensorRadius)) {
-                const h = dist - 0.5 * World.lineThickness;
-                return this.calcSegmentVal(h);
+            if ((0.5 * World.lineThickness) < dist) {
+                if (dist < (0.5 * World.lineThickness + this.sensorRadius)) {
+                    console.debug("Small - One Segment In");
+                    const h = dist - 0.5 * World.lineThickness;
+                    return this.calcSegmentVal(h);
+                }
             }
         }
 
-        if(this.sensorRadius > World.lineThickness) {
-            if( (this.sensorRadius - dist) < dist && dist < (0.5 * World.lineThickness + this.sensorRadius)) {
-                const h = dist - 0.5 * World.lineThickness;
-                return this.calcSegmentVal(h);
+        if(this.sensorRadius >= World.lineThickness) {
+            if((this.sensorRadius - 0.5 * World.lineThickness) < dist) {
+                if(dist < (0.5 * World.lineThickness + this.sensorRadius)) {
+                    console.debug("Big - One Segment In");
+                    const h = this.sensorRadius - World.lineThickness;
+                    return this.calcSegmentVal(h);
+                }
             }
         }
 
         // sensor has one segment out of the line
-        if(this.sensorRadius < World.lineThickness) {
-            const h = 0.5 * World.lineThickness - dist;
-            return 1 - this.calcSegmentVal(h);
+        if((2 * this.sensorRadius) < World.lineThickness) {
+            if(dist < 0.5 * World.lineThickness) {
+                console.debug("Small - One Segment Out");
+                const h = 0.5 * World.lineThickness - dist;
+                return 1 - this.calcSegmentVal(h);
+            }
+        }
+
+        if(World.lineThickness <= (2 * this.sensorRadius)) {
+            if((this.sensorRadius - 0.5 * World.lineThickness) < dist) {
+                if(dist < 0.5 * World.lineThickness) {
+                    console.debug("Medium - One Segment Out");
+                    const h = 0.5 * World.lineThickness - dist;
+                    return 1 - this.calcSegmentVal(h);
+                }
+            }
         }
 
 
-
         // sensor has two segments out of the line
+        if(World.lineThickness < (2 * this.sensorRadius)) {
+            if((this.sensorRadius - 0.5 * World.lineThickness) > dist) {
+                if(dist < 0.5 * World.lineThickness) {
+                    console.debug("Big - Two Segments Out - In Centre");
+                    const h1 = 0.5 * World.lineThickness - dist;
+                    const h2 = World.lineThickness - h1;
+                    const segmentVal1 = 1 - this.calcSegmentVal(h1);
+                    const segmentVal2 = 1 - this.calcSegmentVal(h2);
+                    return segmentVal1 + segmentVal2;
+                }
+            }
+        }
 
-
-
+        if(World.lineThickness < (2 * this.sensorRadius)) {
+            if((this.sensorRadius - 0.5 * World.lineThickness) > dist) {
+                if(dist > 0.5 * World.lineThickness) {
+                    console.debug("Big - Two Segments Out - Off Centre");
+                    const h1 = dist - 0.5 * World.lineThickness;
+                    const h2 = h1 + World.lineThickness;
+                    const segmentVal1 = this.calcSegmentVal(h1);
+                    const segmentVal2 = 1 - this.calcSegmentVal(h2);
+                    return segmentVal1 + segmentVal2;
+                }
+            }
+        }
         return 1;
     }
 
     read(tile) {
-        const rawVal = sensorReadRaw(tile);
+        const rawVal = this.readRaw(tile);
 
-        this.buffer[bufferIndex] = rawVal;
+        this.buffer[this.bufferIndex] = rawVal;
         this.bufferIndex ++;
         this.bufferIndex %= this.bufferLen;
-
 
         const avg = this.buffer.reduce((prev, current) => {
             return prev + current / this.bufferLen;
         });
 
+        return avg;
     }
-}
+};

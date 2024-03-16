@@ -30,6 +30,33 @@
  *
  *****************************************************************************/
 
+/**
+ * Simulation namespace object
+ */
+var Simulation = Simulation || {};
+
+Simulation.firstFrameTime = Date.now();
+Simulation.lastFrameTime = Date.now();
+Simulation.timeSinceStart = 0;
+Simulation.frame = 0;
+Simulation.dt = 0;
+Simulation.dtMillis = 0;
+Simulation.dtSeconds = 0;
+Simulation.fps = 0;
+
+Simulation.update = function() {
+	const currentFrameTime = Date.now();
+	Simulation.dt = currentFrameTime - Simulation.lastFrameTime;
+	Simulation.dtMillis = Simulation.dt;
+	Simulation.dtSeconds = 0.001 * Simulation.dt;
+	Simulation.fps = 1 / Simulation.dtSeconds;
+
+	Simulation.frame++;
+	Simulation.timeSinceStart = currentFrameTime - Simulation.timeSinceStart;
+
+	Simulation.lastFrameTime = currentFrameTime;
+};
+
 let tile0, tile1, tile2, tile3;
 let sensor;
 let sensorRadius = 8;
@@ -50,14 +77,12 @@ function setup() {
 	UI.setup();
 	World.TileSetup();
 
-
 	tile0 = World.Tiles.blankLine;
 	tile1 = World.Tiles.verticalLine;
 	tile2 = World.Tiles.horizontalLine;
 	tile3 = World.Tiles.cross;
 
 	sensor = new Robot.AnalogLightSensor(sensorRadius, createVector(0,0));
-
 }
 
 /**
@@ -66,10 +91,12 @@ function setup() {
 function draw() {
 	background(127);
 	// UI.poll();
+	Simulation.update();
 
 	image(tile3.tileImage, 0, 0, World.gridSize, World.girdSize);
+
 	sensor.setPos(createVector(mouseX, mouseY));
-	const brightness = sensor.readRaw(tile3);
+	const brightness = sensor.read(tile3);
 	if(brightness < 1) {
 		console.log(brightness);
 	}
@@ -81,6 +108,4 @@ function draw() {
 	stroke(127, 0, 30);
 	ellipse(mouseX, mouseY, 2 * sensorRadius, 2 * sensorRadius);
 	pop();
-
-
 }
