@@ -30,33 +30,6 @@
  *
  *****************************************************************************/
 
-/**
- * Simulation namespace object
- */
-var Simulation = Simulation || {};
-
-Simulation.firstFrameTime = Date.now();
-Simulation.lastFrameTime = Date.now();
-Simulation.timeSinceStart = 0;
-Simulation.frame = 0;
-Simulation.dt = 0;
-Simulation.dtMillis = 0;
-Simulation.dtSeconds = 0;
-Simulation.fps = 0;
-
-Simulation.update = function() {
-	const currentFrameTime = Date.now();
-	Simulation.dt = currentFrameTime - Simulation.lastFrameTime;
-	Simulation.dtMillis = Simulation.dt;
-	Simulation.dtSeconds = 0.001 * Simulation.dt;
-	Simulation.fps = 1 / Simulation.dtSeconds;
-
-	Simulation.frame++;
-	Simulation.timeSinceStart = currentFrameTime - Simulation.timeSinceStart;
-
-	Simulation.lastFrameTime = currentFrameTime;
-};
-
 let tile0, tile1, tile2, tile3;
 let sensor;
 let sensorRadius = 8;
@@ -96,6 +69,7 @@ function draw() {
 	image(tile3.tileImage, 0, 0, World.gridSize, World.girdSize);
 
 	sensor.setPos(createVector(mouseX, mouseY));
+	sensor.setRadius(sensorRadius);
 	const brightness = sensor.read(tile3);
 	if(brightness < 1) {
 		console.log(brightness);
