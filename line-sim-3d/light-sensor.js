@@ -207,3 +207,46 @@ Robot.AnalogLightSensor = class {
         return avg;
     }
 };
+
+Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
+    constructor(sensorRadius, position, bufferLength=1,
+        threshUp=0.65, threshDown=0.35) {
+        super(sensorRadius, position, bufferLength);
+        this.setThresholdUp(threshUp);
+        this.setThresholdDown(threshDown);
+        this.value = 1;
+    }
+
+    swapThresholds() {
+        const temp = this.thresholdDown;
+        this.thresholdDown = this.thresholdUp;
+        this.thresholdUp = temp;
+    }
+
+    setThresholdUp(threshUp) {
+        this.thresholdUp = constrain(threshUp, 0, 1);
+        if(this.thresholdUp > this.thresholdDown) {
+            this.swapThresholds();
+        }
+    }
+
+    setThresholdDown(threshDown) {
+        this.thresholdDown = constrain(threshDown, 0, 1);
+        if(this.thresholdUp > this.thresholdDown) {
+            this.swapThresholds();
+        }
+    }
+
+    digitalRead(tile) {
+        const analogValue = super.read(tile);
+        if(this.value == 1 && analogValue < this.thresholdDown) {
+            this.value = 0;
+        }
+
+        if(this.value == 0 && analogValue > this.thresholdUp) {
+            this.value = 1;
+        }
+
+        return this.value;
+    }
+};

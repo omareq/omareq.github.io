@@ -55,7 +55,7 @@ function setup() {
 	tile2 = World.Tiles.horizontalLine;
 	tile3 = World.Tiles.cross;
 
-	sensor = new Robot.AnalogLightSensor(sensorRadius, createVector(0,0));
+	sensor = new Robot.DigitalLightSensor(sensorRadius, createVector(0,0));
 }
 
 /**
@@ -70,7 +70,7 @@ function draw() {
 
 	sensor.setPos(createVector(mouseX, mouseY));
 	sensor.setRadius(sensorRadius);
-	const brightness = sensor.read(tile3);
+	const brightness = sensor.digitalRead(tile3);
 	if(brightness < 1) {
 		console.log(brightness);
 	}
