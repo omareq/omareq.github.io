@@ -50,10 +50,10 @@ function setup() {
 	UI.setup();
 	World.TileSetup();
 
-	tile0 = World.Tiles.blankLine;
-	tile1 = World.Tiles.verticalLine;
-	tile2 = World.Tiles.horizontalLine;
-	tile3 = World.Tiles.cross;
+	tile0 = World.Tiles.blankLine.copy();
+	tile1 = World.Tiles.verticalLine.copy();
+	tile2 = World.Tiles.horizontalLine.copy();
+	tile3 = World.Tiles.cross.copy();
 
 	sensor = new Robot.DigitalLightSensor(sensorRadius, createVector(0,0));
 }

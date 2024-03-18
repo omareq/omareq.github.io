@@ -42,7 +42,7 @@ World.maxInterLinePointDist = World.lineThickness / 4;
 World.TileSetup = function() {
     World.LineConfigs = {};
 
-    World.LineConfigs.BlankLine = [];
+    World.LineConfigs.blankLine = [];
 
     World.LineConfigs.verticalLine = [
                 createVector(0.5, 0),
@@ -60,22 +60,36 @@ World.TileSetup = function() {
     World.Lines.horizontalLine = new World.Line(World.LineConfigs.horizontalLine);
 
     World.Tiles = {};
-    World.Tiles.blankLine = new World.Tile([World.Lines.blankLine]);
-    World.Tiles.verticalLine = new World.Tile([World.Lines.verticalLine]);
-    World.Tiles.horizontalLine = new World.Tile([World.Lines.horizontalLine]);
-    World.Tiles.cross = new World.Tile([World.Lines.horizontalLine,
-        World.Lines.verticalLine]);
+    World.Tiles.blankLine = new World.Tile([World.Lines.blankLine.copy()]);
+    World.Tiles.verticalLine = new World.Tile([World.Lines.verticalLine.copy()]);
+    World.Tiles.horizontalLine = new World.Tile([World.Lines.horizontalLine.copy()]);
+    World.Tiles.cross = new World.Tile([World.Lines.horizontalLine.copy(),
+        World.Lines.verticalLine.copy()]);
 };
 
 World.Line = class {
     constructor(points,
         maxLinePointDist = World.maxInterLinePointDist,
-        color = "#000000") {
-        this.linePoints = points;
+        color = "#000000",
+        copied = false) {
+        this.setPoints(points);
         this.maxLinePointDist = maxLinePointDist;
         this.color = color;
-        this.scaleLinePointsToGridSize();
+
+        if(!copied) {
+            this.scaleLinePointsToGridSize();
+        }
         this.checkInterLinePointDistance();
+    }
+
+    setPoints(points) {
+        this.linePoints = [];
+        if(points.length == 0) {
+            return;
+        }
+        points.forEach((point) => {
+            this.linePoints.push(point.copy());
+        });
     }
 
     scaleLinePointsToGridSize() {
@@ -116,12 +130,37 @@ World.Line = class {
         console.debug("World.Line.checkInterLinePointDistance(): \
             Updated Tile:\n", this);
     }
+
+    copy() {
+        const maxLinePointDist = this.maxLinePointDist;
+        const color = this.color;
+        let points = [];
+
+        if(this.linePoints.length > 0) {
+            this.linePoints.forEach((point) => {
+                points.push(point.copy());
+            });
+        }
+
+        const copied = true;
+        return new World.Line(points, maxLinePointDist, color, copied);
+    }
 };
 
 World.Tile = class {
     constructor(lines) {
         this.lines = lines;
         this.generatePG();
+    }
+
+    setLines(lines) {
+        this.lines = [];
+        if(lines.length == 0) {
+            return;
+        }
+        lines.forEach((line) => {
+            this.lines.push(line.copy());
+        });
     }
 
     generatePG() {
@@ -142,5 +181,15 @@ World.Tile = class {
             });
             this.tileImage.endShape();
         });
+    }
+
+    copy() {
+        let linesCopy = [];
+        if(this.lines.length > 0) {
+            this.lines.forEach((line) => {
+                linesCopy.push(line.copy());
+            });
+        }
+        return new World.Tile(linesCopy);
     }
 };

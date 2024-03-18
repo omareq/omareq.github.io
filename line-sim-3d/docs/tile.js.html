@@ -63,50 +63,84 @@
  */
 var World = World || {};
 
-World.lineThickness = 5;
-World.maxInterLinePointDist = 5;
+World.gridSize = 200;
+World.lineThickness = World.gridSize / 10;
+World.maxInterLinePointDist = World.lineThickness / 4;
 
 World.TileSetup = function() {
-    World.Lines = {};
+    World.LineConfigs = {};
 
-    World.Lines.verticalLine = [
+    World.LineConfigs.blankLine = [];
+
+    World.LineConfigs.verticalLine = [
                 createVector(0.5, 0),
                 createVector(0.5, 1)
                 ];
 
-    World.Lines.horizontalLine = [
+    World.LineConfigs.horizontalLine = [
                 createVector(0, 0.5),
                 createVector(1, 0.5)
                 ];
 
+    World.Lines = {};
+    World.Lines.blankLine = new World.Line(World.LineConfigs.blankLine);
+    World.Lines.verticalLine = new World.Line(World.LineConfigs.verticalLine);
+    World.Lines.horizontalLine = new World.Line(World.LineConfigs.horizontalLine);
 
     World.Tiles = {};
-    World.Tiles.verticalLine = new World.Tile(World.Lines.verticalLine);
+    World.Tiles.blankLine = new World.Tile([World.Lines.blankLine.copy()]);
+    World.Tiles.verticalLine = new World.Tile([World.Lines.verticalLine.copy()]);
+    World.Tiles.horizontalLine = new World.Tile([World.Lines.horizontalLine.copy()]);
+    World.Tiles.cross = new World.Tile([World.Lines.horizontalLine.copy(),
+        World.Lines.verticalLine.copy()]);
 };
 
-World.Tile = class {
+World.Line = class {
     constructor(points,
-        maxLinePointDist=World.maxInterLinePointDist) {
-
-        this.linePoints = points;
+        maxLinePointDist = World.maxInterLinePointDist,
+        color = "#000000",
+        copied = false) {
+        this.setPoints(points);
         this.maxLinePointDist = maxLinePointDist;
-        this.scaleLinePointsToGridSize();
+        this.color = color;
+
+        if(!copied) {
+            this.scaleLinePointsToGridSize();
+        }
         this.checkInterLinePointDistance();
     }
 
+    setPoints(points) {
+        this.linePoints = [];
+        if(points.length == 0) {
+            return;
+        }
+        points.forEach((point) => {
+            this.linePoints.push(point.copy());
+        });
+    }
+
     scaleLinePointsToGridSize() {
+        if(this.linePoints == undefined) {
+            return;
+        }
         this.linePoints.forEach((point) => {
             point.mult(World.gridSize);
         });
     }
 
     checkInterLinePointDistance() {
-        console.debug("World.Tile.checkInterLinePointDistance(): \
+        if(this.linePoints == undefined) {
+            return;
+        }
+
+        console.debug("World.Line.checkInterLinePointDistance(): \
             Original Tile:\n", this);
 
         let loopAgain = true;
         while(loopAgain) {
             loopAgain = false;
+
             for(let i = 0; i &lt; this.linePoints.length - 1; i++) {
                 let v1 = this.linePoints[i].copy();
                 let v2 = this.linePoints[i + 1].copy();
@@ -121,8 +155,70 @@ World.Tile = class {
             }
         }
 
-        console.debug("World.Tile.checkInterLinePointDistance(): \
+        console.debug("World.Line.checkInterLinePointDistance(): \
             Updated Tile:\n", this);
+    }
+
+    copy() {
+        const maxLinePointDist = this.maxLinePointDist;
+        const color = this.color;
+        let points = [];
+
+        if(this.linePoints.length > 0) {
+            this.linePoints.forEach((point) => {
+                points.push(point.copy());
+            });
+        }
+
+        const copied = true;
+        return new World.Line(points, maxLinePointDist, color, copied);
+    }
+};
+
+World.Tile = class {
+    constructor(lines) {
+        this.lines = lines;
+        this.generatePG();
+    }
+
+    setLines(lines) {
+        this.lines = [];
+        if(lines.length == 0) {
+            return;
+        }
+        lines.forEach((line) => {
+            this.lines.push(line.copy());
+        });
+    }
+
+    generatePG() {
+        this.tileImage = createGraphics(World.gridSize, World.gridSize);
+        this.tileImage.background(255);
+        this.lines.forEach((line) => {
+            if(line.linePoints == undefined) {
+                return;
+            }
+
+            this.tileImage.noFill();
+            this.tileImage.strokeWeight(0.5 * World.lineThickness);
+            this.tileImage.stroke(line.color);
+            this.tileImage.beginShape();
+
+            line.linePoints.forEach((point) => {
+                this.tileImage.vertex(point.x - World.gridSize/4, point.y-World.gridSize/4);
+            });
+            this.tileImage.endShape();
+        });
+    }
+
+    copy() {
+        let linesCopy = [];
+        if(this.lines.length > 0) {
+            this.lines.forEach((line) => {
+                linesCopy.push(line.copy());
+            });
+        }
+        return new World.Tile(linesCopy);
     }
 };
 </code></pre>
@@ -135,12 +231,12 @@ World.Tile = class {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Mar 15 2024 14:43:32 GMT+0000 (Greenwich Mean Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 18 2024 09:51:05 GMT+0000 (Greenwich Mean Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

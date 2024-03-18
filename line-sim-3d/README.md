@@ -14,6 +14,8 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] show and hide grid lines
 
+- [ ] add simulation modes including debug views
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
 

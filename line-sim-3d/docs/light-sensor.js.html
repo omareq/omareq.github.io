@@ -62,6 +62,222 @@
  * Robot Namespace Object
  */
 var Robot = Robot || {};
+
+Robot.AnalogLightSensor = class {
+    constructor(sensorRadius, position, bufferLength=1) {
+        this.setRadius(sensorRadius);
+        this.pos = position;
+        this.bufferLen = bufferLength;
+        if(this.bufferLen &lt; 1) {
+            this.bufferLen = 1;
+        }
+        this.buffer = [];
+        this.bufferIndex = 0;
+
+        this.setupBuffer();
+    }
+
+    setupBuffer() {
+        for(let i = 0; i &lt; this.bufferLen; i++) {
+            this.buffer.push(0);
+        }
+    }
+
+    setPos(position) {
+        this.pos = position;
+    }
+
+    setRadius(radius) {
+        this.sensorRadius = sensorRadius;
+        this.circleArea = PI * this.sensorRadius**2;
+    }
+
+    findClosestLinePoint(tile) {
+        let linesClosestPos = [];
+        let linesShortestDist = [];
+        tile.lines.forEach((line) => {
+            let shortestDistance = 2 * World.gridSize;
+            let bestPos = createVector(0, 0);
+
+            line.linePoints.forEach((point) => {
+                const dist = this.pos.dist(point);
+                if(dist &lt; shortestDistance) {
+                    shortestDistance = dist;
+                    bestPos = point.copy();
+                }
+            });
+            linesClosestPos.push(bestPos);
+            linesShortestDist.push(shortestDistance);
+        });
+
+        const index = linesShortestDist.indexOf(Math.min(...linesShortestDist));
+        return linesClosestPos[index].copy();
+    }
+
+    calcSegmentVal(h) {
+        // Dark segment area
+        // A = 0.5 * R^2 * (a - sin a)
+        // where a = segment angle
+        // cos a/2 = h/r
+        // a / 2 = arcos(h/r)
+        const a = 2 * acos(h / this.sensorRadius);
+        const segmentArea = 0.5 * this.sensorRadius**2 * (a - sin(a));
+
+        const sensorVal = (this.circleArea - segmentArea) / this.circleArea;
+        return sensorVal;
+    }
+
+    readRaw(tile) {
+        const linePoint = this.findClosestLinePoint(tile);
+
+        push();
+        let c = color(0, 187, 35);
+        fill(c);
+        stroke(c);
+        line(linePoint.x, linePoint.y, this.pos.x, this.pos.y);
+        ellipse(linePoint.x, linePoint.y, 5,5);
+        pop();
+
+        const dist = this.pos.dist(linePoint);
+
+        // sensor is outside of the line return white
+        if(dist >= (this.sensorRadius + 0.5 * World.lineThickness)) {
+            return 1;
+        }
+
+        // sensor is fully inside the line
+        if((dist + this.sensorRadius) &lt;= (0.5 * World.lineThickness)) {
+            return 0;
+        }
+
+        // sensor circle is overlapping the line but the centre is external to
+        // the line
+        if(this.sensorRadius &lt; World.lineThickness) {
+            if ((0.5 * World.lineThickness) &lt; dist) {
+                if (dist &lt; (0.5 * World.lineThickness + this.sensorRadius)) {
+                    console.debug("Small - One Segment In");
+                    const h = dist - 0.5 * World.lineThickness;
+                    return this.calcSegmentVal(h);
+                }
+            }
+        }
+
+        if(this.sensorRadius >= World.lineThickness) {
+            if((this.sensorRadius - 0.5 * World.lineThickness) &lt; dist) {
+                if(dist &lt; (0.5 * World.lineThickness + this.sensorRadius)) {
+                    console.debug("Big - One Segment In");
+                    const h = this.sensorRadius - World.lineThickness;
+                    return this.calcSegmentVal(h);
+                }
+            }
+        }
+
+        // sensor has one segment out of the line
+        if((2 * this.sensorRadius) &lt; World.lineThickness) {
+            if(dist &lt; 0.5 * World.lineThickness) {
+                console.debug("Small - One Segment Out");
+                const h = 0.5 * World.lineThickness - dist;
+                return 1 - this.calcSegmentVal(h);
+            }
+        }
+
+        if(World.lineThickness &lt;= (2 * this.sensorRadius)) {
+            if((this.sensorRadius - 0.5 * World.lineThickness) &lt; dist) {
+                if(dist &lt; 0.5 * World.lineThickness) {
+                    console.debug("Medium - One Segment Out");
+                    const h = 0.5 * World.lineThickness - dist;
+                    return 1 - this.calcSegmentVal(h);
+                }
+            }
+        }
+
+
+        // sensor has two segments out of the line
+        if(World.lineThickness &lt; (2 * this.sensorRadius)) {
+            if((this.sensorRadius - 0.5 * World.lineThickness) > dist) {
+                if(dist &lt; 0.5 * World.lineThickness) {
+                    console.debug("Big - Two Segments Out - In Centre");
+                    const h1 = 0.5 * World.lineThickness - dist;
+                    const h2 = World.lineThickness - h1;
+                    const segmentVal1 = 1 - this.calcSegmentVal(h1);
+                    const segmentVal2 = 1 - this.calcSegmentVal(h2);
+                    return segmentVal1 + segmentVal2;
+                }
+            }
+        }
+
+        if(World.lineThickness &lt; (2 * this.sensorRadius)) {
+            if((this.sensorRadius - 0.5 * World.lineThickness) > dist) {
+                if(dist > 0.5 * World.lineThickness) {
+                    console.debug("Big - Two Segments Out - Off Centre");
+                    const h1 = dist - 0.5 * World.lineThickness;
+                    const h2 = h1 + World.lineThickness;
+                    const segmentVal1 = this.calcSegmentVal(h1);
+                    const segmentVal2 = 1 - this.calcSegmentVal(h2);
+                    return segmentVal1 + segmentVal2;
+                }
+            }
+        }
+        return 1;
+    }
+
+    read(tile) {
+        const rawVal = this.readRaw(tile);
+
+        this.buffer[this.bufferIndex] = rawVal;
+        this.bufferIndex ++;
+        this.bufferIndex %= this.bufferLen;
+
+        const avg = this.buffer.reduce((prev, current) => {
+            return prev + current / this.bufferLen;
+        });
+
+        return avg;
+    }
+};
+
+Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
+    constructor(sensorRadius, position, bufferLength=1,
+        threshUp=0.65, threshDown=0.35) {
+        super(sensorRadius, position, bufferLength);
+        this.setThresholdUp(threshUp);
+        this.setThresholdDown(threshDown);
+        this.value = 1;
+    }
+
+    swapThresholds() {
+        const temp = this.thresholdDown;
+        this.thresholdDown = this.thresholdUp;
+        this.thresholdUp = temp;
+    }
+
+    setThresholdUp(threshUp) {
+        this.thresholdUp = constrain(threshUp, 0, 1);
+        if(this.thresholdUp > this.thresholdDown) {
+            this.swapThresholds();
+        }
+    }
+
+    setThresholdDown(threshDown) {
+        this.thresholdDown = constrain(threshDown, 0, 1);
+        if(this.thresholdUp > this.thresholdDown) {
+            this.swapThresholds();
+        }
+    }
+
+    digitalRead(tile) {
+        const analogValue = super.read(tile);
+        if(this.value == 1 &amp;&amp; analogValue &lt; this.thresholdDown) {
+            this.value = 0;
+        }
+
+        if(this.value == 0 &amp;&amp; analogValue > this.thresholdUp) {
+            this.value = 1;
+        }
+
+        return this.value;
+    }
+};
 </code></pre>
         </article>
     </section>
@@ -72,12 +288,12 @@ var Robot = Robot || {};
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Mar 15 2024 14:43:32 GMT+0000 (Greenwich Mean Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 18 2024 09:51:05 GMT+0000 (Greenwich Mean Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
