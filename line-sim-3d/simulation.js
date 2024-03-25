@@ -38,24 +38,30 @@ var Simulation = Simulation || {};
 
 Simulation.firstFrameTime = Date.now();
 Simulation.lastFrameTime = Date.now();
-Simulation.timeSinceStart = 0;
-Simulation.timeSinceStartSeconds= 0;
+
+Simulation.frameDataHistory = [];
+Simulation.currentFrameData = null;
 Simulation.frame = 0;
-Simulation.dt = 0;
-Simulation.dtMillis = 0;
-Simulation.dtSeconds = 0;
-Simulation.fps = 0;
+
+Simulation.frameData = class {
+    constructor() {
+        this.frameTime = Date.now();
+
+        this.dt = this.frameTime - Simulation.lastFrameTime;
+        this.dtMillis = this.dt;
+        this.dtSeconds = 0.001 * this.dt;
+        this.fps = 1 / this.dtSeconds;
+
+        this.frame = Simulation.frame;
+        this.timeSinceStart = this.frameTime - Simulation.firstFrameTime;
+        this.timeSinceStartSeconds = 0.001 * this.timeSinceStart;
+    }
+};
 
 Simulation.update = function() {
-    const currentFrameTime = Date.now();
-    Simulation.dt = currentFrameTime - Simulation.lastFrameTime;
-    Simulation.dtMillis = Simulation.dt;
-    Simulation.dtSeconds = 0.001 * Simulation.dt;
-    Simulation.fps = 1 / Simulation.dtSeconds;
+    Simulation.currentFrameData = new Simulation.frameData();
+    Simulation.frameDataHistory.push(Simulation.currentFrameData);
 
     Simulation.frame++;
-    Simulation.timeSinceStart = currentFrameTime - Simulation.firstFrameTime;
-    Simulation.timeSinceStartSeconds = 0.001 * Simulation.timeSinceStart;
-
-    Simulation.lastFrameTime = currentFrameTime;
+    Simulation.lastFrameTime = Simulation.currentFrameData.frameTime;
 };
