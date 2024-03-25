@@ -29,6 +29,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
+"use strict";
 
 let tile0, tile1, tile2, tile3;
 let sensor;
