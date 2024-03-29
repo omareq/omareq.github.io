@@ -62,12 +62,19 @@ function setup() {
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
+let tileX = 0;
+let tileXInc = 1;
 function draw() {
 	background(127);
 	// UI.poll();
 	Simulation.update();
 
-	image(tile3.tileImage, 0, 0, World.gridSize, World.girdSize);
+	tile3.draw();
+	tile3.setPos(createVector(tileX,100));
+	tileX += tileXInc;
+	if(tileX < 0 || tileX + World.gridSize > width) {
+		tileXInc *= -1;
+	}
 
 	sensor.setPos(createVector(mouseX, mouseY));
 	sensor.setRadius(sensorRadius);

@@ -48,6 +48,8 @@ Robot.AnalogLightSensor = class {
         this.bufferIndex = 0;
 
         this.setupBuffer();
+        this.white = 1;
+        this.black = 0;
     }
 
     setupBuffer() {
@@ -65,6 +67,22 @@ Robot.AnalogLightSensor = class {
         this.circleArea = PI * this.sensorRadius**2;
     }
 
+    isOutsideofTile(tile) {
+        if(this.pos.x < tile.pos.x || this.pos.y < tile.pos.y) {
+            return true;
+        }
+
+        if(this.pos.x > tile.pos.x + World.gridSize) {
+            return true;
+        }
+
+        if(this.pos.y > tile.pos.y + World.gridSize) {
+            return true;
+        }
+
+        return false;
+    }
+
     findClosestLinePoint(tile) {
         let linesClosestPos = [];
         let linesShortestDist = [];
@@ -73,7 +91,7 @@ Robot.AnalogLightSensor = class {
             let bestPos = createVector(0, 0);
 
             line.linePoints.forEach((point) => {
-                const dist = this.pos.dist(point);
+                const dist = this.posInTileFrame.dist(point);
                 if(dist < shortestDistance) {
                     shortestDistance = dist;
                     bestPos = point.copy();
@@ -101,26 +119,33 @@ Robot.AnalogLightSensor = class {
     }
 
     readRaw(tile) {
+        // sensor is outside of the tile return white
+        if(this.isOutsideofTile(tile)) {
+            return this.white;
+        }
+
+        this.posInTileFrame = this.pos.copy().sub(tile.pos);
         const linePoint = this.findClosestLinePoint(tile);
 
         push();
         let c = color(0, 187, 35);
         fill(c);
         stroke(c);
-        line(linePoint.x, linePoint.y, this.pos.x, this.pos.y);
-        ellipse(linePoint.x, linePoint.y, 5,5);
+        line(linePoint.x + tile.pos.x, linePoint.y + tile.pos.y,
+            this.pos.x, this.pos.y);
+        ellipse(linePoint.x + tile.pos.x, linePoint.y + tile.pos.y, 5,5);
         pop();
 
-        const dist = this.pos.dist(linePoint);
+        const dist = this.posInTileFrame.dist(linePoint);
 
         // sensor is outside of the line return white
         if(dist >= (this.sensorRadius + 0.5 * World.lineThickness)) {
-            return 1;
+            return this.white;
         }
 
         // sensor is fully inside the line
         if((dist + this.sensorRadius) <= (0.5 * World.lineThickness)) {
-            return 0;
+            return this.black;
         }
 
         // sensor circle is overlapping the line but the centre is external to
@@ -150,7 +175,7 @@ Robot.AnalogLightSensor = class {
             if(dist < 0.5 * World.lineThickness) {
                 console.debug("Small - One Segment Out");
                 const h = 0.5 * World.lineThickness - dist;
-                return 1 - this.calcSegmentVal(h);
+                return this.white - this.calcSegmentVal(h);
             }
         }
 
@@ -159,7 +184,7 @@ Robot.AnalogLightSensor = class {
                 if(dist < 0.5 * World.lineThickness) {
                     console.debug("Medium - One Segment Out");
                     const h = 0.5 * World.lineThickness - dist;
-                    return 1 - this.calcSegmentVal(h);
+                    return this.white - this.calcSegmentVal(h);
                 }
             }
         }
@@ -172,8 +197,8 @@ Robot.AnalogLightSensor = class {
                     console.debug("Big - Two Segments Out - In Centre");
                     const h1 = 0.5 * World.lineThickness - dist;
                     const h2 = World.lineThickness - h1;
-                    const segmentVal1 = 1 - this.calcSegmentVal(h1);
-                    const segmentVal2 = 1 - this.calcSegmentVal(h2);
+                    const segmentVal1 = this.white - this.calcSegmentVal(h1);
+                    const segmentVal2 = this.white - this.calcSegmentVal(h2);
                     return segmentVal1 + segmentVal2;
                 }
             }
@@ -186,12 +211,12 @@ Robot.AnalogLightSensor = class {
                     const h1 = dist - 0.5 * World.lineThickness;
                     const h2 = h1 + World.lineThickness;
                     const segmentVal1 = this.calcSegmentVal(h1);
-                    const segmentVal2 = 1 - this.calcSegmentVal(h2);
+                    const segmentVal2 = this.white - this.calcSegmentVal(h2);
                     return segmentVal1 + segmentVal2;
                 }
             }
         }
-        return 1;
+        return this.white;
     }
 
     read(tile) {
@@ -215,7 +240,7 @@ Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
         super(sensorRadius, position, bufferLength);
         this.setThresholdUp(threshUp);
         this.setThresholdDown(threshDown);
-        this.value = 1;
+        this.value = this.white;
     }
 
     swapThresholds() {
@@ -225,14 +250,14 @@ Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
     }
 
     setThresholdUp(threshUp) {
-        this.thresholdUp = constrain(threshUp, 0, 1);
+        this.thresholdUp = constrain(threshUp, this.black, this.white);
         if(this.thresholdUp > this.thresholdDown) {
             this.swapThresholds();
         }
     }
 
     setThresholdDown(threshDown) {
-        this.thresholdDown = constrain(threshDown, 0, 1);
+        this.thresholdDown = constrain(threshDown, this.black, this.white);
         if(this.thresholdUp > this.thresholdDown) {
             this.swapThresholds();
         }
@@ -240,12 +265,12 @@ Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
 
     digitalRead(tile) {
         const analogValue = super.read(tile);
-        if(this.value == 1 && analogValue < this.thresholdDown) {
-            this.value = 0;
+        if(this.value == this.white && analogValue < this.thresholdDown) {
+            this.value = this.black;
         }
 
-        if(this.value == 0 && analogValue > this.thresholdUp) {
-            this.value = 1;
+        if(this.value == this.black && analogValue > this.thresholdUp) {
+            this.value = this.white;
         }
 
         return this.value;

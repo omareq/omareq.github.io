@@ -149,9 +149,10 @@ World.Line = class {
 };
 
 World.Tile = class {
-    constructor(lines) {
+    constructor(lines, pos=createVector(0,0)) {
         this.lines = lines;
         this.generatePG();
+        this.setPos(pos);
     }
 
     setLines(lines) {
@@ -162,6 +163,10 @@ World.Tile = class {
         lines.forEach((line) => {
             this.lines.push(line.copy());
         });
+    }
+
+    setPos(newPos) {
+        this.pos = newPos.copy();
     }
 
     generatePG() {
@@ -192,5 +197,11 @@ World.Tile = class {
             });
         }
         return new World.Tile(linesCopy);
+    }
+
+    draw() {
+        image(this.tileImage,
+            this.pos.x, this.pos.y,
+            World.gridSize, World.girdSize);
     }
 };
