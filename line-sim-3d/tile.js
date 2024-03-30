@@ -37,10 +37,10 @@
 var World = World || {};
 
 World.gridSize = 200;
-World.lineThickness = World.gridSize / 10;
-World.maxInterLinePointDist = World.lineThickness / 4;
 
 World.TileSetup = function() {
+    World.lineThickness = World.gridSize / 10;
+    World.maxInterLinePointDist = World.lineThickness / 4;
     World.LineConfigs = {};
 
     World.LineConfigs.blankLine = [];
@@ -66,6 +66,11 @@ World.TileSetup = function() {
     World.Tiles.horizontalLine = new World.Tile([World.Lines.horizontalLine.copy()]);
     World.Tiles.cross = new World.Tile([World.Lines.horizontalLine.copy(),
         World.Lines.verticalLine.copy()]);
+};
+
+World.setGridSize = function(gridSize) {
+    World.gridSize = gridSize;
+    World.TileSetup();
 };
 
 World.Line = class {
@@ -189,6 +194,10 @@ World.Tile = class {
         });
     }
 
+    getPG() {
+        return this.tileImage;
+    }
+
     copy() {
         let linesCopy = [];
         if(this.lines.length > 0) {
@@ -202,6 +211,8 @@ World.Tile = class {
     draw() {
         image(this.tileImage,
             this.pos.x, this.pos.y,
-            World.gridSize, World.girdSize);
+            World.gridSize, World.gridSize);
     }
+
+
 };
