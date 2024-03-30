@@ -54,8 +54,6 @@ function setup() {
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
-let tileX = 0;
-let tileXInc = 1;
 function draw() {
 	background(127);
 	// UI.poll();
