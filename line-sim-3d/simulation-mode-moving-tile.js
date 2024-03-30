@@ -41,7 +41,17 @@ var Simulation = Simulation || {};
  */
 Simulation.Mode = Simulation.Mode || {};
 
+/**
+ * Class Simulation.Mode.movingTile is a simulation mode that has a tile moving
+ * back and forth along the canvas to test that the light sensors can correctly
+ * read the value in a global coordinate frame.
+ *
+ * @see Simulation.Mode.Type
+ */
 Simulation.Mode.movingTile = class extends Simulation.Mode.ModeType {
+    /**
+     * The constructor that sets up the simulation variables
+     */
     constructor() {
         super();
         this.tile = World.Tiles.cross.copy();
@@ -53,6 +63,9 @@ Simulation.Mode.movingTile = class extends Simulation.Mode.ModeType {
         this.tileXInc = 1;
     }
 
+    /**
+     * Update function that updates the state of the simulation
+     */
     update() {
         if(this.tileX < 0 || this.tileX + World.gridSize > width) {
             this.tileXInc *= -1;
