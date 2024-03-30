@@ -16,6 +16,14 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] add simulation modes including debug views
 
+    - [ ] single tile unmoving digital/analogue LS at mouse pos variable size
+
+    - [ ] single tile moving digital/analogue LS at mouse pos
+
+    - [ ] room of tiles digital/analogue LS at mouse pos
+
+    - [ ] room of tiles with LS array
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
 

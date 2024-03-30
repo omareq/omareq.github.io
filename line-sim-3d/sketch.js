@@ -31,10 +31,6 @@
  *****************************************************************************/
 "use strict";
 
-let tile0, tile1, tile2, tile3;
-let sensor;
-let sensorRadius = 8;
-
 /**
  * p5.js setup function, creates canvas.
  */
@@ -51,12 +47,8 @@ function setup() {
 	UI.setup();
 	World.TileSetup();
 
-	tile0 = World.Tiles.blankLine.copy();
-	tile1 = World.Tiles.verticalLine.copy();
-	tile2 = World.Tiles.horizontalLine.copy();
-	tile3 = World.Tiles.cross.copy();
-
-	sensor = new Robot.DigitalLightSensor(sensorRadius, createVector(0,0));
+	Simulation.Mode.set(Simulation.Mode.movingTile);
+	Simulation.setup();
 }
 
 /**
@@ -68,26 +60,4 @@ function draw() {
 	background(127);
 	// UI.poll();
 	Simulation.update();
-
-	tile3.draw();
-	tile3.setPos(createVector(tileX,100));
-	tileX += tileXInc;
-	if(tileX < 0 || tileX + World.gridSize > width) {
-		tileXInc *= -1;
-	}
-
-	sensor.setPos(createVector(mouseX, mouseY));
-	sensor.setRadius(sensorRadius);
-	const brightness = sensor.digitalRead(tile3);
-	if(brightness < 1) {
-		console.log(brightness);
-	}
-	const colorVal = floor(brightness * 255);
-
-	push();
-	fill(colorVal);
-	strokeWeight(1);
-	stroke(127, 0, 30);
-	ellipse(mouseX, mouseY, 2 * sensorRadius, 2 * sensorRadius);
-	pop();
 }

@@ -62,7 +62,7 @@ Robot.AnalogLightSensor = class {
         this.pos = position;
     }
 
-    setRadius(radius) {
+    setRadius(sensorRadius) {
         this.sensorRadius = sensorRadius;
         this.circleArea = PI * this.sensorRadius**2;
     }
