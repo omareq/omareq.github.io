@@ -18,7 +18,7 @@ Created using [p5.js](https://p5js.org/)
 
     - [ ] single tile unmoving digital/analogue LS at mouse pos variable size
 
-    - [ ] single tile moving digital/analogue LS at mouse pos
+    - [x] single tile moving digital/analogue LS at mouse pos
 
     - [ ] room of tiles digital/analogue LS at mouse pos
 

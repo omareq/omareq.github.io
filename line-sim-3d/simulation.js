@@ -61,16 +61,10 @@ Simulation.setup = function() {
     Simulation.currentFrameData = null;
     Simulation.frame = 0;
 
-    if(Simulation.Mode.setup == undefined) {
-        Simulation.Mode.setup = () => {return;};
+    if(Simulation.Mode.activeMode == undefined) {
+        Simulation.Mode.setActive(new Simulation.Mode.empty());
     }
-
-    if(Simulation.Mode.update == undefined) {
-        Simulation.Mode.update = () => {return;};
-    }
-
-    Simulation.Mode.setup();
-}
+};
 
 Simulation.update = function() {
     Simulation.currentFrameData = new Simulation.frameData();
@@ -79,59 +73,27 @@ Simulation.update = function() {
     Simulation.frame++;
     Simulation.lastFrameTime = Simulation.currentFrameData.frameTime;
 
-    Simulation.Mode.update();
+    Simulation.Mode.activeMode.update();
 };
 
-Simulation.Mode.set = function(newMode) {
-    Simulation.Mode.setup = newMode.setup;
-    Simulation.Mode.update = newMode.update;
-}
+Simulation.Mode.setActive = function(newMode) {
+    Simulation.Mode.activeMode = newMode;
+};
 
-Simulation.Mode.movingTile = {};
+Simulation.Mode.Type = class {
+    constructor() {
+        let err = "Abstract class Simulation.Mode.Type can't be instantiated.";
+        if(this.constructor == Simulation.Mode.Type) {
+          throw new Error(err);
+        }
+      }
 
-Simulation.Mode.movingTile.setup = function() {
-    Simulation.Mode.movingTile.tile = World.Tiles.cross.copy();
-
-    const sr = 8
-    Simulation.Mode.movingTile.sensorRadius = sr;
-    let s = new Robot.DigitalLightSensor(8, createVector(0,0));
-    Simulation.Mode.movingTile.sensor = s;
-
-    Simulation.Mode.movingTile.tileX = 0;
-    Simulation.Mode.movingTile.tileXInc = 1;
-}
-
-Simulation.Mode.movingTile.update = function() {
-    let tile = Simulation.Mode.movingTile.tile;
-    let sensor = Simulation.Mode.movingTile.sensor;
-    let tileX = Simulation.Mode.movingTile.tileX;
-    let tileXInc = Simulation.Mode.movingTile.tileXInc;
-
-    if(tileX < 0 || tileX + World.gridSize > width) {
-        Simulation.Mode.movingTile.tileXInc *= -1;
+    update() {
+    throw new Error("Method 'update()' must be implemented.");
     }
-    Simulation.Mode.movingTile.tileX += Simulation.Mode.movingTile.tileXInc;
+};
 
-    let tileY = height / 2 - World.gridSize / 2;
-    tile.setPos(createVector(Simulation.Mode.movingTile.tileX, tileY));
-    tile.draw();
-
-    sensor.setPos(createVector(mouseX, mouseY));
-    sensor.setRadius(Simulation.Mode.movingTile.sensorRadius);
-
-    const brightness = sensor.digitalRead(tile);
-
-    if(brightness < 1) {
-        console.log(brightness);
-    }
-    const colorVal = floor(brightness * 255);
-
-    push();
-    fill(colorVal);
-    strokeWeight(1);
-    stroke(127, 0, 30);
-    const ellipseSize = 2 * Simulation.Mode.movingTile.sensorRadius;
-    ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
-    pop();
-
-}
+Simulation.Mode.empty = class extends Simulation.Mode.Type {
+    constructor() {super();};
+    update() {};
+};
