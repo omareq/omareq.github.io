@@ -102,6 +102,12 @@ Simulation.update = function() {
  * @param newMode {Simulation.Mode.Type} - New Simulation mode.
  */
 Simulation.Mode.setActive = function(newMode) {
+    if(!(newMode instanceof Simulation.Mode.ModeType)) {
+        Simulation.Mode.activeMode = new Simulation.Mode.empty();
+        const err = "newMode should be an instance of Simulation.Mode.ModeType";
+        throw new Error(err);
+    }
+
     Simulation.Mode.activeMode = newMode;
 };
 
