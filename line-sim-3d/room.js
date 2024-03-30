@@ -36,8 +36,19 @@
  */
 var World = World || {};
 
-
+/**
+ * Class that implements a room of tiles.
+ */
 World.Room = class {
+    /**
+     * Constructor for the room class.
+     *
+     * @param xNumTiles {number} - Positive integer showing how many tiles there
+     * are in the x direction
+     * @param yNumTIles {number} - Positive integer showing how many tiles there
+     * are in the y direction
+     * @param globalPos {p5.Vector} - The global position of the room
+     */
     constructor(xNumTiles, yNumTiles, globalPos=createVector(0,0)) {
         this.xNumTiles = xNumTiles;
         this.yNumTiles = yNumTiles;
@@ -53,6 +64,9 @@ World.Room = class {
         this.generatePG();
     }
 
+    /**
+     * creates a 2d grid of World.Tiles.blankLine.
+     */
     createEmptyRoom() {
         this.grid = [];
         const blankTile = World.Tiles.blankLine.copy();
@@ -68,6 +82,10 @@ World.Room = class {
         }
     }
 
+    /**
+     * Fills the room with horizontal lines and then adds 90 degree corners to
+     * create the back and forth pattern.
+     */
     fillRoomWithSnakePattern() {
         this.setAllTiles(World.Tiles.horizontalLine.copy());
 
@@ -106,6 +124,9 @@ World.Room = class {
         }
     }
 
+    /**
+     * create a portable graphics image of all the tiles in the room.
+     */
     generatePG() {
         this.img = createGraphics(this.xWidth, this.yHeight);
         // set background as red in case there are any errors;
@@ -116,11 +137,20 @@ World.Room = class {
 // TODO: Figure out why there is a factor of 0.5 needed to make these work
                 const xPos = x * 0.5 * World.gridSize;
                 const yPos = y * 0.5 * World.gridSize;
-                this.img.image(tileImg, xPos, yPos, 0.5*World.gridSize, 0.5*World.gridSize);
+                this.img.image(tileImg, xPos, yPos,
+                    0.5*World.gridSize, 0.5*World.gridSize);
             }
         }
     }
 
+    /**
+     * Set all of the tiles in the room to be the same type.  This will ensure
+     * that the position of all the tiles are in the correct position.
+     *
+     * @param tile {World.Tile} - The type of tile to fill the room with.
+     *
+     * @throws {Error} - tile needs to be an instance of World.Tile
+     */
     setAllTiles(tile) {
         if(!(tile instanceof World.Tile)) {
             const err = "tile needs to be an instance of World.Tile";
@@ -139,6 +169,14 @@ World.Room = class {
         this.generatePG();
     }
 
+    /**
+     * Calculates the position of a tile at the given indexes.
+     *
+     * @param x {number} - X Index
+     * @param y {number} - Y Index
+     *
+     * @returns {p5.Vector} - global position of the tile in the grid
+     */
     getPosOfGrid(x, y) {
         const xPos = x * World.gridSize;
         const yPos = y * World.gridSize;
@@ -146,33 +184,50 @@ World.Room = class {
         return currentPos;
     }
 
+    /**
+     * sets the tiles in the grid to a new pattern
+     *
+     * @param tilePattern {Array<Array<World.Tiles>>} - a 2d array of tiles.
+     */
     setTiles(tilePattern) {
 
     }
 
+    /**
+     * Calculates which tile is at a given global position
+     *
+     * @param pos {p5.Vector} - The global position
+     *
+     * @returns {World.Tile} - The tile at the given position
+     *
+     * @throws {Error} - pos needs to be an instance of p5.Vector
+     */
     getTileAtPos(pos) {
         if(!(pos instanceof p5.Vector)) {
             const err = "pos needs to be an instance of p5.Vector";
             throw new Error(err);
         }
 
-        let localPos = pos.copy();
+        let localPos = pos.copy().sub(this.pos);
         const xIndex = floor(localPos.x / World.gridSize);
         const yIndex = floor(localPos.y / World.gridSize);
 
         console.debug("Room Grid Index: x, y: ", xIndex, yIndex);
 
         if(xIndex < 0 || xIndex > this.xNumTiles - 1) {
-            return World.Tiles.blankLine.copy();
+            return undefined;
         }
 
         if(yIndex < 0 || yIndex > this.yNumTiles - 1) {
-            return World.Tiles.blankLine.copy();
+            return undefined;
         }
 
         return this.grid[xIndex][yIndex];
     }
 
+    /**
+     * Draws the room at the global position set in the constructor.
+     */
     draw() {
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }

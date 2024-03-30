@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: ModeType</title>
+    <title>JSDoc: Class: DebugRoom</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ModeType</h1>
+    <h1 class="page-title">Class: DebugRoom</h1>
 
     
 
@@ -29,10 +29,11 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>ModeType<span class="signature">()</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>DebugRoom<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class Simulation.Mode.ModeType used as an abstract class to enforce that
-Simulation modes have an update function.</div>
+            <div class="class-description">Class Simulation.Mode.DebugMovingTile is a simulation mode that has a tile
+moving back and forth along the canvas to test that the light sensors can
+correctly read the value in a global coordinate frame.</div>
         
     
 </header>
@@ -47,7 +48,7 @@ Simulation modes have an update function.</div>
     
 
     
-    <h4 class="name" id="ModeType"><span class="type-signature"></span>new ModeType<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="DebugRoom"><span class="type-signature"></span>new DebugRoom<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -55,7 +56,7 @@ Simulation modes have an update function.</div>
 
 
 <div class="description">
-    An abstract class constructor that throws an error if it is instantiated.
+    The constructor that sets up the simulation variables
 </div>
 
 
@@ -99,13 +100,20 @@ Simulation modes have an update function.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation.js.html">simulation.js</a>, <a href="simulation.js.html#line120">line 120</a>
+        <a href="simulation-mode-room.js.html">simulation-mode-room.js</a>, <a href="simulation-mode-room.js.html#line53">line 53</a>
     </li></ul></dd>
     
 
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>Simulation.Mode.Type</li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
@@ -122,35 +130,6 @@ Simulation modes have an update function.</div>
 
 
 
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        Abstract class Simulation.Mode.Type can't be instantiated
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
 
 
 
@@ -192,7 +171,7 @@ Simulation modes have an update function.</div>
 
 
 <div class="description">
-    An abstract method which needs to be overridden.
+    Update function that updates the state of the simulation
 </div>
 
 
@@ -236,7 +215,7 @@ Simulation modes have an update function.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation.js.html">simulation.js</a>, <a href="simulation.js.html#line138">line 138</a>
+        <a href="simulation-mode-room.js.html">simulation-mode-room.js</a>, <a href="simulation-mode-room.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -259,35 +238,6 @@ Simulation modes have an update function.</div>
 
 
 
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        Method 'update()' must be implemented
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
 
 
 

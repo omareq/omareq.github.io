@@ -65,10 +65,10 @@
 var World = World || {};
 
 World.gridSize = 200;
-World.lineThickness = World.gridSize / 10;
-World.maxInterLinePointDist = World.lineThickness / 4;
 
 World.TileSetup = function() {
+    World.lineThickness = World.gridSize / 10;
+    World.maxInterLinePointDist = World.lineThickness / 4;
     World.LineConfigs = {};
 
     World.LineConfigs.blankLine = [];
@@ -83,10 +83,34 @@ World.TileSetup = function() {
                 createVector(1, 0.5)
                 ];
 
+    World.LineConfigs.halfLineDown = [
+                createVector(0.5, 0.5),
+                createVector(0.5, 1)
+                ];
+
+    World.LineConfigs.halfLineUp = [
+                createVector(0.5, 0),
+                createVector(0.5, 0.5)
+                ];
+
+    World.LineConfigs.halfLineRight = [
+                createVector(0.5, 0.5),
+                createVector(1, 0.5)
+                ];
+
+    World.LineConfigs.halfLineLeft = [
+                createVector(0, 0.5),
+                createVector(0.5, 0.5)
+                ];
+
     World.Lines = {};
     World.Lines.blankLine = new World.Line(World.LineConfigs.blankLine);
     World.Lines.verticalLine = new World.Line(World.LineConfigs.verticalLine);
     World.Lines.horizontalLine = new World.Line(World.LineConfigs.horizontalLine);
+    World.Lines.halfLineUp = new World.Line(World.LineConfigs.halfLineUp);
+    World.Lines.halfLineDown = new World.Line(World.LineConfigs.halfLineDown);
+    World.Lines.halfLineRight = new World.Line(World.LineConfigs.halfLineRight);
+    World.Lines.halfLineLeft = new World.Line(World.LineConfigs.halfLineLeft);
 
     World.Tiles = {};
     World.Tiles.blankLine = new World.Tile([World.Lines.blankLine.copy()]);
@@ -94,6 +118,26 @@ World.TileSetup = function() {
     World.Tiles.horizontalLine = new World.Tile([World.Lines.horizontalLine.copy()]);
     World.Tiles.cross = new World.Tile([World.Lines.horizontalLine.copy(),
         World.Lines.verticalLine.copy()]);
+
+    World.Tiles.halfLineUp = new World.Tile([World.Lines.halfLineUp.copy()]);
+    World.Tiles.halfLineDown = new World.Tile([World.Lines.halfLineDown.copy()]);
+    World.Tiles.halfLineRight = new World.Tile([World.Lines.halfLineRight.copy()]);
+    World.Tiles.halfLineLeft = new World.Tile([World.Lines.halfLineLeft.copy()]);
+
+    World.Tiles.cornerUpLeft = new World.Tile([World.Lines.halfLineUp.copy(),
+        World.Lines.halfLineLeft.copy()]);
+    World.Tiles.cornerUpRight = new World.Tile([World.Lines.halfLineUp.copy(),
+        World.Lines.halfLineRight.copy()]);
+    World.Tiles.cornerDownLeft = new World.Tile([World.Lines.halfLineDown.copy(),
+        World.Lines.halfLineLeft.copy()]);
+    World.Tiles.cornerDownRight = new World.Tile([World.Lines.halfLineDown.copy(),
+        World.Lines.halfLineRight.copy()]);
+
+};
+
+World.setGridSize = function(gridSize) {
+    World.gridSize = gridSize;
+    World.TileSetup();
 };
 
 World.Line = class {
@@ -217,6 +261,10 @@ World.Tile = class {
         });
     }
 
+    getPG() {
+        return this.tileImage;
+    }
+
     copy() {
         let linesCopy = [];
         if(this.lines.length > 0) {
@@ -230,8 +278,10 @@ World.Tile = class {
     draw() {
         image(this.tileImage,
             this.pos.x, this.pos.y,
-            World.gridSize, World.girdSize);
+            World.gridSize, World.gridSize);
     }
+
+
 };
 </code></pre>
         </article>
@@ -243,12 +293,12 @@ World.Tile = class {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Room.html">Room</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Mar 30 2024 17:49:46 GMT+0000 (Greenwich Mean Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Mar 30 2024 23:08:40 GMT+0000 (Greenwich Mean Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

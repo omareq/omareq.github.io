@@ -64,7 +64,7 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
         World.setGridSize(height / numTiles);
         const x = numTiles;
         const y = numTiles;
-        this.room = new World.Room(x, y, createVector(0, 0));
+        this.room = new World.Room(x, y, createVector(100, 0));
     }
 
     /**
@@ -77,6 +77,10 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
         this.room.draw();
 
         let tileUnderSensor = this.room.getTileAtPos(mousePos);
+
+        if(tileUnderSensor == undefined) {
+            return;
+        }
 
         const brightness = this.sensor.read(tileUnderSensor);
 
