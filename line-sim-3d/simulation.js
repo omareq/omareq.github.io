@@ -78,7 +78,7 @@ Simulation.setup = function() {
     Simulation.frame = 0;
 
     if(Simulation.Mode.activeMode == undefined) {
-        Simulation.Mode.setActive(new Simulation.Mode.empty());
+        Simulation.Mode.setActive(new Simulation.Mode.Empty());
     }
 };
 
@@ -105,7 +105,7 @@ Simulation.update = function() {
  */
 Simulation.Mode.setActive = function(newMode) {
     if(!(newMode instanceof Simulation.Mode.ModeType)) {
-        Simulation.Mode.activeMode = new Simulation.Mode.empty();
+        Simulation.Mode.activeMode = new Simulation.Mode.Empty();
         const err = "newMode should be an instance of Simulation.Mode.ModeType";
         throw new Error(err);
     }
@@ -146,7 +146,7 @@ Simulation.Mode.ModeType = class {
  *
  * @see Simulation.Mode.ModeType
  */
-Simulation.Mode.empty = class extends Simulation.Mode.ModeType {
+Simulation.Mode.Empty = class extends Simulation.Mode.ModeType {
     /**
      * Calls super() and exits
      */
