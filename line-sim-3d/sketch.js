@@ -47,7 +47,7 @@ function setup() {
 	UI.setup();
 	World.TileSetup();
 
-	Simulation.Mode.setActive(new Simulation.Mode.DebugMovingTile());
+	Simulation.Mode.setActive(new Simulation.Mode.DebugStaticTile());
 	Simulation.setup();
 }
 

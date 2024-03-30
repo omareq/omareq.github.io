@@ -45,9 +45,9 @@ Simulation.Mode = Simulation.Mode || {};
  * Class used as a data class to store the current frame statistics.  This
  * includes dt, fps, and time since start.
  */
-Simulation.frameData = class {
+Simulation.FrameData = class {
     /**
-     * constructor for the frameData class.  The data is automatically populated
+     * constructor for the FrameData class.  The data is automatically populated
      * on creation using timing data from the previous frame that is stored in
      * the Simulation.lastFrameTime and Simulation.firstFrameTime variables.
      */
@@ -87,7 +87,7 @@ Simulation.setup = function() {
  * mode update function.
  */
 Simulation.update = function() {
-    Simulation.currentFrameData = new Simulation.frameData();
+    Simulation.currentFrameData = new Simulation.FrameData();
     Simulation.frameDataHistory.push(Simulation.currentFrameData);
 
     Simulation.frame++;

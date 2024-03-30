@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: simulation-mode-moving-tile.js</title>
+    <title>JSDoc: Source: simulation-mode-static-tile.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: simulation-mode-moving-tile.js</h1>
+    <h1 class="page-title">Source: simulation-mode-static-tile.js</h1>
 
     
 
@@ -28,7 +28,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *  @file simulation-mode-moving-tile.js Implementation of moving tile mode.
+ *  @file simulation-mode-static-tile.js Implementation of static tile mode.
  *
  *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
@@ -69,6 +69,8 @@ var Simulation = Simulation || {};
  */
 Simulation.Mode = Simulation.Mode || {};
 
+
+
 /**
  * Class Simulation.Mode.DebugMovingTile is a simulation mode that has a tile
  * moving back and forth along the canvas to test that the light sensors can
@@ -76,41 +78,35 @@ Simulation.Mode = Simulation.Mode || {};
  *
  * @see Simulation.Mode.Type
  */
-Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
+Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
-        this.tile = World.Tiles.cross.copy();
-        this.sensorRadius = 8;
-        this.sensor = new Robot.DigitalLightSensor(this.sensorRadius,
+        this.sensorRadius = 12;
+        this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
             createVector(0,0));
 
-        this.tileX = 0;
-        this.tileXInc = 1;
+        const tileX = width /2 - World.gridSize / 2;
+        const tileY = height / 2 - World.gridSize / 2;
+        this.tile = World.Tiles.verticalLine.copy();
+        this.tile.setPos(createVector(tileX, tileY));
     }
 
     /**
      * Update function that updates the state of the simulation
      */
     update() {
-        if(this.tileX &lt; 0 || this.tileX + World.gridSize > width) {
-            this.tileXInc *= -1;
-        }
-        this.tileX += this.tileXInc;
-
-        const tileY = height / 2 - World.gridSize / 2;
-        this.tile.setPos(createVector(this.tileX, tileY));
         this.tile.draw();
 
         this.sensor.setPos(createVector(mouseX, mouseY));
         this.sensor.setRadius(this.sensorRadius);
 
-        const brightness = this.sensor.digitalRead(this.tile);
+        const brightness = this.sensor.read(this.tile);
 
         if(brightness &lt; 1) {
-            console.log(brightness);
+            console.log("Sensor Val: ", brightness);
         }
         const colorVal = floor(brightness * 255);
 
