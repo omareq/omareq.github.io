@@ -49,19 +49,18 @@ World.Room = class {
 
         this.createEmptyRoom();
 
+        this.fillRoomWithSnakePattern();
         this.generatePG();
     }
 
     createEmptyRoom() {
         this.grid = [];
-        const blankTile = World.Tiles.cross.copy();
+        const blankTile = World.Tiles.blankLine.copy();
         for(let x = 0; x < this.xNumTiles; x++) {
             let emptyCol= [];
             for(let y = 0; y < this.yNumTiles; y++) {
                 let currentTile = blankTile.copy();
-                const xPos = x * World.gridSize;
-                const yPos = y * World.gridSize;
-                const currentPos = createVector(xPos, yPos).add(this.pos);
+                const currentPos = this.getPosOfGrid(x, y);
                 currentTile.setPos(currentPos);
                 emptyCol.push(currentTile);
             }
@@ -69,8 +68,42 @@ World.Room = class {
         }
     }
 
-    fillRoomWithSnakeTiles() {
+    fillRoomWithSnakePattern() {
+        this.setAllTiles(World.Tiles.horizontalLine.copy());
 
+        // right side down
+        let x = this.xNumTiles - 1;
+        for(let y = 0; y < this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerDownLeft.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        // right side up
+        for(let y = 1; y < this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerUpLeft.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        x = 0;
+        // left side down
+        for(let y = 1; y < this.yNumTiles - 1; y+=2) {
+            let currentTile = World.Tiles.cornerDownRight.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        // left side up
+        for(let y = 2; y < this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerUpRight.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
     }
 
     generatePG() {
@@ -79,7 +112,6 @@ World.Room = class {
         this.img.background(255, 0,0);
         for(let x = 0; x < this.xNumTiles; x++) {
             for(let y = 0; y < this.yNumTiles; y++) {
-                console.log("x,y: ", x, y);
                 const tileImg = this.grid[x][y].getPG();
 // TODO: Figure out why there is a factor of 0.5 needed to make these work
                 const xPos = x * 0.5 * World.gridSize;
@@ -87,6 +119,31 @@ World.Room = class {
                 this.img.image(tileImg, xPos, yPos, 0.5*World.gridSize, 0.5*World.gridSize);
             }
         }
+    }
+
+    setAllTiles(tile) {
+        if(!(tile instanceof World.Tile)) {
+            const err = "tile needs to be an instance of World.Tile";
+            throw new Error(err);
+        }
+
+        for(let x = 0; x < this.xNumTiles; x++) {
+            for(let y = 0; y < this.yNumTiles; y++) {
+                let currentTile = tile.copy();
+                const currentPos = this.getPosOfGrid(x, y);
+                currentTile.setPos(currentPos);
+                this.grid[x][y] = currentTile;
+            }
+        }
+
+        this.generatePG();
+    }
+
+    getPosOfGrid(x, y) {
+        const xPos = x * World.gridSize;
+        const yPos = y * World.gridSize;
+        const currentPos = createVector(xPos, yPos).add(this.pos);
+        return currentPos;
     }
 
     setTiles(tilePattern) {
@@ -98,6 +155,6 @@ World.Room = class {
     }
 
     draw() {
-        image(this.img, 0, 0, this.xWidth, this.yHeight);
+        image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
 }

@@ -55,10 +55,34 @@ World.TileSetup = function() {
                 createVector(1, 0.5)
                 ];
 
+    World.LineConfigs.halfLineDown = [
+                createVector(0.5, 0.5),
+                createVector(0.5, 1)
+                ];
+
+    World.LineConfigs.halfLineUp = [
+                createVector(0.5, 0),
+                createVector(0.5, 0.5)
+                ];
+
+    World.LineConfigs.halfLineRight = [
+                createVector(0.5, 0.5),
+                createVector(1, 0.5)
+                ];
+
+    World.LineConfigs.halfLineLeft = [
+                createVector(0, 0.5),
+                createVector(0.5, 0.5)
+                ];
+
     World.Lines = {};
     World.Lines.blankLine = new World.Line(World.LineConfigs.blankLine);
     World.Lines.verticalLine = new World.Line(World.LineConfigs.verticalLine);
     World.Lines.horizontalLine = new World.Line(World.LineConfigs.horizontalLine);
+    World.Lines.halfLineUp = new World.Line(World.LineConfigs.halfLineUp);
+    World.Lines.halfLineDown = new World.Line(World.LineConfigs.halfLineDown);
+    World.Lines.halfLineRight = new World.Line(World.LineConfigs.halfLineRight);
+    World.Lines.halfLineLeft = new World.Line(World.LineConfigs.halfLineLeft);
 
     World.Tiles = {};
     World.Tiles.blankLine = new World.Tile([World.Lines.blankLine.copy()]);
@@ -66,6 +90,21 @@ World.TileSetup = function() {
     World.Tiles.horizontalLine = new World.Tile([World.Lines.horizontalLine.copy()]);
     World.Tiles.cross = new World.Tile([World.Lines.horizontalLine.copy(),
         World.Lines.verticalLine.copy()]);
+
+    World.Tiles.halfLineUp = new World.Tile([World.Lines.halfLineUp.copy()]);
+    World.Tiles.halfLineDown = new World.Tile([World.Lines.halfLineDown.copy()]);
+    World.Tiles.halfLineRight = new World.Tile([World.Lines.halfLineRight.copy()]);
+    World.Tiles.halfLineLeft = new World.Tile([World.Lines.halfLineLeft.copy()]);
+
+    World.Tiles.cornerUpLeft = new World.Tile([World.Lines.halfLineUp.copy(),
+        World.Lines.halfLineLeft.copy()]);
+    World.Tiles.cornerUpRight = new World.Tile([World.Lines.halfLineUp.copy(),
+        World.Lines.halfLineRight.copy()]);
+    World.Tiles.cornerDownLeft = new World.Tile([World.Lines.halfLineDown.copy(),
+        World.Lines.halfLineLeft.copy()]);
+    World.Tiles.cornerDownRight = new World.Tile([World.Lines.halfLineDown.copy(),
+        World.Lines.halfLineRight.copy()]);
+
 };
 
 World.setGridSize = function(gridSize) {

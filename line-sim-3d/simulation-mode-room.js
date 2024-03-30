@@ -60,11 +60,11 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
         this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
             createVector(0,0));
 
-        const numTiles = 3;
-        World.setGridSize(height / numTiles);
+        const numTiles = 4;
+        World.setGridSize(height / numTiles - 5);
         const x = numTiles;
         const y = numTiles;
-        this.room = new World.Room(x, y);
+        this.room = new World.Room(x, y, createVector(10, 10));
     }
 
     /**
