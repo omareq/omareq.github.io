@@ -36,9 +36,21 @@
  */
 var Simulation = Simulation || {};
 
+/**
+ * Simulation Mode nested namespace object
+ */
 Simulation.Mode = Simulation.Mode || {};
 
+/**
+ * Class used as a data class to store the current frame statistics.  This
+ * includes dt, fps, and time since start.
+ */
 Simulation.frameData = class {
+    /**
+     * constructor for the frameData class.  The data is automatically populated
+     * on creation using timing data from the previous frame that is stored in
+     * the Simulation.lastFrameTime and Simulation.firstFrameTime variables.
+     */
     constructor() {
         this.frameTime = Date.now();
 
@@ -53,6 +65,10 @@ Simulation.frameData = class {
     }
 };
 
+/**
+ * A function to setup the simulation.  This includes the frameData statistics
+ * history array and the Simulation mode setup functions.
+ */
 Simulation.setup = function() {
     Simulation.firstFrameTime = Date.now();
     Simulation.lastFrameTime = Date.now();
@@ -66,6 +82,10 @@ Simulation.setup = function() {
     }
 };
 
+/**
+ * A function to update the simulation data statistics and call the simulation
+ * mode update function.
+ */
 Simulation.update = function() {
     Simulation.currentFrameData = new Simulation.frameData();
     Simulation.frameDataHistory.push(Simulation.currentFrameData);
@@ -76,11 +96,25 @@ Simulation.update = function() {
     Simulation.Mode.activeMode.update();
 };
 
+/**
+ * Sets the activeSimulation mode to a new value.
+ *
+ * @param newMode {Simulation.Mode.Type} - New Simulation mode.
+ */
 Simulation.Mode.setActive = function(newMode) {
     Simulation.Mode.activeMode = newMode;
 };
 
-Simulation.Mode.Type = class {
+/**
+ * Class Simulation.Mode.ModeType used as an abstract class to enforce that
+ * Simulation modes have an update function.
+ */
+Simulation.Mode.ModeType = class {
+    /**
+     * An abstract class constructor that throws an error if it is instantiated.
+     *
+     * @thorws {err} Abstract class Simulation.Mode.Type can't be instantiated
+     */
     constructor() {
         let err = "Abstract class Simulation.Mode.Type can't be instantiated.";
         if(this.constructor == Simulation.Mode.Type) {
@@ -88,12 +122,30 @@ Simulation.Mode.Type = class {
         }
       }
 
+      /**
+       * An abstract method which needs to be overridden.
+       *
+       * @throw {err} Method 'update()' must be implemented
+       */
     update() {
-    throw new Error("Method 'update()' must be implemented.");
+        throw new Error("Method 'update()' must be implemented.");
     }
 };
 
-Simulation.Mode.empty = class extends Simulation.Mode.Type {
+/**
+ * Class empty mode that doesn't do anything.  This is the default mode if no
+ * mode has been added to the simulation.
+ *
+ * @see Simulation.Mode.ModeType
+ */
+Simulation.Mode.empty = class extends Simulation.Mode.ModeType {
+    /**
+     * Calls super() and exits
+     */
     constructor() {super();};
+
+    /**
+     * exits immediately
+     */
     update() {};
 };

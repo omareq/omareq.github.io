@@ -36,9 +36,12 @@
  */
 var Simulation = Simulation || {};
 
+/**
+ * Simulation Mode nested namespace object
+ */
 Simulation.Mode = Simulation.Mode || {};
 
-Simulation.Mode.movingTile = class extends Simulation.Mode.Type {
+Simulation.Mode.movingTile = class extends Simulation.Mode.ModeType {
     constructor() {
         super();
         this.tile = World.Tiles.cross.copy();
