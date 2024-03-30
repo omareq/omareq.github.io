@@ -100,6 +100,8 @@ Simulation.update = function() {
  * Sets the activeSimulation mode to a new value.
  *
  * @param newMode {Simulation.Mode.Type} - New Simulation mode.
+ *
+ * @throws {Error} "newMode should be an instance of Simulation.Mode.ModeType";
  */
 Simulation.Mode.setActive = function(newMode) {
     if(!(newMode instanceof Simulation.Mode.ModeType)) {
@@ -119,7 +121,7 @@ Simulation.Mode.ModeType = class {
     /**
      * An abstract class constructor that throws an error if it is instantiated.
      *
-     * @thorws {err} Abstract class Simulation.Mode.Type can't be instantiated
+     * @throws {Error} Abstract class Simulation.Mode.Type can't be instantiated
      */
     constructor() {
         let err = "Abstract class Simulation.Mode.Type can't be instantiated.";
@@ -131,7 +133,7 @@ Simulation.Mode.ModeType = class {
       /**
        * An abstract method which needs to be overridden.
        *
-       * @throw {err} Method 'update()' must be implemented
+       * @throws {Error} Method 'update()' must be implemented
        */
     update() {
         throw new Error("Method 'update()' must be implemented.");
