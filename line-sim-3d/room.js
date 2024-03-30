@@ -150,8 +150,27 @@ World.Room = class {
 
     }
 
-    getTileAtPos(globalPos) {
+    getTileAtPos(pos) {
+        if(!(pos instanceof p5.Vector)) {
+            const err = "pos needs to be an instance of p5.Vector";
+            throw new Error(err);
+        }
 
+        let localPos = pos.copy();
+        const xIndex = floor(localPos.x / World.gridSize);
+        const yIndex = floor(localPos.y / World.gridSize);
+
+        console.debug("Room Grid Index: x, y: ", xIndex, yIndex);
+
+        if(xIndex < 0 || xIndex > this.xNumTiles - 1) {
+            return World.Tiles.blankLine.copy();
+        }
+
+        if(yIndex < 0 || yIndex > this.yNumTiles - 1) {
+            return World.Tiles.blankLine.copy();
+        }
+
+        return this.grid[xIndex][yIndex];
     }
 
     draw() {

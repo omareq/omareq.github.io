@@ -61,10 +61,10 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
             createVector(0,0));
 
         const numTiles = 4;
-        World.setGridSize(height / numTiles - 5);
+        World.setGridSize(height / numTiles);
         const x = numTiles;
         const y = numTiles;
-        this.room = new World.Room(x, y, createVector(10, 10));
+        this.room = new World.Room(x, y, createVector(0, 0));
     }
 
     /**
@@ -72,24 +72,25 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
      */
     update() {
 
-        this.sensor.setPos(createVector(mouseX, mouseY));
+        const mousePos = createVector(mouseX, mouseY);
+        this.sensor.setPos(mousePos);
         this.room.draw();
 
-        // find tile
+        let tileUnderSensor = this.room.getTileAtPos(mousePos);
 
-        // const brightness = this.sensor.read(tile);
+        const brightness = this.sensor.read(tileUnderSensor);
 
-        // if(brightness < 1) {
-        //     console.log("Sensor Val: ", brightness);
-        // }
-        // const colorVal = floor(brightness * 255);
+        if(brightness < 1) {
+            console.log("Sensor Val: ", brightness);
+        }
+        const colorVal = floor(brightness * 255);
 
-        // push();
-        // fill(colorVal);
-        // strokeWeight(1);
-        // stroke(127, 0, 30);
-        // const ellipseSize = 2 * this.sensorRadius;
-        // ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
-        // pop();
+        push();
+        fill(colorVal);
+        strokeWeight(1);
+        stroke(127, 0, 30);
+        const ellipseSize = 2 * this.sensorRadius;
+        ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
+        pop();
     }
 };
