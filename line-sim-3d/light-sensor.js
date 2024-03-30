@@ -36,7 +36,23 @@
  */
 var Robot = Robot || {};
 
+/**
+ * Class containing the analog light sensor features. A digital light sensor
+ * has also been implemented.
+ *
+ * @see Robot.DigitalLightSensor
+ */
 Robot.AnalogLightSensor = class {
+    /**
+     * Constructor function for AnalogLightSensor
+     *
+     * @param sensorRadius {number} - The value of the sensor detection circle
+     *      radius.
+     * @param position {p5.Vector}  - The current position of the sensor in the
+     *      global coordinate frame.
+     * @param bufferLength {number} - An integer showing the length of the
+     *      internal circular buffer that stores the previous sensor values.
+     */
     constructor(sensorRadius, position, bufferLength=1) {
         this.setRadius(sensorRadius);
         this.pos = position;
@@ -52,21 +68,42 @@ Robot.AnalogLightSensor = class {
         this.black = 0;
     }
 
+    /**
+     * A function to set up the internal circular buffer.
+     */
     setupBuffer() {
         for(let i = 0; i < this.bufferLen; i++) {
             this.buffer.push(0);
         }
     }
 
+    /**
+     * A function to change the current light sensor position in the global
+     * coordinate frame.
+     *
+     * @param position {p5.Vector} - The new position value.
+     */
     setPos(position) {
         this.pos = position;
     }
 
+    /**
+     * A function to set the sensor radius of the light sensor
+     *
+     * @param sensorRadius {number} - The new sensor radius.
+     */
     setRadius(sensorRadius) {
         this.sensorRadius = sensorRadius;
         this.circleArea = PI * this.sensorRadius**2;
     }
 
+    /**
+     * A function to check if the sensor is within the boundaries of a tile.
+     *
+     * @param tile {World.Tile} - The tile to check against
+     *
+     * @returns {boolean} - true if outside the tile false if inside the tile.
+     */
     isOutsideofTile(tile) {
         if(this.pos.x < tile.pos.x || this.pos.y < tile.pos.y) {
             return true;
@@ -83,6 +120,16 @@ Robot.AnalogLightSensor = class {
         return false;
     }
 
+    /**
+     * Looks at all the lines on a tile and finds the closest point to the
+     * current global position of the light sensor.  This takes into account the
+     * global position of the tile.  This only returns one closest point for all
+     * the lines and does not account for regions where lines crossover.
+     *
+     * @param tile {World.Tile} - The tile to check against
+     *
+     * @returns {p5.Vector} - The vector location of the closest point.
+     */
     findClosestLinePoint(tile) {
         let linesClosestPos = [];
         let linesShortestDist = [];
@@ -105,12 +152,16 @@ Robot.AnalogLightSensor = class {
         return linesClosestPos[index].copy();
     }
 
+    /**
+     * Calculates the area of a segment given the height of the segment.<br>
+     * Area = 0.5 * r^2 * (a - sin(a)); where a is the segment angle.<br>
+     * a = 2 * arcos(h / r)<br>
+     *
+     * @param h {number} - Height of the segment
+     *
+     * @returns {number} - Area of the segment
+     */
     calcSegmentVal(h) {
-        // Dark segment area
-        // A = 0.5 * R^2 * (a - sin a)
-        // where a = segment angle
-        // cos a/2 = h/r
-        // a / 2 = arcos(h/r)
         const a = 2 * acos(h / this.sensorRadius);
         const segmentArea = 0.5 * this.sensorRadius**2 * (a - sin(a));
 
@@ -118,6 +169,15 @@ Robot.AnalogLightSensor = class {
         return sensorVal;
     }
 
+    /**
+     * Calculates a raw sensor value based on how close the sensor is to the
+     * closest line point.  Reading raw values will not add values to the
+     * sensor buffer.
+     *
+     * @param tile {World.Tile} - The tile to read
+     *
+     * @returns {number} - Number between 0 and 1.  0 is black and 1 is white.
+     */
     readRaw(tile) {
         // sensor is outside of the tile return white
         if(this.isOutsideofTile(tile)) {
@@ -219,6 +279,18 @@ Robot.AnalogLightSensor = class {
         return this.white;
     }
 
+    /**
+     * Calculates the an averaged sensor reading over the raw sensor readings
+     * stored within the circular buffer.  This function will call
+     * Robot.AnalogLightSensor.readRaw(tile) internally and update the buffer
+     * automatically.
+     *
+     * @param tile {World.Tile} - The tile to read.
+     *
+     * @returns {number} - Number between 0 and 1.  0 is black and 1 is white.
+     *
+     * @see Robot.AnalogLightSensor.readRaw
+     */
     read(tile) {
         const rawVal = this.readRaw(tile);
 
@@ -234,7 +306,28 @@ Robot.AnalogLightSensor = class {
     }
 };
 
+
+/**
+ * Class containing the digital light sensor features.  This extends the
+ * implementation of the analog light sensor by adding thresholds to indicate
+ * if the sensor is fully white or fully black.
+ *
+ * @see Robot.AnalogLightSensor
+ */
 Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
+
+    /**
+     * Constructor function for DigitalLightSensor
+     *
+     * @param sensorRadius {number} - The value of the sensor detection circle
+     *      radius.
+     * @param position {p5.Vector}  - The current position of the sensor in the
+     *      global coordinate frame.
+     * @param bufferLength {number} - An integer showing the length of the
+     *      internal circular buffer that stores the previous sensor values.
+     * @param threshUp {number} - The upper threshold required to return white
+     * @param threshDown {number} - The low threshold required to return black
+     */
     constructor(sensorRadius, position, bufferLength=1,
         threshUp=0.65, threshDown=0.35) {
         super(sensorRadius, position, bufferLength);
@@ -243,12 +336,22 @@ Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
         this.value = this.white;
     }
 
+    /**
+     * A function to swap the thresholds if threshDown is larger than threshUp;
+     */
     swapThresholds() {
         const temp = this.thresholdDown;
         this.thresholdDown = this.thresholdUp;
         this.thresholdUp = temp;
     }
 
+    /**
+     * A function to set the up threshold.  This will constrain the value to
+     * between 0 and 1.  If the threshold is lower than the down threshold then
+     * they will be switched.
+     *
+     * @param threshUp {number} - New threshold.
+     */
     setThresholdUp(threshUp) {
         this.thresholdUp = constrain(threshUp, this.black, this.white);
         if(this.thresholdUp > this.thresholdDown) {
@@ -256,6 +359,13 @@ Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
         }
     }
 
+    /**
+     * A function to set the down threshold.  This will constrain the value to
+     * between 0 and 1.  If the threshold is higher than the up threshold then
+     * they will be switched.
+     *
+     * @param threshDown {number} - New threshold.
+     */
     setThresholdDown(threshDown) {
         this.thresholdDown = constrain(threshDown, this.black, this.white);
         if(this.thresholdUp > this.thresholdDown) {
@@ -263,6 +373,17 @@ Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
         }
     }
 
+    /**
+     * A function to read the value of the light sensor.  It will use the read
+     * function from the AnalogLightSensor and compare the value to the
+     * thresholds.
+     *
+     * @param tile {World.Tile} - The tile to read
+     *
+     * @returns {number} - 0 (black) or 1 (white).
+     *
+     * @see Robot.AnalogLightSensor.read
+     */
     digitalRead(tile) {
         const analogValue = super.read(tile);
         if(this.value == this.white && analogValue < this.thresholdDown) {
