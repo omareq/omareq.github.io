@@ -130,6 +130,13 @@ World.Room = class {
      * @param showGrid {boolean} - Flag to show or hide the tile grid pattern.
      */
     generatePG(showGrid=true) {
+        if(!typeof showGrid == "boolean") {
+            let err = "showGrid must be a boolean.";
+            err += "  showGrid is being set to true";
+            console.warn(err);
+            showGrid = true;
+        }
+
         this.img = createGraphics(this.xWidth, this.yHeight);
         // set background as red in case there are any errors;
         this.img.background(255, 0,0);
