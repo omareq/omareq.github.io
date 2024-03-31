@@ -120,7 +120,7 @@ World.TileSetup = function() {
     World.Lines.quarterCircleDownLeft = World.Lines.quarterCircleUpLeft.copy().flipHorizontal();
 
     World.Lines.zigZagVertical = new World.Line(World.LineConfigs.zigZagVertical);
-    World.Lines.zigZagHorizontal =  World.Lines.zigZagVertical.copy().flipDiagonal();
+    World.Lines.zigZagHorizontal = World.Lines.zigZagVertical.copy().flipDiagonal();
 
     // Tiles
     /**************************************************************************/

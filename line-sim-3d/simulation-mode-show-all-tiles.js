@@ -91,7 +91,7 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
 
         let grid = this.createEmpty(numTilesX, numTilesY);
         console.log(grid);
-        this.fillGridWithAllTiles(grid, numTilesX, numTilesY);
+        grid = this.fillGridWithAllTiles(grid, numTilesX, numTilesY);
         console.log(grid);
 
         this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
@@ -150,14 +150,17 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
      */
     fillGridWithAllTiles(grid, cols, rows) {
         const keys = Object.keys(World.Tiles);
+        let newGrid = grid;
 
         for(let i = 0; i < keys.length; i++) {
             const key = keys[i];
             const xIndex = floor(i / rows);
             const yIndex = i % rows;
-            grid[xIndex][yIndex] = World.Tiles[key].copy();
+            newGrid[xIndex][yIndex] = World.Tiles[key].copy();
             console.debug(key);
         }
+
+        return newGrid;
     }
 
      /**

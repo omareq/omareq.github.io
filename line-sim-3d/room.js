@@ -160,11 +160,12 @@ World.Room = class {
      * @param showGrid {boolean} - Flag to show or hide the tile grid pattern.
      */
     generatePG(showGrid=true) {
-        if(!typeof showGrid == "boolean") {
+        this.showGrid = showGrid;
+        if(!typeof this.showGrid == "boolean") {
             let err = "showGrid must be a boolean.";
             err += "  showGrid is being set to true";
             console.warn(err);
-            showGrid = true;
+            this.showGrid = true;
         }
 
         this.img = createGraphics(this.xWidth, this.yHeight);
@@ -182,7 +183,7 @@ World.Room = class {
                 const yPos = y * 0.5 * World.gridSize;
                 this.img.image(tileImg, xPos, yPos,
                     0.5*World.gridSize, 0.5*World.gridSize);
-                if(showGrid) {
+                if(this.showGrid) {
                     this.img.rect(xPos, yPos,
                         World.gridSize - 1, World.gridSize - 1);
                 }
@@ -292,4 +293,4 @@ World.Room = class {
     draw() {
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
-}
+};
