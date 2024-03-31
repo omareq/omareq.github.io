@@ -43,15 +43,34 @@ World.Room = class {
     /**
      * Constructor for the room class.
      *
-     * @param xNumTiles {number} - Positive integer showing how many tiles there
+     * @param cols {number} - Positive integer showing how many tiles there
      * are in the x direction
-     * @param yNumTiles {number} - Positive integer showing how many tiles there
+     * @param rows {number} - Positive integer showing how many tiles there
      * are in the y direction
      * @param globalPos {p5.Vector} - The global position of the room
      */
-    constructor(xNumTiles, yNumTiles, globalPos=createVector(0,0)) {
-        this.xNumTiles = xNumTiles;
-        this.yNumTiles = yNumTiles;
+    constructor(cols=4, rows=4, globalPos=createVector(0,0)) {
+// TODO: Figure out why two negative numbers break the constructor checks
+// TODO: Figure out why a string breaks the constructor checks
+        if(!(isFinite(cols) && Number.isInteger(cols) && cols > 0)) {
+            const err = "cols needs to be a positive integer";
+            throw Error(err);
+        }
+
+        if(!(isFinite(rows) && Number.isInteger(rows) && rows > 0)) {
+            const err = "rows needs to be a positive integer";
+            throw Error(err);
+        }
+
+        if(!(globalPos instanceof p5.Vector)) {
+            const err = "globalPos needs to a p5.Vector";
+            throw Error(err);
+        }
+
+        console.debug("Room cols, rows: ", cols, rows);
+
+        this.xNumTiles = cols;
+        this.yNumTiles = rows;
 
         this.xWidth = World.gridSize * this.xNumTiles;
         this.yHeight = World.gridSize * this.yNumTiles;
@@ -88,6 +107,17 @@ World.Room = class {
      */
     fillRoomWithSnakePattern() {
         this.setAllTiles(World.Tiles.horizontalLine.copy());
+
+        // just stop at horizontal lines if there is one row
+        if(this.yNumTiles == 1) {
+            return;
+        }
+
+        // just stop at vertical lines if there is one column
+        if(this.xNumTiles == 1) {
+            this.setAllTiles(World.Tiles.verticalLine.copy());
+            return;
+        }
 
         // right side down
         let x = this.xNumTiles - 1;
