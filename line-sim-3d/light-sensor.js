@@ -184,6 +184,10 @@ Robot.AnalogLightSensor = class {
             return this.white;
         }
 
+        if(tile.lines[0].linePoints.length == 0) {
+            return this.white;
+        }
+
         this.posInTileFrame = this.pos.copy().sub(tile.pos);
         const linePoint = this.findClosestLinePoint(tile);
 

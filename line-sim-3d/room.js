@@ -237,7 +237,21 @@ World.Room = class {
      * @param tilePattern {Array<Array<World.Tiles>>} - a 2d array of tiles.
      */
     setTiles(tilePattern) {
+        for(let x = 0; x < this.xNumTiles; x++) {
+            for(let y = 0; y < this.yNumTiles; y++) {
+                let tile = tilePattern[x][y].copy();
+                if(!(tile instanceof World.Tile)) {
+                    const err = "tile needs to be an instance of World.Tile";
+                    throw new Error(err);
+                }
 
+                let currentTile = tile.copy();
+                const currentPos = this.getPosOfGrid(x, y);
+                currentTile.setPos(currentPos);
+                this.grid[x][y] = currentTile;
+            }
+        }
+        this.generatePG();
     }
 
     /**
@@ -259,7 +273,6 @@ World.Room = class {
         const xIndex = floor(localPos.x / World.gridSize);
         const yIndex = floor(localPos.y / World.gridSize);
 
-        console.debug("Room Grid Index: x, y: ", xIndex, yIndex);
 
         if(xIndex < 0 || xIndex > this.xNumTiles - 1) {
             return undefined;
@@ -268,6 +281,7 @@ World.Room = class {
         if(yIndex < 0 || yIndex > this.yNumTiles - 1) {
             return undefined;
         }
+        console.debug("Room Grid Index: x, y: ", xIndex, yIndex);
 
         return this.grid[xIndex][yIndex];
     }
