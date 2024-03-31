@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: simulation-mode-moving-tile.js</title>
+    <title>JSDoc: Source: simulation-mode-show-all-tiles.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: simulation-mode-moving-tile.js</h1>
+    <h1 class="page-title">Source: simulation-mode-show-all-tiles.js</h1>
 
     
 
@@ -28,11 +28,11 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *  @file simulation-mode-moving-tile.js Implementation of moving tile mode.
+ *  @file simulation-mode-show-all-tiles.js Shows all tiles
  *
  *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
- *  @date 30-March-2024
+ *  @date 31-March-2024
  *  @link https://omareq.github.io/line-sim-3d/
  *  @link https://omareq.github.io/line-sim-3d/docs/
  *
@@ -69,6 +69,8 @@ var Simulation = Simulation || {};
  */
 Simulation.Mode = Simulation.Mode || {};
 
+
+
 /**
  * Class Simulation.Mode.DebugMovingTile is a simulation mode that has a tile
  * moving back and forth along the canvas to test that the light sensors can
@@ -76,41 +78,137 @@ Simulation.Mode = Simulation.Mode || {};
  *
  * @see Simulation.Mode.Type
  */
-Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
+Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
-        this.tile = World.Tiles.cross.copy();
-        this.sensorRadius = 8;
-        this.sensor = new Robot.DigitalLightSensor(this.sensorRadius,
+        const totalNumTiles = Object.keys(World.Tiles).length;
+        let factors = [];
+
+        let i = 0;
+        while(factors.length &lt;= 2) {
+            factors = this.findFactors(totalNumTiles + i);
+            i++;
+        }
+        i--;
+
+        console.log("Factors", factors);
+
+        const factor1 = factors[floor(factors.length / 2)];
+        const factor2 = (totalNumTiles + i) / factor1;
+        console.log("Factor 1, 2: ", factor1, factor2);
+
+        const numTilesX = max(factor1, factor2);
+        const numTilesY = min(factor1, factor2);
+
+        let gridSize = -1;
+        if(numTilesX > numTilesY) {
+            gridSize = width / numTilesX;
+        } else {
+            gridSize = height / numTilesY;
+        }
+        gridSize *= 0.8;
+
+        World.setGridSize(gridSize);
+        this.sensorRadius = 0.5 * World.lineThickness + 1;
+        this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
             createVector(0,0));
 
-        this.tileX = 0;
-        this.tileXInc = 1;
+
+        let grid = this.createEmpty(numTilesX, numTilesY);
+        console.log(grid);
+        grid = this.fillGridWithAllTiles(grid, numTilesX, numTilesY);
+        console.log(grid);
+
+        this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
+        this.room.setTiles(grid);
+
     }
 
     /**
+     * Find the factors of a number
+     *
+     * @param num {number} - The number
+     *
+     * @returns {Array&lt;numbers>} - An array of the factors
+     */
+    findFactors(num) {
+        let factors = [];
+        for (let i = 1; i &lt;= Math.sqrt(num); i++) {
+            if (num % i === 0) {
+                factors.push(i);
+                if (i !== num / i) {
+                    factors.push(num / i);
+                }
+            }
+        }
+        return factors.sort((a, b) => a - b);
+    }
+
+    /**
+     * creates a grid of blankTiles
+     *
+     * @param cols {number} - number of tiles in the x direction
+     * @param rows {number} - number of tiles in the y direction
+     *
+     * @returns {Array&lt;Array&lt;World.Tile>>} - The grid of blank tiles
+     */
+    createEmpty(cols, rows) {
+//TODO: replace with a call to static room method
+        let grid = [];
+        const blankTile = World.Tiles.blankLine.copy();
+        for(let x = 0; x &lt; cols; x++) {
+            let emptyCol= [];
+            for(let y = 0; y &lt; rows; y++) {
+                emptyCol.push(blankTile.copy());
+            }
+            grid.push(emptyCol);
+        }
+        return grid;
+    }
+
+    /**
+     * fills the empty grid with all of the tiles in the World.Tiles array.
+     *
+     * @param grid {Array&lt;Array&lt;World.Tile>>} - The grid to add all the tiles to
+     * @param cols {number} - number of tiles in the x direction
+     * @param rows {number} - number of tiles in the y direction
+     */
+    fillGridWithAllTiles(grid, cols, rows) {
+        const keys = Object.keys(World.Tiles);
+        let newGrid = grid;
+
+        for(let i = 0; i &lt; keys.length; i++) {
+            const key = keys[i];
+            const xIndex = floor(i / rows);
+            const yIndex = i % rows;
+            newGrid[xIndex][yIndex] = World.Tiles[key].copy();
+            console.debug(key);
+        }
+
+        return newGrid;
+    }
+
+     /**
      * Update function that updates the state of the simulation
      */
     update() {
-        if(this.tileX &lt; 0 || this.tileX + World.gridSize > width) {
-            this.tileXInc *= -1;
+        const mousePos = createVector(mouseX, mouseY);
+        this.sensor.setPos(mousePos);
+        this.room.draw();
+
+        let tileUnderSensor = this.room.getTileAtPos(mousePos);
+
+        if(tileUnderSensor == undefined) {
+            return;
         }
-        this.tileX += this.tileXInc;
 
-        const tileY = height / 2 - World.gridSize / 2;
-        this.tile.setPos(createVector(this.tileX, tileY));
-        this.tile.draw();
-
-        this.sensor.setPos(createVector(mouseX, mouseY));
-        this.sensor.setRadius(this.sensorRadius);
-
-        const brightness = this.sensor.digitalRead(this.tile);
+        const brightness = this.sensor.read(tileUnderSensor);
 
         if(brightness &lt; 1) {
-            console.log(brightness);
+            console.log("Sensor Val: ", brightness);
         }
         const colorVal = floor(brightness * 255);
 

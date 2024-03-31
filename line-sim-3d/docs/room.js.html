@@ -71,15 +71,34 @@ World.Room = class {
     /**
      * Constructor for the room class.
      *
-     * @param xNumTiles {number} - Positive integer showing how many tiles there
+     * @param cols {number} - Positive integer showing how many tiles there
      * are in the x direction
-     * @param yNumTIles {number} - Positive integer showing how many tiles there
+     * @param rows {number} - Positive integer showing how many tiles there
      * are in the y direction
      * @param globalPos {p5.Vector} - The global position of the room
      */
-    constructor(xNumTiles, yNumTiles, globalPos=createVector(0,0)) {
-        this.xNumTiles = xNumTiles;
-        this.yNumTiles = yNumTiles;
+    constructor(cols=4, rows=4, globalPos=createVector(0,0)) {
+// TODO: Figure out why two negative numbers break the constructor checks
+// TODO: Figure out why a string breaks the constructor checks
+        if(!(isFinite(cols) &amp;&amp; Number.isInteger(cols) &amp;&amp; cols > 0)) {
+            const err = "cols needs to be a positive integer";
+            throw Error(err);
+        }
+
+        if(!(isFinite(rows) &amp;&amp; Number.isInteger(rows) &amp;&amp; rows > 0)) {
+            const err = "rows needs to be a positive integer";
+            throw Error(err);
+        }
+
+        if(!(globalPos instanceof p5.Vector)) {
+            const err = "globalPos needs to a p5.Vector";
+            throw Error(err);
+        }
+
+        console.debug("Room cols, rows: ", cols, rows);
+
+        this.xNumTiles = cols;
+        this.yNumTiles = rows;
 
         this.xWidth = World.gridSize * this.xNumTiles;
         this.yHeight = World.gridSize * this.yNumTiles;
@@ -116,6 +135,17 @@ World.Room = class {
      */
     fillRoomWithSnakePattern() {
         this.setAllTiles(World.Tiles.horizontalLine.copy());
+
+        // just stop at horizontal lines if there is one row
+        if(this.yNumTiles == 1) {
+            return;
+        }
+
+        // just stop at vertical lines if there is one column
+        if(this.xNumTiles == 1) {
+            this.setAllTiles(World.Tiles.verticalLine.copy());
+            return;
+        }
 
         // right side down
         let x = this.xNumTiles - 1;
@@ -158,6 +188,14 @@ World.Room = class {
      * @param showGrid {boolean} - Flag to show or hide the tile grid pattern.
      */
     generatePG(showGrid=true) {
+        this.showGrid = showGrid;
+        if(!typeof this.showGrid == "boolean") {
+            let err = "showGrid must be a boolean.";
+            err += "  showGrid is being set to true";
+            console.warn(err);
+            this.showGrid = true;
+        }
+
         this.img = createGraphics(this.xWidth, this.yHeight);
         // set background as red in case there are any errors;
         this.img.background(255, 0,0);
@@ -173,7 +211,7 @@ World.Room = class {
                 const yPos = y * 0.5 * World.gridSize;
                 this.img.image(tileImg, xPos, yPos,
                     0.5*World.gridSize, 0.5*World.gridSize);
-                if(showGrid) {
+                if(this.showGrid) {
                     this.img.rect(xPos, yPos,
                         World.gridSize - 1, World.gridSize - 1);
                 }
@@ -228,7 +266,21 @@ World.Room = class {
      * @param tilePattern {Array&lt;Array&lt;World.Tiles>>} - a 2d array of tiles.
      */
     setTiles(tilePattern) {
+        for(let x = 0; x &lt; this.xNumTiles; x++) {
+            for(let y = 0; y &lt; this.yNumTiles; y++) {
+                let tile = tilePattern[x][y].copy();
+                if(!(tile instanceof World.Tile)) {
+                    const err = "tile needs to be an instance of World.Tile";
+                    throw new Error(err);
+                }
 
+                let currentTile = tile.copy();
+                const currentPos = this.getPosOfGrid(x, y);
+                currentTile.setPos(currentPos);
+                this.grid[x][y] = currentTile;
+            }
+        }
+        this.generatePG();
     }
 
     /**
@@ -250,7 +302,6 @@ World.Room = class {
         const xIndex = floor(localPos.x / World.gridSize);
         const yIndex = floor(localPos.y / World.gridSize);
 
-        console.debug("Room Grid Index: x, y: ", xIndex, yIndex);
 
         if(xIndex &lt; 0 || xIndex > this.xNumTiles - 1) {
             return undefined;
@@ -259,6 +310,7 @@ World.Room = class {
         if(yIndex &lt; 0 || yIndex > this.yNumTiles - 1) {
             return undefined;
         }
+        console.debug("Room Grid Index: x, y: ", xIndex, yIndex);
 
         return this.grid[xIndex][yIndex];
     }
@@ -269,7 +321,7 @@ World.Room = class {
     draw() {
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
-}
+};
 </code></pre>
         </article>
     </section>
@@ -280,12 +332,12 @@ World.Room = class {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Room.html">Room</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Room.html">Room</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 31 2024 09:02:47 GMT+0100 (British Summer Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 31 2024 21:07:02 GMT+0100 (British Summer Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

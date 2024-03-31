@@ -29,7 +29,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#World">World</a>.</span>Room<span class="signature">(xNumTiles, yNumTIles, globalPos)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="global.html#World">World</a>.</span>Room<span class="signature">(cols, rows, globalPos)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Class that implements a room of tiles.</div>
         
@@ -46,7 +46,7 @@
     
 
     
-    <h4 class="name" id="Room"><span class="type-signature"></span>new Room<span class="signature">(xNumTiles, yNumTIles, globalPos)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Room"><span class="type-signature"></span>new Room<span class="signature">(cols, rows, globalPos)</span><span class="type-signature"></span></h4>
     
 
     
@@ -80,6 +80,8 @@
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -90,7 +92,7 @@
 
         <tr>
             
-                <td class="name"><code>xNumTiles</code></td>
+                <td class="name"><code>cols</code></td>
             
 
             <td class="type">
@@ -104,6 +106,12 @@
 
             
 
+            
+                <td class="default">
+                
+                    4
+                
+                </td>
             
 
             <td class="description last">Positive integer showing how many tiles there
@@ -114,7 +122,7 @@ are in the x direction</td>
 
         <tr>
             
-                <td class="name"><code>yNumTIles</code></td>
+                <td class="name"><code>rows</code></td>
             
 
             <td class="type">
@@ -128,6 +136,12 @@ are in the x direction</td>
 
             
 
+            
+                <td class="default">
+                
+                    4
+                
+                </td>
             
 
             <td class="description last">Positive integer showing how many tiles there
@@ -152,6 +166,10 @@ are in the y direction</td>
 
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The global position of the room</td>
@@ -303,7 +321,7 @@ are in the y direction</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room.js.html">room.js</a>, <a href="room.js.html#line70">line 70</a>
+        <a href="room.js.html">room.js</a>, <a href="room.js.html#line89">line 89</a>
     </li></ul></dd>
     
 
@@ -391,7 +409,7 @@ are in the y direction</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room.js.html">room.js</a>, <a href="room.js.html#line241">line 241</a>
+        <a href="room.js.html">room.js</a>, <a href="room.js.html#line293">line 293</a>
     </li></ul></dd>
     
 
@@ -480,7 +498,7 @@ create the back and forth pattern.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room.js.html">room.js</a>, <a href="room.js.html#line89">line 89</a>
+        <a href="room.js.html">room.js</a>, <a href="room.js.html#line108">line 108</a>
     </li></ul></dd>
     
 
@@ -625,7 +643,7 @@ create the back and forth pattern.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room.js.html">room.js</a>, <a href="room.js.html#line132">line 132</a>
+        <a href="room.js.html">room.js</a>, <a href="room.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -785,7 +803,7 @@ create the back and forth pattern.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room.js.html">room.js</a>, <a href="room.js.html#line190">line 190</a>
+        <a href="room.js.html">room.js</a>, <a href="room.js.html#line228">line 228</a>
     </li></ul></dd>
     
 
@@ -944,7 +962,7 @@ create the back and forth pattern.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room.js.html">room.js</a>, <a href="room.js.html#line215">line 215</a>
+        <a href="room.js.html">room.js</a>, <a href="room.js.html#line267">line 267</a>
     </li></ul></dd>
     
 
@@ -1133,7 +1151,7 @@ that the position of all the tiles are in the correct position.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room.js.html">room.js</a>, <a href="room.js.html#line164">line 164</a>
+        <a href="room.js.html">room.js</a>, <a href="room.js.html#line202">line 202</a>
     </li></ul></dd>
     
 
@@ -1299,7 +1317,7 @@ that the position of all the tiles are in the correct position.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room.js.html">room.js</a>, <a href="room.js.html#line202">line 202</a>
+        <a href="room.js.html">room.js</a>, <a href="room.js.html#line240">line 240</a>
     </li></ul></dd>
     
 
@@ -1345,12 +1363,12 @@ that the position of all the tiles are in the correct position.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Room.html">Room</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Room.html">Room</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 31 2024 09:02:47 GMT+0100 (British Summer Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 31 2024 21:07:03 GMT+0100 (British Summer Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
