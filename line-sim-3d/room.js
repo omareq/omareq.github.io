@@ -126,11 +126,17 @@ World.Room = class {
 
     /**
      * create a portable graphics image of all the tiles in the room.
+     *
+     * @param showGrid {boolean} - Flag to show or hide the tile grid pattern.
      */
-    generatePG() {
+    generatePG(showGrid=true) {
         this.img = createGraphics(this.xWidth, this.yHeight);
         // set background as red in case there are any errors;
         this.img.background(255, 0,0);
+
+        this.img.stroke(215);
+        this.img.strokeWeight(1);
+        this.img.noFill();
         for(let x = 0; x < this.xNumTiles; x++) {
             for(let y = 0; y < this.yNumTiles; y++) {
                 const tileImg = this.grid[x][y].getPG();
@@ -139,6 +145,10 @@ World.Room = class {
                 const yPos = y * 0.5 * World.gridSize;
                 this.img.image(tileImg, xPos, yPos,
                     0.5*World.gridSize, 0.5*World.gridSize);
+                if(showGrid) {
+                    this.img.rect(xPos, yPos,
+                        World.gridSize - 1, World.gridSize - 1);
+                }
             }
         }
     }
