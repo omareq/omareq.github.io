@@ -53,18 +53,22 @@ Simulation.Mode = Simulation.Mode || {};
 Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
     /**
      * The constructor that sets up the simulation variables
+     *
+     * @param numTilesX {number} - Positive integer value for the number of
+     *  tiles in the x direction
+     * @param numTilesY {number} - Positive integer value for the number of
+     *  tiles in the y direction
      */
-    constructor() {
+    constructor(numTilesX=4, numTilesY=4) {
         super();
-        this.sensorRadius = 8;
+        const numTiles = min(numTilesX, numTilesY);
+        console.log("numTiles: ", numTiles);
+        World.setGridSize(height / numTiles);
+        this.sensorRadius = 0.5 * World.lineThickness + 1;
         this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
             createVector(0,0));
 
-        const numTiles = 4;
-        World.setGridSize(height / numTiles);
-        const x = numTiles;
-        const y = numTiles;
-        this.room = new World.Room(x, y, createVector(100, 0));
+        this.room = new World.Room(numTilesX, numTilesY, createVector(100, 0));
     }
 
     /**

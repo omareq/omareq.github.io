@@ -45,7 +45,7 @@ World.Room = class {
      *
      * @param xNumTiles {number} - Positive integer showing how many tiles there
      * are in the x direction
-     * @param yNumTIles {number} - Positive integer showing how many tiles there
+     * @param yNumTiles {number} - Positive integer showing how many tiles there
      * are in the y direction
      * @param globalPos {p5.Vector} - The global position of the room
      */
