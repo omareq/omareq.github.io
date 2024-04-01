@@ -149,15 +149,24 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
      * @param grid {Array<Array<World.Tile>>} - The grid to add all the tiles to
      * @param cols {number} - number of tiles in the x direction
      * @param rows {number} - number of tiles in the y direction
+     * @param horizontalFill {boolean} - flag to decide if the tiles are filled
+     * in the x or the y direction first
+     *
+     * @returns {Array<Array<World.Tile>>} - A grid with the new tile values
      */
-    fillGridWithAllTiles(grid, cols, rows) {
+    fillGridWithAllTiles(grid, cols, rows, horizontalFill=true) {
         const keys = Object.keys(World.Tiles);
         let newGrid = grid;
 
         for(let i = 0; i < keys.length; i++) {
             const key = keys[i];
-            const xIndex = floor(i / rows);
-            const yIndex = i % rows;
+
+            let xIndex = i % cols;
+            let yIndex = floor(i / cols);
+            if(!horizontalFill) {
+                xIndex = floor(i / rows);
+                yIndex = i % rows;
+            }
             newGrid[xIndex][yIndex] = World.Tiles[key].copy();
             console.debug(key);
         }
