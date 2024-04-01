@@ -319,6 +319,7 @@ World.Tile = class {
 
     generatePG() {
         this.tileImage = createGraphics(World.gridSize, World.gridSize);
+        this.tileImage.pixelDensity(1);
         this.tileImage.background(255);
         this.lines.forEach((line) => {
             if(line.linePoints == undefined) {
@@ -326,14 +327,12 @@ World.Tile = class {
             }
 
             this.tileImage.noFill();
-            this.tileImage.strokeWeight(0.5 * World.lineThickness);
+            this.tileImage.strokeWeight(World.lineThickness);
             this.tileImage.stroke(line.color);
             this.tileImage.beginShape();
 
             line.linePoints.forEach((point) => {
-// TODO: figure out why this needs a factor of 0.5
-                this.tileImage.vertex(point.x * 0.5, point.y * 0.5);
-                // this.tileImage.vertex(point.x, point.y);
+                this.tileImage.vertex(point.x, point.y);
             });
             this.tileImage.endShape();
         });

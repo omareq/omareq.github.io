@@ -80,9 +80,9 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
 
         let gridSize = -1;
         if(tilesRatio > pixelsRatio) {
-            gridSize = (width - 1) / numTilesX;
+            gridSize = width / numTilesX;
         } else {
-            gridSize = (height - 1) / numTilesY;
+            gridSize = height / numTilesY;
         }
 
         World.setGridSize(gridSize);

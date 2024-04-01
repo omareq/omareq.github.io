@@ -169,21 +169,27 @@ World.Room = class {
         }
 
         this.img = createGraphics(this.xWidth, this.yHeight);
+
+        if(this.img.pixelDensity() != 1) {
+            console.debug("Original Pixel Density: ", this.img.pixelDensity());
+            this.img.pixelDensity(1);
+            console.debug("New Pixel Density: ", this.img.pixelDensity());
+        }
+
         // set background as red in case there are any errors;
         this.img.background(255, 0,0);
 
         this.img.stroke(215);
-        this.img.strokeWeight(1);
+        const gridStrokeWeight = max(World.lineThickness / 6, 2);
+        this.img.strokeWeight(gridStrokeWeight);
         this.img.noFill();
         for(let x = 0; x < this.xNumTiles; x++) {
             for(let y = 0; y < this.yNumTiles; y++) {
                 const tileImg = this.grid[x][y].getPG();
-// TODO: Figure out why there is a factor of 0.5 needed to make these work
-                const scaleVal = 0.5; // 0.5 or 1
-                const xPos = x * scaleVal * World.gridSize;
-                const yPos = y * scaleVal * World.gridSize;
+                const xPos = x * World.gridSize;
+                const yPos = y * World.gridSize;
                 this.img.image(tileImg, xPos, yPos,
-                    scaleVal * World.gridSize, scaleVal * World.gridSize);
+                    World.gridSize, World.gridSize);
                 if(this.showGrid) {
                     this.img.rect(xPos, yPos,
                         World.gridSize - 1, World.gridSize - 1);
