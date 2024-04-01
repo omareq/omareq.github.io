@@ -60,7 +60,7 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
         let factors = [];
 
         let i = 0;
-        while(factors.length <= 2) {
+        while(factors.length <= 4) {
             factors = this.findFactors(totalNumTiles + i);
             i++;
         }
@@ -75,13 +75,15 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
         const numTilesX = max(factor1, factor2);
         const numTilesY = min(factor1, factor2);
 
+        const tilesRatio = numTilesX / numTilesY;
+        const pixelsRatio = width / height;
+
         let gridSize = -1;
-        if(numTilesX > numTilesY) {
-            gridSize = width / numTilesX;
+        if(tilesRatio > pixelsRatio) {
+            gridSize = (width - 1) / numTilesX;
         } else {
-            gridSize = height / numTilesY;
+            gridSize = (height - 1) / numTilesY;
         }
-        gridSize *= 0.8;
 
         World.setGridSize(gridSize);
         this.sensorRadius = 0.5 * World.lineThickness + 1;
