@@ -179,10 +179,11 @@ World.Room = class {
             for(let y = 0; y < this.yNumTiles; y++) {
                 const tileImg = this.grid[x][y].getPG();
 // TODO: Figure out why there is a factor of 0.5 needed to make these work
-                const xPos = x * 0.5 * World.gridSize;
-                const yPos = y * 0.5 * World.gridSize;
+                const scaleVal = 0.5; // 0.5 or 1
+                const xPos = x * scaleVal * World.gridSize;
+                const yPos = y * scaleVal * World.gridSize;
                 this.img.image(tileImg, xPos, yPos,
-                    0.5*World.gridSize, 0.5*World.gridSize);
+                    scaleVal * World.gridSize, scaleVal * World.gridSize);
                 if(this.showGrid) {
                     this.img.rect(xPos, yPos,
                         World.gridSize - 1, World.gridSize - 1);

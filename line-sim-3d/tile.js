@@ -333,6 +333,7 @@ World.Tile = class {
             line.linePoints.forEach((point) => {
 // TODO: figure out why this needs a factor of 0.5
                 this.tileImage.vertex(point.x * 0.5, point.y * 0.5);
+                // this.tileImage.vertex(point.x, point.y);
             });
             this.tileImage.endShape();
         });
