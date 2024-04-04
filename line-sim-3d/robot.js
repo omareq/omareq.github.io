@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- *  @file ui.js A file with the robot class
+ *  @file robot.js A file with the robot class
  *
  *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *  @version 1.0

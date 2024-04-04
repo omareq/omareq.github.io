@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- *  @file ui.js A file with the Tile class
+ *  @file tile.js A file with the Tile class
  *
  *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *  @version 1.0

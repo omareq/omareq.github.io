@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- *  @file ui.js A file with the light sensor class
+ *  @file light-sensor.js A file with the light sensor class
  *
  *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *  @version 1.0
@@ -35,6 +35,10 @@
  * Robot Namespace Object
  */
 var Robot = Robot || {};
+
+Robot.LightSensorType = {};
+Robot.LightSensorType.Analog = 0;
+Robot.LightSensorType.Digital = 1;
 
 /**
  * Class containing the analog light sensor features. A digital light sensor
@@ -73,7 +77,7 @@ Robot.AnalogLightSensor = class {
      */
     setupBuffer() {
         for(let i = 0; i < this.bufferLen; i++) {
-            this.buffer.push(0);
+            this.buffer.push(this.white);
         }
     }
 
@@ -95,6 +99,23 @@ Robot.AnalogLightSensor = class {
     setRadius(sensorRadius) {
         this.sensorRadius = sensorRadius;
         this.circleArea = PI * this.sensorRadius**2;
+    }
+
+    /**
+     * A function to return the last reading that the sensor made.  This is done
+     * by returning the last value in the buffer.
+     *
+     * @returns {number} - between 0 (black) and 1 (white)
+     */
+    getLastRead() {
+        return this.buffer[this.bufferLen - 1];
+    }
+
+    getLastClosestLinePoint() {
+        if(this.closestLinePoint == undefined) {
+            return createVector(-1, -1);
+        }
+        return this.closestLinePoint;
     }
 
     /**
@@ -178,27 +199,37 @@ Robot.AnalogLightSensor = class {
      *
      * @returns {number} - Number between 0 and 1.  0 is black and 1 is white.
      */
-    readRaw(tile) {
+    readRaw(tile, drawFlag=true) {
+        if(tile == undefined) {
+            this.closestLinePoint = createVector(-1,-1);
+            return this.white;
+        }
+
         // sensor is outside of the tile return white
         if(this.isOutsideofTile(tile)) {
+            this.closestLinePoint = createVector(-1,-1);
             return this.white;
         }
 
         if(tile.lines[0].linePoints.length == 0) {
+            this.closestLinePoint = createVector(-1,-1);
             return this.white;
         }
 
         this.posInTileFrame = this.pos.copy().sub(tile.pos);
         const linePoint = this.findClosestLinePoint(tile);
+        this.closestLinePoint = linePoint.copy().add(tile.pos);
 
-        push();
-        let c = color(0, 187, 35);
-        fill(c);
-        stroke(c);
-        line(linePoint.x + tile.pos.x, linePoint.y + tile.pos.y,
-            this.pos.x, this.pos.y);
-        ellipse(linePoint.x + tile.pos.x, linePoint.y + tile.pos.y, 5,5);
-        pop();
+        if(drawFlag) {
+            push();
+            let c = color(0, 187, 35);
+            fill(c);
+            stroke(c);
+            line(linePoint.x + tile.pos.x, linePoint.y + tile.pos.y,
+                this.pos.x, this.pos.y);
+            ellipse(linePoint.x + tile.pos.x, linePoint.y + tile.pos.y, 5,5);
+            pop();
+        }
 
         const dist = this.posInTileFrame.dist(linePoint);
 
@@ -295,8 +326,8 @@ Robot.AnalogLightSensor = class {
      *
      * @see Robot.AnalogLightSensor.readRaw
      */
-    read(tile) {
-        const rawVal = this.readRaw(tile);
+    read(tile, drawFlag=true) {
+        const rawVal = this.readRaw(tile, drawFlag);
 
         this.buffer[this.bufferIndex] = rawVal;
         this.bufferIndex ++;
@@ -388,7 +419,7 @@ Robot.DigitalLightSensor = class extends Robot.AnalogLightSensor {
      *
      * @see Robot.AnalogLightSensor.read
      */
-    digitalRead(tile) {
+    read(tile) {
         const analogValue = super.read(tile);
         if(this.value == this.white && analogValue < this.thresholdDown) {
             this.value = this.black;

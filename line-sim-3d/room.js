@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- *  @file ui.js A file with the room class
+ *  @file room.js A file with the room class
  *
  *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *  @version 1.0
@@ -222,6 +222,23 @@ World.Room = class {
         }
 
         this.generatePG();
+    }
+
+    /**
+     * Returns a copy of the tile grid
+     *
+     * @returns {Array<Array<World.Tiles>>} - a 2d array of tiles.
+     */
+    getAllTiles() {
+        let gridCopy = [];
+        for(let x = 0; x < this.xNumTiles; x++) {
+            let col = [];
+            for(let y = 0; y < this.yNumTiles; y++) {
+                col.push(this.grid[x][y].copy());
+            }
+            gridCopy.push(col);
+        }
+        return gridCopy;
     }
 
     /**

@@ -79,7 +79,7 @@ Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
         this.sensor.setPos(createVector(mouseX, mouseY));
         this.sensor.setRadius(this.sensorRadius);
 
-        const brightness = this.sensor.digitalRead(this.tile);
+        const brightness = this.sensor.read(this.tile);
 
         if(brightness < 1) {
             console.log(brightness);
