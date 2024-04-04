@@ -114,7 +114,7 @@ Robot.Algorithm.TwoSensorFollow = class extends Robot.Algorithm.LineFollow {
         const velKp = 0.15 * World.gridSize;
         if(error > 0.35) {
             forwardVel = velKp * (1 - error);
-            console.log("Initial speed: ",  0.70 * World.gridSize,
+            console.log("Initial speed: ", 0.70 * World.gridSize,
                 "slow down speed: ", forwardVel);
         }
 
