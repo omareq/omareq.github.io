@@ -126,6 +126,14 @@ Robot.LightSensorArray = class {
         this.updatePosAndBearing();
     }
 
+    getLastSensorVals() {
+        let sensorVals = [];
+        for(let i = 0; i < this.numSensors; i++) {
+            sensorVals[i] = this.sensors[i].getLastRead();
+        }
+        return sensorVals;
+    }
+
     updatePosAndBearing() {
         // rotate relative positions
         const rotated = math.multiply(this.rotationMatrix,
@@ -179,4 +187,4 @@ Robot.LightSensorArray = class {
 };
 
 
-// TODO: make light sensor array builder
+// TODO: make light sensor array builder/factory

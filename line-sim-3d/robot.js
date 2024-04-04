@@ -36,6 +36,24 @@
  */
 var Robot = Robot || {};
 
+Robot.RobotTelemetryData = class {
+    constructor(robot) {
+        this.pos = robot.pos.copy();
+        this.bearing = robot.bearing;
+        this.vel = robot.bearing;
+        this.rotationRate = robot.rotationRate;
+
+        this.sensorVals = robot.getLastSensorVals();
+    }
+};
+
+Robot.MovementCommands = class {
+    constructor(vel, rotationRate) {
+        this.vel = vel;
+        this.rotationRate = rotationRate;
+    }
+};
+
 Robot.robot = class{
 
     constructor(pos, bearing, size, sensorArray, sensorArrayPos, algorithm) {
@@ -51,6 +69,10 @@ Robot.robot = class{
 
         this.maxVel = 2 * World.gridSize;
         this.maxRotationRate = 1.5 * math.Pi;
+    }
+
+    getLastSensorVals() {
+        return this.sensorArray.getLastSensorVals();
     }
 
     sensorsRead(room) {
@@ -74,6 +96,11 @@ Robot.robot = class{
     }
 
     update() {
+        const data = new Robot.RobotTelemetryData(this);
+        const movementCommands = this.algorithm.follow(data);
+        this.setForwardVel(movementCommands.vel);
+        this.setRotationRate(movementCommands.rotationRate);
+
         this.bearing += this.rotationRate * Simulation.dtSeconds;
         let vel = createVector(0, this.vel).mult(Simulation.dtSeconds);
         vel = vel.rotate(this.bearing);
@@ -103,3 +130,5 @@ Robot.robot = class{
         this.sensorArray.draw();
     }
 };
+
+// TODO: make robot builder/factory

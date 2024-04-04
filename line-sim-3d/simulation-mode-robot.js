@@ -110,7 +110,7 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
         const sensorRadius = 0.5 * World.lineThickness + 1;
         const sensorArray = this.setupLightSensorArray(sensorRadius);
         const sensorArrayPos = createVector(0, 0.5 * size);
-        const algorithm = {};
+        const algorithm = new Robot.Algorithm.CurveRight();
 
         this.robot = new Robot.robot(
             pos,
