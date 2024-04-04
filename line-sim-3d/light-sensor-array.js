@@ -109,8 +109,6 @@ Robot.LightSensorArray = class {
             this.posMatrix[1][i] = this.pos.y;
         }
         this.posMatrix = math.matrix(this.posMatrix);
-        // console.log("pos matrix array");
-        // console.log(this.posMatrix);
     }
 
     setBearing(newBearing) {
@@ -179,3 +177,6 @@ Robot.LightSensorArray = class {
         }
     }
 };
+
+
+// TODO: make light sensor array builder

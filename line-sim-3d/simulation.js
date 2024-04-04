@@ -89,6 +89,9 @@ Simulation.setup = function() {
 Simulation.update = function() {
     Simulation.currentFrameData = new Simulation.FrameData();
     Simulation.frameDataHistory.push(Simulation.currentFrameData);
+    Simulation.dt = Simulation.currentFrameData.dt;
+    Simulation.dtSeconds = Simulation.currentFrameData.dtSeconds;
+    Simulation.fps = Simulation.currentFrameData.fps;
 
     Simulation.frame++;
     Simulation.lastFrameTime = Simulation.currentFrameData.frameTime;

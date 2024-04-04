@@ -72,8 +72,6 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
 
         World.setGridSize(gridSize);
         this.sensorRadius = 0.5 * World.lineThickness + 1;
-        // this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
-        //     createVector(0,0));
 
         let numSensors = 3;
         let globalPos = createVector(0,0);
@@ -82,7 +80,10 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
             createVector(0.00, 0.00),
             createVector(0.25 * World.gridSize, 0)
             ];
-        let radiuses = [this.sensorRadius, this.sensorRadius, this.sensorRadius];
+        let radiuses = [this.sensorRadius,
+            this.sensorRadius,
+            this.sensorRadius
+            ];
         let analogOrDigital = [
             Robot.LightSensorType.Analog,
             Robot.LightSensorType.Analog,
@@ -90,6 +91,7 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
             ];
 
         this.bearing = 0;
+        this.radPerSec = 0.5 * math.PI;
 
         this.sensorArray = new Robot.LightSensorArray(numSensors,
             globalPos,
@@ -138,7 +140,7 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
         this.room.draw();
         this.sensorArray.setPos(mousePos);
         this.sensorArray.setBearing(this.bearing);
-        this.bearing += 0.02;
+        this.bearing += this.radPerSec * Simulation.dtSeconds;
         if(this.bearing >= math.TWO_PI) {
             this.bearing = 0;
         }
