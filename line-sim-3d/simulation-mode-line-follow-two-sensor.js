@@ -58,7 +58,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         super();
 
         const numTilesX = 7;
-        const numTilesY = 5;
+        const numTilesY = 6;
 
         const tilesRatio = numTilesX / numTilesY;
         const pixelsRatio = width / height;
@@ -125,7 +125,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         let grid = this.room.getAllTiles();
 
         grid[2][0] = World.Tiles.gapQuarterLineHorizontal.copy();
-        grid[4][0] = World.Tiles.blankLine.copy();
+        grid[4][0] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[5][0] = World.Tiles.diagonalVDown.copy();
         grid[6][0] = World.Tiles.diagonalDownLeft.copy();
 
@@ -133,10 +133,10 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         grid[4][1] = World.Tiles.diagonalVDown.copy();
         grid[3][1] = World.Tiles.diagonalVUp.copy();
         grid[2][1] = World.Tiles.diagonalVDown.copy();
-        grid[1][1] = World.Tiles.diagonalVUp.copy();
+        grid[1][1] = World.Tiles.quarterCircleDownRight.copy();
 
-        grid[0][2] = World.Tiles.quarterCircleUpRight.copy();
-        grid[2][2] = World.Tiles.blankLine.copy();
+        grid[1][2] = World.Tiles.quarterCircleUpRight.copy();
+        grid[2][2] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[3][2] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[5][2] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[6][2] = World.Tiles.quarterCircleDownLeft.copy();
@@ -145,12 +145,23 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         grid[4][3] = World.Tiles.diagonalVUp.copy();
         grid[3][3] = World.Tiles.diagonalVUp.copy();
         grid[2][3] = World.Tiles.gapQuarterLineHorizontal.copy();
-        grid[0][3] = World.Tiles.diagonalDownRight.copy();
+        grid[1][3] = World.Tiles.diagonalDownRight.copy();
 
-        grid[0][4] = World.Tiles.diagonalUpRight.copy();
+        grid[1][4] = World.Tiles.diagonalUpRight.copy();
         grid[2][4] = World.Tiles.diagonalVDown.copy();
         grid[3][4] = World.Tiles.diagonalVDown.copy();
-        grid[5][4] = World.Tiles.blankLine.copy();
+        grid[5][4] = World.Tiles.gapQuarterLineHorizontal.copy();
+
+        grid[5][5] = World.Tiles.diagonalVUp.copy();
+        grid[2][5] = World.Tiles.blankLine.copy();
+        grid[1][5] = World.Tiles.diagonalVDown.copy();
+
+        grid[0][5] = World.Tiles.cornerUpRight.copy();
+        grid[0][4] = World.Tiles.diagonalVRight.copy();
+        grid[0][3] = World.Tiles.gapQuarterLineVertical.copy();
+        grid[0][2] = World.Tiles.diagonalVLeft.copy();
+        grid[0][1] = World.Tiles.diagonalVRight.copy();
+        grid[0][0] = World.Tiles.cornerDownRight.copy();
 
         this.room.setTiles(grid);
     }

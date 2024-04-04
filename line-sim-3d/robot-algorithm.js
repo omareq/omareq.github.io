@@ -101,7 +101,12 @@ Robot.Algorithm.OneSensorFollow = class extends Robot.Algorithm.LineFollow {
 };
 
 Robot.Algorithm.TwoSensorFollow = class extends Robot.Algorithm.LineFollow {
-    constructor() {super();};
+    constructor() {
+        super();
+        this.crossingGap = false;
+        this.crossingParam = 0;
+    };
+
     follow(robotData) {
         let forwardVel = 1.5 * World.gridSize;
 
@@ -109,7 +114,7 @@ Robot.Algorithm.TwoSensorFollow = class extends Robot.Algorithm.LineFollow {
 
         const error = robotData.sensorVals[1] - robotData.sensorVals[0];
         const rotationKp = 12;
-        const rotationRate = rotationKp * error;
+        let rotationRate = rotationKp * error;
 
         const velKp = 0.15 * World.gridSize;
         if(error > 0.35) {
@@ -119,7 +124,15 @@ Robot.Algorithm.TwoSensorFollow = class extends Robot.Algorithm.LineFollow {
         }
 
         if(error == 0) {
+            console.log("Crossing Gap");
             forwardVel = 0.4 * World.gridSize;
+            if(this.crossingGap) {
+                rotationRate = 0.75 * math.sin(this.crossingParam) - 0.05;
+                this.crossingParam += 0.15;
+            }
+            this.crossingGap = true;
+        } else {
+            this.crossingGap = false;
         }
 
         return new Robot.MovementCommands(forwardVel, rotationRate);
