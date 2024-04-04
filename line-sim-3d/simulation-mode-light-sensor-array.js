@@ -56,7 +56,7 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
      */
     constructor() {
         super();
-        
+
         const numTilesX = 7;
         const numTilesY = 5;
 
@@ -99,7 +99,7 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
 
 
         this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
-        
+
         let grid = this.room.getAllTiles();
 
         grid[2][0] = World.Tiles.gapQuarterLineHorizontal.copy();
@@ -130,7 +130,6 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
         this.room.setTiles(grid);
     }
 
-    
      /**
      * Update function that updates the state of the simulation
      */
@@ -146,26 +145,5 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
 
         this.sensorArray.read(this.room);
         this.sensorArray.draw();
-
-        // let tileUnderSensor = this.room.getTileAtPos(mousePos);
-
-        // if(tileUnderSensor == undefined) {
-        //     return;
-        // }
-
-        // const brightness = this.sensor.read(tileUnderSensor);
-
-        // if(brightness < 1) {
-        //     console.log("Sensor Val: ", brightness);
-        // }
-        // const colorVal = floor(brightness * 255);
-
-        // push();
-        // fill(colorVal);
-        // strokeWeight(1);
-        // stroke(127, 0, 30);
-        // const ellipseSize = 2 * this.sensorRadius;
-        // ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
-        // pop();
     }
 };

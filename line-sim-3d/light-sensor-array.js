@@ -146,7 +146,7 @@ Robot.LightSensorArray = class {
 
     read(room) {
         let sensorVals = [];
-        const drawFlag = false
+        const drawFlag = false;
         for(let i = 0; i < this.numSensors; i++) {
             const sensorPos = this.sensors[i].pos.copy();
             const tileUnderSensor = room.getTileAtPos(sensorPos);
@@ -164,7 +164,7 @@ Robot.LightSensorArray = class {
             const v = this.sensors[i].getLastClosestLinePoint();
 
             push();
-            colorMode(HSB)
+            colorMode(HSB);
             fill(0, 0, b);
             stroke(100 * i / this.numSensors, 100, 100);
             strokeWeight(0.2 * r);
