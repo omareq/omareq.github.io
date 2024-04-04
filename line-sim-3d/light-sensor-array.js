@@ -48,7 +48,7 @@ Robot.LightSensorArray = class {
         this.posMatrix = [[], []];
 
         // always use radians
-        this.bearing = math.PI;
+        this.bearing = 0;
         this.rotationMatrix = math.rotationMatrix(this.bearing);
 
         this.setRelativePositions(relPositions);

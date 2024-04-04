@@ -35,3 +35,71 @@
  * Robot Namespace Object
  */
 var Robot = Robot || {};
+
+Robot.robot = class{
+
+    constructor(pos, bearing, size, sensorArray, sensorArrayPos, algorithm) {
+        this.pos = pos.copy();
+        this.bearing = bearing;
+        this.size = size;
+        this.sensorArray = sensorArray;//.copy();
+        this.sensorArrayPos = sensorArrayPos.copy();
+        this.algorithm = algorithm;
+
+        this.vel = 0.5 * World.gridSize; // Pixels per second
+        this.rotationRate = 0; // Radians per second
+
+        this.maxVel = 2 * World.gridSize;
+        this.maxRotationRate = 1.5 * math.Pi;
+    }
+
+    sensorsRead(room) {
+        return this.sensorArray.read(room);
+    }
+
+    setForwardVel(newVel) {
+        if(abs(newVel) > this.maxVel) {
+            this.vel = this.maxVel;
+            return;
+        }
+        this.vel = newVel;
+    }
+
+    setRotationRate(newRotationRate) {
+        if(abs(newRotationRate) > this.maxRotationRate) {
+            this.rotationRate = this.maxRotationRate;
+            return;
+        }
+        this.rotationRate = newRotationRate;
+    }
+
+    update() {
+        this.bearing += this.rotationRate * Simulation.dtSeconds;
+        let vel = createVector(0, this.vel).mult(Simulation.dtSeconds);
+        vel = vel.rotate(this.bearing);
+        this.pos.add(vel);
+    }
+
+
+    draw() {
+        push();
+        rectMode(CENTER);
+        fill(127);
+        translate(this.pos.x, this.pos.y);
+        rotate(this.bearing);
+
+        // robot rectangle
+        rect(0,0, this.size, this.size, 0.15 * this.size);
+
+        // forward pointing line
+        stroke(0);
+        strokeWeight(0.05 * this.size);
+        line(0,0, 0, 0.5 * this.size);
+        pop();
+
+        this.sensorArray.setBearing(this.bearing);
+        let rotatedSensorPos = this.sensorArrayPos.copy().rotate(this.bearing);
+        this.sensorArray.setPos(this.pos.copy().add(rotatedSensorPos));
+        this.sensorArray.draw();
+    }
+};
