@@ -47,7 +47,7 @@ function setup() {
 	// UI.setup();
 	World.TileSetup();
 
-	Simulation.Mode.setActive(new Simulation.Mode.DebugRobot());
+	Simulation.Mode.setActive(new Simulation.Mode.LineFollowTwoSensor());
 	Simulation.setup();
 }
 

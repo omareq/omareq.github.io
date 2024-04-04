@@ -55,6 +55,11 @@ Simulation.FrameData = class {
         this.frameTime = Date.now();
 
         this.dt = this.frameTime - Simulation.lastFrameTime;
+        if(this.dt > 100) {
+            // this is done to remove jumping effects when you switch windows
+            // contexts by changing tab or application.
+            this.dt = 10;
+        }
         this.dtMillis = this.dt;
         this.dtSeconds = 0.001 * this.dt;
         this.fps = 1 / this.dtSeconds;

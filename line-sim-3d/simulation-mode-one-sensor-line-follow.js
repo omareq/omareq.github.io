@@ -1,6 +1,7 @@
 /*******************************************************************************
  *
- *  @file simulation-mode-robot.js Test the robot class
+ *  @file simulation-mode-one-sensor-line-follow.js Test the robot one sensor
+ *  line follow algorithm
  *
  *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *  @version 1.0
@@ -49,7 +50,7 @@ Simulation.Mode = Simulation.Mode || {};
  *
  * @see Simulation.Mode.Type
  */
-Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
+Simulation.Mode.LineFollowOneSensor = class extends Simulation.Mode.ModeType {
     /**
      * The constructor that sets up the simulation variables
      */
@@ -78,22 +79,11 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
     }
 
     setupLightSensorArray(sensorRadius) {
-        let numSensors = 3;
+        let numSensors = 1;
         let globalPos = createVector(0,0);
-        let sensorPositions = [
-            createVector(-0.25 * World.gridSize, 0),
-            createVector(0.00, 0.00),
-            createVector(0.25 * World.gridSize, 0)
-            ];
-        let radiuses = [sensorRadius,
-            sensorRadius,
-            sensorRadius
-            ];
-        let analogOrDigital = [
-            Robot.LightSensorType.Analog,
-            Robot.LightSensorType.Analog,
-            Robot.LightSensorType.Analog
-            ];
+        let sensorPositions = [createVector(0.00, 0.00)];
+        let radiuses = [sensorRadius];
+        let analogOrDigital = [Robot.LightSensorType.Analog];
 
         return new Robot.LightSensorArray(numSensors,
             globalPos,
@@ -103,13 +93,13 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
     }
 
     setupRobot() {
-        const pos = createVector(width / 2, 0.5 * World.gridSize);
+        const pos = createVector(0.5 * World.gridSize, 0.55 * World.gridSize);
         const bearing = -0.5 * math.PI;
         const size = 0.5 * World.gridSize;
         const sensorRadius = 0.5 * World.lineThickness + 1;
         const sensorArray = this.setupLightSensorArray(sensorRadius);
         const sensorArrayPos = createVector(0, 0.5 * size);
-        const algorithm = new Robot.Algorithm.CurveRight();
+        const algorithm = new Robot.Algorithm.OneSensorFollow();
 
         this.robot = new Robot.robot(
             pos,
@@ -125,25 +115,26 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
     setRoomToConfig() {
         let grid = this.room.getAllTiles();
 
-        grid[2][0] = World.Tiles.gapQuarterLineHorizontal.copy();
-        grid[4][0] = World.Tiles.gapQuarterLineHorizontal.copy();
+        // grid[2][0] = World.Tiles.gapQuarterLineHorizontal.copy();
+        // grid[4][0] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[6][0] = World.Tiles.diagonalDownLeft.copy();
 
+        grid[6][1] = World.Tiles.quarterCircleUpLeft.copy();
         grid[4][1] = World.Tiles.diagonalVDown.copy();
         grid[3][1] = World.Tiles.diagonalVUp.copy();
         grid[1][1] = World.Tiles.zigZagHorizontal.copy();
         grid[0][1] = World.Tiles.quarterCircleDownRight.copy();
 
         grid[0][2] = World.Tiles.quarterCircleUpRight.copy();
-        grid[2][2] = World.Tiles.blankLine.copy();
-        grid[3][2] = World.Tiles.gapQuarterLineHorizontal.copy();
+        // grid[2][2] = World.Tiles.blankLine.copy();
+        // grid[3][2] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[5][2] = World.Tiles.zigZagHorizontal.copy();
         grid[6][2] = World.Tiles.quarterCircleDownLeft.copy();
 
         grid[6][3] = World.Tiles.diagonalUpLeft.copy();
         grid[4][3] = World.Tiles.zigZagHorizontal.copy();
-        grid[3][3] = World.Tiles.zigZagHorizontal.copy();
-        grid[2][3] = World.Tiles.gapQuarterLineHorizontal.copy();
+        // grid[3][3] = World.Tiles.zigZagHorizontal.copy();
+        // grid[2][3] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[0][3] = World.Tiles.diagonalDownRight.copy();
 
         grid[0][4] = World.Tiles.diagonalUpRight.copy();
