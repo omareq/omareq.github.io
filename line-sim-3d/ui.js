@@ -61,12 +61,22 @@ UI.controlPanelHide = function() {
     UI.controlPanel.style.visibility = "hidden";
 };
 
+/**
+ * UI canvas loading text hide function
+ */
+UI.canvasLoadingTextHide = function() {
+    UI.canvasLoadingText = document.getElementById("canvas-loading-text");
+    UI.canvasLoadingText.style.visibility = "hidden";
+    UI.canvasLoadingText.style.display = "none";
+};
+
 
 /**
  * UI setup all UI elements
  */
 UI.setup = function() {
     console.debug("UI.setup: Start");
+    UI.canvasLoadingTextHide();
     UI.controlPanelSetup();
     console.debug("UI.setup: End");
 };

@@ -43,8 +43,8 @@ function setup() {
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
-
-	// UI.setup();
+	frameRate(60);
+	UI.setup();
 	World.TileSetup();
 
 	Simulation.Mode.setActive(new Simulation.Mode.LineFollowTwoSensor());
