@@ -59,6 +59,9 @@ Simulation.FrameData = class {
             // this is done to remove jumping effects when you switch windows
             // contexts by changing tab or application.
             this.dt = 10;
+        } else if (this.dt > 16) {
+            // if frameRate is less than 60fps but greater than 10fps
+            this.dt = 16;
         }
         this.dtMillis = this.dt;
         this.dtSeconds = 0.001 * this.dt;
