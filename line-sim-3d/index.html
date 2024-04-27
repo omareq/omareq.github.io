@@ -42,6 +42,13 @@
             <p style="font-weight: bold"> Control Panel <p>
 
               <div>
+
+                <!-- Buttons -->
+                <div style="margin: 10px;">
+                <div id=pause-button style=" display: inline-block"> </div>
+                <div id=reset-button style=" display: inline-block"> </div>
+                </div>
+
                 <!-- Algorithm dependent Code -->
                 <div id="simulation-mode-selector"></div>
 
@@ -157,7 +164,9 @@
   </footer>
 
   <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjs-10.6.0.min.js"> </script>
-  <script language="javascript" type="text/javascript" src="../libraries/p5-1.9.2.min.js"></script>
+  <!-- p5 v1.9.2 has a problem with callbacks for createButton -->
+  <!-- <script language="javascript" type="text/javascript" src="../libraries/p5-1.9.2.min.js"></script> -->
+  <script language="javascript" type="text/javascript" src="../libraries/p5.js"></script>
   <script language="javascript" type="text/javascript" src="../libraries/p5.dom.js"></script>
   <script async language="javascript" type="text/javascript" src="ui.js"></script>
   <script async language="javascript" type="text/javascript" src="tile.js"></script>

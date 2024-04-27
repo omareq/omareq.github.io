@@ -41,6 +41,20 @@ var Simulation = Simulation || {};
  */
 Simulation.Mode = Simulation.Mode || {};
 
+Simulation.pause = false;
+
+Simulation.pauseFlagSet = function() {
+    Simulation.pause = true;
+};
+
+Simulation.pauseFlagUnset = function() {
+    Simulation.pause = false;
+};
+
+Simulation.pauseFlagToggle = function() {
+    Simulation.pause = !Simulation.pause;
+};
+
 /**
  * Class used as a data class to store the current frame statistics.  This
  * includes dt, fps, and time since start.
@@ -126,6 +140,23 @@ Simulation.Mode.setActive = function(newMode) {
     }
 
     Simulation.Mode.activeMode = newMode;
+    Simulation.pauseFlagUnset();
+};
+
+Simulation.Mode.setModeByName = function(modeName) {
+    for(let i = 0; i < Simulation.Mode.ModeList.length; i++) {
+// TODO: figure out how to do this without for loop
+        if(Simulation.Mode.ModeList[i].staticName == modeName) {
+            Simulation.Mode.setActive(new Simulation.Mode.ModeList[i]());
+            return;
+        }
+    }
+    console.warn("Can't set Simulation mode to: ", modeName);
+    Simulation.Mode.setActive(new Simulation.Mode.Empty());
+};
+
+Simulation.reset = function() {
+    Simulation.Mode.setModeByName(Simulation.Mode.activeMode.name);
 };
 
 /**

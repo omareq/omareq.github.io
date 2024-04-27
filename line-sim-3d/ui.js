@@ -36,7 +36,6 @@
  */
 var UI = UI || {};
 
-UI.controlPanel = undefined;
 
 /**
  * UI control panel setup function that assigns the handler and makes the
@@ -90,16 +89,20 @@ UI.updateSimulationModeSelector = function() {
 
     if(Simulation.Mode.activeMode.name != UI.modeSelect.selected()) {
         console.debug("Changing Mode: ", UI.modeSelect.selected());
-
-        // is there a way to do this without running through every option?
-        for(let i = 0; i < UI.modeSelectorLength; i++) {
-            if(Simulation.Mode.ModeList[i].staticName == UI.modeSelect.selected()) {
-                Simulation.Mode.setActive(new Simulation.Mode.ModeList[i]());
-                break;
-            }
-
-        }
+        Simulation.Mode.setModeByName(UI.modeSelect.selected());
     }
+};
+
+UI.initPauseButton = function() {
+    UI.pauseButton = createButton("Pause", "value");
+    UI.pauseButton.parent("pause-button");
+    UI.pauseButton.mousePressed(Simulation.pauseFlagToggle);
+};
+
+UI.initResetButton = function() {
+    UI.resetButton = createButton("Reset", "value");
+    UI.resetButton.parent("reset-button");
+    UI.resetButton.mousePressed(Simulation.reset);
 };
 
 
@@ -111,6 +114,8 @@ UI.setup = function() {
     UI.canvasLoadingTextHide();
     UI.controlPanelSetup();
     UI.initSimulationModeSelector();
+    UI.initPauseButton();
+    UI.initResetButton();
     console.debug("UI.setup: End");
 };
 
