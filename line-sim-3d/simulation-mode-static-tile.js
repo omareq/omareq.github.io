@@ -51,11 +51,14 @@ Simulation.Mode = Simulation.Mode || {};
  * @see Simulation.Mode.Type
  */
 Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugStaticTile";
+
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
+        this.name = "DebugStaticTile";
         this.sensorRadius = 12;
         this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
             createVector(0,0));
@@ -91,3 +94,5 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
         pop();
     }
 };
+
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugStaticTile);

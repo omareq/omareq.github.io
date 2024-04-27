@@ -51,11 +51,13 @@ Simulation.Mode = Simulation.Mode || {};
  * @see Simulation.Mode.Type
  */
 Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
+    static staticName = "LineFollowTwoSensor";
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
+        this.name = "LineFollowTwoSensor";
 
         const numTilesX = 7;
         const numTilesY = 6;
@@ -178,3 +180,5 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
     }
 };
+
+Simulation.Mode.ModeList.push(Simulation.Mode.LineFollowTwoSensor);

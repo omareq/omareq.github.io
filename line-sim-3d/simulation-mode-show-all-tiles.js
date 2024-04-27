@@ -51,11 +51,14 @@ Simulation.Mode = Simulation.Mode || {};
  * @see Simulation.Mode.Type
  */
 Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugShowAllTiles";
+
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
+        this.name = "DebugShowAllTiles";
         const totalNumTiles = Object.keys(World.Tiles).length;
         let factors = [];
 
@@ -204,3 +207,5 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
         pop();
     }
 };
+
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugShowAllTiles);

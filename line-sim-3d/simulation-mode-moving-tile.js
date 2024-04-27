@@ -49,11 +49,14 @@ Simulation.Mode = Simulation.Mode || {};
  * @see Simulation.Mode.Type
  */
 Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugMovingTile";
+
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
+        this.name = "DebugMovingTile";
         this.tile = World.Tiles.cross.copy();
         this.sensorRadius = 8;
         this.sensor = new Robot.DigitalLightSensor(this.sensorRadius,
@@ -95,3 +98,5 @@ Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
         pop();
     }
 };
+
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugMovingTile);

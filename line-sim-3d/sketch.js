@@ -44,18 +44,18 @@ function setup() {
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
 	frameRate(60);
-	UI.setup();
 	World.TileSetup();
 
 	Simulation.Mode.setActive(new Simulation.Mode.LineFollowTwoSensor());
 	Simulation.setup();
+	UI.setup();
 }
+
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(127);
-	// UI.poll();
+	UI.poll();
 	Simulation.update();
 }

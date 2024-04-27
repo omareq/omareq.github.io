@@ -70,6 +70,38 @@ UI.canvasLoadingTextHide = function() {
     UI.canvasLoadingText.style.display = "none";
 };
 
+UI.initSimulationModeSelector = function() {
+    UI.modeSelectorLength = Simulation.Mode.ModeList.length;
+    UI.modeSelect = createSelect();
+    UI.modeSelect.parent("simulation-mode-selector");
+    for(let i = 0; i < UI.modeSelectorLength; i++) {
+        UI.modeSelect.option(Simulation.Mode.ModeList[i].staticName);
+    }
+    UI.modeSelect.selected(Simulation.Mode.activeMode.name);
+
+// TODO: when this line is removed line follow two sensor doesn't work properly
+    Simulation.Mode.setActive(new Simulation.Mode.LineFollowTwoSensor());
+};
+
+UI.updateSimulationModeSelector = function() {
+    if(UI.modeSelectorLength != Simulation.Mode.ModeList.length) {
+        UI.initSimulationModeSelector();
+    }
+
+    if(Simulation.Mode.activeMode.name != UI.modeSelect.selected()) {
+        console.debug("Changing Mode: ", UI.modeSelect.selected());
+
+        // is there a way to do this without running through every option?
+        for(let i = 0; i < UI.modeSelectorLength; i++) {
+            if(Simulation.Mode.ModeList[i].staticName == UI.modeSelect.selected()) {
+                Simulation.Mode.setActive(new Simulation.Mode.ModeList[i]());
+                break;
+            }
+
+        }
+    }
+};
+
 
 /**
  * UI setup all UI elements
@@ -78,6 +110,7 @@ UI.setup = function() {
     console.debug("UI.setup: Start");
     UI.canvasLoadingTextHide();
     UI.controlPanelSetup();
+    UI.initSimulationModeSelector();
     console.debug("UI.setup: End");
 };
 
@@ -86,6 +119,6 @@ UI.setup = function() {
  */
 UI.poll = function() {
     console.debug("UI.poll: Start");
-
+    UI.updateSimulationModeSelector();
     console.debug("UI.poll: End");
 };

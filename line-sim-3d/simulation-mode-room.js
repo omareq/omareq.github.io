@@ -51,6 +51,7 @@ Simulation.Mode = Simulation.Mode || {};
  * @see Simulation.Mode.Type
  */
 Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugRoom";
     /**
      * The constructor that sets up the simulation variables
      *
@@ -61,6 +62,7 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
      */
     constructor(numTilesX=4, numTilesY=4) {
         super();
+        this.name = "DebugRoom";
         let gridSize = -1;
         if(numTilesX > numTilesY) {
             gridSize = width / numTilesX;
@@ -108,3 +110,5 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
         pop();
     }
 };
+
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugRoom);

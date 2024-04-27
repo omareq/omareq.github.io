@@ -51,11 +51,14 @@ Simulation.Mode = Simulation.Mode || {};
  * @see Simulation.Mode.Type
  */
 Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugLightSensorArray";
+
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
+        this.name = "DebugLightSensorArray";
 
         const numTilesX = 7;
         const numTilesY = 5;
@@ -149,3 +152,5 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
         this.sensorArray.draw();
     }
 };
+
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugLightSensorArray);

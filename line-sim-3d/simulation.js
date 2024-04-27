@@ -95,6 +95,9 @@ Simulation.setup = function() {
  * mode update function.
  */
 Simulation.update = function() {
+    if(Simulation.pause) {
+        return;
+    }
     Simulation.currentFrameData = new Simulation.FrameData();
     Simulation.frameDataHistory.push(Simulation.currentFrameData);
     Simulation.dt = Simulation.currentFrameData.dt;
@@ -104,6 +107,7 @@ Simulation.update = function() {
     Simulation.frame++;
     Simulation.lastFrameTime = Simulation.currentFrameData.frameTime;
 
+    background(127);
     Simulation.Mode.activeMode.update();
 };
 
@@ -129,6 +133,7 @@ Simulation.Mode.setActive = function(newMode) {
  * Simulation modes have an update function.
  */
 Simulation.Mode.ModeType = class {
+    static isModeType = true;
     /**
      * An abstract class constructor that throws an error if it is instantiated.
      *
@@ -149,6 +154,10 @@ Simulation.Mode.ModeType = class {
     update() {
         throw new Error("Method 'update()' must be implemented.");
     }
+
+    getName() {
+        return this.testName;
+    }
 };
 
 /**
@@ -158,13 +167,22 @@ Simulation.Mode.ModeType = class {
  * @see Simulation.Mode.ModeType
  */
 Simulation.Mode.Empty = class extends Simulation.Mode.ModeType {
+    static staticName = "Empty";
+
     /**
      * Calls super() and exits
      */
-    constructor() {super();};
+    constructor() {
+        super();
+        this.name = "Empty";
+    };
 
     /**
      * exits immediately
      */
     update() {};
 };
+
+Simulation.Mode.ModeList = [];
+
+Simulation.Mode.ModeList.push(Simulation.Mode.Empty);

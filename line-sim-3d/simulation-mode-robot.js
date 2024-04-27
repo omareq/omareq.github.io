@@ -50,11 +50,14 @@ Simulation.Mode = Simulation.Mode || {};
  * @see Simulation.Mode.Type
  */
 Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugRobot";
+
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
+        this.name = "DebugRobot";
 
         const numTilesX = 7;
         const numTilesY = 5;
@@ -165,3 +168,5 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
 
     }
 };
+
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugRobot);
