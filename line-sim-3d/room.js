@@ -318,4 +318,4 @@ World.Room = class {
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
 };
-this
+
