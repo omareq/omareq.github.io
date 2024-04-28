@@ -57,8 +57,9 @@ Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
     constructor() {
         super();
         this.name = "DebugMovingTile";
+        World.setGridSize(width / 5);
         this.tile = World.Tiles.cross.copy();
-        this.sensorRadius = 8;
+        this.sensorRadius = 0.5 * World.lineThickness;
         this.sensor = new Robot.DigitalLightSensor(this.sensorRadius,
             createVector(0,0));
 

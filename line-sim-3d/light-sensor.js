@@ -58,6 +58,7 @@ Robot.AnalogLightSensor = class {
      *      internal circular buffer that stores the previous sensor values.
      */
     constructor(sensorRadius, position, bufferLength=1) {
+// TODO: check input params
         this.setRadius(sensorRadius);
         this.pos = position;
         this.bufferLen = bufferLength;
