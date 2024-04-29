@@ -226,6 +226,10 @@ World.TileSetup = function() {
 };
 
 World.setGridSize = function(gridSize) {
+    if(abs(gridSize - World.gridSize) < Number.EPSILON) {
+        return;
+    }
+
     World.gridSize = gridSize;
     World.TileSetup();
 };
