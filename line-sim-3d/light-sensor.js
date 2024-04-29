@@ -155,7 +155,7 @@ Robot.AnalogLightSensor = class {
     findClosestLinePoint(tile) {
         let linesClosestPos = [];
         let linesShortestDist = [];
-        tile.lines.forEach((line) => {
+        tile.getLines().forEach((line) => {
             let shortestDistance = 2 * World.gridSize;
             let bestPos = createVector(0, 0);
 
@@ -212,7 +212,7 @@ Robot.AnalogLightSensor = class {
             return this.white;
         }
 
-        if(tile.lines[0].linePoints.length == 0) {
+        if(tile.getLines()[0].linePoints.length == 0) {
             this.closestLinePoint = createVector(-1,-1);
             return this.white;
         }

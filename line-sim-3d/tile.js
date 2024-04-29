@@ -125,57 +125,104 @@ World.TileSetup = function() {
     // Tiles
     /**************************************************************************/
     World.Tiles = {};
-    World.Tiles.blankLine = new World.Tile([World.Lines.blankLine.copy()]);
-    World.Tiles.verticalLine = new World.Tile([World.Lines.verticalLine.copy()]);
-    World.Tiles.horizontalLine = new World.Tile([World.Lines.horizontalLine.copy()]);
-    World.Tiles.cross = new World.Tile([World.Lines.horizontalLine.copy(),
+    World.Tiles.proxySubject = {};
+
+    World.Tiles.proxySubject.blankLine = new World.Tile([World.Lines.blankLine.copy()]);
+    World.Tiles.proxySubject.verticalLine = new World.Tile([World.Lines.verticalLine.copy()]);
+    World.Tiles.proxySubject.horizontalLine = new World.Tile([World.Lines.horizontalLine.copy()]);
+    World.Tiles.proxySubject.cross = new World.Tile([World.Lines.horizontalLine.copy(),
         World.Lines.verticalLine.copy()]);
 
-    World.Tiles.halfLineUp = new World.Tile([World.Lines.halfLineUp.copy()]);
-    World.Tiles.halfLineDown = new World.Tile([World.Lines.halfLineDown.copy()]);
-    World.Tiles.halfLineRight = new World.Tile([World.Lines.halfLineRight.copy()]);
-    World.Tiles.halfLineLeft = new World.Tile([World.Lines.halfLineLeft.copy()]);
+    World.Tiles.proxySubject.halfLineUp = new World.Tile([World.Lines.halfLineUp.copy()]);
+    World.Tiles.proxySubject.halfLineDown = new World.Tile([World.Lines.halfLineDown.copy()]);
+    World.Tiles.proxySubject.halfLineRight = new World.Tile([World.Lines.halfLineRight.copy()]);
+    World.Tiles.proxySubject.halfLineLeft = new World.Tile([World.Lines.halfLineLeft.copy()]);
 
-    World.Tiles.quarterLineUp = new World.Tile([World.Lines.quarterLineUp.copy()]);
-    World.Tiles.quarterLineDown = new World.Tile([World.Lines.quarterLineDown.copy()]);
-    World.Tiles.quarterLineRight = new World.Tile([World.Lines.quarterLineRight.copy()]);
-    World.Tiles.quarterLineLeft = new World.Tile([World.Lines.quarterLineLeft.copy()]);
+    World.Tiles.proxySubject.quarterLineUp = new World.Tile([World.Lines.quarterLineUp.copy()]);
+    World.Tiles.proxySubject.quarterLineDown = new World.Tile([World.Lines.quarterLineDown.copy()]);
+    World.Tiles.proxySubject.quarterLineRight = new World.Tile([World.Lines.quarterLineRight.copy()]);
+    World.Tiles.proxySubject.quarterLineLeft = new World.Tile([World.Lines.quarterLineLeft.copy()]);
 
-    World.Tiles.gapQuarterLineHorizontal = new World.Tile([World.Lines.quarterLineRight.copy(),
+    World.Tiles.proxySubject.gapQuarterLineHorizontal = new World.Tile([World.Lines.quarterLineRight.copy(),
         World.Lines.quarterLineLeft.copy()]);
-    World.Tiles.gapQuarterLineVertical = new World.Tile([World.Lines.quarterLineUp.copy(),
+    World.Tiles.proxySubject.gapQuarterLineVertical = new World.Tile([World.Lines.quarterLineUp.copy(),
         World.Lines.quarterLineDown.copy()]);
 
-    World.Tiles.cornerUpLeft = new World.Tile([World.Lines.halfLineUp.copy(),
+    World.Tiles.proxySubject.cornerUpLeft = new World.Tile([World.Lines.halfLineUp.copy(),
         World.Lines.halfLineLeft.copy()]);
-    World.Tiles.cornerUpRight = new World.Tile([World.Lines.halfLineUp.copy(),
+    World.Tiles.proxySubject.cornerUpRight = new World.Tile([World.Lines.halfLineUp.copy(),
         World.Lines.halfLineRight.copy()]);
-    World.Tiles.cornerDownLeft = new World.Tile([World.Lines.halfLineDown.copy(),
+    World.Tiles.proxySubject.cornerDownLeft = new World.Tile([World.Lines.halfLineDown.copy(),
         World.Lines.halfLineLeft.copy()]);
-    World.Tiles.cornerDownRight = new World.Tile([World.Lines.halfLineDown.copy(),
+    World.Tiles.proxySubject.cornerDownRight = new World.Tile([World.Lines.halfLineDown.copy(),
         World.Lines.halfLineRight.copy()]);
 
-    World.Tiles.diagonalUpRight = new World.Tile([World.Lines.diagonalUpRight.copy()]);
-    World.Tiles.diagonalUpLeft = new World.Tile([World.Lines.diagonalUpLeft.copy()]);
-    World.Tiles.diagonalDownRight = new World.Tile([World.Lines.diagonalDownRight.copy()]);
-    World.Tiles.diagonalDownLeft = new World.Tile([World.Lines.diagonalDownLeft.copy()]);
+    World.Tiles.proxySubject.diagonalUpRight = new World.Tile([World.Lines.diagonalUpRight.copy()]);
+    World.Tiles.proxySubject.diagonalUpLeft = new World.Tile([World.Lines.diagonalUpLeft.copy()]);
+    World.Tiles.proxySubject.diagonalDownRight = new World.Tile([World.Lines.diagonalDownRight.copy()]);
+    World.Tiles.proxySubject.diagonalDownLeft = new World.Tile([World.Lines.diagonalDownLeft.copy()]);
 
-    World.Tiles.diagonalVUp = new World.Tile([World.Lines.diagonalUpRight.copy(),
+    World.Tiles.proxySubject.diagonalVUp = new World.Tile([World.Lines.diagonalUpRight.copy(),
         World.Lines.diagonalUpLeft.copy()]);
-    World.Tiles.diagonalVDown = new World.Tile([World.Lines.diagonalDownRight.copy(),
+    World.Tiles.proxySubject.diagonalVDown = new World.Tile([World.Lines.diagonalDownRight.copy(),
         World.Lines.diagonalDownLeft.copy()]);
-    World.Tiles.diagonalVRight = new World.Tile([World.Lines.diagonalDownRight.copy(),
+    World.Tiles.proxySubject.diagonalVRight = new World.Tile([World.Lines.diagonalDownRight.copy(),
         World.Lines.diagonalUpRight.copy()]);
-    World.Tiles.diagonalVLeft = new World.Tile([World.Lines.diagonalDownLeft.copy(),
+    World.Tiles.proxySubject.diagonalVLeft = new World.Tile([World.Lines.diagonalDownLeft.copy(),
         World.Lines.diagonalUpLeft.copy()]);
 
-    World.Tiles.quarterCircleUpLeft = new World.Tile([World.Lines.quarterCircleUpLeft.copy()]);
-    World.Tiles.quarterCircleUpRight = new World.Tile([World.Lines.quarterCircleUpRight.copy()]);
-    World.Tiles.quarterCircleDownLeft = new World.Tile([World.Lines.quarterCircleDownLeft.copy()]);
-    World.Tiles.quarterCircleDownRight = new World.Tile([World.Lines.quarterCircleDownRight.copy()]);
+    World.Tiles.proxySubject.quarterCircleUpLeft = new World.Tile([World.Lines.quarterCircleUpLeft.copy()]);
+    World.Tiles.proxySubject.quarterCircleUpRight = new World.Tile([World.Lines.quarterCircleUpRight.copy()]);
+    World.Tiles.proxySubject.quarterCircleDownLeft = new World.Tile([World.Lines.quarterCircleDownLeft.copy()]);
+    World.Tiles.proxySubject.quarterCircleDownRight = new World.Tile([World.Lines.quarterCircleDownRight.copy()]);
 
-    World.Tiles.zigZagVertical = new World.Tile([World.Lines.zigZagVertical.copy()]);
-    World.Tiles.zigZagHorizontal = new World.Tile([World.Lines.zigZagHorizontal.copy()]);
+    World.Tiles.proxySubject.zigZagVertical = new World.Tile([World.Lines.zigZagVertical.copy()]);
+    World.Tiles.proxySubject.zigZagHorizontal = new World.Tile([World.Lines.zigZagHorizontal.copy()]);
+
+
+    // Tiles Proxies
+    /**************************************************************************/
+    World.Tiles.blankLine = new World.Tile.Proxy(World.Tiles.proxySubject.blankLine);
+
+    World.Tiles.verticalLine = new World.Tile.Proxy(World.Tiles.proxySubject.verticalLine);
+    World.Tiles.horizontalLine = new World.Tile.Proxy(World.Tiles.proxySubject.horizontalLine);
+    World.Tiles.cross = new World.Tile.Proxy(World.Tiles.proxySubject.cross);
+
+    World.Tiles.halfLineUp = new World.Tile.Proxy(World.Tiles.proxySubject.halfLineUp);
+    World.Tiles.halfLineDown = new World.Tile.Proxy(World.Tiles.proxySubject.halfLineDown);
+    World.Tiles.halfLineRight = new World.Tile.Proxy(World.Tiles.proxySubject.halfLineRight);
+    World.Tiles.halfLineLeft = new World.Tile.Proxy(World.Tiles.proxySubject.halfLineLeft);
+
+    World.Tiles.quarterLineUp = new World.Tile.Proxy(World.Tiles.proxySubject.quarterLineUp);
+    World.Tiles.quarterLineDown = new World.Tile.Proxy(World.Tiles.proxySubject.quarterLineDown);
+    World.Tiles.quarterLineRight = new World.Tile.Proxy(World.Tiles.proxySubject.quarterLineRight);
+    World.Tiles.quarterLineLeft = new World.Tile.Proxy(World.Tiles.proxySubject.quarterLineLeft);
+
+    World.Tiles.gapQuarterLineHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.gapQuarterLineHorizontal);
+    World.Tiles.gapQuarterLineVertical = new World.Tile.Proxy(World.Tiles.proxySubject.gapQuarterLineVertical);
+
+    World.Tiles.cornerUpLeft = new World.Tile.Proxy(World.Tiles.proxySubject.cornerUpLeft);
+    World.Tiles.cornerUpRight = new World.Tile.Proxy(World.Tiles.proxySubject.cornerUpRight);
+    World.Tiles.cornerDownLeft = new World.Tile.Proxy(World.Tiles.proxySubject.cornerDownLeft);
+    World.Tiles.cornerDownRight = new World.Tile.Proxy(World.Tiles.proxySubject.cornerDownRight);
+
+    World.Tiles.diagonalUpRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalUpRight);
+    World.Tiles.diagonalUpLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalUpLeft);
+    World.Tiles.diagonalDownRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalDownRight);
+    World.Tiles.diagonalDownLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalDownLeft);
+
+    World.Tiles.diagonalVUp = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVUp);
+    World.Tiles.diagonalVDown = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVDown);
+    World.Tiles.diagonalVRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVRight);
+    World.Tiles.diagonalVLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVLeft);
+
+    World.Tiles.quarterCircleUpLeft = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleUpLeft);
+    World.Tiles.quarterCircleUpRight = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleUpRight);
+    World.Tiles.quarterCircleDownLeft = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleDownLeft);
+    World.Tiles.quarterCircleDownRight = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleDownRight);
+
+    World.Tiles.zigZagVertical = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagVertical);
+    World.Tiles.zigZagHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagHorizontal);
 };
 
 World.setGridSize = function(gridSize) {
@@ -226,6 +273,9 @@ World.Line = class {
             Original Tile:\n", this);
 
         let loopAgain = true;
+        // don't need to loop again if you are adding a midpoint
+        let distThresh = 2 * this.maxLinePointDist;
+
         while(loopAgain) {
             loopAgain = false;
 
@@ -234,7 +284,7 @@ World.Line = class {
                 const v2 = this.linePoints[i + 1].copy();
                 const distance = v1.dist(v2);
 
-                if(distance > this.maxLinePointDist) {
+                if(distance > distThresh) {
                     const midPoint = v1.add(v2).div(2);
                     this.linePoints.splice(i + 1, 0, midPoint);
                     i++;
@@ -307,6 +357,10 @@ World.Tile = class {
         this.setPos(pos);
     }
 
+    getLines() {
+        return this.lines;
+    }
+
     setLines(lines) {
         this.lines = [];
         if(lines.length == 0) {
@@ -366,6 +420,56 @@ World.Tile = class {
         image(this.tileImage,
             this.pos.x, this.pos.y,
             World.gridSize, World.gridSize);
+    }
+
+
+};
+
+
+World.Tile.Proxy = class {
+    constructor(tile, pos=createVector(0,0)) {
+        this.tile = tile;
+        this.setPos(pos);
+        this.tile.setPos(this.pos);
+    }
+
+    getLines() {
+        this.tile.setPos(this.pos);
+        return this.tile.getLines();
+    }
+
+    setLines(lines) {
+        this.lines = [];
+        if(lines.length == 0) {
+            return;
+        }
+
+        this.tile.setPos(this.pos);
+        this.tile.setLines(lines);
+    }
+
+    setPos(newPos) {
+        this.pos = newPos.copy();
+        this.tile.setPos(newPos);
+    }
+
+    generatePG() {
+        this.tile.setPos(this.pos);
+        this.tile.generatePG();
+    }
+
+    getPG() {
+        this.tile.setPos(this.pos);
+        return this.tile.getPG();
+    }
+
+    copy() {
+        return new World.Tile.Proxy(this.tile, this.pos.copy());
+    }
+
+    draw() {
+        this.tile.setPos(this.pos);
+        this.tile.draw();
     }
 
 

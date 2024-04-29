@@ -207,7 +207,7 @@ World.Room = class {
      * @throws {Error} - tile needs to be an instance of World.Tile
      */
     setAllTiles(tile) {
-        if(!(tile instanceof World.Tile)) {
+        if(!(tile instanceof World.Tile || tile instanceof World.Tile.Proxy)) {
             const err = "tile needs to be an instance of World.Tile";
             throw new Error(err);
         }
@@ -265,7 +265,7 @@ World.Room = class {
         for(let x = 0; x < this.xNumTiles; x++) {
             for(let y = 0; y < this.yNumTiles; y++) {
                 let tile = tilePattern[x][y].copy();
-                if(!(tile instanceof World.Tile)) {
+                if(!(tile instanceof World.Tile || tile instanceof World.Tile.Proxy)) {
                     const err = "tile needs to be an instance of World.Tile";
                     throw new Error(err);
                 }

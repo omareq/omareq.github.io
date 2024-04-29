@@ -158,7 +158,7 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
      * @returns {Array<Array<World.Tile>>} - A grid with the new tile values
      */
     fillGridWithAllTiles(grid, cols, rows, horizontalFill=true) {
-        const keys = Object.keys(World.Tiles);
+        const keys = Object.keys(World.Tiles.proxySubject);
         let newGrid = grid;
 
         for(let i = 0; i < keys.length; i++) {
@@ -170,7 +170,7 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
                 xIndex = floor(i / rows);
                 yIndex = i % rows;
             }
-            newGrid[xIndex][yIndex] = World.Tiles[key].copy();
+            newGrid[xIndex][yIndex] = World.Tiles.proxySubject[key].copy();
             console.debug(key);
         }
 
