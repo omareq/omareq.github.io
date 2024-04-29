@@ -77,9 +77,6 @@ UI.initSimulationModeSelector = function() {
         UI.modeSelect.option(Simulation.Mode.ModeList[i].staticName);
     }
     UI.modeSelect.selected(Simulation.Mode.activeMode.name);
-
-// TODO: when this line is removed line follow two sensor doesn't work properly
-    Simulation.Mode.setActive(new Simulation.Mode.LineFollowTwoSensor());
 };
 
 UI.updateSimulationModeSelector = function() {

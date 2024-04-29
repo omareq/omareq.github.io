@@ -126,12 +126,15 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
     setRoomToConfig() {
         let grid = this.room.getAllTiles();
 
+        grid[1][0] = World.Tiles.horizontalLine.copy();
         grid[2][0] = World.Tiles.gapQuarterLineHorizontal.copy();
+        grid[3][0] = World.Tiles.horizontalLine.copy();
         grid[4][0] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[5][0] = World.Tiles.diagonalVDown.copy();
         grid[6][0] = World.Tiles.diagonalDownLeft.copy();
 
         grid[6][1] = World.Tiles.quarterCircleUpLeft.copy();
+        grid[5][1] = World.Tiles.horizontalLine.copy();
         grid[4][1] = World.Tiles.diagonalVDown.copy();
         grid[3][1] = World.Tiles.diagonalVUp.copy();
         grid[2][1] = World.Tiles.diagonalVDown.copy();
@@ -140,10 +143,12 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         grid[1][2] = World.Tiles.quarterCircleUpRight.copy();
         grid[2][2] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[3][2] = World.Tiles.gapQuarterLineHorizontal.copy();
+        grid[4][2] = World.Tiles.horizontalLine.copy();
         grid[5][2] = World.Tiles.gapQuarterLineHorizontal.copy();
         grid[6][2] = World.Tiles.quarterCircleDownLeft.copy();
 
         grid[6][3] = World.Tiles.diagonalUpLeft.copy();
+        grid[5][3] = World.Tiles.horizontalLine.copy();
         grid[4][3] = World.Tiles.diagonalVUp.copy();
         grid[3][3] = World.Tiles.diagonalVUp.copy();
         grid[2][3] = World.Tiles.gapQuarterLineHorizontal.copy();
@@ -152,9 +157,14 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         grid[1][4] = World.Tiles.diagonalUpRight.copy();
         grid[2][4] = World.Tiles.diagonalVDown.copy();
         grid[3][4] = World.Tiles.diagonalVDown.copy();
+        grid[4][4] = World.Tiles.horizontalLine.copy();
         grid[5][4] = World.Tiles.gapQuarterLineHorizontal.copy();
+        grid[6][4] = World.Tiles.cornerDownLeft.copy();
 
+        grid[6][5] = World.Tiles.cornerUpLeft.copy();
         grid[5][5] = World.Tiles.diagonalVUp.copy();
+        grid[4][5] = World.Tiles.horizontalLine.copy();
+        grid[3][5] = World.Tiles.horizontalLine.copy();
         grid[2][5] = World.Tiles.blankLine.copy();
         grid[1][5] = World.Tiles.diagonalVDown.copy();
 

@@ -79,8 +79,8 @@ World.Room = class {
 
         this.createEmptyRoom();
 
-        this.fillRoomWithSnakePattern();
-        this.generatePG();
+        // this.fillRoomWithSnakePattern();
+        //this.generatePG();
     }
 
     /**
@@ -221,7 +221,7 @@ World.Room = class {
             }
         }
 
-        this.generatePG();
+        //this.generatePG();
     }
 
     /**
@@ -276,7 +276,7 @@ World.Room = class {
                 this.grid[x][y] = currentTile;
             }
         }
-        this.generatePG();
+        //this.generatePG();
     }
 
     /**
@@ -315,6 +315,9 @@ World.Room = class {
      * Draws the room at the global position set in the constructor.
      */
     draw() {
+        if(this.img == undefined) {
+            this.generatePG();
+        }
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
 };

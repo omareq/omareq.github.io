@@ -230,8 +230,8 @@ World.Line = class {
             loopAgain = false;
 
             for(let i = 0; i < this.linePoints.length - 1; i++) {
-                let v1 = this.linePoints[i].copy();
-                let v2 = this.linePoints[i + 1].copy();
+                const v1 = this.linePoints[i].copy();
+                const v2 = this.linePoints[i + 1].copy();
                 const distance = v1.dist(v2);
 
                 if(distance > this.maxLinePointDist) {
@@ -296,10 +296,14 @@ World.Line = class {
     }
 };
 
+
+/**
+ * TODO make tile class less expensive to use. Use Proxy Pattern?
+ */
 World.Tile = class {
     constructor(lines, pos=createVector(0,0)) {
         this.lines = lines;
-        this.generatePG();
+        // this.generatePG();
         this.setPos(pos);
     }
 
@@ -339,6 +343,9 @@ World.Tile = class {
     }
 
     getPG() {
+        if(this.tileImage == undefined) {
+            this.generatePG();
+        }
         return this.tileImage;
     }
 
@@ -353,6 +360,9 @@ World.Tile = class {
     }
 
     draw() {
+        if(this.tileImage == undefined) {
+            this.generatePG();
+        }
         image(this.tileImage,
             this.pos.x, this.pos.y,
             World.gridSize, World.gridSize);

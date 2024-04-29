@@ -77,6 +77,7 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
         this.setupRobot();
 
         this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
+        this.room.fillRoomWithSnakePattern();
         this.setRoomToConfig();
     }
 

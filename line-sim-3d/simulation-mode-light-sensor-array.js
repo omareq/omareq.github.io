@@ -104,6 +104,7 @@ Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
 
 
         this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
+        this.room.fillRoomWithSnakePattern();
 
         let grid = this.room.getAllTiles();
 
