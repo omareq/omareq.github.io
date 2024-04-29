@@ -171,6 +171,15 @@ World.TileSetup = function() {
     World.Tiles.proxySubject.diagonalVLeft = new World.Tile([World.Lines.diagonalDownLeft.copy(),
         World.Lines.diagonalUpLeft.copy()]);
 
+    World.Tiles.proxySubject.diagBoxGapDownLeft = new World.Tile([World.Lines.diagonalUpRight.copy(),
+        World.Lines.diagonalUpLeft.copy(), World.Lines.diagonalDownRight.copy()]);
+    World.Tiles.proxySubject.diagBoxGapUpLeft = new World.Tile([World.Lines.diagonalUpRight.copy(),
+        World.Lines.diagonalDownLeft.copy(), World.Lines.diagonalDownRight.copy()]);
+    World.Tiles.proxySubject.diagBoxGapDownRight = new World.Tile([World.Lines.diagonalUpRight.copy(),
+        World.Lines.diagonalUpLeft.copy(), World.Lines.diagonalDownLeft.copy()]);
+    World.Tiles.proxySubject.diagBoxGapUpRight = new World.Tile([World.Lines.diagonalUpLeft.copy(),
+        World.Lines.diagonalDownLeft.copy(), World.Lines.diagonalDownRight.copy()]);
+
     World.Tiles.proxySubject.quarterCircleUpLeft = new World.Tile([World.Lines.quarterCircleUpLeft.copy()]);
     World.Tiles.proxySubject.quarterCircleUpRight = new World.Tile([World.Lines.quarterCircleUpRight.copy()]);
     World.Tiles.proxySubject.quarterCircleDownLeft = new World.Tile([World.Lines.quarterCircleDownLeft.copy()]);
@@ -215,6 +224,11 @@ World.TileSetup = function() {
     World.Tiles.diagonalVDown = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVDown);
     World.Tiles.diagonalVRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVRight);
     World.Tiles.diagonalVLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVLeft);
+
+    World.Tiles.diagBoxGapUpLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapDownLeft);
+    World.Tiles.diagBoxGapUpRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapUpRight);
+    World.Tiles.diagBoxGapDownLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapDownLeft);
+    World.Tiles.diagBoxGapDownRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapDownRight);
 
     World.Tiles.quarterCircleUpLeft = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleUpLeft);
     World.Tiles.quarterCircleUpRight = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleUpRight);
