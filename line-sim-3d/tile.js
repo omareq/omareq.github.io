@@ -92,6 +92,29 @@ World.TileSetup = function() {
                 createVector(0.50, 1.0)
                 ];
 
+    World.LineConfigs.threeQuarterCircleUpRight = [
+                createVector(0.750, 0.500),
+                createVector(0.741, 0.565),
+                createVector(0.717, 0.625),
+                createVector(0.677, 0.677),
+                createVector(0.625, 0.717),
+                createVector(0.565, 0.741),
+                createVector(0.500, 0.750),
+                createVector(0.435, 0.741),
+                createVector(0.375, 0.717),
+                createVector(0.323, 0.677),
+                createVector(0.283, 0.625),
+                createVector(0.259, 0.565),
+                createVector(0.250, 0.500),
+                createVector(0.259, 0.435),
+                createVector(0.283, 0.375),
+                createVector(0.323, 0.323),
+                createVector(0.375, 0.283),
+                createVector(0.435, 0.259),
+                createVector(0.500, 0.250)
+                ];
+
+
     // Lines
     /**************************************************************************/
     World.Lines = {};
@@ -118,6 +141,11 @@ World.TileSetup = function() {
     World.Lines.quarterCircleUpRight = World.Lines.quarterCircleUpLeft.copy().flipVertical();
     World.Lines.quarterCircleDownRight = World.Lines.quarterCircleUpRight.copy().flipHorizontal();
     World.Lines.quarterCircleDownLeft = World.Lines.quarterCircleUpLeft.copy().flipHorizontal();
+
+    World.Lines.threeQuarterCircleUpRight = new World.Line(World.LineConfigs.threeQuarterCircleUpRight);
+    World.Lines.threeQuarterCircleUpLeft = World.Lines.threeQuarterCircleUpRight.copy().flipVertical();
+    World.Lines.threeQuarterCircleDownLeft = World.Lines.threeQuarterCircleUpLeft.copy().flipHorizontal();
+    World.Lines.threeQuarterCircleDownRight = World.Lines.threeQuarterCircleUpRight.copy().flipHorizontal();
 
     World.Lines.zigZagVertical = new World.Line(World.LineConfigs.zigZagVertical);
     World.Lines.zigZagHorizontal = World.Lines.zigZagVertical.copy().flipDiagonal();
@@ -185,6 +213,15 @@ World.TileSetup = function() {
     World.Tiles.proxySubject.quarterCircleDownLeft = new World.Tile([World.Lines.quarterCircleDownLeft.copy()]);
     World.Tiles.proxySubject.quarterCircleDownRight = new World.Tile([World.Lines.quarterCircleDownRight.copy()]);
 
+    World.Tiles.proxySubject.threeQuarterCircleUpRight = new World.Tile([World.Lines.threeQuarterCircleUpRight.copy(),
+        World.Lines.quarterLineUp.copy(), World.Lines.quarterLineRight.copy()]);
+    World.Tiles.proxySubject.threeQuarterCircleUpLeft = new World.Tile([World.Lines.threeQuarterCircleUpLeft.copy(),
+        World.Lines.quarterLineUp.copy(), World.Lines.quarterLineLeft.copy()]);
+    World.Tiles.proxySubject.threeQuarterCircleDownRight = new World.Tile([World.Lines.threeQuarterCircleDownRight.copy(),
+        World.Lines.quarterLineDown.copy(), World.Lines.quarterLineRight.copy()]);
+    World.Tiles.proxySubject.threeQuarterCircleDownLeft = new World.Tile([World.Lines.threeQuarterCircleDownLeft.copy(),
+        World.Lines.quarterLineDown.copy(), World.Lines.quarterLineLeft.copy()]);
+
     World.Tiles.proxySubject.zigZagVertical = new World.Tile([World.Lines.zigZagVertical.copy()]);
     World.Tiles.proxySubject.zigZagHorizontal = new World.Tile([World.Lines.zigZagHorizontal.copy()]);
 
@@ -234,6 +271,11 @@ World.TileSetup = function() {
     World.Tiles.quarterCircleUpRight = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleUpRight);
     World.Tiles.quarterCircleDownLeft = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleDownLeft);
     World.Tiles.quarterCircleDownRight = new World.Tile.Proxy(World.Tiles.proxySubject.quarterCircleDownRight);
+
+    World.Tiles.threeQuarterCircleUpLeft = new World.Tile.Proxy(World.Tiles.proxySubject.threeQuarterCircleUpLeft);
+    World.Tiles.threeQuarterCircleUpRight = new World.Tile.Proxy(World.Tiles.proxySubject.threeQuarterCircleUpRight);
+    World.Tiles.threeQuarterCircleDownLeft = new World.Tile.Proxy(World.Tiles.proxySubject.threeQuarterCircleDownLeft);
+    World.Tiles.threeQuarterCircleDownRight = new World.Tile.Proxy(World.Tiles.proxySubject.threeQuarterCircleDownRight);
 
     World.Tiles.zigZagVertical = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagVertical);
     World.Tiles.zigZagHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagHorizontal);
