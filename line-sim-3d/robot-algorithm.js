@@ -101,22 +101,28 @@ Robot.Algorithm.OneSensorFollow = class extends Robot.Algorithm.LineFollow {
 };
 
 Robot.Algorithm.TwoSensorFollow = class extends Robot.Algorithm.LineFollow {
-    constructor() {
+    constructor(forwardVel, rotationKp, rotationKd) {
         super();
+        this.forwardVel = forwardVel;
+        this.rotationKp = rotationKp;
+        this.rotationKd = rotationKd;
+        console.debug("Algorithm forward Vel: ", this.forwardVel);
+        console.debug("Algorithm rotationKp: ", this.rotationKp);
+        console.debug("Algorithm rotationKd: ", this.rotationKd);
         this.pError = 0;
         this.crossingGap = false;
         this.crossingParam = 0;
     };
 
     follow(robotData) {
-        let forwardVel = 1.5 * World.gridSize;
+        let forwardVel = this.forwardVel;
 
         // Simple PD controller
 
         const error = robotData.sensorVals[1] - robotData.sensorVals[0];
-        const rotationKp = 12;
-        const rotationKd = 0;
-        let rotationRate = rotationKp * error + rotationKd * (this.pError - error);
+        // const rotationKp = 12;
+        // const rotationKd = 0;
+        let rotationRate = this.rotationKp * error + this.rotationKd * (this.pError - error);
 
         // slow down if at a sharp turn
         const velKp = 0.15 * World.gridSize;

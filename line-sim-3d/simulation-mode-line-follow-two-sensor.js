@@ -78,6 +78,9 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
         this.sensorRadius = 0.5 * World.lineThickness + 1;
         this.sensorSeparation = 0.2;
+        this.rotationKp = 12;
+        this.rotationKd = 0;
+        this.algorithmForwardVel = 1.5 * World.gridSize;
         this.addNewUIElements();
 
         this.setupRobot();
@@ -94,6 +97,15 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
             document.getElementById("sm-lfts-sensor-radius-slider").children[0].remove();
             document.getElementById("sm-lfts-sensor-radius-val").children[0].remove();
+
+            document.getElementById("sm-lfts-pd-rotation-kp-slider").children[0].remove();
+            document.getElementById("sm-lfts-pd-rotation-kp-val").children[0].remove();
+
+            document.getElementById("sm-lfts-pd-rotation-kd-slider").children[0].remove();
+            document.getElementById("sm-lfts-pd-rotation-kd-val").children[0].remove();
+
+            document.getElementById("sm-lfts-pd-vel-slider").children[0].remove();
+            document.getElementById("sm-lfts-pd-vel-val").children[0].remove();
         }
 
         // sensor separation
@@ -106,13 +118,37 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
 
         // sensor radius
-        console.log("World line thickness", World.lineThickness);
         this.sensorRadiusSlider = createSlider(1, World.lineThickness + 2, this.sensorRadius, 0.25);
         this.sensorRadiusSlider.parent("sm-lfts-sensor-radius-slider");
 
         this.sensorRadiusDisplay = createP();
         this.sensorRadiusDisplay.parent("sm-lfts-sensor-radius-val");
         this.sensorRadiusDisplay.elt.innerText = "Radius: " + str(this.sensorRadius);
+
+
+        // pd rotation kp
+        this.rotationKpSlider = createSlider(1, 50, this.rotationKp, 0.25);
+        this.rotationKpSlider.parent("sm-lfts-pd-rotation-kp-slider");
+
+        this.rotationKpDisplay = createP();
+        this.rotationKpDisplay.parent("sm-lfts-pd-rotation-kp-val");
+        this.rotationKpDisplay.elt.innerText = "Kp: " + str(this.rotationKp);
+
+        // pd rotation kd
+        this.rotationKdSlider = createSlider(0, 50, this.rotationKd, 0.25);
+        this.rotationKdSlider.parent("sm-lfts-pd-rotation-kd-slider");
+
+        this.rotationKdDisplay = createP();
+        this.rotationKdDisplay.parent("sm-lfts-pd-rotation-kd-val");
+        this.rotationKdDisplay.elt.innerText = "Kd: " + str(this.rotationKd);
+
+        // pd rotation vel
+        this.velSlider = createSlider(1, 2 * World.gridSize, this.algorithmForwardVel, 1);
+        this.velSlider.parent("sm-lfts-pd-vel-slider");
+
+        this.velDisplay = createP();
+        this.velDisplay.parent("sm-lfts-pd-vel-val");
+        this.velDisplay.elt.innerText = "Vel: " + str(this.algorithmForwardVel);
     }
 
     UIPoll() {
@@ -131,6 +167,34 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
                 sliderVal);
             this.sensorRadius = sliderVal;
             this.sensorRadiusDisplay.elt.innerText = "Radius: " + str(sliderVal);
+            this.setupRobot();
+        }
+
+
+        sliderVal = this.rotationKpSlider.value();
+        if(sliderVal != this.rotationKp) {
+            console.debug("Simulation Mode Line follow two sensor uiPoll: rotation Kp Slider value has changed to: ",
+                sliderVal);
+            this.rotationKp = sliderVal;
+            this.rotationKpDisplay.elt.innerText = "Kp: " + str(sliderVal);
+            this.setupRobot();
+        }
+
+        sliderVal = this.rotationKdSlider.value();
+        if(sliderVal != this.rotationKd) {
+            console.debug("Simulation Mode Line follow two sensor uiPoll: rotation Kd Slider value has changed to: ",
+                sliderVal);
+            this.rotationKd = sliderVal;
+            this.rotationKdDisplay.elt.innerText = "Kd: " + str(sliderVal);
+            this.setupRobot();
+        }
+
+        sliderVal = this.velSlider.value();
+        if(sliderVal != this.algorithmForwardVel) {
+            console.debug("Simulation Mode Line follow two sensor uiPoll: rotation Kd Slider value has changed to: ",
+                sliderVal);
+            this.algorithmForwardVel = sliderVal;
+            this.velDisplay.elt.innerText = "Vel: " + str(sliderVal);
             this.setupRobot();
         }
     }
@@ -172,7 +236,10 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         const size = 0.5 * World.gridSize;
         const sensorArray = this.setupLightSensorArray(size);
         const sensorArrayPos = createVector(0, 0.5 * size);
-        const algorithm = new Robot.Algorithm.TwoSensorFollow();
+        const algorithm = new Robot.Algorithm.TwoSensorFollow(
+            this.algorithmForwardVel,
+            this.rotationKp,
+            this.rotationKd);
 
         this.robot = new Robot.robot(
             pos,
