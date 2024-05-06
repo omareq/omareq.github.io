@@ -106,6 +106,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
 
         // sensor radius
+        console.log("World line thickness", World.lineThickness);
         this.sensorRadiusSlider = createSlider(1, World.lineThickness + 2, this.sensorRadius, 0.25);
         this.sensorRadiusSlider.parent("sm-lfts-sensor-radius-slider");
 
@@ -243,7 +244,6 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
      * Update function that updates the state of the simulation
      */
     update() {
-        this.UIPoll();
         this.room.draw();
 
         this.robot.sensorsRead(this.room);

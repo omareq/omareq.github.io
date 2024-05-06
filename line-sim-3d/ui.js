@@ -122,5 +122,6 @@ UI.setup = function() {
 UI.poll = function() {
     console.debug("UI.poll: Start");
     UI.updateSimulationModeSelector();
+    Simulation.Mode.activeMode.UIPoll();
     console.debug("UI.poll: End");
 };

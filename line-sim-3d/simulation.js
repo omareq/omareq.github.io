@@ -217,6 +217,8 @@ Simulation.Mode.ModeType = class {
         console.debug("Hide sim mode UI");
         this.UIPanel.style.visibility = "hidden";
     }
+
+    UIPoll() {};
 };
 
 /**
