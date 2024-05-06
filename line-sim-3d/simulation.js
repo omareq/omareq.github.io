@@ -207,7 +207,7 @@ Simulation.Mode.ModeType = class {
         }
         console.debug("Show sim mode UI");
         this.UIPanel.style.visibility = "visible";
-
+        this.UIPanel.style.display = "inline";
     }
 
     hideUI() {
@@ -216,6 +216,7 @@ Simulation.Mode.ModeType = class {
         }
         console.debug("Hide sim mode UI");
         this.UIPanel.style.visibility = "hidden";
+        this.UIPanel.style.display = "none";
     }
 
     UIPoll() {};
