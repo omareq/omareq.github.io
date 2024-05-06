@@ -92,6 +92,8 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
     addNewUIElements() {
         // TODO: save handles when switching simulation mode
         if(document.getElementById("sm-lfts-sensor-separation-slider").children.length) {
+            document.getElementById("sm-lfts-show-grid").children[0].remove();
+
             document.getElementById("sm-lfts-sensor-separation-slider").children[0].remove();
             document.getElementById("sm-lfts-sensor-separation-val").children[0].remove();
 
@@ -107,6 +109,10 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
             document.getElementById("sm-lfts-pd-vel-slider").children[0].remove();
             document.getElementById("sm-lfts-pd-vel-val").children[0].remove();
         }
+
+        // show grid check box
+        this.showGridCheckbox = createCheckbox("Draw Grid Lines", true);
+        this.showGridCheckbox.parent("sm-lfts-show-grid");
 
         // sensor separation
         this.sensorSeparationSlider = createSlider(0, 1, this.sensorSeparation, 0.05);
@@ -196,6 +202,10 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
             this.algorithmForwardVel = sliderVal;
             this.velDisplay.elt.innerText = "Vel: " + str(sliderVal);
             this.setupRobot();
+        }
+
+        if(this.showGridCheckbox.checked() != this.room.showGrid) {
+            this.room.generatePG(this.showGridCheckbox.checked());
         }
     }
 

@@ -189,7 +189,7 @@ World.Room = class {
                 const xPos = x * World.gridSize;
                 const yPos = y * World.gridSize;
                 this.img.image(tileImg, xPos, yPos,
-                    World.gridSize, World.gridSize);
+                    World.gridSize + 1, World.gridSize + 1);
                 if(this.showGrid) {
                     this.img.rect(xPos, yPos,
                         World.gridSize - 1, World.gridSize - 1);
