@@ -51,6 +51,7 @@ UI.controlPanelSetup = function() {
  */
 UI.controlPanelShow = function() {
     UI.controlPanel.style.visibility = "visible";
+    UI.controlPanel.style.display = "inline";
 };
 
 /**
@@ -58,6 +59,7 @@ UI.controlPanelShow = function() {
  */
 UI.controlPanelHide = function() {
     UI.controlPanel.style.visibility = "hidden";
+    UI.controlPanel.style.display = "none";
 };
 
 /**
