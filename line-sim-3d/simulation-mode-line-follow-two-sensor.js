@@ -106,7 +106,6 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
 
         // sensor radius
-        console.log("World line thickness", World.lineThickness);
         this.sensorRadiusSlider = createSlider(1, World.lineThickness + 2, this.sensorRadius, 0.25);
         this.sensorRadiusSlider.parent("sm-lfts-sensor-radius-slider");
 
@@ -118,7 +117,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
     UIPoll() {
         let sliderVal = this.sensorSeparationSlider.value();
         if(sliderVal != this.sensorSeparation) {
-            console.log("Simulation Mode Line follow two sensor uiPoll: sensor separation Slider value has changed to: ",
+            console.debug("Simulation Mode Line follow two sensor uiPoll: sensor separation Slider value has changed to: ",
                 sliderVal);
             this.sensorSeparation = sliderVal;
             this.sensorSeparationDisplay.elt.innerText = "Separation: " + str(sliderVal);
@@ -127,7 +126,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
         sliderVal = this.sensorRadiusSlider.value();
         if(sliderVal != this.sensorRadius) {
-            console.log("Simulation Mode Line follow two sensor uiPoll: sensor radius Slider value has changed to: ",
+            console.debug("Simulation Mode Line follow two sensor uiPoll: sensor radius Slider value has changed to: ",
                 sliderVal);
             this.sensorRadius = sliderVal;
             this.sensorRadiusDisplay.elt.innerText = "Radius: " + str(sliderVal);
