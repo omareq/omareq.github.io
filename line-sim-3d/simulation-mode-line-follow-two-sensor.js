@@ -58,6 +58,8 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
     constructor() {
         super();
         this.name = "LineFollowTwoSensor";
+        this.uiDivID = "simulation-mode-line-follow-two-sensor";
+        this.setupUI();
 
         const numTilesX = 7;
         const numTilesY = 6;
@@ -74,22 +76,83 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
         World.setGridSize(gridSize);
 
+        this.sensorRadius = 0.5 * World.lineThickness + 1;
+        this.sensorSeparation = 0.2;
+        this.addNewUIElements();
+
         this.setupRobot();
 
         this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
         this.setRoomToConfig();
     }
 
-    setupLightSensorArray(sensorRadius) {
+    addNewUIElements() {
+        // TODO: save handles when switching simulation mode
+        if(document.getElementById("sm-lfts-sensor-separation-slider").children.length) {
+            document.getElementById("sm-lfts-sensor-separation-slider").children[0].remove();
+            document.getElementById("sm-lfts-sensor-separation-val").children[0].remove();
+
+            document.getElementById("sm-lfts-sensor-radius-slider").children[0].remove();
+            document.getElementById("sm-lfts-sensor-radius-val").children[0].remove();
+        }
+
+        // sensor separation
+        this.sensorSeparationSlider = createSlider(0, 1, this.sensorSeparation, 0.05);
+        this.sensorSeparationSlider.parent("sm-lfts-sensor-separation-slider");
+
+        this.sensorSeparationDisplay = createP();
+        this.sensorSeparationDisplay.parent("sm-lfts-sensor-separation-val");
+        this.sensorSeparationDisplay.elt.innerText = "Separation: " + str(this.sensorSeparation);
+
+
+        // sensor radius
+        console.log("World line thickness", World.lineThickness);
+        this.sensorRadiusSlider = createSlider(1, World.lineThickness + 2, this.sensorRadius, 0.25);
+        this.sensorRadiusSlider.parent("sm-lfts-sensor-radius-slider");
+
+        this.sensorRadiusDisplay = createP();
+        this.sensorRadiusDisplay.parent("sm-lfts-sensor-radius-val");
+        this.sensorRadiusDisplay.elt.innerText = "Radius: " + str(this.sensorRadius);
+    }
+
+    UIPoll() {
+        let sliderVal = this.sensorSeparationSlider.value();
+        if(sliderVal != this.sensorSeparation) {
+            console.log("Simulation Mode Line follow two sensor uiPoll: sensor separation Slider value has changed to: ",
+                sliderVal);
+            this.sensorSeparation = sliderVal;
+            this.sensorSeparationDisplay.elt.innerText = "Separation: " + str(sliderVal);
+            this.setupRobot();
+        }
+
+        sliderVal = this.sensorRadiusSlider.value();
+        if(sliderVal != this.sensorRadius) {
+            console.log("Simulation Mode Line follow two sensor uiPoll: sensor radius Slider value has changed to: ",
+                sliderVal);
+            this.sensorRadius = sliderVal;
+            this.sensorRadiusDisplay.elt.innerText = "Radius: " + str(sliderVal);
+            this.setupRobot();
+        }
+    }
+
+    setupLightSensorArray(robotSize) {
         let numSensors = 2;
         let globalPos = createVector(0,0);
+        let posOffset = map(this.sensorSeparation,
+            0, 1,
+            this.sensorRadius, 0.5 * robotSize);
+
+        console.debug("this.sensorRadius", this.sensorRadius);
+        console.debug("robotSize", robotSize);
+        console.debug("lightSensorPosOffset: ", posOffset);
+
         let sensorPositions = [
-            createVector(-1.5 * sensorRadius, 0.00),
-            createVector(1.5 * sensorRadius, 0.00)
+            createVector(-posOffset, 0.00),
+            createVector(posOffset, 0.00)
             ];
         let radiuses = [
-            sensorRadius,
-            sensorRadius
+            this.sensorRadius,
+            this.sensorRadius
             ];
         let analogOrDigital = [
             Robot.LightSensorType.Analog,
@@ -107,8 +170,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         const pos = createVector(0.5 * World.gridSize, 0.55 * World.gridSize);
         const bearing = -0.5 * math.PI;
         const size = 0.5 * World.gridSize;
-        const sensorRadius = 0.5 * World.lineThickness + 1;
-        const sensorArray = this.setupLightSensorArray(sensorRadius);
+        const sensorArray = this.setupLightSensorArray(size);
         const sensorArrayPos = createVector(0, 0.5 * size);
         const algorithm = new Robot.Algorithm.TwoSensorFollow();
 
@@ -182,6 +244,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
      * Update function that updates the state of the simulation
      */
     update() {
+        this.UIPoll();
         this.room.draw();
 
         this.robot.sensorsRead(this.room);

@@ -139,6 +139,12 @@ Simulation.Mode.setActive = function(newMode) {
         throw new Error(err);
     }
 
+    // no point hiding the UI if the new mode is the current mode
+    if(Simulation.Mode.activeMode != undefined &&
+        Simulation.Mode.activeMode.name != newMode.name) {
+        Simulation.Mode.activeMode.hideUI();
+    }
+
     Simulation.Mode.activeMode = newMode;
     Simulation.pauseFlagUnset();
 };
@@ -186,8 +192,30 @@ Simulation.Mode.ModeType = class {
         throw new Error("Method 'update()' must be implemented.");
     }
 
-    getName() {
-        return this.testName;
+    setupUI() {
+        if(this.uiDivID == undefined) {
+            return;
+        }
+        console.debug("setup sim mode UI");
+        this.UIPanel = document.getElementById(this.uiDivID);
+        this.showUI();
+    }
+
+    showUI() {
+        if(this.UIPanel == undefined) {
+            return;
+        }
+        console.debug("Show sim mode UI");
+        this.UIPanel.style.visibility = "visible";
+
+    }
+
+    hideUI() {
+        if(this.UIPanel == undefined) {
+            return;
+        }
+        console.debug("Hide sim mode UI");
+        this.UIPanel.style.visibility = "hidden";
     }
 };
 
@@ -212,6 +240,11 @@ Simulation.Mode.Empty = class extends Simulation.Mode.ModeType {
      * exits immediately
      */
     update() {};
+
+    /**
+     * exits immediately
+     */
+    hideUI() {};
 };
 
 Simulation.Mode.ModeList = [];

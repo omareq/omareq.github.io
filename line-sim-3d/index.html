@@ -38,19 +38,36 @@
 
     <section class="container">
       <div class="row">
-         <div id="control-panel" class="col-sm-4" style="margin-bottom:10px; border: 2px solid purple; border-radius: 10px; visibility:hidden;">
+
+        <div id="control-panel" class="col-sm-4" style="margin-bottom:10px; border: 2px solid purple; border-radius: 10px; visibility:hidden;">
             <p style="font-weight: bold"> Control Panel <p>
 
               <div>
 
                 <!-- Buttons -->
                 <div style="margin: 10px;">
-                <div id=pause-button style=" display: inline-block"> </div>
-                <div id=reset-button style=" display: inline-block"> </div>
+                <div id="pause-button" style=" display: inline-block"> </div>
+                <div id="reset-button" style=" display: inline-block"> </div>
                 </div>
 
                 <!-- Algorithm dependent Code -->
                 <div id="simulation-mode-selector" style="overflow: hidden;"></div>
+
+                <!-- Simulation mode line follow two sensor (SM LFTS) -->
+                <div id="simulation-mode-line-follow-two-sensor" style="visibility:hidden;">
+                  <b>Line Follow 2 Sensor Settings</b>
+
+                  <p> Light Sensor (LS) </p>
+                  <div>
+                  <div id="sm-lfts-sensor-separation-slider" style="   display: inline-block"> </div>
+                  <div id="sm-lfts-sensor-separation-val" style="   display: inline-block"></div>
+                  </div>
+
+                  <div>
+                  <div id="sm-lfts-sensor-radius-slider" style="   display: inline-block"> </div>
+                  <div id="sm-lfts-sensor-radius-val" style="   display: inline-block"> </div>
+                  </div>
+                </div> <!-- End SM LFTS-->
 
               </div>
           </div>
