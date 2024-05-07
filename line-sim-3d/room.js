@@ -38,6 +38,9 @@ var World = World || {};
 
 /**
  * Class that implements a room of tiles.
+ *
+ * @see World.Tile
+ * @see World.Tile.proxy
  */
 World.Room = class {
     /**
@@ -84,7 +87,7 @@ World.Room = class {
     }
 
     /**
-     * creates a 2d grid of World.Tiles.blankLine.
+     * creates a 2d grid of World.Tile.blankLine.
      */
     createEmptyRoom() {
         this.grid = [];
@@ -227,7 +230,7 @@ World.Room = class {
     /**
      * Returns a copy of the tile grid
      *
-     * @returns {Array<Array<World.Tiles>>} - a 2d array of tiles.
+     * @returns {Array<Array<World.Tile>>} - a 2d array of tiles.
      */
     getAllTiles() {
         let gridCopy = [];
@@ -259,7 +262,7 @@ World.Room = class {
     /**
      * sets the tiles in the grid to a new pattern
      *
-     * @param tilePattern {Array<Array<World.Tiles>>} - a 2d array of tiles.
+     * @param tilePattern {Array<Array<World.Tile>>} - a 2d array of tiles.
      */
     setTiles(tilePattern) {
         for(let x = 0; x < this.xNumTiles; x++) {

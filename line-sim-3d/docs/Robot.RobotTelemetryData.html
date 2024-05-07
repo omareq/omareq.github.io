@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: DebugStaticTile</title>
+    <title>JSDoc: Class: RobotTelemetryData</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: DebugStaticTile</h1>
+    <h1 class="page-title">Class: RobotTelemetryData</h1>
 
     
 
@@ -29,12 +29,11 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>DebugStaticTile<span class="signature">()</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="global.html#Robot">Robot</a>.</span>RobotTelemetryData<span class="signature">(robot)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class Simulation.Mode.DebugStaticTile is a simulation mode that has a single
-tile in the centre of the canvas.  This was used as a test for different
-sized light sensors to ensure that they give sensible readings in different
-conditions.</div>
+            <div class="class-description">A class that stores a snapshot of all the robots parameters at a given time.
+This includes the position, bearing, velocity, rotation rate, and last read
+sensor values.</div>
         
     
 </header>
@@ -49,7 +48,7 @@ conditions.</div>
     
 
     
-    <h4 class="name" id="DebugStaticTile"><span class="type-signature"></span>new DebugStaticTile<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RobotTelemetryData"><span class="type-signature"></span>new RobotTelemetryData<span class="signature">(robot)</span><span class="type-signature"></span></h4>
     
 
     
@@ -57,7 +56,7 @@ conditions.</div>
 
 
 <div class="description">
-    The constructor that sets up the simulation variables
+    Constructor for the telemetry data.
 </div>
 
 
@@ -66,6 +65,55 @@ conditions.</div>
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>robot</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Robot.robot.html">Robot.robot</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The robot to save the data for.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -101,7 +149,7 @@ conditions.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation-mode-static-tile.js.html">simulation-mode-static-tile.js</a>, <a href="simulation-mode-static-tile.js.html#line57">line 57</a>
+        <a href="robot.js.html">robot.js</a>, <a href="robot.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -111,13 +159,11 @@ conditions.</div>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Simulation.Mode.ModeType.html">Simulation.Mode.ModeType</a></li>
+            <li><a href="Robot.robot.html">Robot.robot</a></li>
         
-            <li><a href="World.Tile.html">World.Tile</a></li>
+            <li><a href="Robot.Algorithm.LineFollow.html">Robot.Algorithm.LineFollow</a></li>
         
-            <li>World.Tile.proxy</li>
-        
-            <li><a href="Robot.AnalogLightSensor.html">Robot.AnalogLightSensor</a></li>
+            <li><a href="Robot.MovementCommands.html">Robot.MovementCommands</a></li>
         </ul>
     </dd>
     
@@ -161,98 +207,6 @@ conditions.</div>
 
     
 
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Update function that updates the state of the simulation
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation-mode-static-tile.js.html">simulation-mode-static-tile.js</a>, <a href="simulation-mode-static-tile.js.html#line79">line 79</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     
 
     

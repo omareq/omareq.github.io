@@ -43,11 +43,16 @@ Simulation.Mode = Simulation.Mode || {};
 
 
 /**
- * Class Simulation.Mode.DebugMovingTile is a simulation mode that has a tile
- * moving back and forth along the canvas to test that the light sensors can
- * correctly read the value in a global coordinate frame.
+ * Class Simulation.Mode.DebugRobot is a simulation mode that has a room of
+ * tiles that a robot drives around in circles.  This is simply to test that the
+ * robot functionality is working correctly in terms of motion and that the
+ * light sensor array follows the motion of the robot correctly and reads the
+ * correct lines.
  *
- * @see Simulation.Mode.Type
+ * @see Simulation.Mode.ModeType
+ * @see Robot.robot
+ * @see Robot.LightSensorArray
+ * @see Robot.Algorithm.CurveRight
  */
 Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
     static staticName = "DebugRobot";
@@ -81,6 +86,11 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
         this.setRoomToConfig();
     }
 
+    /**
+     * setup the light sensor array that will be attached to the robot.
+     *
+     * @param sensorRadius {number} - The radius of the light sensors
+     */
     setupLightSensorArray(sensorRadius) {
         let numSensors = 3;
         let globalPos = createVector(0,0);
@@ -106,6 +116,9 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
             analogOrDigital);
     }
 
+    /**
+     * Setup the robot in the simulation.
+     */
     setupRobot() {
         const pos = createVector(width / 2, 0.5 * World.gridSize);
         const bearing = -0.5 * math.PI;
@@ -126,6 +139,9 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
         this.robot.setRotationRate(0.30);
     }
 
+    /**
+     * Set the room the configuration in the function
+     */
     setRoomToConfig() {
         let grid = this.room.getAllTiles();
 

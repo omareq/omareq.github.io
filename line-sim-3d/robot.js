@@ -36,7 +36,21 @@
  */
 var Robot = Robot || {};
 
+/**
+ * A class that stores a snapshot of all the robots parameters at a given time.
+ * This includes the position, bearing, velocity, rotation rate, and last read
+ * sensor values.
+ *
+ * @see Robot.robot
+ * @see Robot.Algorithm.LineFollow
+ * @see Robot.MovementCommands
+ */
 Robot.RobotTelemetryData = class {
+    /**
+     * Constructor for the telemetry data.
+     *
+     * @param robot {Robot.robot} - The robot to save the data for.
+     */
     constructor(robot) {
         this.pos = robot.pos.copy();
         this.bearing = robot.bearing;
@@ -47,15 +61,50 @@ Robot.RobotTelemetryData = class {
     }
 };
 
+/**
+ * A class that stores effector commands for the robot.  This includes linear
+ * velocity in the forward direction and rotation rate.
+ *
+ * @see Robot.robot
+ * @see Robot.Algorithm.LineFollow
+ * @see Robot.RobotTelemetryData
+ */
 Robot.MovementCommands = class {
+    /**
+     * The constructor for the command object.
+     *
+     * @param vel {number} - The forward velocity of the robot
+     * @param rotationRate {number} - The rotation rate of the robot
+     */
     constructor(vel, rotationRate) {
         this.vel = vel;
         this.rotationRate = rotationRate;
     }
 };
 
+/**
+ * A robot class to encapsulate all of the properties of a line following robot
+ *
+ * @see Robot.Algorithm.LineFollow
+ * @see Robot.RobotTelemetryData
+ * @see Robot.MovementCommands
+ * @see Robot.AnalogLightSensor
+ * @see Robot.DigitalLightSensor
+ * @see Robot.LightSensorArray
+ */
 Robot.robot = class{
-
+    /**
+     * The constructor for the robot class.
+     *
+     * @param pos {p5.Vector} - Start position of the robot in pixels
+     * @param bearing {number} - Start bearing of the robot in radians
+     * @param size {number} - The size of the robot in pixels
+     * @param sensorArray {Robot.LightSensorArray} - An array of light sensors
+     * @param sensorArrayPos {p5.Vector} - A vector with the relative position
+     *  of the light sensor array with respect to the robot centre
+     * @param algorithm {Robot.Algorithm.LineFollow} - The line following
+     *   algorithm that the robot uses.
+     */
     constructor(pos, bearing, size, sensorArray, sensorArrayPos, algorithm) {
         this.pos = pos.copy();
         this.bearing = bearing;
@@ -71,14 +120,32 @@ Robot.robot = class{
         this.maxRotationRate = 1.5 * math.Pi;
     }
 
+    /**
+     * A function to return the last sensor values.
+     *
+     * @returns {Array<number>} - An array of sensor values
+     */
     getLastSensorVals() {
         return this.sensorArray.getLastSensorVals();
     }
 
+    /**
+     * Reads all of the sensor values in the given room.
+     *
+     * @param room {World.Room} - The room to be probed with the sensors
+     *
+     * @return {Array<number>} - An array of sensor values
+     */
     sensorsRead(room) {
         return this.sensorArray.read(room);
     }
 
+    /**
+     * Sets the forward velocity of the robot.  Returns early if the requested
+     * velocity is greater than the robots maximum velocity.
+     *
+     * @param newVel {number} - The new velocity
+     */
     setForwardVel(newVel) {
         if(abs(newVel) > this.maxVel) {
             this.vel = this.maxVel;
@@ -87,6 +154,12 @@ Robot.robot = class{
         this.vel = newVel;
     }
 
+    /**
+     * Sets the rotation rate of the robot.  Returns early if the requested
+     * rotation rate is greater than the robots maximum rotation rate.
+     *
+     * @param newRotationRate {number} - The new rotation rate
+     */
     setRotationRate(newRotationRate) {
         if(abs(newRotationRate) > this.maxRotationRate) {
             this.rotationRate = this.maxRotationRate;
@@ -95,6 +168,11 @@ Robot.robot = class{
         this.rotationRate = newRotationRate;
     }
 
+    /**
+     * Robot update function.  This sends a telemetry data object to the line
+     * follow algorithm and then updates the movement according the algorithms
+     * requested movement commands.
+     */
     update() {
         const data = new Robot.RobotTelemetryData(this);
         const movementCommands = this.algorithm.follow(data);
@@ -107,7 +185,9 @@ Robot.robot = class{
         this.pos.add(vel);
     }
 
-
+    /**
+     * Draws the robot and the light sensor array.
+     */
     draw() {
         push();
         rectMode(CENTER);

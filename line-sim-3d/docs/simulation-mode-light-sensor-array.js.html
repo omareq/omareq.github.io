@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: simulation-mode-show-all-tiles.js</title>
+    <title>JSDoc: Source: simulation-mode-light-sensor-array.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: simulation-mode-show-all-tiles.js</h1>
+    <h1 class="page-title">Source: simulation-mode-light-sensor-array.js</h1>
 
     
 
@@ -28,7 +28,8 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *  @file simulation-mode-show-all-tiles.js Shows all tiles
+ *  @file simulation-mode-light-sensor-array.js Test the light sensor array
+ *      light sensor
  *
  *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
@@ -71,43 +72,27 @@ Simulation.Mode = Simulation.Mode || {};
 
 
 /**
- * Class Simulation.Mode.DebugShowAllTiles is a simulation mode that shows every
- * tile.  This is to ensure that they are being drawn correctly and that none
- * are being missed read by the light sensors.
+ * Class Simulation.Mode.DebugLightSensorArray is a simulation mode that tests
+ * the light sensor array functionality.  This is done by moving the light
+ * sensor array to the mouse location and constantly rotating it to make sure
+ * that it maintains the correct orientation and spacing for each sensor.
  *
  * @see Simulation.Mode.ModeType
- * @see World.Tile
- * @see World.Tile.proxy
- * @see World.Room
+ * @see Robot.LightSensorArray
  * @see Robot.AnalogLightSensor
  */
-Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
-    static staticName = "DebugShowAllTiles";
+Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugLightSensorArray";
 
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
-        this.name = "DebugShowAllTiles";
-        const totalNumTiles = Object.keys(World.Tiles).length;
-        let factors = [];
+        this.name = "DebugLightSensorArray";
 
-        let i = 0;
-        while(factors.length &lt;= 4) {
-            factors = this.findFactors(totalNumTiles + i);
-            i++;
-        }
-        i--;
-
-        console.log("Factors", factors);
-
-        const factor1 = factors[floor(factors.length / 2)];
-        const factor2 = (totalNumTiles + i) / factor1;
-        console.log("Factor 1, 2: ", factor1, factor2);
-
-        const numTilesX = max(factor1, factor2);
-        const numTilesY = min(factor1, factor2);
+        const numTilesX = 7;
+        const numTilesY = 5;
 
         const tilesRatio = numTilesX / numTilesY;
         const pixelsRatio = width / height;
@@ -121,91 +106,65 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
 
         World.setGridSize(gridSize);
         this.sensorRadius = 0.5 * World.lineThickness + 1;
-        this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
-            createVector(0,0));
 
+        let numSensors = 3;
+        let globalPos = createVector(0,0);
+        let sensorPositions = [
+            createVector(-0.25 * World.gridSize, 0),
+            createVector(0.00, 0.00),
+            createVector(0.25 * World.gridSize, 0)
+            ];
+        let radiuses = [this.sensorRadius,
+            this.sensorRadius,
+            this.sensorRadius
+            ];
+        let analogOrDigital = [
+            Robot.LightSensorType.Analog,
+            Robot.LightSensorType.Analog,
+            Robot.LightSensorType.Analog
+            ];
 
-        let grid = this.createEmpty(numTilesX, numTilesY);
-        console.log(grid);
-        grid = this.fillGridWithAllTiles(grid, numTilesX, numTilesY);
-        console.log(grid);
+        this.bearing = 0;
+        this.radPerSec = 0.5 * math.PI;
+
+        this.sensorArray = new Robot.LightSensorArray(numSensors,
+            globalPos,
+            sensorPositions,
+            radiuses,
+            analogOrDigital);
+
 
         this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
+        this.room.fillRoomWithSnakePattern();
+
+        let grid = this.room.getAllTiles();
+
+        grid[2][0] = World.Tiles.gapQuarterLineHorizontal.copy();
+        grid[4][0] = World.Tiles.gapQuarterLineHorizontal.copy();
+        grid[6][0] = World.Tiles.diagonalDownLeft.copy();
+
+        grid[4][1] = World.Tiles.diagonalVDown.copy();
+        grid[3][1] = World.Tiles.diagonalVUp.copy();
+        grid[1][1] = World.Tiles.zigZagHorizontal.copy();
+        grid[0][1] = World.Tiles.quarterCircleDownRight.copy();
+
+        grid[0][2] = World.Tiles.quarterCircleUpRight.copy();
+        grid[2][2] = World.Tiles.blankLine.copy();
+        grid[3][2] = World.Tiles.gapQuarterLineHorizontal.copy();
+        grid[5][2] = World.Tiles.zigZagHorizontal.copy();
+        grid[6][2] = World.Tiles.quarterCircleDownLeft.copy();
+
+        grid[6][3] = World.Tiles.diagonalUpLeft.copy();
+        grid[4][3] = World.Tiles.zigZagHorizontal.copy();
+        grid[3][3] = World.Tiles.zigZagHorizontal.copy();
+        grid[2][3] = World.Tiles.gapQuarterLineHorizontal.copy();
+        grid[0][3] = World.Tiles.diagonalDownRight.copy();
+
+        grid[0][4] = World.Tiles.diagonalUpRight.copy();
+        grid[2][4] = World.Tiles.diagonalVDown.copy();
+        grid[3][4] = World.Tiles.diagonalVDown.copy();
+
         this.room.setTiles(grid);
-
-    }
-
-    /**
-     * Find the factors of a number
-     *
-     * @param num {number} - The number
-     *
-     * @returns {Array&lt;numbers>} - An array of the factors
-     */
-    findFactors(num) {
-        let factors = [];
-        for (let i = 1; i &lt;= Math.sqrt(num); i++) {
-            if (num % i === 0) {
-                factors.push(i);
-                if (i !== num / i) {
-                    factors.push(num / i);
-                }
-            }
-        }
-        return factors.sort((a, b) => a - b);
-    }
-
-    /**
-     * creates a grid of blankTiles
-     *
-     * @param cols {number} - number of tiles in the x direction
-     * @param rows {number} - number of tiles in the y direction
-     *
-     * @returns {Array&lt;Array&lt;World.Tile>>} - The grid of blank tiles
-     */
-    createEmpty(cols, rows) {
-//TODO: replace with a call to static room method
-        let grid = [];
-        const blankTile = World.Tiles.blankLine.copy();
-        for(let x = 0; x &lt; cols; x++) {
-            let emptyCol= [];
-            for(let y = 0; y &lt; rows; y++) {
-                emptyCol.push(blankTile.copy());
-            }
-            grid.push(emptyCol);
-        }
-        return grid;
-    }
-
-    /**
-     * fills the empty grid with all of the tiles in the World.Tiles array.
-     *
-     * @param grid {Array&lt;Array&lt;World.Tile>>} - The grid to add all the tiles to
-     * @param cols {number} - number of tiles in the x direction
-     * @param rows {number} - number of tiles in the y direction
-     * @param horizontalFill {boolean} - flag to decide if the tiles are filled
-     * in the x or the y direction first
-     *
-     * @returns {Array&lt;Array&lt;World.Tile>>} - A grid with the new tile values
-     */
-    fillGridWithAllTiles(grid, cols, rows, horizontalFill=true) {
-        const keys = Object.keys(World.Tiles.proxySubject);
-        let newGrid = grid;
-
-        for(let i = 0; i &lt; keys.length; i++) {
-            const key = keys[i];
-
-            let xIndex = i % cols;
-            let yIndex = floor(i / cols);
-            if(!horizontalFill) {
-                xIndex = floor(i / rows);
-                yIndex = i % rows;
-            }
-            newGrid[xIndex][yIndex] = World.Tiles.proxySubject[key].copy();
-            console.debug(key);
-        }
-
-        return newGrid;
     }
 
      /**
@@ -213,33 +172,20 @@ Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
      */
     update() {
         const mousePos = createVector(mouseX, mouseY);
-        this.sensor.setPos(mousePos);
         this.room.draw();
-
-        let tileUnderSensor = this.room.getTileAtPos(mousePos);
-
-        if(tileUnderSensor == undefined) {
-            return;
+        this.sensorArray.setPos(mousePos);
+        this.sensorArray.setBearing(this.bearing);
+        this.bearing += this.radPerSec * Simulation.dtSeconds;
+        if(this.bearing >= math.TWO_PI) {
+            this.bearing = 0;
         }
 
-        const brightness = this.sensor.read(tileUnderSensor);
-
-        if(brightness &lt; 1) {
-            console.log("Sensor Val: ", brightness);
-        }
-        const colorVal = floor(brightness * 255);
-
-        push();
-        fill(colorVal);
-        strokeWeight(1);
-        stroke(127, 0, 30);
-        const ellipseSize = 2 * this.sensorRadius;
-        ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
-        pop();
+        this.sensorArray.read(this.room);
+        this.sensorArray.draw();
     }
 };
 
-Simulation.Mode.ModeList.push(Simulation.Mode.DebugShowAllTiles);
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugLightSensorArray);
 </code></pre>
         </article>
     </section>

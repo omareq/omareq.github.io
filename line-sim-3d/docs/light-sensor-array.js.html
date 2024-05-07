@@ -1,8 +1,36 @@
-/*******************************************************************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: light-sensor-array.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: light-sensor-array.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
  *  @file light-sensor-array.js A file with the light sensor array class
  *
- *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
  *  @date 03-April-2024
  *  @link https://omareq.github.io/line-sim-3d/
@@ -26,7 +54,7 @@
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
 "use strict";
@@ -49,11 +77,11 @@ Robot.LightSensorArray = class {
      *
      * @param numSensors {number} - The number of light sensors
      * @param globalPos {p5.Vector} - The global position of the light sensor array
-     * @param relPositions {Array<p5.Vector>} - The relative positions of the
+     * @param relPositions {Array&lt;p5.Vector>} - The relative positions of the
      * sensors in the array.  This ensures that they are transformed in the
      * correct orientation.
-     * @param radiuses {Array<number>} - An array of sensor radiuses
-     * @param analogOrDigital {Array< Robot.LightSensorType >} - Array of
+     * @param radiuses {Array&lt;number>} - An array of sensor radiuses
+     * @param analogOrDigital {Array&lt; Robot.LightSensorType >} - Array of
      * LightSensorType showing if the given sensor is an Analog or digital light
      * sensor.
      */
@@ -73,7 +101,7 @@ Robot.LightSensorArray = class {
 
         this.sensors = [];
 
-        for(let i = 0; i < this.numSensors; i++) {
+        for(let i = 0; i &lt; this.numSensors; i++) {
             if(analogOrDigital[i] == Robot.LightSensorType.Analog) {
                 this.sensors[i] = new Robot.AnalogLightSensor(
                     radiuses[i],
@@ -94,7 +122,7 @@ Robot.LightSensorArray = class {
     /**
      * Set's new relative positions of the light sensors
      *
-     * @param newPositions {Array< p5.Vector >} - new relative positions array
+     * @param newPositions {Array&lt; p5.Vector >} - new relative positions array
      *
      * @throws {Error} The length of the new positions array should be: numSensors
      */
@@ -107,7 +135,7 @@ Robot.LightSensorArray = class {
 
 //TODO: check type
 
-        for(let i = 0; i < this.numSensors; i++) {
+        for(let i = 0; i &lt; this.numSensors; i++) {
             this.relPositions[i] = newPositions[i].copy();
         }
 
@@ -123,7 +151,7 @@ Robot.LightSensorArray = class {
      */
     calcRefPosMatrix() {
         this.refPosMatrix = [[], []];
-        for(let i = 0; i < this.numSensors; i++) {
+        for(let i = 0; i &lt; this.numSensors; i++) {
             this.refPosMatrix[0][i] = this.relPositions[i].x;
             this.refPosMatrix[1][i] = this.relPositions[i].y;
         }
@@ -136,7 +164,7 @@ Robot.LightSensorArray = class {
      */
     calcPosMatrix() {
         this.posMatrix = [[], []];
-        for(let i = 0; i < this.numSensors; i++) {
+        for(let i = 0; i &lt; this.numSensors; i++) {
             this.posMatrix[0][i] = this.pos.x;
             this.posMatrix[1][i] = this.pos.y;
         }
@@ -173,11 +201,11 @@ Robot.LightSensorArray = class {
     /**
      * gets the last sensor values from the light sensors
      *
-     * @returns {Array< number >} - the last sensor values
+     * @returns {Array&lt; number >} - the last sensor values
      */
     getLastSensorVals() {
         let sensorVals = [];
-        for(let i = 0; i < this.numSensors; i++) {
+        for(let i = 0; i &lt; this.numSensors; i++) {
             sensorVals[i] = this.sensors[i].getLastRead();
         }
         return sensorVals;
@@ -195,7 +223,7 @@ Robot.LightSensorArray = class {
         // apply global position translation
         const translated = math.add(rotated, this.posMatrix);
 
-        for(let i = 0; i < this.numSensors; i++) {
+        for(let i = 0; i &lt; this.numSensors; i++) {
             const x = translated.get([0, i]);
             const y = translated.get([1, i]);
 
@@ -208,12 +236,12 @@ Robot.LightSensorArray = class {
      *
      * @param room {World.Room} - The room to probe with the sensors
      *
-     * @returns {Array< number >} - the current sensor values
+     * @returns {Array&lt; number >} - the current sensor values
      */
     read(room) {
         let sensorVals = [];
         const drawFlag = false;
-        for(let i = 0; i < this.numSensors; i++) {
+        for(let i = 0; i &lt; this.numSensors; i++) {
             const sensorPos = this.sensors[i].pos.copy();
             const tileUnderSensor = room.getTileAtPos(sensorPos);
             sensorVals[i] = this.sensors[i].read(tileUnderSensor, drawFlag);
@@ -225,7 +253,7 @@ Robot.LightSensorArray = class {
      * Draw the light sensor array.  Colour each sensor independently.
      */
     draw() {
-        for(let i = 0; i < this.numSensors; i++) {
+        for(let i = 0; i &lt; this.numSensors; i++) {
             const x = this.sensors[i].pos.x;
             const y = this.sensors[i].pos.y;
             const r = 2 * this.sensors[i].sensorRadius;
@@ -238,7 +266,7 @@ Robot.LightSensorArray = class {
             stroke(100 * i / this.numSensors, 100, 100);
             strokeWeight(0.2 * r);
 
-            if(v.x != -1 && v.y != -1) {
+            if(v.x != -1 &amp;&amp; v.y != -1) {
                 ellipse(v.x, v.y, 0.25 * r, 0.25 * r);
                 line(x, y, v.x, v.y);
             }
@@ -251,3 +279,31 @@ Robot.LightSensorArray = class {
 
 
 // TODO: make light sensor array builder/factory
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Robot.robot.html">robot</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 07 2024 12:28:42 GMT+0100 (British Summer Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

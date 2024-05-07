@@ -44,11 +44,14 @@ Simulation.Mode = Simulation.Mode || {};
 
 
 /**
- * Class Simulation.Mode.DebugMovingTile is a simulation mode that has a tile
- * moving back and forth along the canvas to test that the light sensors can
- * correctly read the value in a global coordinate frame.
+ * Class Simulation.Mode.DebugLightSensorArray is a simulation mode that tests
+ * the light sensor array functionality.  This is done by moving the light
+ * sensor array to the mouse location and constantly rotating it to make sure
+ * that it maintains the correct orientation and spacing for each sensor.
  *
- * @see Simulation.Mode.Type
+ * @see Simulation.Mode.ModeType
+ * @see Robot.LightSensorArray
+ * @see Robot.AnalogLightSensor
  */
 Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
     static staticName = "DebugLightSensorArray";

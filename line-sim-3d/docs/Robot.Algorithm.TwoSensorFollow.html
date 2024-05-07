@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: DebugRoom</title>
+    <title>JSDoc: Class: TwoSensorFollow</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: DebugRoom</h1>
+    <h1 class="page-title">Class: TwoSensorFollow</h1>
 
     
 
@@ -28,13 +28,11 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>DebugRoom<span class="signature">(numTilesX, numTilesY)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>TwoSensorFollow<span class="signature">(forwardVel, rotationKp, rotationKd)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class Simulation.Mode.DebugRoom is a simulation that tests that the room
-class is working correctly.  This is mostly to test that the drawing
-functionality is correct and that a single light sensor can read the lines
-as they appear on the canvas.</div>
+            <div class="class-description">Class which defines a concrete robot algorithm.  The algorithm implemented
+uses two analogue light sensors to follow  a black line using a PD
+proportional derivate controller.</div>
         
     
 </header>
@@ -49,7 +47,7 @@ as they appear on the canvas.</div>
     
 
     
-    <h4 class="name" id="DebugRoom"><span class="type-signature"></span>new DebugRoom<span class="signature">(numTilesX, numTilesY)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TwoSensorFollow"><span class="type-signature"></span>new TwoSensorFollow<span class="signature">(forwardVel, rotationKp, rotationKd)</span><span class="type-signature"></span></h4>
     
 
     
@@ -57,7 +55,8 @@ as they appear on the canvas.</div>
 
 
 <div class="description">
-    The constructor that sets up the simulation variables
+    The constructor of the Two Sensor Follow algorithm.  This initialises
+the PD parameters and the velocity.
 </div>
 
 
@@ -83,8 +82,6 @@ as they appear on the canvas.</div>
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -95,7 +92,7 @@ as they appear on the canvas.</div>
 
         <tr>
             
-                <td class="name"><code>numTilesX</code></td>
+                <td class="name"><code>forwardVel</code></td>
             
 
             <td class="type">
@@ -110,22 +107,16 @@ as they appear on the canvas.</div>
             
 
             
-                <td class="default">
-                
-                    4
-                
-                </td>
-            
 
-            <td class="description last">Positive integer value for the number of
- tiles in the x direction</td>
+            <td class="description last">The forward velocity of the robot when going
+  in a straight line</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>numTilesY</code></td>
+                <td class="name"><code>rotationKp</code></td>
             
 
             <td class="type">
@@ -140,15 +131,26 @@ as they appear on the canvas.</div>
             
 
             
-                <td class="default">
-                
-                    4
-                
-                </td>
+
+            <td class="description last">The proportional term for the PD controller.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rotationKd</code></td>
             
 
-            <td class="description last">Positive integer value for the number of
- tiles in the y direction</td>
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">(number) - The derivative term for the PD controller.</td>
         </tr>
 
     
@@ -189,7 +191,7 @@ as they appear on the canvas.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation-mode-room.js.html">simulation-mode-room.js</a>, <a href="simulation-mode-room.js.html#line56">line 56</a>
+        <a href="robot-algorithm.js.html">robot-algorithm.js</a>, <a href="robot-algorithm.js.html#line269">line 269</a>
     </li></ul></dd>
     
 
@@ -199,11 +201,15 @@ as they appear on the canvas.</div>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Simulation.Mode.ModeType.html">Simulation.Mode.ModeType</a></li>
+            <li><a href="Robot.Algorithm.LineFollow.html">Robot.Algorithm.LineFollow</a></li>
         
-            <li><a href="World.Room.html">World.Room</a></li>
+            <li><a href="Robot.robot.html">Robot.robot</a></li>
         
-            <li><a href="Robot.AnalogLightSensor.html">Robot.AnalogLightSensor</a></li>
+            <li><a href="Robot.RobotTelemetryData.html">Robot.RobotTelemetryData</a></li>
+        
+            <li><a href="Robot.MovementCommands.html">Robot.MovementCommands</a></li>
+        
+            <li><a href="Simulation.Mode.LineFollowTwoSensor.html">Simulation.Mode.LineFollowTwoSensor</a></li>
         </ul>
     </dd>
     
@@ -256,7 +262,7 @@ as they appear on the canvas.</div>
     
 
     
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="follow"><span class="type-signature"></span>follow<span class="signature">(robotData)</span><span class="type-signature"> &rarr; {<a href="Robot.MovementCommands.html">Robot.MovementCommands</a>}</span></h4>
     
 
     
@@ -264,7 +270,11 @@ as they appear on the canvas.</div>
 
 
 <div class="description">
-    Update function that updates the state of the simulation
+    The follow method that overrides the virtual follow method. For this
+algorithm the difference between the two sensors is used as the error
+term for the PD controller.  The greater the error the faster the robot
+turns.  If the error is greater than 0.35 the robot slows down so that
+it can turn without skipping over the line.
 </div>
 
 
@@ -273,6 +283,57 @@ as they appear on the canvas.</div>
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>robotData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Robot.RobotTelemetryData.html">Robot.RobotTelemetryData</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Values for all the sensors that
+the robot can read.  This includes the position, velocity, bearing and
+light sensors.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -308,7 +369,7 @@ as they appear on the canvas.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation-mode-room.js.html">simulation-mode-room.js</a>, <a href="simulation-mode-room.js.html#line89">line 89</a>
+        <a href="robot-algorithm.js.html">robot-algorithm.js</a>, <a href="robot-algorithm.js.html#line305">line 305</a>
     </li></ul></dd>
     
 
@@ -333,6 +394,28 @@ as they appear on the canvas.</div>
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - The commands for the robot effectors.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Robot.MovementCommands.html">Robot.MovementCommands</a></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 

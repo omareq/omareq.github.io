@@ -64,7 +64,6 @@
  */
 var UI = UI || {};
 
-UI.controlPanel = undefined;
 
 /**
  * UI control panel setup function that assigns the handler and makes the
@@ -80,6 +79,7 @@ UI.controlPanelSetup = function() {
  */
 UI.controlPanelShow = function() {
     UI.controlPanel.style.visibility = "visible";
+    UI.controlPanel.style.display = "inline";
 };
 
 /**
@@ -87,6 +87,49 @@ UI.controlPanelShow = function() {
  */
 UI.controlPanelHide = function() {
     UI.controlPanel.style.visibility = "hidden";
+    UI.controlPanel.style.display = "none";
+};
+
+/**
+ * UI canvas loading text hide function
+ */
+UI.canvasLoadingTextHide = function() {
+    UI.canvasLoadingText = document.getElementById("canvas-loading-text");
+    UI.canvasLoadingText.style.visibility = "hidden";
+    UI.canvasLoadingText.style.display = "none";
+};
+
+UI.initSimulationModeSelector = function() {
+    UI.modeSelectorLength = Simulation.Mode.ModeList.length;
+    UI.modeSelect = createSelect();
+    UI.modeSelect.parent("simulation-mode-selector");
+    for(let i = 0; i &lt; UI.modeSelectorLength; i++) {
+        UI.modeSelect.option(Simulation.Mode.ModeList[i].staticName);
+    }
+    UI.modeSelect.selected(Simulation.Mode.activeMode.name);
+};
+
+UI.updateSimulationModeSelector = function() {
+    if(UI.modeSelectorLength != Simulation.Mode.ModeList.length) {
+        UI.initSimulationModeSelector();
+    }
+
+    if(Simulation.Mode.activeMode.name != UI.modeSelect.selected()) {
+        console.debug("Changing Mode: ", UI.modeSelect.selected());
+        Simulation.Mode.setModeByName(UI.modeSelect.selected());
+    }
+};
+
+UI.initPauseButton = function() {
+    UI.pauseButton = createButton("Pause", "value");
+    UI.pauseButton.parent("pause-button");
+    UI.pauseButton.mousePressed(Simulation.pauseFlagToggle);
+};
+
+UI.initResetButton = function() {
+    UI.resetButton = createButton("Reset", "value");
+    UI.resetButton.parent("reset-button");
+    UI.resetButton.mousePressed(Simulation.reset);
 };
 
 
@@ -95,7 +138,11 @@ UI.controlPanelHide = function() {
  */
 UI.setup = function() {
     console.debug("UI.setup: Start");
+    UI.canvasLoadingTextHide();
     UI.controlPanelSetup();
+    UI.initSimulationModeSelector();
+    UI.initPauseButton();
+    UI.initResetButton();
     console.debug("UI.setup: End");
 };
 
@@ -104,7 +151,8 @@ UI.setup = function() {
  */
 UI.poll = function() {
     console.debug("UI.poll: Start");
-
+    UI.updateSimulationModeSelector();
+    Simulation.Mode.activeMode.UIPoll();
     console.debug("UI.poll: End");
 };</code></pre>
         </article>
@@ -116,12 +164,12 @@ UI.poll = function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Room.html">Room</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Robot.robot.html">robot</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 31 2024 21:07:02 GMT+0100 (British Summer Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 07 2024 12:28:42 GMT+0100 (British Summer Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

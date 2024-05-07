@@ -70,6 +70,34 @@ var Simulation = Simulation || {};
 Simulation.Mode = Simulation.Mode || {};
 
 /**
+ * Simulation pause flag
+ */
+Simulation.pause = false;
+
+/**
+ * Sets the pause flag and stops simulation updates.  UI poll events are not
+ * affected.
+ */
+Simulation.pauseFlagSet = function() {
+    Simulation.pause = true;
+};
+
+/**
+ * Un-sets the pause flag and starts simulation updates.  UI poll events are not
+ * affected.
+ */
+Simulation.pauseFlagUnset = function() {
+    Simulation.pause = false;
+};
+
+/**
+ * Toggles the pause flag. This starts or stops simulation updates.
+ */
+Simulation.pauseFlagToggle = function() {
+    Simulation.pause = !Simulation.pause;
+};
+
+/**
  * Class used as a data class to store the current frame statistics.  This
  * includes dt, fps, and time since start.
  */
@@ -78,11 +106,28 @@ Simulation.FrameData = class {
      * constructor for the FrameData class.  The data is automatically populated
      * on creation using timing data from the previous frame that is stored in
      * the Simulation.lastFrameTime and Simulation.firstFrameTime variables.
+     *
+     * If dt is greater than 100ms (for example when switching windows context,
+     * or by changing tabs) then dt is set to 10ms.  Additionally if dt is
+     * greater than 16ms it is reduced to 16ms to maintain a constant sensor
+     * refresh rate.  If the refresh rate drops below 50Hz then the robot moves
+     * too quickly over the line and misses it. Due to these time manipulations
+     * the time since start is different to the sum of all dts.  Time since
+     * start is always the true difference between the start time and the
+     * current frame time.
      */
     constructor() {
         this.frameTime = Date.now();
 
         this.dt = this.frameTime - Simulation.lastFrameTime;
+        if(this.dt > 100) {
+            // this is done to remove jumping effects when you switch windows
+            // contexts by changing tab or application.
+            this.dt = 10;
+        } else if (this.dt > 16) {
+            // if frameRate is less than 60fps but greater than 10fps
+            this.dt = 16;
+        }
         this.dtMillis = this.dt;
         this.dtSeconds = 0.001 * this.dt;
         this.fps = 1 / this.dtSeconds;
@@ -115,17 +160,25 @@ Simulation.setup = function() {
  * mode update function.
  */
 Simulation.update = function() {
+    if(Simulation.pause) {
+        return;
+    }
     Simulation.currentFrameData = new Simulation.FrameData();
     Simulation.frameDataHistory.push(Simulation.currentFrameData);
+    Simulation.dt = Simulation.currentFrameData.dt;
+    Simulation.dtSeconds = Simulation.currentFrameData.dtSeconds;
+    Simulation.fps = Simulation.currentFrameData.fps;
 
     Simulation.frame++;
     Simulation.lastFrameTime = Simulation.currentFrameData.frameTime;
 
+    background(127);
     Simulation.Mode.activeMode.update();
 };
 
 /**
- * Sets the activeSimulation mode to a new value.
+ * Sets the activeSimulation mode to a new value.  This checks to see if the UI
+ * panel for the current mode needs to be hidden and also unsets the pause flag.
  *
  * @param newMode {Simulation.Mode.Type} - New Simulation mode.
  *
@@ -138,14 +191,62 @@ Simulation.Mode.setActive = function(newMode) {
         throw new Error(err);
     }
 
+    // no point hiding the UI if the new mode is the current mode
+    if(Simulation.Mode.activeMode != undefined &amp;&amp;
+        Simulation.Mode.activeMode.name != newMode.name) {
+        Simulation.Mode.activeMode.hideUI();
+    }
+
     Simulation.Mode.activeMode = newMode;
+    Simulation.pauseFlagUnset();
+};
+
+/**
+ * Searches through the list of Simulation.Mode.ModeList and sets the active
+ * mode to the one selected by name by passing it to Simulation.Mode.setActive()
+ *
+ * This function will use console.warn to alert the user to an incorrect mode
+ * name being selected.  The decision to not throw has been made as this is an
+ * error that can be recovered from gracefully by changing the mode to empty.
+ *
+ * @param modeName {String} - The name of the mode to select.  For example
+ * "LineFollowOneSensor"
+ */
+Simulation.Mode.setModeByName = function(modeName) {
+    for(let i = 0; i &lt; Simulation.Mode.ModeList.length; i++) {
+// TODO: figure out how to do this without for loop
+        if(Simulation.Mode.ModeList[i].staticName == modeName) {
+            Simulation.Mode.setActive(new Simulation.Mode.ModeList[i]());
+            return;
+        }
+    }
+    console.warn("Can't set Simulation mode to: ", modeName);
+    Simulation.Mode.setActive(new Simulation.Mode.Empty());
+};
+
+/**
+ * The reset function sets the mode to a new instance of the current mode.
+ */
+Simulation.reset = function() {
+    Simulation.Mode.setModeByName(Simulation.Mode.activeMode.name);
 };
 
 /**
  * Class Simulation.Mode.ModeType used as an abstract class to enforce that
  * Simulation modes have an update function.
+ *
+ * @see Simulation.Mode.Empty
+ * @see Simulation.Mode.LineFollowOneSensor
+ * @see Simulation.Mode.LineFollowTwoSensor
+ * @see Simulation.Mode.DebugStaticTile
+ * @see Simulation.Mode.DebugMovingTile
+ * @see Simulation.Mode.DebugRoom
+ * @see Simulation.Mode.DebugShowAllTiles
+ * @see Simulation.Mode.DebugLightSensorArray
+ * @see Simulation.Mode.DebugRobot
  */
 Simulation.Mode.ModeType = class {
+    static isModeType = true;
     /**
      * An abstract class constructor that throws an error if it is instantiated.
      *
@@ -166,6 +267,62 @@ Simulation.Mode.ModeType = class {
     update() {
         throw new Error("Method 'update()' must be implemented.");
     }
+
+    /**
+     * This function gets a document element by ID as defined in the variable
+     * this.uiDivID created by the child class.  If this is not defined then
+     * the setup function does nothing.
+     *
+     * The document element is saved in this.UIPanel and this.showUI() is
+     * called.
+     */
+    setupUI() {
+        if(this.uiDivID == undefined) {
+            return;
+        }
+        console.debug("setup sim mode UI");
+        this.UIPanel = document.getElementById(this.uiDivID);
+        this.showUI();
+    }
+
+    /**
+     * Checks if this.UIPanel is defined and shows the panel if it is.  This is
+     * done by setting the visibility to "visible" and the display style to
+     * "inline".
+     */
+    showUI() {
+        if(this.UIPanel == undefined) {
+            return;
+        }
+        console.debug("Show sim mode UI");
+        this.UIPanel.style.visibility = "visible";
+        this.UIPanel.style.display = "inline";
+    }
+
+    /**
+     * Checks if this.UIPanel is defined and hides the panel if it is.  This is
+     * done by setting the visibility to "hidden" and the display style to
+     * "none".
+     */
+    hideUI() {
+        if(this.UIPanel == undefined) {
+            return;
+        }
+        console.debug("Hide sim mode UI");
+        this.UIPanel.style.visibility = "hidden";
+        this.UIPanel.style.display = "none";
+    }
+
+    /**
+     * UI Poll function that should be overridden by child classes that define
+     * UI functionality. It is not enforced that this function should be
+     * overridden so that a child class can choose not to implement this
+     * feature.
+     *
+     * This function is called in UI.poll() and is still called when the
+     * simulation is paused.
+     */
+    UIPoll() {};
 };
 
 /**
@@ -175,16 +332,31 @@ Simulation.Mode.ModeType = class {
  * @see Simulation.Mode.ModeType
  */
 Simulation.Mode.Empty = class extends Simulation.Mode.ModeType {
+    static staticName = "Empty";
+
     /**
      * Calls super() and exits
      */
-    constructor() {super();};
+    constructor() {
+        super();
+        this.name = "Empty";
+    };
 
     /**
      * exits immediately
      */
     update() {};
-};</code></pre>
+
+    /**
+     * exits immediately
+     */
+    hideUI() {};
+};
+
+Simulation.Mode.ModeList = [];
+
+Simulation.Mode.ModeList.push(Simulation.Mode.Empty);
+</code></pre>
         </article>
     </section>
 
@@ -194,12 +366,12 @@ Simulation.Mode.Empty = class extends Simulation.Mode.ModeType {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Room.html">Room</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Robot.robot.html">robot</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 31 2024 21:07:02 GMT+0100 (British Summer Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 07 2024 12:28:42 GMT+0100 (British Summer Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

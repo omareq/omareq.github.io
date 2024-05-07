@@ -28,7 +28,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *  @file ui.js A file with the room class
+ *  @file room.js A file with the room class
  *
  *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
@@ -66,6 +66,9 @@ var World = World || {};
 
 /**
  * Class that implements a room of tiles.
+ *
+ * @see World.Tile
+ * @see World.Tile.proxy
  */
 World.Room = class {
     /**
@@ -107,12 +110,12 @@ World.Room = class {
 
         this.createEmptyRoom();
 
-        this.fillRoomWithSnakePattern();
-        this.generatePG();
+        // this.fillRoomWithSnakePattern();
+        //this.generatePG();
     }
 
     /**
-     * creates a 2d grid of World.Tiles.blankLine.
+     * creates a 2d grid of World.Tile.blankLine.
      */
     createEmptyRoom() {
         this.grid = [];
@@ -197,20 +200,27 @@ World.Room = class {
         }
 
         this.img = createGraphics(this.xWidth, this.yHeight);
+
+        if(this.img.pixelDensity() != 1) {
+            console.debug("Original Pixel Density: ", this.img.pixelDensity());
+            this.img.pixelDensity(1);
+            console.debug("New Pixel Density: ", this.img.pixelDensity());
+        }
+
         // set background as red in case there are any errors;
         this.img.background(255, 0,0);
 
         this.img.stroke(215);
-        this.img.strokeWeight(1);
+        const gridStrokeWeight = max(World.lineThickness / 6, 2);
+        this.img.strokeWeight(gridStrokeWeight);
         this.img.noFill();
         for(let x = 0; x &lt; this.xNumTiles; x++) {
             for(let y = 0; y &lt; this.yNumTiles; y++) {
                 const tileImg = this.grid[x][y].getPG();
-// TODO: Figure out why there is a factor of 0.5 needed to make these work
-                const xPos = x * 0.5 * World.gridSize;
-                const yPos = y * 0.5 * World.gridSize;
+                const xPos = x * World.gridSize;
+                const yPos = y * World.gridSize;
                 this.img.image(tileImg, xPos, yPos,
-                    0.5*World.gridSize, 0.5*World.gridSize);
+                    World.gridSize + 1, World.gridSize + 1);
                 if(this.showGrid) {
                     this.img.rect(xPos, yPos,
                         World.gridSize - 1, World.gridSize - 1);
@@ -228,7 +238,7 @@ World.Room = class {
      * @throws {Error} - tile needs to be an instance of World.Tile
      */
     setAllTiles(tile) {
-        if(!(tile instanceof World.Tile)) {
+        if(!(tile instanceof World.Tile || tile instanceof World.Tile.Proxy)) {
             const err = "tile needs to be an instance of World.Tile";
             throw new Error(err);
         }
@@ -242,7 +252,24 @@ World.Room = class {
             }
         }
 
-        this.generatePG();
+        //this.generatePG();
+    }
+
+    /**
+     * Returns a copy of the tile grid
+     *
+     * @returns {Array&lt;Array&lt;World.Tile>>} - a 2d array of tiles.
+     */
+    getAllTiles() {
+        let gridCopy = [];
+        for(let x = 0; x &lt; this.xNumTiles; x++) {
+            let col = [];
+            for(let y = 0; y &lt; this.yNumTiles; y++) {
+                col.push(this.grid[x][y].copy());
+            }
+            gridCopy.push(col);
+        }
+        return gridCopy;
     }
 
     /**
@@ -263,13 +290,13 @@ World.Room = class {
     /**
      * sets the tiles in the grid to a new pattern
      *
-     * @param tilePattern {Array&lt;Array&lt;World.Tiles>>} - a 2d array of tiles.
+     * @param tilePattern {Array&lt;Array&lt;World.Tile>>} - a 2d array of tiles.
      */
     setTiles(tilePattern) {
         for(let x = 0; x &lt; this.xNumTiles; x++) {
             for(let y = 0; y &lt; this.yNumTiles; y++) {
                 let tile = tilePattern[x][y].copy();
-                if(!(tile instanceof World.Tile)) {
+                if(!(tile instanceof World.Tile || tile instanceof World.Tile.Proxy)) {
                     const err = "tile needs to be an instance of World.Tile";
                     throw new Error(err);
                 }
@@ -280,7 +307,7 @@ World.Room = class {
                 this.grid[x][y] = currentTile;
             }
         }
-        this.generatePG();
+        //this.generatePG();
     }
 
     /**
@@ -319,9 +346,13 @@ World.Room = class {
      * Draws the room at the global position set in the constructor.
      */
     draw() {
+        if(this.img == undefined) {
+            this.generatePG();
+        }
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
 };
+
 </code></pre>
         </article>
     </section>
@@ -332,12 +363,12 @@ World.Room = class {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Room.html">Room</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Robot.robot.html">robot</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 31 2024 21:07:02 GMT+0100 (British Summer Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 07 2024 12:28:42 GMT+0100 (British Summer Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

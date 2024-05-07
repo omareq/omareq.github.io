@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: ModeType</title>
+    <title>JSDoc: Class: LineFollowTwoSensor</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ModeType</h1>
+    <h1 class="page-title">Class: LineFollowTwoSensor</h1>
 
     
 
@@ -29,10 +29,12 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>ModeType<span class="signature">()</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>LineFollowTwoSensor<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class Simulation.Mode.ModeType used as an abstract class to enforce that
-Simulation modes have an update function.</div>
+            <div class="class-description">Class Simulation.Mode.LineFollowTwoSensor is a simulation mode that sets up
+a robot with two light sensors and allows it to loop around a room.  UI
+elements are set up so that the user can change the parameters controlling
+the line following algorithm.</div>
         
     
 </header>
@@ -47,7 +49,7 @@ Simulation modes have an update function.</div>
     
 
     
-    <h4 class="name" id="ModeType"><span class="type-signature"></span>new ModeType<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="LineFollowTwoSensor"><span class="type-signature"></span>new LineFollowTwoSensor<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -55,7 +57,7 @@ Simulation modes have an update function.</div>
 
 
 <div class="description">
-    An abstract class constructor that throws an error if it is instantiated.
+    The constructor that sets up the simulation variables
 </div>
 
 
@@ -99,7 +101,7 @@ Simulation modes have an update function.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation.js.html">simulation.js</a>, <a href="simulation.js.html#line220">line 220</a>
+        <a href="simulation-mode-line-follow-two-sensor.js.html">simulation-mode-line-follow-two-sensor.js</a>, <a href="simulation-mode-line-follow-two-sensor.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -109,23 +111,11 @@ Simulation modes have an update function.</div>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Simulation.Mode.Empty.html">Simulation.Mode.Empty</a></li>
+            <li><a href="Simulation.Mode.ModeType.html">Simulation.Mode.ModeType</a></li>
         
-            <li><a href="Simulation.Mode.LineFollowOneSensor.html">Simulation.Mode.LineFollowOneSensor</a></li>
+            <li><a href="Robot.Algorithm.LineFollow.html">Robot.Algorithm.LineFollow</a></li>
         
-            <li><a href="Simulation.Mode.LineFollowTwoSensor.html">Simulation.Mode.LineFollowTwoSensor</a></li>
-        
-            <li><a href="Simulation.Mode.DebugStaticTile.html">Simulation.Mode.DebugStaticTile</a></li>
-        
-            <li><a href="Simulation.Mode.DebugMovingTile.html">Simulation.Mode.DebugMovingTile</a></li>
-        
-            <li><a href="Simulation.Mode.DebugRoom.html">Simulation.Mode.DebugRoom</a></li>
-        
-            <li><a href="Simulation.Mode.DebugShowAllTiles.html">Simulation.Mode.DebugShowAllTiles</a></li>
-        
-            <li><a href="Simulation.Mode.DebugLightSensorArray.html">Simulation.Mode.DebugLightSensorArray</a></li>
-        
-            <li><a href="Simulation.Mode.DebugRobot.html">Simulation.Mode.DebugRobot</a></li>
+            <li><a href="Robot.Algorithm.TwoSensorFollow.html">Robot.Algorithm.TwoSensorFollow</a></li>
         </ul>
     </dd>
     
@@ -145,35 +135,6 @@ Simulation modes have an update function.</div>
 
 
 
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        Abstract class Simulation.Mode.Type can't be instantiated
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
 
 
 
@@ -215,13 +176,7 @@ Simulation modes have an update function.</div>
 
 
 <div class="description">
-    UI Poll function that should be overridden by child classes that define
-UI functionality. It is not enforced that this function should be
-overridden so that a child class can choose not to implement this
-feature.
-
-This function is called in UI.poll() and is still called when the
-simulation is paused.
+    Polls the line follow two sensor mode specific UI elements
 </div>
 
 
@@ -265,7 +220,7 @@ simulation is paused.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation.js.html">simulation.js</a>, <a href="simulation.js.html#line297">line 297</a>
+        <a href="simulation-mode-line-follow-two-sensor.js.html">simulation-mode-line-follow-two-sensor.js</a>, <a href="simulation-mode-line-follow-two-sensor.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -301,7 +256,7 @@ simulation is paused.
     
 
     
-    <h4 class="name" id="hideUI"><span class="type-signature"></span>hideUI<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addNewUIElements"><span class="type-signature"></span>addNewUIElements<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -309,9 +264,10 @@ simulation is paused.
 
 
 <div class="description">
-    Checks if this.UIPanel is defined and hides the panel if it is.  This is
-done by setting the visibility to "hidden" and the display style to
-"none".
+    Adds the UI elements that control the line follow two sensor simulation
+mode.  This code currently has an inefficiency that deletes DOM elements
+for the inputs if they already exist.  It would be preferable if a handle
+could be saved and reused for these elements.
 </div>
 
 
@@ -355,7 +311,7 @@ done by setting the visibility to "hidden" and the display style to
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation.js.html">simulation.js</a>, <a href="simulation.js.html#line279">line 279</a>
+        <a href="simulation-mode-line-follow-two-sensor.js.html">simulation-mode-line-follow-two-sensor.js</a>, <a href="simulation-mode-line-follow-two-sensor.js.html#line101">line 101</a>
     </li></ul></dd>
     
 
@@ -391,7 +347,7 @@ done by setting the visibility to "hidden" and the display style to
     
 
     
-    <h4 class="name" id="setupUI"><span class="type-signature"></span>setupUI<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setRoomToConfig"><span class="type-signature"></span>setRoomToConfig<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -399,12 +355,7 @@ done by setting the visibility to "hidden" and the display style to
 
 
 <div class="description">
-    This function gets a document element by ID as defined in the variable
-this.uiDivID created by the child class.  If this is not defined then
-the setup function does nothing.
-
-The document element is saved in this.UIPanel and this.showUI() is
-called.
+    Sets the room to the specific configuration defined in this function.
 </div>
 
 
@@ -448,7 +399,7 @@ called.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation.js.html">simulation.js</a>, <a href="simulation.js.html#line251">line 251</a>
+        <a href="simulation-mode-line-follow-two-sensor.js.html">simulation-mode-line-follow-two-sensor.js</a>, <a href="simulation-mode-line-follow-two-sensor.js.html#line291">line 291</a>
     </li></ul></dd>
     
 
@@ -484,7 +435,7 @@ called.
     
 
     
-    <h4 class="name" id="showUI"><span class="type-signature"></span>showUI<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setupLightSensorArray"><span class="type-signature"></span>setupLightSensorArray<span class="signature">(robotSize)</span><span class="type-signature"></span></h4>
     
 
     
@@ -492,9 +443,147 @@ called.
 
 
 <div class="description">
-    Checks if this.UIPanel is defined and shows the panel if it is.  This is
-done by setting the visibility to "visible" and the display style to
-"inline".
+    Configures the light sensor array using the input parameters from the UI
+elements.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>robotSize</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The size of the robot that the light sensor
+ will be attached to.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="simulation-mode-line-follow-two-sensor.js.html">simulation-mode-line-follow-two-sensor.js</a>, <a href="simulation-mode-line-follow-two-sensor.js.html#line231">line 231</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setupRobot"><span class="type-signature"></span>setupRobot<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Set up the robot in the simulation.  The Robot Algorithm parameters for
+the PD controller are initialized according to the UI element values.
 </div>
 
 
@@ -538,7 +627,7 @@ done by setting the visibility to "visible" and the display style to
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation.js.html">simulation.js</a>, <a href="simulation.js.html#line265">line 265</a>
+        <a href="simulation-mode-line-follow-two-sensor.js.html">simulation-mode-line-follow-two-sensor.js</a>, <a href="simulation-mode-line-follow-two-sensor.js.html#line266">line 266</a>
     </li></ul></dd>
     
 
@@ -582,7 +671,7 @@ done by setting the visibility to "visible" and the display style to
 
 
 <div class="description">
-    An abstract method which needs to be overridden.
+    Update function that updates the state of the simulation
 </div>
 
 
@@ -626,7 +715,7 @@ done by setting the visibility to "visible" and the display style to
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="simulation.js.html">simulation.js</a>, <a href="simulation.js.html#line239">line 239</a>
+        <a href="simulation-mode-line-follow-two-sensor.js.html">simulation-mode-line-follow-two-sensor.js</a>, <a href="simulation-mode-line-follow-two-sensor.js.html#line349">line 349</a>
     </li></ul></dd>
     
 
@@ -649,35 +738,6 @@ done by setting the visibility to "visible" and the display style to
 
 
 
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        Method 'update()' must be implemented
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
 
 
 

@@ -42,13 +42,16 @@ var Simulation = Simulation || {};
 Simulation.Mode = Simulation.Mode || {};
 
 
-
 /**
- * Class Simulation.Mode.DebugMovingTile is a simulation mode that has a tile
- * moving back and forth along the canvas to test that the light sensors can
- * correctly read the value in a global coordinate frame.
+ * Class Simulation.Mode.DebugShowAllTiles is a simulation mode that shows every
+ * tile.  This is to ensure that they are being drawn correctly and that none
+ * are being missed read by the light sensors.
  *
- * @see Simulation.Mode.Type
+ * @see Simulation.Mode.ModeType
+ * @see World.Tile
+ * @see World.Tile.proxy
+ * @see World.Room
+ * @see Robot.AnalogLightSensor
  */
 Simulation.Mode.DebugShowAllTiles = class extends Simulation.Mode.ModeType {
     static staticName = "DebugShowAllTiles";

@@ -46,7 +46,8 @@ Simulation.Mode = Simulation.Mode || {};
  * moving back and forth along the canvas to test that the light sensors can
  * correctly read the value in a global coordinate frame.
  *
- * @see Simulation.Mode.Type
+ * @see Simulation.Mode.ModeType
+ * @see World.Tile
  */
 Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
     static staticName = "DebugMovingTile";

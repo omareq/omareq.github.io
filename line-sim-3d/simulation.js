@@ -41,16 +41,30 @@ var Simulation = Simulation || {};
  */
 Simulation.Mode = Simulation.Mode || {};
 
+/**
+ * Simulation pause flag
+ */
 Simulation.pause = false;
 
+/**
+ * Sets the pause flag and stops simulation updates.  UI poll events are not
+ * affected.
+ */
 Simulation.pauseFlagSet = function() {
     Simulation.pause = true;
 };
 
+/**
+ * Un-sets the pause flag and starts simulation updates.  UI poll events are not
+ * affected.
+ */
 Simulation.pauseFlagUnset = function() {
     Simulation.pause = false;
 };
 
+/**
+ * Toggles the pause flag. This starts or stops simulation updates.
+ */
 Simulation.pauseFlagToggle = function() {
     Simulation.pause = !Simulation.pause;
 };
@@ -64,6 +78,15 @@ Simulation.FrameData = class {
      * constructor for the FrameData class.  The data is automatically populated
      * on creation using timing data from the previous frame that is stored in
      * the Simulation.lastFrameTime and Simulation.firstFrameTime variables.
+     *
+     * If dt is greater than 100ms (for example when switching windows context,
+     * or by changing tabs) then dt is set to 10ms.  Additionally if dt is
+     * greater than 16ms it is reduced to 16ms to maintain a constant sensor
+     * refresh rate.  If the refresh rate drops below 50Hz then the robot moves
+     * too quickly over the line and misses it. Due to these time manipulations
+     * the time since start is different to the sum of all dts.  Time since
+     * start is always the true difference between the start time and the
+     * current frame time.
      */
     constructor() {
         this.frameTime = Date.now();
@@ -126,7 +149,8 @@ Simulation.update = function() {
 };
 
 /**
- * Sets the activeSimulation mode to a new value.
+ * Sets the activeSimulation mode to a new value.  This checks to see if the UI
+ * panel for the current mode needs to be hidden and also unsets the pause flag.
  *
  * @param newMode {Simulation.Mode.Type} - New Simulation mode.
  *
@@ -149,6 +173,17 @@ Simulation.Mode.setActive = function(newMode) {
     Simulation.pauseFlagUnset();
 };
 
+/**
+ * Searches through the list of Simulation.Mode.ModeList and sets the active
+ * mode to the one selected by name by passing it to Simulation.Mode.setActive()
+ *
+ * This function will use console.warn to alert the user to an incorrect mode
+ * name being selected.  The decision to not throw has been made as this is an
+ * error that can be recovered from gracefully by changing the mode to empty.
+ *
+ * @param modeName {String} - The name of the mode to select.  For example
+ * "LineFollowOneSensor"
+ */
 Simulation.Mode.setModeByName = function(modeName) {
     for(let i = 0; i < Simulation.Mode.ModeList.length; i++) {
 // TODO: figure out how to do this without for loop
@@ -161,6 +196,9 @@ Simulation.Mode.setModeByName = function(modeName) {
     Simulation.Mode.setActive(new Simulation.Mode.Empty());
 };
 
+/**
+ * The reset function sets the mode to a new instance of the current mode.
+ */
 Simulation.reset = function() {
     Simulation.Mode.setModeByName(Simulation.Mode.activeMode.name);
 };
@@ -168,6 +206,16 @@ Simulation.reset = function() {
 /**
  * Class Simulation.Mode.ModeType used as an abstract class to enforce that
  * Simulation modes have an update function.
+ *
+ * @see Simulation.Mode.Empty
+ * @see Simulation.Mode.LineFollowOneSensor
+ * @see Simulation.Mode.LineFollowTwoSensor
+ * @see Simulation.Mode.DebugStaticTile
+ * @see Simulation.Mode.DebugMovingTile
+ * @see Simulation.Mode.DebugRoom
+ * @see Simulation.Mode.DebugShowAllTiles
+ * @see Simulation.Mode.DebugLightSensorArray
+ * @see Simulation.Mode.DebugRobot
  */
 Simulation.Mode.ModeType = class {
     static isModeType = true;
@@ -192,6 +240,14 @@ Simulation.Mode.ModeType = class {
         throw new Error("Method 'update()' must be implemented.");
     }
 
+    /**
+     * This function gets a document element by ID as defined in the variable
+     * this.uiDivID created by the child class.  If this is not defined then
+     * the setup function does nothing.
+     *
+     * The document element is saved in this.UIPanel and this.showUI() is
+     * called.
+     */
     setupUI() {
         if(this.uiDivID == undefined) {
             return;
@@ -201,6 +257,11 @@ Simulation.Mode.ModeType = class {
         this.showUI();
     }
 
+    /**
+     * Checks if this.UIPanel is defined and shows the panel if it is.  This is
+     * done by setting the visibility to "visible" and the display style to
+     * "inline".
+     */
     showUI() {
         if(this.UIPanel == undefined) {
             return;
@@ -210,6 +271,11 @@ Simulation.Mode.ModeType = class {
         this.UIPanel.style.display = "inline";
     }
 
+    /**
+     * Checks if this.UIPanel is defined and hides the panel if it is.  This is
+     * done by setting the visibility to "hidden" and the display style to
+     * "none".
+     */
     hideUI() {
         if(this.UIPanel == undefined) {
             return;
@@ -219,6 +285,15 @@ Simulation.Mode.ModeType = class {
         this.UIPanel.style.display = "none";
     }
 
+    /**
+     * UI Poll function that should be overridden by child classes that define
+     * UI functionality. It is not enforced that this function should be
+     * overridden so that a child class can choose not to implement this
+     * feature.
+     *
+     * This function is called in UI.poll() and is still called when the
+     * simulation is paused.
+     */
     UIPoll() {};
 };
 

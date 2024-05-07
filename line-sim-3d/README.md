@@ -12,9 +12,9 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] render in 2d and 3d
 
-- [ ] show and hide grid lines
+- [x] show and hide grid lines
 
-- [ ] add simulation modes including debug views
+- [x] add simulation modes including debug views
 
     - [x] single tile unmoving digital/analogue LS at mouse pos variable size
 

@@ -44,11 +44,14 @@ Simulation.Mode = Simulation.Mode || {};
 
 
 /**
- * Class Simulation.Mode.DebugMovingTile is a simulation mode that has a tile
- * moving back and forth along the canvas to test that the light sensors can
- * correctly read the value in a global coordinate frame.
+ * Class Simulation.Mode.DebugRoom is a simulation that tests that the room
+ * class is working correctly.  This is mostly to test that the drawing
+ * functionality is correct and that a single light sensor can read the lines
+ * as they appear on the canvas.
  *
- * @see Simulation.Mode.Type
+ * @see Simulation.Mode.ModeType
+ * @see World.Room
+ * @see Robot.AnalogLightSensor
  */
 Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
     static staticName = "DebugRoom";

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: DigitalLightSensor</title>
+    <title>JSDoc: Class: robot</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: DigitalLightSensor</h1>
+    <h1 class="page-title">Class: robot</h1>
 
     
 
@@ -29,11 +29,9 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#Robot">Robot</a>.</span>DigitalLightSensor<span class="signature">(sensorRadius, position, bufferLength, threshUp, threshDown)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="global.html#Robot">Robot</a>.</span>robot<span class="signature">(pos, bearing, size, sensorArray, sensorArrayPos, algorithm)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class containing the digital light sensor features.  This extends the
-implementation of the analog light sensor by adding thresholds to indicate
-if the sensor is fully white or fully black.</div>
+            <div class="class-description">A robot class to encapsulate all of the properties of a line following robot</div>
         
     
 </header>
@@ -48,7 +46,7 @@ if the sensor is fully white or fully black.</div>
     
 
     
-    <h4 class="name" id="DigitalLightSensor"><span class="type-signature"></span>new DigitalLightSensor<span class="signature">(sensorRadius, position, bufferLength, threshUp, threshDown)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="robot"><span class="type-signature"></span>new robot<span class="signature">(pos, bearing, size, sensorArray, sensorArrayPos, algorithm)</span><span class="type-signature"></span></h4>
     
 
     
@@ -56,7 +54,7 @@ if the sensor is fully white or fully black.</div>
 
 
 <div class="description">
-    Constructor function for DigitalLightSensor
+    The constructor for the robot class.
 </div>
 
 
@@ -82,8 +80,6 @@ if the sensor is fully white or fully black.</div>
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -94,35 +90,7 @@ if the sensor is fully white or fully black.</div>
 
         <tr>
             
-                <td class="name"><code>sensorRadius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">The value of the sensor detection circle
-     radius.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>position</code></td>
+                <td class="name"><code>pos</code></td>
             
 
             <td class="type">
@@ -137,20 +105,15 @@ if the sensor is fully white or fully black.</div>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">The current position of the sensor in the
-     global coordinate frame.</td>
+            <td class="description last">Start position of the robot in pixels</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>bufferLength</code></td>
+                <td class="name"><code>bearing</code></td>
             
 
             <td class="type">
@@ -165,22 +128,15 @@ if the sensor is fully white or fully black.</div>
             
 
             
-                <td class="default">
-                
-                    1
-                
-                </td>
-            
 
-            <td class="description last">An integer showing the length of the
-     internal circular buffer that stores the previous sensor values.</td>
+            <td class="description last">Start bearing of the robot in radians</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>threshUp</code></td>
+                <td class="name"><code>size</code></td>
             
 
             <td class="type">
@@ -195,27 +151,21 @@ if the sensor is fully white or fully black.</div>
             
 
             
-                <td class="default">
-                
-                    0.65
-                
-                </td>
-            
 
-            <td class="description last">The upper threshold required to return white</td>
+            <td class="description last">The size of the robot in pixels</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>threshDown</code></td>
+                <td class="name"><code>sensorArray</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type"><a href="Robot.LightSensorArray.html">Robot.LightSensorArray</a></span>
 
 
             
@@ -224,14 +174,56 @@ if the sensor is fully white or fully black.</div>
             
 
             
-                <td class="default">
-                
-                    0.35
-                
-                </td>
+
+            <td class="description last">An array of light sensors</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sensorArrayPos</code></td>
             
 
-            <td class="description last">The low threshold required to return black</td>
+            <td class="type">
+            
+                
+<span class="param-type">p5.Vector</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A vector with the relative position
+ of the light sensor array with respect to the robot centre</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>algorithm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Robot.Algorithm.LineFollow.html">Robot.Algorithm.LineFollow</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The line following
+  algorithm that the robot uses.</td>
         </tr>
 
     
@@ -272,7 +264,7 @@ if the sensor is fully white or fully black.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="light-sensor.js.html">light-sensor.js</a>, <a href="light-sensor.js.html#line353">line 353</a>
+        <a href="robot.js.html">robot.js</a>, <a href="robot.js.html#line95">line 95</a>
     </li></ul></dd>
     
 
@@ -282,7 +274,17 @@ if the sensor is fully white or fully black.</div>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
+            <li><a href="Robot.Algorithm.LineFollow.html">Robot.Algorithm.LineFollow</a></li>
+        
+            <li><a href="Robot.RobotTelemetryData.html">Robot.RobotTelemetryData</a></li>
+        
+            <li><a href="Robot.MovementCommands.html">Robot.MovementCommands</a></li>
+        
             <li><a href="Robot.AnalogLightSensor.html">Robot.AnalogLightSensor</a></li>
+        
+            <li><a href="Robot.DigitalLightSensor.html">Robot.DigitalLightSensor</a></li>
+        
+            <li><a href="Robot.LightSensorArray.html">Robot.LightSensorArray</a></li>
         </ul>
     </dd>
     
@@ -335,7 +337,7 @@ if the sensor is fully white or fully black.</div>
     
 
     
-    <h4 class="name" id="read"><span class="type-signature"></span>read<span class="signature">(tile)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -343,9 +345,7 @@ if the sensor is fully white or fully black.</div>
 
 
 <div class="description">
-    A function to read the value of the light sensor.  It will use the read
-function from the AnalogLightSensor and compare the value to the
-thresholds.
+    Draws the robot and the light sensor array.
 </div>
 
 
@@ -354,55 +354,6 @@ thresholds.
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>tile</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="World.Tile.html">World.Tile</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The tile to read</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -438,19 +389,100 @@ thresholds.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="light-sensor.js.html">light-sensor.js</a>, <a href="light-sensor.js.html#line423">line 423</a>
+        <a href="robot.js.html">robot.js</a>, <a href="robot.js.html#line191">line 191</a>
     </li></ul></dd>
     
 
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>Robot.AnalogLightSensor.read</li>
-        </ul>
-    </dd>
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getLastSensorVals"><span class="type-signature"></span>getLastSensorVals<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function to return the last sensor values.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="robot.js.html">robot.js</a>, <a href="robot.js.html#line128">line 128</a>
+    </li></ul></dd>
+    
+
+    
+
     
 
     
@@ -474,7 +506,7 @@ thresholds.
 
         
 <div class="param-desc">
-    - 0 (black) or 1 (white).
+    - An array of sensor values
 </div>
 
 
@@ -485,7 +517,7 @@ thresholds.
     </dt>
     <dd>
         
-<span class="param-type">number</span>
+<span class="param-type">Array.&lt;number></span>
 
 
     </dd>
@@ -503,7 +535,7 @@ thresholds.
     
 
     
-    <h4 class="name" id="setThresholdDown"><span class="type-signature"></span>setThresholdDown<span class="signature">(threshDown)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="sensorsRead"><span class="type-signature"></span>sensorsRead<span class="signature">(room)</span><span class="type-signature"> &rarr; {Array.&lt;number>}</span></h4>
     
 
     
@@ -511,9 +543,7 @@ thresholds.
 
 
 <div class="description">
-    A function to set the down threshold.  This will constrain the value to
-between 0 and 1.  If the threshold is higher than the up threshold then
-they will be switched.
+    Reads all of the sensor values in the given room.
 </div>
 
 
@@ -549,13 +579,13 @@ they will be switched.
 
         <tr>
             
-                <td class="name"><code>threshDown</code></td>
+                <td class="name"><code>room</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type"><a href="World.Room.html">World.Room</a></span>
 
 
             
@@ -565,7 +595,7 @@ they will be switched.
 
             
 
-            <td class="description last">New threshold.</td>
+            <td class="description last">The room to be probed with the sensors</td>
         </tr>
 
     
@@ -606,7 +636,7 @@ they will be switched.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="light-sensor.js.html">light-sensor.js</a>, <a href="light-sensor.js.html#line405">line 405</a>
+        <a href="robot.js.html">robot.js</a>, <a href="robot.js.html#line139">line 139</a>
     </li></ul></dd>
     
 
@@ -631,6 +661,28 @@ they will be switched.
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - An array of sensor values
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;number></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -642,7 +694,7 @@ they will be switched.
     
 
     
-    <h4 class="name" id="setThresholdUp"><span class="type-signature"></span>setThresholdUp<span class="signature">(threshUp)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setForwardVel"><span class="type-signature"></span>setForwardVel<span class="signature">(newVel)</span><span class="type-signature"></span></h4>
     
 
     
@@ -650,9 +702,8 @@ they will be switched.
 
 
 <div class="description">
-    A function to set the up threshold.  This will constrain the value to
-between 0 and 1.  If the threshold is lower than the down threshold then
-they will be switched.
+    Sets the forward velocity of the robot.  Returns early if the requested
+velocity is greater than the robots maximum velocity.
 </div>
 
 
@@ -688,7 +739,7 @@ they will be switched.
 
         <tr>
             
-                <td class="name"><code>threshUp</code></td>
+                <td class="name"><code>newVel</code></td>
             
 
             <td class="type">
@@ -704,7 +755,7 @@ they will be switched.
 
             
 
-            <td class="description last">New threshold.</td>
+            <td class="description last">The new velocity</td>
         </tr>
 
     
@@ -745,7 +796,7 @@ they will be switched.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="light-sensor.js.html">light-sensor.js</a>, <a href="light-sensor.js.html#line391">line 391</a>
+        <a href="robot.js.html">robot.js</a>, <a href="robot.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -781,7 +832,7 @@ they will be switched.
     
 
     
-    <h4 class="name" id="swapThresholds"><span class="type-signature"></span>swapThresholds<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setRotationRate"><span class="type-signature"></span>setRotationRate<span class="signature">(newRotationRate)</span><span class="type-signature"></span></h4>
     
 
     
@@ -789,7 +840,147 @@ they will be switched.
 
 
 <div class="description">
-    A function to swap the thresholds if threshDown is larger than threshUp;
+    Sets the rotation rate of the robot.  Returns early if the requested
+rotation rate is greater than the robots maximum rotation rate.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newRotationRate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new rotation rate</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="robot.js.html">robot.js</a>, <a href="robot.js.html#line163">line 163</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Robot update function.  This sends a telemetry data object to the line
+follow algorithm and then updates the movement according the algorithms
+requested movement commands.
 </div>
 
 
@@ -833,7 +1024,7 @@ they will be switched.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="light-sensor.js.html">light-sensor.js</a>, <a href="light-sensor.js.html#line378">line 378</a>
+        <a href="robot.js.html">robot.js</a>, <a href="robot.js.html#line176">line 176</a>
     </li></ul></dd>
     
 

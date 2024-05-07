@@ -44,11 +44,12 @@ Simulation.Mode = Simulation.Mode || {};
 
 
 /**
- * Class Simulation.Mode.DebugMovingTile is a simulation mode that has a tile
- * moving back and forth along the canvas to test that the light sensors can
- * correctly read the value in a global coordinate frame.
+ * Class Simulation.Mode.LineFollowOneSensor is a simulation mode that sets up
+ * a robot with one light sensor and allows it to zig zag across a room.
  *
- * @see Simulation.Mode.Type
+ * @see Simulation.Mode.ModeType
+ * @see Robot.Algorithm.LineFollow
+ * @see Robot.Algorithm.OneSensorFollow
  */
 Simulation.Mode.LineFollowOneSensor = class extends Simulation.Mode.ModeType {
     static staticName = "LineFollowOneSensor";
@@ -82,6 +83,13 @@ Simulation.Mode.LineFollowOneSensor = class extends Simulation.Mode.ModeType {
         this.setRoomToConfig();
     }
 
+    /**
+     * Sets up the light sensor array.
+     *
+     * @param sensorRadius {number} - radius of the light sensor
+     *
+     * @returns {Robot.LightSensorArray} - The initialized sensor array
+     */
     setupLightSensorArray(sensorRadius) {
         let numSensors = 1;
         let globalPos = createVector(0,0);
@@ -96,6 +104,9 @@ Simulation.Mode.LineFollowOneSensor = class extends Simulation.Mode.ModeType {
             analogOrDigital);
     }
 
+    /**
+     * setup the robot and save it in this.robot
+     */
     setupRobot() {
         const pos = createVector(0.5 * World.gridSize, 0.55 * World.gridSize);
         const bearing = -0.5 * math.PI;
@@ -116,6 +127,9 @@ Simulation.Mode.LineFollowOneSensor = class extends Simulation.Mode.ModeType {
         this.robot.setRotationRate(0.30);
     }
 
+    /**
+     * configure this.room to match the tile layout in the function
+     */
     setRoomToConfig() {
         let grid = this.room.getAllTiles();
 

@@ -38,6 +38,10 @@ var World = World || {};
 
 World.gridSize = 200;
 
+/**
+ * Tile setup function.  Calculates all the line and tile sizes with respect to
+ * the chosen grid size.
+ */
 World.TileSetup = function() {
     World.lineThickness = World.gridSize / 10;
     World.maxInterLinePointDist = World.lineThickness / 4;
@@ -281,7 +285,16 @@ World.TileSetup = function() {
     World.Tiles.zigZagHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagHorizontal);
 };
 
+/**
+ * Sets the World.gridSize Variable.  If the grid size is exactly the same then
+ * it returns early.
+ *
+ * If the grid size is different then the World.TileSetup() function is called.
+ *
+ * @param gridSize {number} - The new grid size
+ */
 World.setGridSize = function(gridSize) {
+// TODO: add param checks
     if(abs(gridSize - World.gridSize) < Number.EPSILON) {
         return;
     }
@@ -290,7 +303,37 @@ World.setGridSize = function(gridSize) {
     World.TileSetup();
 };
 
+/**
+ * Class describing an individual line.  This is done as a series of points
+ * along a defined path.  There is a minimum distance between points that needs
+ * to be adhered to in order for the line following to work correctly.  This
+ * distance is defined by World.maxInterLinePointDist.  This class ensures
+ * that this limit is obeyed and adds extra points using linear interpolation
+ * if necessary.
+ *
+ * The points only need to be defined at corners for straight line objects.  For
+ * curves the points should be defined frequently enough to show the shape of
+ * the curve to the desired resolution.  The class will add more to ensure the
+ * max inter line point distance threshold is obeyed.
+ *
+ * The line point data is scaled to the grid size.
+ *
+ * @see World.Tile
+ * @see World.Tile.proxy
+ * @see World.Room
+ *
+ */
 World.Line = class {
+    /**
+     * The constructor for the World.Line class.
+     * @param points {Array<p5.Vector>} - An array of points with x/y values between
+     *   zero and one to indicate the edges of a tile.
+     * @param maxLinePointDist {number} - The maximum spacing between adjacent
+     *   points. Default World.maxInterLinePointDist
+     * @param color {String} - Hex string for rgb color eg "#AABBCC"
+     * @param copied {Boolean} - Flag to show if the data is from World.Line.copy().
+     *   This prevents the data from being rescaled to the grid size.
+     */
     constructor(points,
         maxLinePointDist = World.maxInterLinePointDist,
         color = "#000000",
@@ -305,6 +348,11 @@ World.Line = class {
         this.checkInterLinePointDistance();
     }
 
+    /**
+     * Copies the original points into an internal array of points.
+     *
+     * @param points {p5.Vector} - The list of points to copy.
+     */
     setPoints(points) {
         this.linePoints = [];
         if(points.length == 0) {
@@ -315,6 +363,10 @@ World.Line = class {
         });
     }
 
+    /**
+     * Scales the 0-1 normalized points to grid size.  This is done by
+     * multiplying all points by World.gridSize.
+     */
     scaleLinePointsToGridSize() {
         if(this.linePoints == undefined) {
             return;
@@ -324,6 +376,12 @@ World.Line = class {
         });
     }
 
+    /**
+     * Checks the inter point distance and adds a point between them if they
+     * are further apart than the maximum inter point distance.  This continues
+     * until no pair of adjacent points are further apart than the inter point
+     * distance threshold.
+     */
     checkInterLinePointDistance() {
         if(this.linePoints == undefined) {
             return;
@@ -357,6 +415,11 @@ World.Line = class {
             Updated Tile:\n", this);
     }
 
+    /**
+     * Copies the line object.  All points are copied and a new World.Line
+     * object is instantiated with the copy argument set to true.  This prevents
+     * the object from rescaling to World.gridSize.
+     */
     copy() {
         const maxLinePointDist = this.maxLinePointDist;
         const color = this.color;
@@ -372,6 +435,12 @@ World.Line = class {
         return new World.Line(points, maxLinePointDist, color, copied);
     }
 
+    /**
+     * Flips all of the line points in the vertical direction.  i.e a reflection
+     * in the horizontal axis.
+     *
+     * @returns {World.Line} - Returns this so that calls can be chained.
+     */
     flipVertical() {
         // change x axis values
         if(this.linePoints.length > 0) {
@@ -383,6 +452,12 @@ World.Line = class {
         return this;
     }
 
+    /**
+     * Flips all of the line points in the horizontal direction.  i.e a
+     * reflection in the vertical axis.
+     *
+     * @returns {World.Line} - Returns this so that calls can be chained.
+     */
     flipHorizontal() {
         // change y axis values
         if(this.linePoints.length > 0) {
@@ -394,6 +469,12 @@ World.Line = class {
         return this;
     }
 
+    /**
+     * Flips all of the line points in the diagonal direction.  i.e a
+     * reflection along the line y=x.
+     *
+     * @returns {World.Line} - Returns this so that calls can be chained.
+     */
     flipDiagonal() {
         // swap x and y axis values
         if(this.linePoints.length > 0) {
@@ -408,19 +489,43 @@ World.Line = class {
 
 
 /**
- * TODO make tile class less expensive to use. Use Proxy Pattern?
+ * Tile class that stores a list of lines and encapsulates the position and
+ * drawing of these lines.  The drawing is done through the use of a portable
+ * graphics object image.  This is expensive to create so is not generated in
+ * the constructor.  The image is lazily created when a call to draw is made or
+ * if getPG is called, whichever happens first.
+ *
+ * @see World.Line
+ * @see World.Tile.proxy
+ * @see World.Room
  */
 World.Tile = class {
+    /**
+     * constructor for the Tile
+     *
+     * @param lines {Array<World.Line>} - The lines in the tile
+     * @param pos {p5.Vector} - The position of the tile
+     */
     constructor(lines, pos=createVector(0,0)) {
         this.lines = lines;
         // this.generatePG();
         this.setPos(pos);
     }
 
+    /**
+     * Get the lines stored in the tile
+     *
+     * @returns {Array<World.Line>} - The lines stored in the tile
+     */
     getLines() {
         return this.lines;
     }
 
+    /**
+     * Sets the lines in the tile
+     *
+     * @param {Array<World.Line>} - The lines to store in the tile
+     */
     setLines(lines) {
         this.lines = [];
         if(lines.length == 0) {
@@ -431,10 +536,18 @@ World.Tile = class {
         });
     }
 
+    /**
+     * Change the position of the tile
+     *
+     * @param newPos {p5.Vector} - The new position of the tile
+     */
     setPos(newPos) {
         this.pos = newPos.copy();
     }
 
+    /**
+     * Generate the portable graphics image for the tile.
+     */
     generatePG() {
         this.tileImage = createGraphics(World.gridSize, World.gridSize);
         this.tileImage.pixelDensity(1);
@@ -456,6 +569,12 @@ World.Tile = class {
         });
     }
 
+    /**
+     * Gets the current image of the tile.  If the tile image hasn't been
+     * created then it will be lazily generated before being returned.
+     *
+     * @return {p5.Graphics} - The tile image
+     */
     getPG() {
         if(this.tileImage == undefined) {
             this.generatePG();
@@ -463,6 +582,11 @@ World.Tile = class {
         return this.tileImage;
     }
 
+    /**
+     * Copies the all of the lines in the tile object and returns a new tile.
+     *
+     * @returns {World.Tile} - The new tile
+     */
     copy() {
         let linesCopy = [];
         if(this.lines.length > 0) {
@@ -473,6 +597,10 @@ World.Tile = class {
         return new World.Tile(linesCopy);
     }
 
+    /**
+     * Draws the tile.  If the tile image hasn't been created it is lazily
+     * generated before it is drawn.
+     */
     draw() {
         if(this.tileImage == undefined) {
             this.generatePG();
@@ -481,23 +609,52 @@ World.Tile = class {
             this.pos.x, this.pos.y,
             World.gridSize, World.gridSize);
     }
-
-
 };
 
-
+/**
+ * Tile proxy class.  This is created to act as a proxy to the expensive tile
+ * class.  Each type of tile is created in World.TileSetup() and then a proxy
+ * object takes the reference to each tile and is used by the rest of the
+ * simulation.  This prevents expensive copies of the tile being created.
+ *
+ * The proxy object stores a local copy of the position of the object so that if
+ * another proxy changes it for the subject tile it can be changed back.  This
+ * is critical for position dependent code such as calls to
+ * WorldTile.Proxy.draw().
+ *
+ * @see World.Line
+ * @see World.Tile
+ * @see World.Room
+ */
 World.Tile.Proxy = class {
+    /**
+     * Constructor for a tile proxy.
+     *
+     * @param tile {World.Tile} - A reference to tile object that is the proxy
+     *  subject
+     * @param pos {p5.Vector} - The position of the proxy tile
+     */
     constructor(tile, pos=createVector(0,0)) {
         this.tile = tile;
         this.setPos(pos);
         this.tile.setPos(this.pos);
     }
 
+    /**
+     * Pass through to World.Tile.getLines()
+     *
+     * @returns {Array<World.Line>} - The array of lines in the tile
+     */
     getLines() {
         this.tile.setPos(this.pos);
         return this.tile.getLines();
     }
 
+    /**
+     * Pass through to World.Tile.setLines(lines)
+     *
+     * @param lines {Array<World.Line>} - The new array of lines
+     */
     setLines(lines) {
         this.lines = [];
         if(lines.length == 0) {
@@ -508,29 +665,54 @@ World.Tile.Proxy = class {
         this.tile.setLines(lines);
     }
 
+    /**
+     * Pass through to World.Tile.setPos(newPos).  The proxy object also saves
+     * the location for the position so that when it calls position dependent
+     * pass through functions it can set the position correctly.
+     *
+     * @param newPos {p5.Vector} - the new position of the tile
+     */
     setPos(newPos) {
         this.pos = newPos.copy();
         this.tile.setPos(newPos);
     }
 
+    /**
+     * Pass through to World.Tile.generatePg()
+     */
     generatePG() {
         this.tile.setPos(this.pos);
         this.tile.generatePG();
     }
 
+    /**
+     * Pass through to World.Tile.getPG()
+     *
+     * @returns {p5.Graphics} - The tile image
+     */
     getPG() {
         this.tile.setPos(this.pos);
         return this.tile.getPG();
     }
 
+
+    /**
+     * A method to copy this proxy object.  It passes a reference to the subject
+     * tile and a copy of the current position.
+     *
+     * This is not a pass through to the World.Tile.copy() method.
+     *
+     * @returns {World.Tile.Proxy} - A new proxy to the same tile subject
+     */
     copy() {
         return new World.Tile.Proxy(this.tile, this.pos.copy());
     }
 
+    /**
+     * Draws the tile subject in the location that the proxy has saved
+     */
     draw() {
         this.tile.setPos(this.pos);
         this.tile.draw();
     }
-
-
 };
