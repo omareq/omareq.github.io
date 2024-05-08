@@ -50,6 +50,7 @@ Simulation.Mode = Simulation.Mode || {};
  *
  * @see Simulation.Mode.ModeType
  * @see Robot.AnalogLightSensor
+ * @see World.Line
  */
 Simulation.Mode.DebugLineDistanceCheck = class extends Simulation.Mode.ModeType {
     static staticName = "DebugLineDistanceCheck";
