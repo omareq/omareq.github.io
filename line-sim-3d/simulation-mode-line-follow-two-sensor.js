@@ -50,6 +50,7 @@ Simulation.Mode = Simulation.Mode || {};
  * the line following algorithm.
  *
  * @see Simulation.Mode.ModeType
+ * @see Robot.Robot
  * @see Robot.Algorithm.LineFollow
  * @see Robot.Algorithm.TwoSensorFollow
  */
@@ -274,7 +275,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
             this.rotationKp,
             this.rotationKd);
 
-        this.robot = new Robot.robot(
+        this.robot = new Robot.Robot(
             pos,
             bearing,
             size,

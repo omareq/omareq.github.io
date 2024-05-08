@@ -50,7 +50,7 @@ Simulation.Mode = Simulation.Mode || {};
  * correct lines.
  *
  * @see Simulation.Mode.ModeType
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.LightSensorArray
  * @see Robot.Algorithm.CurveRight
  */
@@ -128,7 +128,7 @@ Simulation.Mode.DebugRobot = class extends Simulation.Mode.ModeType {
         const sensorArrayPos = createVector(0, 0.5 * size);
         const algorithm = new Robot.Algorithm.CurveRight();
 
-        this.robot = new Robot.robot(
+        this.robot = new Robot.Robot(
             pos,
             bearing,
             size,

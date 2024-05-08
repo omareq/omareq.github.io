@@ -48,6 +48,7 @@ Simulation.Mode = Simulation.Mode || {};
  * a robot with one light sensor and allows it to zig zag across a room.
  *
  * @see Simulation.Mode.ModeType
+ * @see Robot.Robot
  * @see Robot.Algorithm.LineFollow
  * @see Robot.Algorithm.OneSensorFollow
  */
@@ -116,7 +117,7 @@ Simulation.Mode.LineFollowOneSensor = class extends Simulation.Mode.ModeType {
         const sensorArrayPos = createVector(0, 0.5 * size);
         const algorithm = new Robot.Algorithm.OneSensorFollow();
 
-        this.robot = new Robot.robot(
+        this.robot = new Robot.Robot(
             pos,
             bearing,
             size,
