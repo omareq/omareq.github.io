@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: simulation-mode-light-sensor-array.js</title>
+    <title>JSDoc: Source: simulation-mode-line-distance-check.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: simulation-mode-light-sensor-array.js</h1>
+    <h1 class="page-title">Source: simulation-mode-line-distance-check.js</h1>
 
     
 
@@ -28,12 +28,12 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *  @file simulation-mode-light-sensor-array.js Test the light sensor array
- *      light sensor
+ *  @file simulation-mode-line-distance-check.js Test the line inter point
+ *  distance functionality
  *
  *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
- *  @date 31-March-2024
+ *  @date 08-May-2024
  *  @link https://omareq.github.io/line-sim-3d/
  *  @link https://omareq.github.io/line-sim-3d/docs/
  *
@@ -72,120 +72,119 @@ Simulation.Mode = Simulation.Mode || {};
 
 
 /**
- * Class Simulation.Mode.DebugLightSensorArray is a simulation mode that tests
- * the light sensor array functionality.  This is done by moving the light
- * sensor array to the mouse location and constantly rotating it to make sure
- * that it maintains the correct orientation and spacing for each sensor.
+ * Class Simulation.Mode.DebugLineDistanceCheck is a simulation mode that checks how
+ * well an analog light sensor can read the simulated line.  This is mostly to
+ * see how far apart the line points need to be to produce a realistic effect.
  *
  * @see Simulation.Mode.ModeType
- * @see Robot.LightSensorArray
  * @see Robot.AnalogLightSensor
+ * @see World.Line
  */
-Simulation.Mode.DebugLightSensorArray = class extends Simulation.Mode.ModeType {
-    static staticName = "DebugLightSensorArray";
-
+Simulation.Mode.DebugLineDistanceCheck = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugLineDistanceCheck";
     /**
      * The constructor that sets up the simulation variables
      */
     constructor() {
         super();
-        this.name = "DebugLightSensorArray";
+        this.name = "DebugLineDistanceCheck";
+        this.uiDivID = "simulation-mode-line-distance-check";
+        this.setupUI();
 
-        const numTilesX = 7;
-        const numTilesY = 5;
-
-        const tilesRatio = numTilesX / numTilesY;
-        const pixelsRatio = width / height;
-
-        let gridSize = -1;
-        if(tilesRatio > pixelsRatio) {
-            gridSize = width / numTilesX;
+        if (width &lt; height) {
+            World.setGridSize(0.75 * width);
         } else {
-            gridSize = height / numTilesY;
+            World.setGridSize(0.75 * height);
         }
 
-        World.setGridSize(gridSize);
-        this.sensorRadius = 0.5 * World.lineThickness + 1;
+        this.sensorRadius = 0.3;
+        this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
+            createVector(0,0));
 
-        let numSensors = 3;
-        let globalPos = createVector(0,0);
-        let sensorPositions = [
-            createVector(-0.25 * World.gridSize, 0),
-            createVector(0.00, 0.00),
-            createVector(0.25 * World.gridSize, 0)
-            ];
-        let radiuses = [this.sensorRadius,
-            this.sensorRadius,
-            this.sensorRadius
-            ];
-        let analogOrDigital = [
-            Robot.LightSensorType.Analog,
-            Robot.LightSensorType.Analog,
-            Robot.LightSensorType.Analog
-            ];
+        this.addNewUIElements();
+        this.tileX = width /2 - World.gridSize / 2;
+        this.tileY = height / 2 - World.gridSize / 2;
+        this.tile = World.Tiles.verticalLine.copy();
+        this.tile.setPos(createVector(this.tileX, this.tileY));
 
-        this.bearing = 0;
-        this.radPerSec = 0.5 * math.PI;
+        this.sensorX = width/2 + World.lineThickness/2;
+        this.sensorY = this.tileY;
+    }
 
-        this.sensorArray = new Robot.LightSensorArray(numSensors,
-            globalPos,
-            sensorPositions,
-            radiuses,
-            analogOrDigital);
+    /**
+     * Adds the UI elements that control the line distance check simulation
+     * mode.  This code currently has an inefficiency that deletes DOM elements
+     * for the inputs if they already exist.  It would be preferable if a handle
+     * could be saved and reused for these elements.
+     */
+    addNewUIElements() {
+        // TODO: save handles when switching simulation mode
+        if(document.getElementById("sm-ldc-sensor-radius-slider").children.length) {
+            document.getElementById("sm-ldc-sensor-radius-slider").children[0].remove();
+            document.getElementById("sm-ldc-sensor-radius-val").children[0].remove();
+        }
 
+        // sensor radius
+        this.sensorRadiusSlider = createSlider(0.01, 1, this.sensorRadius, 0.05);
+        this.sensorRadiusSlider.parent("sm-ldc-sensor-radius-slider");
 
-        this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
-        this.room.fillRoomWithSnakePattern();
+        this.sensorRadiusDisplay = createP();
+        this.sensorRadiusDisplay.parent("sm-ldc-sensor-radius-val");
+        this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(this.sensorRadius);
 
-        let grid = this.room.getAllTiles();
+    }
 
-        grid[2][0] = World.Tiles.gapQuarterLineHorizontal.copy();
-        grid[4][0] = World.Tiles.gapQuarterLineHorizontal.copy();
-        grid[6][0] = World.Tiles.diagonalDownLeft.copy();
+    /**
+     * Polls the line distance check mode specific UI elements
+     */
+    UIPoll() {
 
-        grid[4][1] = World.Tiles.diagonalVDown.copy();
-        grid[3][1] = World.Tiles.diagonalVUp.copy();
-        grid[1][1] = World.Tiles.zigZagHorizontal.copy();
-        grid[0][1] = World.Tiles.quarterCircleDownRight.copy();
+        let sliderVal = this.sensorRadiusSlider.value();
+        if(sliderVal != this.sensorRadius) {
+            console.debug("Simulation Mode Line Distance Check uiPoll: sensor radius Slider value has changed to: ",
+                sliderVal);
+            this.sensorRadius = sliderVal;
+            this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(sliderVal);
+            this.sensor.setRadius(this.sensorRadius * World.lineThickness);
+        }
 
-        grid[0][2] = World.Tiles.quarterCircleUpRight.copy();
-        grid[2][2] = World.Tiles.blankLine.copy();
-        grid[3][2] = World.Tiles.gapQuarterLineHorizontal.copy();
-        grid[5][2] = World.Tiles.zigZagHorizontal.copy();
-        grid[6][2] = World.Tiles.quarterCircleDownLeft.copy();
-
-        grid[6][3] = World.Tiles.diagonalUpLeft.copy();
-        grid[4][3] = World.Tiles.zigZagHorizontal.copy();
-        grid[3][3] = World.Tiles.zigZagHorizontal.copy();
-        grid[2][3] = World.Tiles.gapQuarterLineHorizontal.copy();
-        grid[0][3] = World.Tiles.diagonalDownRight.copy();
-
-        grid[0][4] = World.Tiles.diagonalUpRight.copy();
-        grid[2][4] = World.Tiles.diagonalVDown.copy();
-        grid[3][4] = World.Tiles.diagonalVDown.copy();
-
-        this.room.setTiles(grid);
     }
 
      /**
      * Update function that updates the state of the simulation
      */
     update() {
-        const mousePos = createVector(mouseX, mouseY);
-        this.room.draw();
-        this.sensorArray.setPos(mousePos);
-        this.sensorArray.setBearing(this.bearing);
-        this.bearing += this.radPerSec * Simulation.dtSeconds;
-        if(this.bearing >= math.TWO_PI) {
-            this.bearing = 0;
+
+        this.tile.draw();
+
+        this.sensorY++;
+        if(this.sensorY > (this.tileY + World.gridSize)) {
+            this.sensorY = this.tileY;
         }
 
-        this.sensorArray.read(this.room);
-        this.sensorArray.draw();
+        this.sensor.setPos(createVector(this.sensorX, this.sensorY));
+
+        const draw = true;
+        const brightness = this.sensor.read(this.tile, draw);
+
+        console.log(
+            ", x, ", this.sensorX,
+            ", y, ", this.sensorY,
+            ", sensor val, ", brightness
+            );
+
+        const colorVal = floor(brightness * 255);
+        push();
+        fill(colorVal);
+        strokeWeight(1);
+        stroke(127, 0, 30);
+        const ellipseSize = 2 * this.sensorRadius * World.lineThickness;
+        ellipse(this.sensorX, this.sensorY, ellipseSize, ellipseSize);
+        pop();
     }
 };
 
-Simulation.Mode.ModeList.push(Simulation.Mode.DebugLightSensorArray);
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugLineDistanceCheck);
 </code></pre>
         </article>
     </section>

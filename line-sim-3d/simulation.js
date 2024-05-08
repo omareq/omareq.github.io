@@ -216,6 +216,7 @@ Simulation.reset = function() {
  * @see Simulation.Mode.DebugShowAllTiles
  * @see Simulation.Mode.DebugLightSensorArray
  * @see Simulation.Mode.DebugRobot
+ * @see Simulation.Mode.DebugLineDistanceCheck
  */
 Simulation.Mode.ModeType = class {
     static isModeType = true;

@@ -41,7 +41,7 @@ Robot.Algorithm = Robot.Algorithm || {};
 /**
  * An abstract class that defines the interface for line following algorithms
  *
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.RobotTelemetryData
  * @see Robot.MovementCommands
  * @see Robot.Algorithm.OneSensorFollow
@@ -86,7 +86,7 @@ Robot.Algorithm.LineFollow = class {
  * is do nothing / NOP.
  *
  * @see Robot.Algorithm.LineFollow
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.RobotTelemetryData
  * @see Robot.MovementCommands
  */
@@ -118,7 +118,7 @@ Robot.Algorithm.Empty = class extends Robot.Algorithm.LineFollow {
  * a go in straight line algorithm.
  *
  * @see Robot.Algorithm.LineFollow
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.RobotTelemetryData
  * @see Robot.MovementCommands
  */
@@ -151,7 +151,7 @@ Robot.Algorithm.StraightLine = class extends Robot.Algorithm.LineFollow {
  * a go in curve to the right.
  *
  * @see Robot.Algorithm.LineFollow
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.RobotTelemetryData
  * @see Robot.MovementCommands
  *
@@ -186,7 +186,7 @@ Robot.Algorithm.CurveRight = class extends Robot.Algorithm.LineFollow {
  * a go in curve to the left.
  *
  * @see Robot.Algorithm.LineFollow
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.RobotTelemetryData
  * @see Robot.MovementCommands
  */
@@ -219,7 +219,7 @@ Robot.Algorithm.CurveLeft = class extends Robot.Algorithm.LineFollow {
  * uses a single analogue light sensor to follow the edge of a line.
  *
  * @see Robot.Algorithm.LineFollow
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.RobotTelemetryData
  * @see Robot.MovementCommands
  *
@@ -260,7 +260,7 @@ Robot.Algorithm.OneSensorFollow = class extends Robot.Algorithm.LineFollow {
  * proportional derivate controller.
  *
  * @see Robot.Algorithm.LineFollow
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.RobotTelemetryData
  * @see Robot.MovementCommands
  *

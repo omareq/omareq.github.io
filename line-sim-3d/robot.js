@@ -41,7 +41,7 @@ var Robot = Robot || {};
  * This includes the position, bearing, velocity, rotation rate, and last read
  * sensor values.
  *
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.Algorithm.LineFollow
  * @see Robot.MovementCommands
  */
@@ -49,7 +49,7 @@ Robot.RobotTelemetryData = class {
     /**
      * Constructor for the telemetry data.
      *
-     * @param robot {Robot.robot} - The robot to save the data for.
+     * @param robot {Robot.Robot} - The robot to save the data for.
      */
     constructor(robot) {
         this.pos = robot.pos.copy();
@@ -65,7 +65,7 @@ Robot.RobotTelemetryData = class {
  * A class that stores effector commands for the robot.  This includes linear
  * velocity in the forward direction and rotation rate.
  *
- * @see Robot.robot
+ * @see Robot.Robot
  * @see Robot.Algorithm.LineFollow
  * @see Robot.RobotTelemetryData
  */
@@ -92,7 +92,7 @@ Robot.MovementCommands = class {
  * @see Robot.DigitalLightSensor
  * @see Robot.LightSensorArray
  */
-Robot.robot = class{
+Robot.Robot = class{
     /**
      * The constructor for the robot class.
      *

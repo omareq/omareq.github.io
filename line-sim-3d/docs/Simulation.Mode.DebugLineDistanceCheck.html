@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: StraightLine</title>
+    <title>JSDoc: Class: DebugLineDistanceCheck</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: StraightLine</h1>
+    <h1 class="page-title">Class: DebugLineDistanceCheck</h1>
 
     
 
@@ -28,10 +28,12 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>StraightLine<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>DebugLineDistanceCheck<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class which defines a concrete robot algorithm.  The algorithm implemented is
-a go in straight line algorithm.</div>
+            <div class="class-description">Class Simulation.Mode.DebugLineDistanceCheck is a simulation mode that checks how
+well an analog light sensor can read the simulated line.  This is mostly to
+see how far apart the line points need to be to produce a realistic effect.</div>
         
     
 </header>
@@ -46,7 +48,7 @@ a go in straight line algorithm.</div>
     
 
     
-    <h4 class="name" id="StraightLine"><span class="type-signature"></span>new StraightLine<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="DebugLineDistanceCheck"><span class="type-signature"></span>new DebugLineDistanceCheck<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -54,7 +56,7 @@ a go in straight line algorithm.</div>
 
 
 <div class="description">
-    Empty constructor.  No setup is required for this algorithm
+    The constructor that sets up the simulation variables
 </div>
 
 
@@ -98,7 +100,7 @@ a go in straight line algorithm.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="robot-algorithm.js.html">robot-algorithm.js</a>, <a href="robot-algorithm.js.html#line125">line 125</a>
+        <a href="simulation-mode-line-distance-check.js.html">simulation-mode-line-distance-check.js</a>, <a href="simulation-mode-line-distance-check.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -108,13 +110,11 @@ a go in straight line algorithm.</div>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Robot.Algorithm.LineFollow.html">Robot.Algorithm.LineFollow</a></li>
+            <li><a href="Simulation.Mode.ModeType.html">Simulation.Mode.ModeType</a></li>
         
-            <li><a href="Robot.Robot.html">Robot.Robot</a></li>
+            <li><a href="Robot.AnalogLightSensor.html">Robot.AnalogLightSensor</a></li>
         
-            <li><a href="Robot.RobotTelemetryData.html">Robot.RobotTelemetryData</a></li>
-        
-            <li><a href="Robot.MovementCommands.html">Robot.MovementCommands</a></li>
+            <li><a href="World.Line.html">World.Line</a></li>
         </ul>
     </dd>
     
@@ -167,7 +167,7 @@ a go in straight line algorithm.</div>
     
 
     
-    <h4 class="name" id="follow"><span class="type-signature"></span>follow<span class="signature">(robotData)</span><span class="type-signature"> &rarr; {<a href="Robot.MovementCommands.html">Robot.MovementCommands</a>}</span></h4>
+    <h4 class="name" id="UIPoll"><span class="type-signature"></span>UIPoll<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -175,9 +175,7 @@ a go in straight line algorithm.</div>
 
 
 <div class="description">
-    The follow method that overrides the virtual follow method. For this
-algorithm the forwardVelocity is set to move at 1 tile per second with
-no rotation.
+    Polls the line distance check mode specific UI elements
 </div>
 
 
@@ -186,57 +184,6 @@ no rotation.
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>robotData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Robot.RobotTelemetryData.html">Robot.RobotTelemetryData</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Values for all the sensors that
-the robot can read.  This includes the position, velocity, bearing and
-light sensors.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -272,7 +219,7 @@ light sensors.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="robot-algorithm.js.html">robot-algorithm.js</a>, <a href="robot-algorithm.js.html#line142">line 142</a>
+        <a href="simulation-mode-line-distance-check.js.html">simulation-mode-line-distance-check.js</a>, <a href="simulation-mode-line-distance-check.js.html#line112">line 112</a>
     </li></ul></dd>
     
 
@@ -297,28 +244,185 @@ light sensors.</td>
 
 
 
-<h5>Returns:</h5>
+
+
+
+
 
         
-<div class="param-desc">
-    - The commands for the robot effectors.
+            
+
+    
+
+    
+    <h4 class="name" id="addNewUIElements"><span class="type-signature"></span>addNewUIElements<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Adds the UI elements that control the line distance check simulation
+mode.  This code currently has an inefficiency that deletes DOM elements
+for the inputs if they already exist.  It would be preferable if a handle
+could be saved and reused for these elements.
 </div>
 
 
 
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Robot.MovementCommands.html">Robot.MovementCommands</a></span>
 
 
-    </dd>
-</dl>
+
+
+
+
+
+
+
+
+<dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="simulation-mode-line-distance-check.js.html">simulation-mode-line-distance-check.js</a>, <a href="simulation-mode-line-distance-check.js.html#line92">line 92</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Update function that updates the state of the simulation
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="simulation-mode-line-distance-check.js.html">simulation-mode-line-distance-check.js</a>, <a href="simulation-mode-line-distance-check.js.html#line128">line 128</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
