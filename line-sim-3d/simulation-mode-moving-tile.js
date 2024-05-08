@@ -140,9 +140,10 @@ Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
             console.debug("Simulation Mode Moving Tile Check uiPoll: tile x speed Slider value has changed to: ",
                 sliderVal);
 
-            this.tileXInc = sliderVal;
             if(this.tileXInc != 0) {
-                this.tileXInc *= this.tileXInc / abs(this.tileXInc);
+                this.tileXInc = sliderVal * this.tileXInc / abs(this.tileXInc);
+            } else {
+                this.tileXInc = sliderVal;
             }
 
             this.tileXSpeedDisplay.elt.innerText = "X Speed (px): " + str(sliderVal);
@@ -152,9 +153,10 @@ Simulation.Mode.DebugMovingTile = class extends Simulation.Mode.ModeType {
         if(abs(sliderVal) != abs(this.tileYInc)) {
             console.debug("Simulation Mode Moving Tile Check uiPoll: tile y speed Slider value has changed to: ",
                 sliderVal);
-            this.tileYInc = sliderVal;
             if(this.tileYInc != 0) {
-                this.tileYInc *= this.tileYInc / abs(this.tileYInc);
+                this.tileYInc = sliderVal * this.tileYInc / abs(this.tileYInc);
+            } else {
+                this.tileYInc = sliderVal;
             }
             this.tileYSpeedDisplay.elt.innerText = "Y Speed (px): " + str(sliderVal);
         }
