@@ -111,6 +111,11 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
         this.addTileSelector();
     }
 
+    /**
+     * Add the tile selector UI element.  This automatically selects all of the
+     * Tile proxies and uses them to populate the selector options.  Therefore,
+     * if a new tile is added this will automagically be included in the options
+     */
     addTileSelector() {
         const keys = Object.keys(World.Tiles.proxySubject);
         this.tileSelect = createSelect();
