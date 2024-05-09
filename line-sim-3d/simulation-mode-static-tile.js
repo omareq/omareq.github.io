@@ -77,10 +77,10 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
             this.sensorRadius * World.lineThickness,
             createVector(0,0));
 
-        const tileX = width /2 - World.gridSize / 2;
-        const tileY = height / 2 - World.gridSize / 2;
+        this.tileX = width /2 - World.gridSize / 2;
+        this.tileY = height / 2 - World.gridSize / 2;
         this.tile = World.Tiles.verticalLine.copy();
-        this.tile.setPos(createVector(tileX, tileY));
+        this.tile.setPos(createVector(this.tileX, this.tileY));
 
         this.addNewUIElements();
     }
@@ -96,6 +96,8 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
         if(document.getElementById("sm-st-sensor-radius-slider").children.length) {
             document.getElementById("sm-st-sensor-radius-slider").children[0].remove();
             document.getElementById("sm-st-sensor-radius-val").children[0].remove();
+
+            document.getElementById("sm-st-tile-selector").children[0].remove();
         }
 
         // sensor radius
@@ -106,6 +108,19 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
         this.sensorRadiusDisplay.parent("sm-st-sensor-radius-val");
         this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(this.sensorRadius);
 
+        this.addTileSelector();
+    }
+
+    addTileSelector() {
+        const keys = Object.keys(World.Tiles.proxySubject);
+        this.tileSelect = createSelect();
+        this.tileSelect.parent("sm-st-tile-selector");
+
+        for(let i = 0; i < keys.length; i++) {
+            this.tileSelect.option(keys[i]);
+        }
+        this.tileSelect.selected("verticalLine");
+        this.currentTileName = this.tileSelect.selected();
     }
 
     /**
@@ -120,6 +135,14 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
             this.sensorRadius = sliderVal;
             this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(sliderVal);
             this.sensor.setRadius(this.sensorRadius * World.lineThickness);
+        }
+
+        if(this.currentTileName != this.tileSelect.selected()) {
+            console.log("Simulation Mode Static Tile Check uiPoll: tile selector has changed to new tile: ",
+                this.tileSelect.selected())
+            this.tile = World.Tiles.proxySubject[this.tileSelect.selected()].copy();
+            this.currentTileName = this.tileSelect.selected();
+            this.tile.setPos(createVector(this.tileX, this.tileY));
         }
     }
 
