@@ -31,6 +31,8 @@
  *****************************************************************************/
 "use strict";
 
+let testString = undefined;
+
 /**
  * p5.js setup function, creates canvas.
  */
@@ -43,6 +45,70 @@ function setup() {
 	}
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
+
+	let positions = [
+		createVector(0.25*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.50*width, 20),
+		createVector(0.75*width, 20)
+		];
+
+	// let velocities = [
+	// 	createVector(0, 0),
+	// 	createVector(0, 0),
+	// 	createVector(0, 0),
+	// 	createVector(0, 0),
+	// 	createVector(0, 0)
+	// 	];
+
+	let masses = [
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4
+		];
+
+	let hookesConstants = [
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5,
+		9.5
+		];
+
+	testString = new Elastic.String(
+		40,
+		positions,
+		masses,
+		hookesConstants);
 }
 
 /**
@@ -50,5 +116,9 @@ function setup() {
  */
 function draw() {
 	background(0);
+	for(let i = 0 ; i < 100; i++) {
+		testString.update(0.0005);
+	}
+	testString.draw();
 }
 
