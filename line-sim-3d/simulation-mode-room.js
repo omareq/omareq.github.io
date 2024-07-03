@@ -66,6 +66,9 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
     constructor(numTilesX=4, numTilesY=4) {
         super();
         this.name = "DebugRoom";
+        this.uiDivID = "simulation-mode-room";
+        this.setupUI();
+
         let gridSize = -1;
         if(numTilesX > numTilesY) {
             gridSize = width / numTilesX;
@@ -75,12 +78,54 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
         gridSize *= 0.9;
 
         World.setGridSize(gridSize);
-        this.sensorRadius = 0.5 * World.lineThickness + 1;
-        this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
+        this.sensorRadius = 0.5;
+        this.sensor = new Robot.AnalogLightSensor(
+            this.sensorRadius * World.lineThickness,
             createVector(0,0));
 
         this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
         this.room.fillRoomWithSnakePattern();
+
+        this.addNewUIElements();
+    }
+
+    /**
+     * Adds the UI elements that control the debug room mode simulation
+     * mode.  This code currently has an inefficiency that deletes DOM elements
+     * for the inputs if they already exist.  It would be preferable if a handle
+     * could be saved and reused for these elements.
+     */
+    addNewUIElements() {
+        // TODO: save handles when switching simulation mode
+        if(document.getElementById("sm-room-sensor-radius-slider").children.length) {
+            document.getElementById("sm-room-sensor-radius-slider").children[0].remove();
+            document.getElementById("sm-room-sensor-radius-val").children[0].remove();
+        }
+
+        // sensor radius
+        this.sensorRadiusSlider = createSlider(0.1, 4, this.sensorRadius, 0.1);
+        this.sensorRadiusSlider.parent("sm-room-sensor-radius-slider");
+
+        this.sensorRadiusDisplay = createP();
+        this.sensorRadiusDisplay.parent("sm-room-sensor-radius-val");
+        this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(this.sensorRadius);
+
+    }
+
+    /**
+     * Polls the simulation mode debug room specific UI elements
+     */
+    UIPoll() {
+
+        let sliderVal = this.sensorRadiusSlider.value();
+        if(sliderVal != this.sensorRadius) {
+            console.debug("Simulation Mode Static Tile Check uiPoll: sensor radius Slider value has changed to: ",
+                sliderVal);
+            this.sensorRadius = sliderVal;
+            this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(sliderVal);
+            this.sensor.setRadius(this.sensorRadius * World.lineThickness);
+        }
+
     }
 
     /**
@@ -109,7 +154,7 @@ Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
         fill(colorVal);
         strokeWeight(1);
         stroke(127, 0, 30);
-        const ellipseSize = 2 * this.sensorRadius;
+        const ellipseSize = 2 * this.sensorRadius * World.lineThickness;
         ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
         pop();
     }

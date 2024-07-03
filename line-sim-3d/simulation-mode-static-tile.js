@@ -63,14 +63,92 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
     constructor() {
         super();
         this.name = "DebugStaticTile";
-        this.sensorRadius = 12;
-        this.sensor = new Robot.AnalogLightSensor(this.sensorRadius,
+        this.uiDivID = "simulation-mode-static-tile";
+        this.setupUI();
+
+        if (width < height) {
+            World.setGridSize(0.75 * width);
+        } else {
+            World.setGridSize(0.75 * height);
+        }
+
+        this.sensorRadius = 0.5;
+        this.sensor = new Robot.AnalogLightSensor(
+            this.sensorRadius * World.lineThickness,
             createVector(0,0));
 
-        const tileX = width /2 - World.gridSize / 2;
-        const tileY = height / 2 - World.gridSize / 2;
+        this.tileX = width /2 - World.gridSize / 2;
+        this.tileY = height / 2 - World.gridSize / 2;
         this.tile = World.Tiles.verticalLine.copy();
-        this.tile.setPos(createVector(tileX, tileY));
+        this.tile.setPos(createVector(this.tileX, this.tileY));
+
+        this.addNewUIElements();
+    }
+
+    /**
+     * Adds the UI elements that control the static tile mode simulation
+     * mode.  This code currently has an inefficiency that deletes DOM elements
+     * for the inputs if they already exist.  It would be preferable if a handle
+     * could be saved and reused for these elements.
+     */
+    addNewUIElements() {
+        // TODO: save handles when switching simulation mode
+        if(document.getElementById("sm-st-sensor-radius-slider").children.length) {
+            document.getElementById("sm-st-sensor-radius-slider").children[0].remove();
+            document.getElementById("sm-st-sensor-radius-val").children[0].remove();
+
+            document.getElementById("sm-st-tile-selector").children[0].remove();
+        }
+
+        // sensor radius
+        this.sensorRadiusSlider = createSlider(0.1, 4, this.sensorRadius, 0.1);
+        this.sensorRadiusSlider.parent("sm-st-sensor-radius-slider");
+
+        this.sensorRadiusDisplay = createP();
+        this.sensorRadiusDisplay.parent("sm-st-sensor-radius-val");
+        this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(this.sensorRadius);
+
+        this.addTileSelector();
+    }
+
+    /**
+     * Add the tile selector UI element.  This automatically selects all of the
+     * Tile proxies and uses them to populate the selector options.  Therefore,
+     * if a new tile is added this will automagically be included in the options
+     */
+    addTileSelector() {
+        const keys = Object.keys(World.Tiles.proxySubject);
+        this.tileSelect = createSelect();
+        this.tileSelect.parent("sm-st-tile-selector");
+
+        for(let i = 0; i < keys.length; i++) {
+            this.tileSelect.option(keys[i]);
+        }
+        this.tileSelect.selected("verticalLine");
+        this.currentTileName = this.tileSelect.selected();
+    }
+
+    /**
+     * Polls the moving tile mode specific UI elements
+     */
+    UIPoll() {
+
+        let sliderVal = this.sensorRadiusSlider.value();
+        if(sliderVal != this.sensorRadius) {
+            console.debug("Simulation Mode Static Tile Check uiPoll: sensor radius Slider value has changed to: ",
+                sliderVal);
+            this.sensorRadius = sliderVal;
+            this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(sliderVal);
+            this.sensor.setRadius(this.sensorRadius * World.lineThickness);
+        }
+
+        if(this.currentTileName != this.tileSelect.selected()) {
+            console.log("Simulation Mode Static Tile Check uiPoll: tile selector has changed to new tile: ",
+                this.tileSelect.selected())
+            this.tile = World.Tiles.proxySubject[this.tileSelect.selected()].copy();
+            this.currentTileName = this.tileSelect.selected();
+            this.tile.setPos(createVector(this.tileX, this.tileY));
+        }
     }
 
     /**
@@ -80,7 +158,6 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
         this.tile.draw();
 
         this.sensor.setPos(createVector(mouseX, mouseY));
-        this.sensor.setRadius(this.sensorRadius);
 
         const brightness = this.sensor.read(this.tile);
 
@@ -93,7 +170,7 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
         fill(colorVal);
         strokeWeight(1);
         stroke(127, 0, 30);
-        const ellipseSize = 2 * this.sensorRadius;
+        const ellipseSize = 2 * this.sensorRadius * World.lineThickness;
         ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
         pop();
     }
