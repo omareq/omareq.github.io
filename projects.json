@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_027",
+            "prev-id": "p_028",
             "status": "active",
             "tags": [
                 "fun"
@@ -434,14 +434,29 @@
             "gif-url": "imgs/p_027.gif",
             "id": "p_027",
             "name": "Line sim 3d",
-            "next-id": "p_000",
+            "next-id": "p_028",
             "pic-url": "imgs/p_027.jpg",
             "prev-id": "p_026",
             "status": "active",
             "tags": [
                 "robot",
-                "science"],
+                "science"
+            ],
             "vid-url": "vids/p_027.mp4"
+        },
+        "p_028": {
+            "brief": "A quick simulation to test elasticity",
+            "demo-url": "/elastic-string/",
+            "docs-url": "/elastic-string/docs/",
+            "gif-url": "imgs/p_028.gif",
+            "id": "p_028",
+            "name": "Elastic string",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_028.jpg",
+            "prev-id": "p_027",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_028.mp4"
         }
     }
 }
