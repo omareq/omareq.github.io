@@ -86,10 +86,12 @@ Elastic.String = class {
                 const direction = this.posArray[i-1].copy().sub(this.posArray[i].copy());
                 const dist = direction.copy().mag();
                 const deltaX = this.interParticleRestLen - dist;
-                const forceMag = -this.hookesConstArray[i-1] * deltaX;
-                const newForce = direction.copy().setMag(forceMag);
-                // console.log("Elastic Force 1: ", newForce);
-                force.add(newForce.copy());
+                if(deltaX < 0) {
+                    const forceMag = -this.hookesConstArray[i-1] * deltaX;
+                    const newForce = direction.copy().setMag(forceMag);
+                    // console.log("Elastic Force 1: ", newForce);
+                    force.add(newForce.copy());
+                }
 
                 this.epe += 0.5 * this.hookesConstArray[i-1] * deltaX**2;
             }
@@ -99,10 +101,12 @@ Elastic.String = class {
                 const direction = this.posArray[i+1].copy().sub(this.posArray[i].copy());
                 const dist = direction.copy().mag();
                 const deltaX = this.interParticleRestLen - dist;
-                const forceMag = -this.hookesConstArray[i] * deltaX;
-                const newForce = direction.copy().setMag(forceMag);
-                // console.log("Elastic Force 2: ", newForce);
-                force.add(newForce.copy());
+                if(deltaX < 0) {
+                    const forceMag = -this.hookesConstArray[i] * deltaX;
+                    const newForce = direction.copy().setMag(forceMag);
+                    // console.log("Elastic Force 2: ", newForce);
+                    force.add(newForce.copy());
+                }
             }
 
             this.forceArray[i] = force.copy();
@@ -148,9 +152,9 @@ Elastic.String = class {
 
         // save the position values
         for(let i = 0; i < this.numParticles; i++) {
-            if(i == 0 || i == this.numParticles-1) {
-                continue;
-            }
+            if (lockFirst && (i == 0)) continue;
+            if (lockLast && (i == this.numParticles-1)) continue;
+
             this.posArray[i] = nextPosArray[i];
         }
 
@@ -170,8 +174,10 @@ Elastic.String = class {
             accTerm.mult(0.5 * dt);
             nextVel.add(accTerm);
 
-            // dampening
-            this.velArray[i] = nextVel.mult(0.99995);
+            // crude dampening - move to calc forces add force based on vel
+            if(dampening) nextVel.mult(0.99995);
+
+            this.velArray[i] = nextVel.copy();
         }
 
         // Save the acceleration values
@@ -221,7 +227,7 @@ Elastic.String = class {
         for(let i = 0; i < this.numParticles; i++) {
             let direction = (this.forceArray[i].copy());
             let strength = direction.mag();
-            stroke(int(5*strength) + 10, 0, 0);
+            stroke(int(5*strength) + 50, 0, 0);
             direction.setMag(10);
             line(this.posArray[i].x,
                 this.posArray[i].y,

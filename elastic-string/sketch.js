@@ -32,6 +32,9 @@
 "use strict";
 
 let testString = undefined;
+let lockLast = true;
+let lockFirst = true;
+let dampening = true;
 
 /**
  * p5.js setup function, creates canvas.
@@ -47,37 +50,37 @@ function setup() {
 	cnv.parent('sketch');
 
 	let positions = [
-		createVector(0.25*width, 20),
-		createVector(0.25*width, 25),
-		createVector(0.25*width, 30),
-		createVector(0.25*width, 35),
-		createVector(0.25*width, 40),
-		createVector(0.50*width, 45),
-		createVector(0.50*width, 50),
-		createVector(0.50*width, 45),
-		createVector(0.50*width, 40),
-		createVector(0.75*width, 35),
-		createVector(0.75*width, 30),
-		createVector(0.75*width, 25),
-		createVector(0.75*width, 20),
-		createVector(0.75*width, 20)
+		createVector(0.5*width, 20),
+		createVector(0.5*width+10, 25),
+		createVector(0.5*width+20, 30),
+		createVector(0.5*width+30, 35),
+		createVector(0.5*width+40, 40),
+		createVector(0.5*width+50, 45),
+		createVector(0.5*width+60, 50),
+		createVector(0.5*width+70, 45),
+		createVector(0.5*width+80, 40),
+		createVector(0.5*width+90, 35),
+		createVector(0.5*width+10, 30),
+		createVector(0.5*width+110, 25),
+		createVector(0.5*width+120, 20),
+		createVector(0.5*width+150, 20)
 		];
 
 	let masses = [
-		10,
-		10,
-		10,
-		10,
-		10,
-		10,
-		10,
-		10,
-		10,
-		10,
-		10,
-		10,
-		10,
-		10
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		40,
+		1,
+		1,
+		1,
+		1,
+		1,
+		40
 		];
 
 	let hookesConstants = [
@@ -108,11 +111,19 @@ function setup() {
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
+let numUpdatesPerFrame = 2000;
 function draw() {
 	background(0);
-	for(let i = 0 ; i < 1000; i++) {
-		testString.update(0.0005);
+	for(let i = 0 ; i < numUpdatesPerFrame; i++) {
+		testString.update(0.0002);
 	}
 	testString.draw();
+
+	// once outside of relaxation period begin simulation
+	if(frameCount > 200) {
+		lockLast = false;
+		dampening = false;
+		numUpdatesPerFrame = 500;
+	}
 }
 
