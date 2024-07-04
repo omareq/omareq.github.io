@@ -111,7 +111,7 @@ function setup() {
 function draw() {
 	background(0);
 	for(let i = 0 ; i < 1000; i++) {
-		testString.update(0.00005);
+		testString.update(0.0005);
 	}
 	testString.draw();
 }
