@@ -37,8 +37,8 @@
 var Elastic = Elastic || {};
 
 Elastic.Algorithm = Object.freeze({
-  Euler: "Euler",
-  VelocityVerlet: "VelocityVerlet"
+  Euler: 0,
+  VelocityVerlet: 1
 });
 
 Elastic.String = class {
