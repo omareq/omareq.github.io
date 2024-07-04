@@ -51,9 +51,15 @@ Elastic.String = class {
         this.numParticles = posArray.length;
         this.interParticleRestLen = this.length / this.numParticles;
         this.posArray = posArray;
+
         this.velArray = [];
+        this.accArray = [];
+        this.forceArray = [];
+
         for(let i = 0; i < this.numParticles; i++) {
             this.velArray.push(createVector(0, 0));
+            this.forceArray.push(createVector(0, 0));
+            this.accArray.push(createVector(0, 0));
         }
 
         this.massArray = massArray;
@@ -61,48 +67,58 @@ Elastic.String = class {
         this.algorithm = algorithm;
     }
 
-    updateEuler(dt) {
-        let nextPosArray = [];
+    calcForces() {
+        // const gravitationalAcc = createVector(0, 5);
+        const gravitationalAcc = createVector(0, 0);
         this.epe = 0;
+        for(let i = 0; i <  this.numParticles; i++) {
+            // get force from both directions
+            // f = -kx
+            let force = createVector(0, 0);
+            const gravityForce = gravitationalAcc.copy().mult(this.massArray[i]);
+
+            force.add(gravityForce.copy());
+            // console.log("Particle: ", i);
+            // console.log("Gravity Force: ", gravityForce);
+
+            // get force between particle and previous one
+            if(i > 0) {
+                const direction = this.posArray[i-1].copy().sub(this.posArray[i].copy());
+                const dist = direction.copy().mag();
+                const deltaX = this.interParticleRestLen - dist;
+                const forceMag = -this.hookesConstArray[i-1] * deltaX;
+                const newForce = direction.copy().setMag(forceMag);
+                // console.log("Elastic Force 1: ", newForce);
+                force.add(newForce.copy());
+
+                this.epe += 0.5 * this.hookesConstArray[i-1] * deltaX**2;
+            }
+
+            // get force between particle and next one
+            if(i < this.massArray.length - 1) {
+                const direction = this.posArray[i+1].copy().sub(this.posArray[i].copy());
+                const dist = direction.copy().mag();
+                const deltaX = this.interParticleRestLen - dist;
+                const forceMag = -this.hookesConstArray[i] * deltaX;
+                const newForce = direction.copy().setMag(forceMag);
+                // console.log("Elastic Force 2: ", newForce);
+                force.add(newForce.copy());
+            }
+
+            this.forceArray[i] = force.copy();
+        }
+    }
+
+    updateEuler(dt) {
+        this.calcForces();
+        let nextPosArray = [];
         for (let i = 0; i < this.numParticles; i++) {
-                // get force from both directions
-                // f = -kx
-                let force = createVector(0, 0);
-                const gravitationalAcc = createVector(0, 5);
-                const gravityForce = gravitationalAcc.copy().mult(this.massArray[i]);
-
-                force.add(gravityForce);
-                // console.log("Gravity Force: ", gravityForce);
-
-                // get force between particle and previous one
-                if(i > 0) {
-                    const direction = this.posArray[i-1].copy().sub(this.posArray[i]);
-                    const dist = direction.copy().mag();
-                    const x = this.interParticleRestLen - dist;
-                    const forceMag = -this.hookesConstArray[i-1] * x;
-                    const newForce = direction.copy().setMag(forceMag);
-                    // console.log("Elastic Force 1: ", newForce);
-                    force.add(newForce.copy());
-
-                    this.epe += 0.5 *this.hookesConstArray[i-1] * x*x;
-                }
-
-                // get force between particle and next one
-                if(i < this.massArray.length - 2) {
-                    const direction = this.posArray[i+1].copy().sub(this.posArray[i]);
-                    const dist = direction.copy().mag();
-                    const x = this.interParticleRestLen - dist;
-                    const forceMag = -this.hookesConstArray[i] * x;
-                    const newForce = direction.copy().setMag(forceMag);
-                    // console.log("Elastic Force 2: ", newForce);
-                    force.add(newForce.copy());
-                }
-
+                let force = this.forceArray[i];
                 // a = f/m
-                const acc = force.copy().div(this.massArray[i]);
+                this.accArray[i] = force.copy().div(this.massArray[i]);
 
                 // v = v + a * dt
-                this.velArray[i].add(acc.copy().mult(dt));
+                this.velArray[i].add(this.accArray[i].copy().mult(dt));
 
                 // p = p + v * dt
                 nextPosArray.push(
@@ -117,6 +133,50 @@ Elastic.String = class {
                 this.posArray[i] = nextPosArray[i];
             }
             return;
+    }
+
+    updateVelocityVerlet(dt) {
+        // update positions
+        let nextPosArray = [];
+        for (let i = 0; i < this.numParticles; i++) {
+            let nextPos = this.posArray[i].copy();
+            nextPos.add(this.velArray[i].copy().mult(dt));
+            nextPos.add(this.accArray[i].copy().mult(0.5 *dt**2));
+
+            nextPosArray.push(nextPos);
+        }
+
+        // save the position values
+        for(let i = 0; i < this.numParticles; i++) {
+            if(i == 0 || i == this.numParticles-1) {
+                continue;
+            }
+            this.posArray[i] = nextPosArray[i];
+        }
+
+        //calculate acceleration from new interaction potential
+        this.calcForces();
+        let nextAccArray = [];
+        for(let i = 0; i < this.numParticles; i++) {
+            let force = this.forceArray[i];
+                // a = f/m
+            nextAccArray.push(force.copy().div(this.massArray[i]));
+        }
+
+        // calculate new velocity
+        for(let i = 0; i < this.numParticles; i++) {
+            let nextVel = this.velArray[i].copy();
+            let accTerm = this.accArray[i].copy().add(nextAccArray[i]);
+            accTerm.mult(0.5 * dt);
+            nextVel.add(accTerm);
+
+            this.velArray[i] = nextVel;
+        }
+
+        // Save the acceleration values
+        for(let i = 0; i < this.numParticles; i++) {
+            this.accArray[i] = nextAccArray[i];
+        }
     }
 
     update(dt) {
@@ -134,7 +194,6 @@ Elastic.String = class {
         for(let i = 0; i < this.numParticles; i++) {
             this.gpe += (- this.posArray[i].y) * this.massArray[i];
         }
-        console.log("GPE: ", this.gpe);
     }
 
     calcKineticEnergy() {
@@ -142,7 +201,6 @@ Elastic.String = class {
         for(let i = 0; i < this.numParticles; i++) {
             this.ke += (0.5 * this.massArray[i] * this.velArray[i].magSq());
         }
-        console.log("KE: ", this.ke);
     }
 
     draw() {
@@ -157,10 +215,30 @@ Elastic.String = class {
         endShape();
         pop();
 
+        push();
+        strokeWeight(2);
+        for(let i = 0; i < this.numParticles; i++) {
+            let direction = (this.forceArray[i].copy());
+            let strength = direction.mag();
+            stroke(int(5*strength) + 10, 0, 0);
+            direction.setMag(10);
+            line(this.posArray[i].x,
+                this.posArray[i].y,
+                this.posArray[i].x + direction.x,
+                this.posArray[i].y + direction.y);
+
+            ellipse(this.posArray[i].x, this.posArray[i].y,3, 3);
+        }
+        pop();
+
         this.calcGravityPotentialEnergy();
         this.calcKineticEnergy();
 
-        console.log("Total Energy: ", this.gpe + this.ke + this.epe);
+        console.debug("GPE: ", this.gpe);
+        console.debug("KE: ", this.ke);
+        console.debug("EPE: ", this.epe);
+
+        console.debug("Total Energy: ", this.gpe + this.ke + this.epe);
     }
 };
 

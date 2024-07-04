@@ -48,67 +48,61 @@ function setup() {
 
 	let positions = [
 		createVector(0.25*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
-		createVector(0.50*width, 20),
+		createVector(0.25*width, 25),
+		createVector(0.25*width, 30),
+		createVector(0.25*width, 35),
+		createVector(0.25*width, 40),
+		createVector(0.50*width, 45),
+		createVector(0.50*width, 50),
+		createVector(0.50*width, 45),
+		createVector(0.50*width, 40),
+		createVector(0.75*width, 35),
+		createVector(0.75*width, 30),
+		createVector(0.75*width, 25),
+		createVector(0.75*width, 20),
 		createVector(0.75*width, 20)
 		];
 
-	// let velocities = [
-	// 	createVector(0, 0),
-	// 	createVector(0, 0),
-	// 	createVector(0, 0),
-	// 	createVector(0, 0),
-	// 	createVector(0, 0)
-	// 	];
-
 	let masses = [
-		4,
-		4,
-		4,
-		4,
-		4,
-		4,
-		4,
-		4,
-		4,
-		4,
-		4,
-		4,
-		4,
-		4
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10
 		];
 
 	let hookesConstants = [
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5,
-		9.5
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5,
+		1.5
 		];
 
 	testString = new Elastic.String(
 		40,
 		positions,
 		masses,
-		hookesConstants);
+		hookesConstants,
+		// Elastic.Algorithm.Euler);
+		Elastic.Algorithm.VelocityVerlet);
 }
 
 /**
@@ -116,8 +110,8 @@ function setup() {
  */
 function draw() {
 	background(0);
-	for(let i = 0 ; i < 100; i++) {
-		testString.update(0.0005);
+	for(let i = 0 ; i < 1000; i++) {
+		testString.update(0.00005);
 	}
 	testString.draw();
 }
