@@ -63,6 +63,8 @@ function setup() {
 		createVector(0.5*width+10, 30),
 		createVector(0.5*width+110, 25),
 		createVector(0.5*width+120, 20),
+		createVector(0.5*width+130, 20),
+		createVector(0.5*width+140, 20),
 		createVector(0.5*width+150, 20)
 		];
 
@@ -72,10 +74,12 @@ function setup() {
 		1,
 		1,
 		1,
+		40,
+		1,
+		1,
 		1,
 		1,
 		40,
-		1,
 		1,
 		1,
 		1,
@@ -96,11 +100,13 @@ function setup() {
 		1.5,
 		1.5,
 		1.5,
+		1.5,
+		1.5,
 		1.5
 		];
 
 	testString = new Elastic.String(
-		40,
+		5,
 		positions,
 		masses,
 		hookesConstants,
