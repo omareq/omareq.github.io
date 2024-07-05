@@ -175,7 +175,8 @@ def sketch_js(name, description):
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.\n\
  *\n "
         + "*" * 77
-        + "/\n\n"
+        + "/\n"
+        + "\"use strict\";\n\n"
     )
 
     f.write(
