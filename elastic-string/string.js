@@ -68,8 +68,11 @@ Elastic.String = class {
     }
 
     calcForces() {
-        const gravitationalAcc = createVector(0, 0.25);
-        // const gravitationalAcc = createVector(0, 0);
+        let gravitationalAcc = createVector(0, 0);
+        if(gravityActive) {
+            gravitationalAcc = createVector(0, 0.25);
+        }
+
         this.epe = 0;
         for(let i = 0; i <  this.numParticles; i++) {
             // get force from both directions
@@ -178,11 +181,27 @@ Elastic.String = class {
             if(dampening) nextVel.mult(0.99995);
 
             this.velArray[i] = nextVel.copy();
+
+            if (lockFirst && (i == 0)) {
+                this.velArray[i] = createVector();
+                continue;
+            }
+            if (lockLast && (i == this.numParticles-1)) {
+                this.velArray[i] = createVector();
+            }
         }
 
         // Save the acceleration values
         for(let i = 0; i < this.numParticles; i++) {
             this.accArray[i] = nextAccArray[i];
+
+            if (lockFirst && (i == 0)) {
+                this.accArray[i] = createVector();
+                continue;
+            }
+            if (lockLast && (i == this.numParticles-1)) {
+                this.accArray[i] = createVector();
+            }
         }
     }
 

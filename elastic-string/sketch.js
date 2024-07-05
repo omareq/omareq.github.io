@@ -35,6 +35,7 @@ let testString = undefined;
 let lockLast = true;
 let lockFirst = true;
 let dampening = true;
+let gravityActive = true;
 
 /**
  * p5.js setup function, creates canvas.
@@ -126,7 +127,7 @@ function draw() {
 	testString.draw();
 
 	// once outside of relaxation period begin simulation
-	if(frameCount > 200) {
+	if(frameCount == 200) {
 		lockLast = false;
 		dampening = false;
 		numUpdatesPerFrame = 500;
