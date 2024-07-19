@@ -156,11 +156,21 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
      */
     update() {
         this.tile.draw();
-
         push();
-        stroke(255, 0, 0);
-        fill(255, 0, 0);
+        let i = 0;
         this.tile.getLines().forEach((line) => {
+            if(i%3 == 0) {
+                stroke(255, 0, 0);
+                fill(255, 0, 0);
+            } else if(i%3 == 1) {
+                stroke(0, 255, 0);
+                fill(0, 255, 0);
+            } else if(i%3 == 2) {
+                stroke(0, 0, 255);
+                fill(0, 0, 255);
+            }
+            i++;
+
             if(line.linePoints != undefined) {
                 line.linePoints.forEach((point) => {
                     ellipse(
