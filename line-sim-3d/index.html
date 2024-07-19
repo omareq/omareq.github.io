@@ -208,7 +208,7 @@
             </a>.
             The rules for this competition are always updating and evolving to
             challenge the participants to come up with unique and creative
-            solutions. Whilst not all of the rule set is implemented here please
+            solutions. The entire rule set is not implemented here please,
             visit the official website to learn about the current iteration of
             the rules.
           </p>
@@ -216,10 +216,70 @@
       </div>
     </section>
 
-<!--     <section class="container" style="padding-top:10px">
+    <section class="container" style="padding-top:10px">
       <div class="row text-left">
         <div class="col-sm-12">
           <h2> The Simulation </h2>
+          <p>
+            This simulation is a model of what is happening in the real world.
+            As per the common saying in the scientific community:
+            <em>"<a href="https://en.wikipedia.org/wiki/All_models_are_wrong">
+            All models are wrong, but some are useful</a>"</em>. This is
+            particularly true for this line following simulation.  The following
+            section will delve into some of the trade-offs made to ensure that
+            the simulation can run in real time whilst maintaining behaviours
+            accurate to real line following robots.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-8">
+        <h5> The Line </h5>
+          <p>
+            Initially the model for the line was a pixel bitmap showing how much
+            of a tile a line occupies.  This was a simple model which produced
+            results that were rather realistic.  The real-time constraint for
+            this project meant that manipulating images to take sensor readings
+            was possibly too slow for the simple analog light sensor case.  A
+            series of points is used instead to represent the line.  The Debug
+            Static Tile mode will show how every single tile type is represented
+            with individual points.  Each tile is constructed with a minimum
+            inter-point spacing to ensure that the line is well represented
+            which is very important for curved lines.
+          </p>
+        </div>
+
+        <div class="col-sm-4">
+          <!-- Picture of line representation here -->
+          <img src="./imgs/vertical-line-representation.webp"
+          style="border: 2px solid #888888; max-width: 80%">
+          <p> <em>
+            Image showing the individual points that represent a line.
+          </em></p>
+        </div>
+      </div>
+    </section>
+
+<!--     <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-8">
+        <h5> The Sensor </h5>
+          <p>
+
+          </p>
+        </div> -->
+
+        <!-- Picture of sensor representation here -->
+<!--         <div class="col-sm-4">
+          <img src="./imgs/sensor-line-point-distance.webp"
+          style="border: 2px solid #888888; max-width: 80%">
+          <p> <em>
+            Image showing that the light sensor only looks at the closest line
+            point.
+          </em></p>
         </div>
       </div>
     </section> -->
