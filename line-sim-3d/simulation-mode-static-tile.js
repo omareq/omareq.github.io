@@ -157,6 +157,23 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
     update() {
         this.tile.draw();
 
+        push();
+        stroke(255, 0, 0);
+        fill(255, 0, 0);
+        this.tile.getLines().forEach((line) => {
+            if(line.linePoints != undefined) {
+                line.linePoints.forEach((point) => {
+                    ellipse(
+                        point.x + this.tile.pos.x,
+                        point.y + this.tile.pos.y,
+                        0.1 * World.lineThickness,
+                        0.1 * World.lineThickness);
+                });
+            }
+        });
+        pop();
+
+
         this.sensor.setPos(createVector(mouseX, mouseY));
 
         const brightness = this.sensor.read(this.tile);
