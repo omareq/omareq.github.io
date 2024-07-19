@@ -144,7 +144,7 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
 
         if(this.currentTileName != this.tileSelect.selected()) {
             console.log("Simulation Mode Static Tile Check uiPoll: tile selector has changed to new tile: ",
-                this.tileSelect.selected())
+                this.tileSelect.selected());
             this.tile = World.Tiles.proxySubject[this.tileSelect.selected()].copy();
             this.currentTileName = this.tileSelect.selected();
             this.tile.setPos(createVector(this.tileX, this.tileY));
