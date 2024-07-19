@@ -74,7 +74,7 @@ Elastic.String = class {
         }
 
         this.epe = 0;
-        for(let i = 0; i <  this.numParticles; i++) {
+        for(let i = 0; i < this.numParticles; i++) {
             // get force from both directions
             // f = -kx
             let force = createVector(0, 0);
