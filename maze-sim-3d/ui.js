@@ -39,7 +39,8 @@ let controlPanel;
 const algorithms = Object.freeze({
   LEFT_HAND_RULE: "Left Hand Rule",
   RIGHT_HAND_RULE: "Right Hand Rule",
-  HYBRID_4: "Hybrid 4"
+  HYBRID_4: "Hybrid 4",
+  HYBRID_5: "Hybrid 5"
 });
 
 /**
@@ -54,7 +55,7 @@ let selectAlgorithm;
 *
 *   @type {Enum<String>}
 */
-let algorithm = algorithms.HYBRID_4;
+let algorithm = algorithms.HYBRID_5;
 
 let mapXsizeSlider;
 let mapXSizeDisplay;
@@ -81,6 +82,7 @@ function algorithmSelectorSetup() {
     selectAlgorithm.option(algorithms.LEFT_HAND_RULE);
     selectAlgorithm.option(algorithms.RIGHT_HAND_RULE);
     selectAlgorithm.option(algorithms.HYBRID_4);
+    selectAlgorithm.option(algorithms.HYBRID_5);
     selectAlgorithm.selected(algorithm);
     selectAlgorithm.changed(algorithmSelectEvent);
 }
@@ -108,6 +110,12 @@ function algorithmSelectEvent() {
     }
 
     if(algorithm == algorithms.HYBRID_4) {
+        // show monotone chain options
+    } else {
+        // hide monotone chain options
+    }
+
+    if(algorithm == algorithms.HYBRID_5) {
         // show monotone chain options
     } else {
         // hide monotone chain options

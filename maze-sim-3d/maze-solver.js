@@ -54,6 +54,8 @@ async function solve(robot) {
         await rightHandRule(robot);
     } else if(algorithm == algorithms.HYBRID_4) {
         await hybrid4(robot);
+    } else if(algorithm == algorithms.HYBRID_5) {
+        await hybrid5(robot);
     }
 }
 
