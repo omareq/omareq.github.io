@@ -288,9 +288,43 @@ function leftHandRule(robot) {
             current method is to follow the tiles backwards by visit order until
             the robot is at the desired tile. This can lead to the robot going
             around in a large spiral to return to the previous location.
-            Implementing a simple A* path finding algorithm would be trivial to
-            add to this method.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <h5> Hybrid 5 Solver - A Simple Upgrade </h5>
+
+          <p>
+            The Hybrid 5 solver is in most ways similar to hybrid four.  It has
+            the same steps: take the left most unvisited tile until stuck, back
+            track and go to an unvisited tile, repeat until all tiles have been
+            visited.  The main difference is that when the Hybrid 4 solver would
+            back track to an unvisited tile it would could down through the
+            visit order causing extremely long traversal times.  The Hybrid 5
+            solver has a sub-optimal solution which instead goes to the lowest
+            tile that is still higher than the desired tile location.  This is
+            not necessarily the shortest route but depending on the maze
+            geometry can save between 10% to 20% on traversal distances.  A
+            benefit of doing traversal in this manner rather than using a
+            shortest path finding algorithm is that it will prevent expensive
+            search operations as it only uses data already gathered by the
+            robot during exploration.
+          </p>
+        </div>
+
+        <div class="col-sm-4">
+          <img src="./imgs/hybrid-5-example-routing-with-arrows.jpg"
+          style="border:2px solid black; border-radius: 0.5rem; max-width: 95%">
+
+          <em><p>
+            Image showing how the Hybrid 5 Solver would take a more efficient
+            path from tile 30 to tile 4 than the Hybrid 4 Solver.
+          </p></em>
+
         </div>
       </div>
     </section>
