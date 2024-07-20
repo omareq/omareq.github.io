@@ -29,7 +29,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
-var MODE_DEBUG = false;
+var MODE_DEBUG = true;
 // https://github.com/processing/p5.js/wiki/Optimizing-p5.js-Code-for-Performance#p5-performance-tips
 // In this case it doesn't appear to make and difference
 p5.disableFriendlyErrors = true; // disables FES

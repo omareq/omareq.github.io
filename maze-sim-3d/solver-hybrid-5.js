@@ -39,6 +39,20 @@ Solver.Hybrid5.checkForUnvisitedNeighbourAround = async function(robot) {
     return false;
 };
 
+Solver.Hybrid5.findTileWallOrderCheck = function(currentPos, adjacentPos, direction, order) {
+    if(!arena.hasWall(currentPos, direction) && arena.getVisit(adjacentPos) == 0) {
+        if(!adjacentPos.equals(createVector(robot.getX(), robot.getY()))) {
+            Solver.Hybrid5.goalX = currentPos.x;
+            Solver.Hybrid5.goalY = currentPos.y;
+            console.debug("Node Found: (",
+                currentPos.x,",", currentPos.y,")",
+                " Order: ", order);
+            return true;
+        }
+    }
+    return false;
+};
+
 Solver.Hybrid5.findTileWithUnvisitedNeighbour = function() {
     for(let i = arena.tileCount; i > 0; i--) {
         for(let y = 0; y < mapSizeY; y++) {
@@ -47,55 +61,71 @@ Solver.Hybrid5.findTileWithUnvisitedNeighbour = function() {
                 if(arena.getOrder(position) != i) {
                     continue;
                 }
-                const posNorth = createVector(x, y - 1);
 
-                if(!arena.hasWall(position, "north") && arena.getVisit(posNorth) == 0) {
-                    if(!posNorth.equals(createVector(robot.getX(), robot.getY()))) {
-                        Solver.Hybrid5.goalX = x;
-                        Solver.Hybrid5.goalY = y;
-                        console.debug("Node Found: (", x,",", y,")", " Order: ",i );
-                        return true;
-                    }
-                }
+                const posNorth = createVector(x, y - 1);
+                const northCheck = Solver.Hybrid5.findTileWallOrderCheck(
+                    position, posNorth, "north", i);
+                if(northCheck) return true;
 
                 const posEast = createVector(x + 1, y);
-
-                if(!arena.hasWall(position, "east") && arena.getVisit(posEast) == 0) {
-                    if(!posEast.equals(createVector(robot.getX(), robot.getY()))) {
-                        Solver.Hybrid5.goalX = x;
-                        Solver.Hybrid5.goalY = y;
-                        console.debug("Node Found: (", x,",", y,")", " Order: ",i );
-                        return true;
-                    }
-                }
+                const eastCheck = Solver.Hybrid5.findTileWallOrderCheck(
+                    position, posEast, "east", i);
+                if(eastCheck) return true;
 
                 const posSouth = createVector(x, y + 1);
-
-                if(!arena.hasWall(position, "south") && arena.getVisit(posSouth) == 0) {
-                    if(!posSouth.equals(createVector(robot.getX(), robot.getY()))) {
-                        Solver.Hybrid5.goalX = x;
-                        Solver.Hybrid5.goalY = y;
-                        console.debug("Node Found: (", x,",", y,")", " Order: ",i );
-                        return true;
-                    }
-                }
+                const southCheck = Solver.Hybrid5.findTileWallOrderCheck(
+                    position, posSouth, "south", i);
+                if(southCheck) return true;
 
                 const posWest = createVector(x - 1, y);
+                const westCheck = Solver.Hybrid5.findTileWallOrderCheck(
+                    position, posWest, "west", i);
+                if(westCheck) return true;
 
-                if(!arena.hasWall(position, "west") && arena.getVisit(posWest) == 0) {
-                    if(!posWest.equals(createVector(robot.getX(), robot.getY()))) {
-                        Solver.Hybrid5.goalX = x;
-                        Solver.Hybrid5.goalY = y;
-                        console.debug("Node Found: (", x,",", y,")", " Order: ",i );
-                        return true;
-                    }
-                }
                 console.debug("No zeros found for Order: ", i, "in position: (", x, ",", y, ")");
             }
         }
     }
     console.debug("findTileWithUnvisitedNeighbour(): No zeros found for any positions");
     return false;
+};
+
+Solver.Hybrid5.selectDirection = function(robot, goalPositionOrder) {
+    const left = !robot.hasWallLeft() ? robot.checkLeftOrder() : Infinity;
+    const forward = !robot.hasWallFront() ? robot.checkFrontOrder() : Infinity;
+    const right = !robot.hasWallRight() ? robot.checkRightOrder() : Infinity;
+    const back = !robot.hasWallBack() ? robot.checkBackOrder() : Infinity;
+
+    let orders = [left, forward, right, back];
+    console.debug("Orders before: ", orders);
+
+    for(let i= 0; i < 4; i++) {
+        const direction = orders.indexOf(Math.min(...orders));
+
+        if(orders[direction] >= goalPositionOrder) {
+            console.debug("Selected Direction: ", direction,
+                " Selected Order: ", orders[direction]);
+            return direction;
+        } else {
+            orders[direction] = Infinity;
+        }
+    }
+};
+
+Solver.Hybrid5.turnToDirection = async function (robot, directionNumber) {
+    if(directionNumber == 0) {
+        await robot.turnLeft();
+        await robot.moveForward();
+    } else if(directionNumber == 1) {
+        await robot.moveForward();
+    } else if(directionNumber == 2) {
+        await robot.turnRight();
+        await robot.moveForward();
+    } else if(directionNumber == 3) {
+        await robot.turnRight();
+        await robot.turnRight();
+        await robot.moveForward();
+    }
 };
 
 
@@ -119,42 +149,11 @@ Solver.Hybrid5.goTo = async function (robot, x, y) {
             break;
         }
 
-        let left = !robot.hasWallLeft() ? robot.checkLeftOrder() : arena.tileCount + 10;
-        let forward = !robot.hasWallFront() ? robot.checkFrontOrder() : arena.tileCount + 10;
-        let right = !robot.hasWallRight() ? robot.checkRightOrder() : arena.tileCount + 10;
-        let back = !robot.hasWallBack() ? robot.checkBackOrder() : arena.tileCount + 10;
-        let orders = [left, forward, right, back];
+        const direction = Solver.Hybrid5.selectDirection(robot,
+            arena.getOrder(goalPos));
 
-        let direction;
-        let done = false;
-        console.debug("Orders before: ", orders);
-        while(!done) {
-            let smallest = orders.indexOf(Math.min(...orders));
+        await Solver.Hybrid5.turnToDirection(robot, direction);
 
-            if(orders[smallest] >= arena.getOrder(goalPos)) {
-                direction = smallest;
-                done = true;
-                break;
-            } else {
-                orders[smallest] = arena.tileCount + 1;
-            }
-        }
-        console.debug("Selected Direction: ", direction,
-            " Selected Order: ", orders[direction]);
-
-        if(direction == 0) {
-            await robot.turnLeft();
-            await robot.moveForward();
-        } else if(direction == 1) {
-            await robot.moveForward();
-        } else if(direction == 2) {
-            await robot.turnRight();
-            await robot.moveForward();
-        } else if(direction == 3) {
-            await robot.turnRight();
-            await robot.turnRight();
-            await robot.moveForward();
-        }
         console.debug("Current Pos: (", robot.getX(),",", robot.getY(),")");
     }
     console.debug("End Go TO: (", x,",", y,")");
@@ -167,12 +166,13 @@ Solver.Hybrid5.solve = async function(robot) {
 
     while(!finished) {
         if(endSimulationFlag) {
-            console.debug("hybrid5: end endSimulationFlag");
+            console.debug("Hybrid 5: end endSimulationFlag");
             return;
         }
 
         if(await Solver.Hybrid5.checkForUnvisitedNeighbourAround(robot)) {
             console.debug("Check for unvisited neighbour around robot is true");
+            console.debug("Current Pos: (", robot.getX(),",", robot.getY(),")");
             await robot.moveForward();
             await checkForVictim(robot);
             console.debug("\n");
@@ -180,6 +180,7 @@ Solver.Hybrid5.solve = async function(robot) {
         }
 
         console.debug("Check for unvisited neighbour around robot is false");
+        console.debug("Current Pos: (", robot.getX(),",", robot.getY(),")");
 
         if(Solver.Hybrid5.findTileWithUnvisitedNeighbour()) {
             console.debug("found Tile With Unvisited Neighbour()");
