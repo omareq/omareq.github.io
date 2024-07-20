@@ -156,7 +156,7 @@
       </div>
     </section>
 
-    <section class="container" style="padding-top:10px">
+    <section class="container" style="padding-top:1rem">
       <div class="row text-center">
         <div class="col-sm-12">
           Github Repo
@@ -174,7 +174,7 @@
     </section>
 
 
-     <section class="container" style="padding-top:10px">
+     <section class="container" style="padding-top:2rem">
       <div class="row text-left">
         <div class="col-sm-12">
           <h2> Introduction - The Start of the Line </h2>
@@ -216,7 +216,7 @@
       </div>
     </section>
 
-    <section class="container" style="padding-top:10px">
+    <section class="container" style="padding-top:2rem">
       <div class="row text-left">
         <div class="col-sm-12">
           <h2> The Simulation </h2>
@@ -234,7 +234,7 @@
       </div>
     </section>
 
-    <section class="container" style="padding-top:10px">
+    <section class="container" style="padding-top:2rem">
       <div class="row text-left">
         <div class="col-sm-8">
         <h5> The Line </h5>
@@ -263,17 +263,27 @@
       </div>
     </section>
 
-<!--     <section class="container" style="padding-top:10px">
+    <section class="container" style="padding-top:2rem">
       <div class="row text-left">
         <div class="col-sm-8">
         <h5> The Sensor </h5>
           <p>
-
+            The main goal of a light sensor in this simulation is to provide a
+            some means of measurement to identify where the line is.  There
+            are many means to do this using multiple types of sensor.  In this
+            simulation the aim will be to model a simple analog light sensor.
+            This works by bouncing light off the surface below and seeing how
+            much is returned.  The greater the return the higher the voltage
+            signal output by the sensor.  This is affected by a series of
+            parameters such as the intensity of the light, the height of the
+            sensor above the surface and most importantly the material under the
+            sensor.  There are a number of assumptions that are made for this
+            simulation.
           </p>
-        </div> -->
+        </div>
 
         <!-- Picture of sensor representation here -->
-<!--         <div class="col-sm-4">
+        <div class="col-sm-4">
           <img src="./imgs/sensor-line-point-distance.webp"
           style="border: 2px solid #888888; max-width: 80%">
           <p> <em>
@@ -282,7 +292,48 @@
           </em></p>
         </div>
       </div>
-    </section> -->
+    </section>
+
+    <section class="container" style="padding-top: 2.5rem">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h5> Assumptions </h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <b> 1) </b>
+              There are no external light sources and the onboard light source
+              is not fluctuating as is common when lights are powered with
+              unstable power supplies.
+            </li>
+
+            <li class="list-group-item">
+              <b> 2) </b>
+              The height of the light sensor above the ground is constant.  This
+              means that the area of the circle remains constant all the time.
+              This is generally quite difficult to achieve on a robot. Even with
+              active suspension maintaining a perfectly stable height is
+              unlikely.
+            </li>
+
+            <li class="list-group-item">
+              <b> 3) </b>
+              The material of the background perfectly reflects light in
+              a uniform manner across all the tiles in the room.  This will
+              return the maximum of 1.0f when the light sensor is fully over the
+              background.
+            </li>
+
+            <li class="list-group-item">
+              <b> 4) </b>
+              The material of both the line perfectly absorbs light in
+              a uniform manner across all the tiles in the room.  This will
+              return the maximum of 0.0f when the light sensor is fully over the
+              black line.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
 <!--      <section class="container" style="padding-top:10px">
       <div class="row text-left">
