@@ -1,4 +1,3 @@
-
 let goalX_5 = -1;
 let goalY_5 = -1;
 
@@ -108,7 +107,7 @@ async function goTo_5(robot, x, y) {
             break;
         }
 
-        let left = !robot.hasWallLeft() ?  robot.checkLeftOrder() : arena.tileCount + 10;
+        let left = !robot.hasWallLeft() ? robot.checkLeftOrder() : arena.tileCount + 10;
         let forward = !robot.hasWallFront() ? robot.checkFrontOrder() : arena.tileCount + 10;
         let right = !robot.hasWallRight() ? robot.checkRightOrder() : arena.tileCount + 10;
         let back = !robot.hasWallBack() ? robot.checkBackOrder() : arena.tileCount + 10;
@@ -118,7 +117,7 @@ async function goTo_5(robot, x, y) {
         let done = false;
         console.debug("Orders before: ", orders);
         while(!done) {
-            let smallest = orders.indexOf(Math.min(...orders))
+            let smallest = orders.indexOf(Math.min(...orders));
 
             if(orders[smallest] >= arena.getOrder(goalPos)) {
                 direction = smallest;
