@@ -173,6 +173,13 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
 
             if(line.linePoints != undefined) {
                 line.linePoints.forEach((point) => {
+                    noFill();
+                    ellipse(
+                        point.x + this.tile.pos.x,
+                        point.y + this.tile.pos.y,
+                        1.0 * World.lineThickness,
+                        1.0 * World.lineThickness);
+                    fill(255, 0, 0);
                     ellipse(
                         point.x + this.tile.pos.x,
                         point.y + this.tile.pos.y,

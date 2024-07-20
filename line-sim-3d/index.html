@@ -335,6 +335,93 @@
       </div>
     </section>
 
+   <section class="container" style="padding-top:1.5rem">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          In order to estimate the light sensor measurement the light sensor
+          looks at the closest point in the line and uses that as the basis for
+          all calculations.  The distance between the centre of the line point
+          and the centre of the light sensor is calculated.  This distance is
+          compared to the line thickness and the sensor radius to figure out how
+          much or the sensor is overlapping the line.  This distance is
+          calculated independent of the angle to the line.  This manifests as a
+          series of circles which are filled black as can be seen in the image
+          below.  The closer the circles are together the better the
+          approximation to a complete line.  However, no matter how close the
+          circles are to each other there will still remain a small gap, this
+          ends up causing small jumps in the sensor value.
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:2rem">
+      <div class="row text-left">
+        <div class="col-sm-3">
+          <img src="./imgs/line-point-circles.webp"
+          style="border: 2px solid #888888; max-width: 90%">
+          <em><p>
+            Exaggerated line point spacing showing how lines behave.
+          </p></em>
+        </div>
+
+        <div class="col-sm-3">
+          <img src="./imgs/line-point-circles-filled.webp"
+          style="border: 2px solid #888888; max-width: 90%">
+          <em><p>
+            Condensed line point spacing still showing small gaps at the edges.
+          </p></em>
+        </div>
+
+        <div class="col-sm-6" >
+          <img src="./imgs/line-dist-check-ps-0_25lt-ls-all.webp"
+          style="border: 2px solid #888888; max-width: 76%">
+          <em><p>
+            Graph showing how the light sensor value changes due to the line
+            point model.  This effect is reduced at the centre of the line.
+          </p></em>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:2.0rem">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <p>
+            The graph on the right hand side shown above is an example of how
+            these spikes in sensor value could appear.  This graph is obtained
+            by taking a simple analog sensor and moving it at uniform speed
+            along the edge of a line.  The expected value of the light sensor
+            reading is 0.5f.  The individual lines shown are for light
+            sensors with larger and large radius.  This reduces the effect of
+            the gaps between the line points as they take up less area in the
+            light sensors field of view.  Similarly if the inter point distance
+            is reduced the errors will also be smaller.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:1.5rem">
+      <div class="row text-left">
+        <div class="col-sm-6">
+          <p>
+            Whilst these errors are unavoidable they can be quantified more
+            precisely to understand if they are acceptable.  For example looking
+            at the maximum, minimum and average of the light sensor error for
+            all the positions recorded above can provide an understanding of the
+            overall performance for a given set of parameters.  This can be seen
+            in the following graph.  For example if the light sensor radius and
+            the line point separation are the same then there is a less than 5%
+            mean error.
+          </p>
+        </div>
+        <div class="col-sm-6">
+          <img src="./imgs/line-dist-check-stats-all-percentage.webp"
+          style="border: 2px solid #888888; max-width: 98%">
+        </div>
+      </div>
+    </section>
+
 <!--      <section class="container" style="padding-top:10px">
       <div class="row text-left">
         <div class="col-sm-12">
