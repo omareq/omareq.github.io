@@ -177,8 +177,8 @@ Simulation.Mode.DebugStaticTile = class extends Simulation.Mode.ModeType {
                     ellipse(
                         point.x + this.tile.pos.x,
                         point.y + this.tile.pos.y,
-                        1.0 * World.lineThickness,
-                        1.0 * World.lineThickness);
+                        World.lineThickness,
+                        World.lineThickness);
                     fill(255, 0, 0);
                     ellipse(
                         point.x + this.tile.pos.x,
