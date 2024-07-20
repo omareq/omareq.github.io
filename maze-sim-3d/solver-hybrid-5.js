@@ -106,9 +106,9 @@ Solver.Hybrid5.selectDirection = function(robot, goalPositionOrder) {
             console.debug("Selected Direction: ", direction,
                 " Selected Order: ", orders[direction]);
             return direction;
+        } else {
+            orders[direction] = Infinity;
         }
-
-        orders[direction] = Infinity;
     }
 };
 

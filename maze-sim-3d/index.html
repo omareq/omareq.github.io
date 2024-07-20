@@ -324,10 +324,37 @@ function leftHandRule(robot) {
             Image showing how the Hybrid 5 Solver would take a more efficient
             path from tile 30 to tile 4 than the Hybrid 4 Solver.
           </p></em>
-
         </div>
       </div>
     </section>
+
+ <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <pre>
+          <code class="prettyprint lang-js">
+function hybrid5(robot) {
+  while(!finished) {
+    if(robot.checkForUnvisitedNeighbour()) {
+      robot.turnToUnvisitedNeighbour();
+      robot.moveForward();
+      continue;
+    }
+
+    if(findTileWithUnvisitedNeighbour()) {
+      robot.goToViaLowestTiles(tileWithUnvisitedNeighbour);
+      continue;
+    }
+
+    robot.goTo(startPosition)
+    finished = true;
+  }
+}
+          </code>
+        </pre>
+      </div>
+    </div>
+  </section>
 
     <div>
       <section class="container" style="padding-top:10px">
