@@ -68,6 +68,15 @@ class RescueKit {
     }
 }
 
+class RobotStats {
+    constructor() {
+        this.rightTurns = 0;
+        this.leftTurns = 0;
+        this.goForwards = 0;
+        this.droppedKits = 0;
+    }
+}
+
 class Robot {
     constructor(pos, gridSize) {
         this.pos = pos;
@@ -78,6 +87,8 @@ class Robot {
         this.rescueKits = [];
         this.robotChasis = loadModel("assets/robot-chasis.obj");
         this.scale = this.gridSize * 0.0027;
+
+        this.stats = new RobotStats();
     }
 
     setMaze(maze) {
@@ -312,6 +323,7 @@ class Robot {
         if(this.bearing < 0) {
             this.bearing = 360 + this.bearing;
         }
+        this.stats.leftTurns++;
     }
 
     async turnRight() {
@@ -337,6 +349,7 @@ class Robot {
         if(this.bearing < 0) {
             this.bearing = 360 + this.bearing;
         }
+        this.stats.rightTurns++;
     }
 
     async moveForward() {
@@ -382,6 +395,7 @@ class Robot {
         this.pos.x = int(this.pos.x);
         this.pos.y = int(this.pos.y);
         await delay(250 / speedUp);
+        this.stats.goForwards++;
         return true;
     }
 
@@ -430,6 +444,7 @@ class Robot {
             }
             await delay(10);
         }
+        this.stats.droppedKits++;
     }
 
     showRescueKits() {
