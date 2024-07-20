@@ -57,5 +57,8 @@ async function solve(robot) {
     } else if(algorithm == algorithms.HYBRID_5) {
         await hybrid5(robot);
     }
+
+    console.info("algorithm: ", algorithm);
+    console.info("Robot Stats: ", robot.stats);
 }
 
