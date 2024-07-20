@@ -369,6 +369,18 @@ class Room {
                     this.grid[x-1][y].addWall("east");
                 }
 
+                // make first cell clear of walls
+                if(x==0 && y==0) {
+                    randSouth = false;
+                    randEast = false;
+                }
+                if(x==1 &&y==0) {
+                    randWest = false;
+                }
+                if(x==0 &&y==1) {
+                    randNorth = false;
+                }
+
                 let randomTile = new Tile(randNorth, randEast,
                     randSouth, randWest,
                     this.gridSize);
