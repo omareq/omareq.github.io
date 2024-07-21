@@ -167,6 +167,7 @@ Simulation.Mode.LineFollowOneSensor = class extends Simulation.Mode.ModeType {
      * Update function that updates the state of the simulation
      */
     update() {
+        background(255);
         this.room.draw();
 
         this.robot.sensorsRead(this.room);
