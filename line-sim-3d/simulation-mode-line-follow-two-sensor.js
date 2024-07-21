@@ -87,10 +87,12 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         this.algorithmForwardVel = 1.5 * World.gridSize;
         this.addNewUIElements();
 
-        this.setupRobot();
-
-        this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
+        const xOffsetRoom = 0.5 * (width - (numTilesX * gridSize));
+        const roomPos = createVector(xOffsetRoom, 0);
+        this.room = new World.Room(numTilesX, numTilesY, roomPos);
         this.setRoomToConfig();
+
+        this.setupRobot();
     }
 
     /**
@@ -265,7 +267,8 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
      * the PD controller are initialized according to the UI element values.
      */
     setupRobot() {
-        const pos = createVector(0.5 * World.gridSize, 0.55 * World.gridSize);
+        const pos = createVector(0.5 * World.gridSize + this.room.pos.x,
+            0.55 * World.gridSize + this.room.pos.y);
         const bearing = -0.5 * math.PI;
         const size = 0.5 * World.gridSize;
         const sensorArray = this.setupLightSensorArray(size);
@@ -348,6 +351,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
      * Update function that updates the state of the simulation
      */
     update() {
+        background(225);
         this.room.draw();
 
         this.robot.sensorsRead(this.room);
