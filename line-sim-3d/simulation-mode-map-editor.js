@@ -126,6 +126,9 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         }
         this.tileSelect.selected("blankLine");
         this.currentTileName = this.tileSelect.selected();
+
+        this.tile = World.Tiles.proxySubject[this.tileSelect.selected()].copy();
+        this.currentTileName = this.tileSelect.selected();
     }
 
     resetRoom() {
@@ -169,6 +172,10 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             this.numTilesX = sliderVal;
             this.roomXDisplay.elt.innerText = "Room Size X: " + str(this.numTilesX);
             this.resetRoom();
+
+            if(this.tile && this.currentTileName) {
+                this.tile = World.Tiles.proxySubject[this.currentTileName].copy();
+            }
         }
 
         sliderVal = this.roomYSlider.value();
@@ -178,6 +185,9 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             this.numTilesY = sliderVal;
             this.roomYDisplay.elt.innerText = "Room Size X: " + str(this.numTilesY);
             this.resetRoom();
+            if(this.tile && this.currentTileName) {
+                this.tile = World.Tiles.proxySubject[this.currentTileName].copy();
+            }
         }
 
         if(this.currentTileName != this.tileSelect.selected()) {
@@ -185,7 +195,14 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
                 this.tileSelect.selected());
             this.tile = World.Tiles.proxySubject[this.tileSelect.selected()].copy();
             this.currentTileName = this.tileSelect.selected();
-            this.tile.setPos(createVector(this.tileX, this.tileY));
+        }
+
+        if(mouseIsPressed) {
+            if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
+                return;
+            }
+            const mousePos = createVector(mouseX, mouseY);
+            this.room.setTileAtPos(mousePos, this.tile);
         }
     }
 
@@ -196,11 +213,15 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         background(225);
         this.room.draw();
 
+        const mousePos = createVector(mouseX, mouseY);
+        this.sensor.setPos(mousePos);
 
+        const tileUnderSensor = this.room.getTileAtPos(mousePos);
+        if(tileUnderSensor == undefined) {
+            return;
+        }
 
-        this.sensor.setPos(createVector(mouseX, mouseY));
-
-        const brightness = this.sensor.read(this.tile);
+        const brightness = this.sensor.read(tileUnderSensor);
 
         if(brightness < 1) {
             console.log("Sensor Val: ", brightness);

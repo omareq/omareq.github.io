@@ -314,6 +314,49 @@ World.Room = class {
         return this.grid[xIndex][yIndex];
     }
 
+
+    /**
+     * sets the tiles in the grid to a new pattern
+     *
+     * @param tilePattern {Array<Array<World.Tile>>} - a 2d array of tiles.
+     */
+    setTileAtPos(pos, tile) {
+        if(!(pos instanceof p5.Vector)) {
+            const err = "pos needs to be an instance of p5.Vector";
+            throw new Error(err);
+        }
+
+        if(!(tile instanceof World.Tile || tile instanceof World.Tile.Proxy)) {
+            const err = "tile needs to be an instance of World.Tile";
+            throw new Error(err);
+        }
+
+        // TODO: add check to see if tiles are the same
+        // if(/** tiles are the same*/) {
+        //     console.log("The tile at this position is already a: ",
+        //         tile.name());
+        //     return;
+        // }
+
+        const localPos = pos.copy().sub(this.pos);
+        const xIndex = floor(localPos.x / World.gridSize);
+        const yIndex = floor(localPos.y / World.gridSize);
+
+        if(xIndex < 0 || xIndex > this.xNumTiles - 1) {
+            return undefined;
+        }
+
+        if(yIndex < 0 || yIndex > this.yNumTiles - 1) {
+            return undefined;
+        }
+
+        let newTile = tile.copy();
+        const gridAllignedGridPos = this.getPosOfGrid(xIndex, yIndex);
+        newTile.setPos(gridAllignedGridPos);
+        this.grid[xIndex][yIndex] = newTile;
+        this.generatePG();
+    }
+
     /**
      * Draws the room at the global position set in the constructor.
      */
