@@ -141,6 +141,25 @@
                   </div>
                 </div> <!-- End SM room-->
 
+                <!-- Simulation mode map editor (SM ME) -->
+                <div id="simulation-mode-map-editor" style="visibility: hidden;display:none">
+                  <p><u>Room</u></p>
+                  <div>
+                    <div>
+                      <div id="sm-me-room-x-slider" style="display: inline-block"> </div>
+                      <div id="sm-me-room-x-val" style="display: inline-block"> </div>
+                    </div>
+
+
+                    <div>
+                      <div id="sm-me-room-y-slider" style="display: inline-block"> </div>
+                      <div id="sm-me-room-y-val" style="display: inline-block"> </div>
+                    </div>
+
+                    <div id="sm-me-tile-selector" style="overflow: hidden;"> </div>
+                  </div>
+                </div> <!-- End SM ME-->
+
 
               </div>
           </div>
@@ -532,6 +551,7 @@
   <script language="javascript" type="text/javascript" src="../libraries/p5.js"></script>
   <script language="javascript" type="text/javascript" src="../libraries/p5.dom.js"></script>
   <script async language="javascript" type="text/javascript" src="ui.js"></script>
+  <script async language="javascript" type="text/javascript" src="finite-state-machine.js"></script>
   <script async language="javascript" type="text/javascript" src="tile.js"></script>
   <script async language="javascript" type="text/javascript" src="room.js"></script>
   <script async language="javascript" type="text/javascript" src="light-sensor.js"></script>
@@ -550,5 +570,6 @@
   <script defer async language="javascript" type="text/javascript" src="simulation-mode-robot.js"></script>
   <script defer async language="javascript" type="text/javascript" src="simulation-mode-one-sensor-line-follow.js"></script>
   <script defer async language="javascript" type="text/javascript" src="simulation-mode-line-distance-check.js"></script>
+  <script defer async language="javascript" type="text/javascript" src="simulation-mode-map-editor.js"></script>
 </body>
 </html>
