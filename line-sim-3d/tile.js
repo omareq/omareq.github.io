@@ -38,6 +38,13 @@ var World = World || {};
 
 World.gridSize = 200;
 
+World.TilesAddName = function() {
+    const keys = Object.keys(World.Tiles.proxySubject);
+    for(let i = 0; i < keys.length; i++) {
+        World.Tiles.proxySubject[keys[i]].setName(keys[i]);
+    }
+}
+
 /**
  * Tile setup function.  Calculates all the line and tile sizes with respect to
  * the chosen grid size.
@@ -283,6 +290,8 @@ World.TileSetup = function() {
 
     World.Tiles.zigZagVertical = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagVertical);
     World.Tiles.zigZagHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagHorizontal);
+
+    World.TilesAddName();
 };
 
 /**
@@ -545,6 +554,14 @@ World.Tile = class {
         this.pos = newPos.copy();
     }
 
+    setName(name) {
+        this.name = name;
+    }
+
+    getName() {
+        return this.name;
+    }
+
     /**
      * Generate the portable graphics image for the tile.
      */
@@ -675,6 +692,14 @@ World.Tile.Proxy = class {
     setPos(newPos) {
         this.pos = newPos.copy();
         this.tile.setPos(newPos);
+    }
+
+    setName(name) {
+        this.tile.setName(name);
+    }
+
+    getName() {
+        return this.tile.getName();
     }
 
     /**

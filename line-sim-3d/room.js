@@ -331,12 +331,11 @@ World.Room = class {
             throw new Error(err);
         }
 
-        // TODO: add check to see if tiles are the same
-        // if(/** tiles are the same*/) {
-        //     console.log("The tile at this position is already a: ",
-        //         tile.name());
-        //     return;
-        // }
+        if(tile.getName() == this.getTileAtPos(pos).getName()) {
+            console.log("The tile at this position is already a: ",
+                tile.getName());
+            return;
+        }
 
         const localPos = pos.copy().sub(this.pos);
         const xIndex = floor(localPos.x / World.gridSize);

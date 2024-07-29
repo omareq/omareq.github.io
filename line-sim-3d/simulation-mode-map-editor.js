@@ -70,7 +70,8 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         this.numTilesY = 5;
         this.resetRoom();
 
-
+        this.commandStack = [];
+        this.commandStackPointer = -1;
         this.addNewUIElements();
     }
 
@@ -90,6 +91,9 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             document.getElementById("sm-me-room-y-val").children[0].remove();
 
             document.getElementById("sm-me-tile-selector").children[0].remove();
+
+            document.getElementById("sm-me-undo-button").children[0].remove();
+            document.getElementById("sm-me-redo-button").children[0].remove();
         }
 
         // room x
@@ -109,6 +113,14 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         this.roomYDisplay.elt.innerText = "Room Size Y: " + str(this.numTilesY);
 
         this.addTileSelector();
+
+        this.undoButton = createButton("Undo", "value");
+        this.undoButton.parent("sm-me-undo-button");
+        this.undoButton.mousePressed(Simulation.Mode.MapEditor.undo);
+
+        this.redoButton = createButton("Redo", "value");
+        this.redoButton.parent("sm-me-redo-button");
+        this.redoButton.mousePressed(Simulation.Mode.MapEditor.redo);
     }
 
     /**
@@ -127,7 +139,7 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         this.tileSelect.selected("blankLine");
         this.currentTileName = this.tileSelect.selected();
 
-        this.tile = World.Tiles.proxySubject[this.tileSelect.selected()].copy();
+        this.tile = World.Tiles[this.tileSelect.selected()].copy();
         this.currentTileName = this.tileSelect.selected();
     }
 
@@ -151,6 +163,9 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
 
         this.resetSensor();
 
+        this.commandStack = [];
+        this.commandStackPointer = -1;
+
     }
 
     resetSensor() {
@@ -158,6 +173,34 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         this.sensor = new Robot.AnalogLightSensor(
             this.sensorRadius * World.lineThickness,
             createVector(0,0));
+    }
+
+    pushToCommandStack(command) {
+        this.commandStack.push(command);
+        if(this.commandStackPointer != this.commandStack.length - 2) {
+            const numElementsToDelete = this.commandStack.length - 2
+                - this.commandStackPointer;
+
+            this.commandStack.splice(this.commandStackPointer+1,
+                numElementsToDelete);
+        }
+        this.commandStackPointer = this.commandStack.length - 1;
+    }
+
+    undo() {
+        if(this.commandStackPointer < 0) {
+            return;
+        }
+        this.commandStack[this.commandStackPointer].undo();
+        this.commandStackPointer--;
+    }
+
+    redo() {
+        if(this.commandStackPointer >= this.commandStack.length - 1 ) {
+            return;
+        }
+        this.commandStackPointer++;
+        this.commandStack[this.commandStackPointer].redo();
     }
 
     /**
@@ -174,7 +217,7 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             this.resetRoom();
 
             if(this.tile && this.currentTileName) {
-                this.tile = World.Tiles.proxySubject[this.currentTileName].copy();
+                this.tile = World.Tiles[this.currentTileName].copy();
             }
         }
 
@@ -186,14 +229,14 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             this.roomYDisplay.elt.innerText = "Room Size X: " + str(this.numTilesY);
             this.resetRoom();
             if(this.tile && this.currentTileName) {
-                this.tile = World.Tiles.proxySubject[this.currentTileName].copy();
+                this.tile = World.Tiles[this.currentTileName].copy();
             }
         }
 
         if(this.currentTileName != this.tileSelect.selected()) {
             console.log("Simulation Mode Map Editor Check uiPoll: tile selector has changed to new tile: ",
                 this.tileSelect.selected());
-            this.tile = World.Tiles.proxySubject[this.tileSelect.selected()].copy();
+            this.tile = World.Tiles[this.tileSelect.selected()].copy();
             this.currentTileName = this.tileSelect.selected();
         }
 
@@ -201,7 +244,23 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
                 return;
             }
+
             const mousePos = createVector(mouseX, mouseY);
+            const tileAtMousePos = this.room.getTileAtPos(mousePos);
+
+            if(tileAtMousePos == undefined) {
+                return;
+            }
+
+            if(tileAtMousePos.getName() == this.currentTileName) {
+                return;
+            }
+
+            const command = new Simulation.Mode.MapEditor.EditCommand(
+                this.room, mousePos, tileAtMousePos, this.tile);
+
+           this.pushToCommandStack(command);
+
             this.room.setTileAtPos(mousePos, this.tile);
         }
     }
@@ -239,3 +298,28 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
 };
 
 Simulation.Mode.ModeList.push(Simulation.Mode.MapEditor);
+
+Simulation.Mode.MapEditor.EditCommand = class {
+    constructor(room, mapPos, prevTile, nextTile) {
+        this.room = room;
+        this.mapPos = mapPos.copy();
+        this.prevTile = prevTile.copy();
+        this.nextTile = nextTile.copy();
+    }
+
+    undo() {
+        this.room.setTileAtPos(this.mapPos, this.prevTile);
+    }
+
+    redo() {
+        this.room.setTileAtPos(this.mapPos, this.nextTile);
+    }
+}
+
+Simulation.Mode.MapEditor.undo = function() {
+    Simulation.Mode.activeMode.undo();
+}
+
+Simulation.Mode.MapEditor.redo = function() {
+    Simulation.Mode.activeMode.redo();
+}
