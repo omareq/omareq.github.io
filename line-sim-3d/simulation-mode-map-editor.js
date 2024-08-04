@@ -94,6 +94,9 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
 
             document.getElementById("sm-me-undo-button").children[0].remove();
             document.getElementById("sm-me-redo-button").children[0].remove();
+
+            document.getElementById("sm-me-clear-room-button").children[0].remove();
+            document.getElementById("sm-me-fill-room-button").children[0].remove();
         }
 
         // room x
@@ -121,6 +124,14 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         this.redoButton = createButton("Redo", "value");
         this.redoButton.parent("sm-me-redo-button");
         this.redoButton.mousePressed(Simulation.Mode.MapEditor.redo);
+
+        this.clearButton = createButton("Clear", "value");
+        this.clearButton.parent("sm-me-clear-room-button");
+        this.clearButton.mousePressed(Simulation.Mode.MapEditor.clearRoom);
+
+        this.fillButton = createButton("Fill", "value");
+        this.fillButton.parent("sm-me-fill-room-button");
+        this.fillButton.mousePressed(Simulation.Mode.MapEditor.fillRoom);
     }
 
     /**
@@ -246,23 +257,45 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             }
 
             const mousePos = createVector(mouseX, mouseY);
-            const tileAtMousePos = this.room.getTileAtPos(mousePos);
-
-            if(tileAtMousePos == undefined) {
-                return;
-            }
-
-            if(tileAtMousePos.getName() == this.currentTileName) {
-                return;
-            }
-
-            const command = new Simulation.Mode.MapEditor.EditCommand(
-                this.room, mousePos, tileAtMousePos, this.tile);
-
-           this.pushToCommandStack(command);
-
-            this.room.setTileAtPos(mousePos, this.tile);
+            this.changeTileAtPos(mousePos, this.tile);
         }
+    }
+
+    clearRoom() {
+        this.fillRoom(World.Tiles["blankLine"].copy());
+    }
+
+    fillRoom(tile) {
+        if(tile == undefined) {
+            tile = this.tile.copy();
+        }
+
+        for(let x = 0; x < this.room.xNumTiles; x++) {
+            for(let y = 0; y < this.room.yNumTiles; y++) {
+                const pos = createVector(x * World.gridSize + this.room.pos.x +1,
+                    y * World.gridSize + this.room.pos.y + 1);
+                this.changeTileAtPos(pos, tile.copy());
+            }
+        }
+    }
+
+    changeTileAtPos(pos, newTile) {
+        const tileAtPos = this.room.getTileAtPos(pos);
+
+        if(tileAtPos == undefined) {
+            return;
+        }
+
+        if(tileAtPos.getName() == newTile.getName()) {
+            return;
+        }
+
+        const command = new Simulation.Mode.MapEditor.EditCommand(
+            this.room, pos, tileAtPos, newTile);
+
+        this.pushToCommandStack(command);
+
+        this.room.setTileAtPos(pos, newTile);
     }
 
     /**
@@ -322,4 +355,12 @@ Simulation.Mode.MapEditor.undo = function() {
 
 Simulation.Mode.MapEditor.redo = function() {
     Simulation.Mode.activeMode.redo();
+}
+
+Simulation.Mode.MapEditor.clearRoom = function() {
+    Simulation.Mode.activeMode.clearRoom();
+}
+
+Simulation.Mode.MapEditor.fillRoom = function() {
+    Simulation.Mode.activeMode.fillRoom();
 }
