@@ -102,6 +102,7 @@ World.Room = class {
             }
             this.grid.push(emptyCol);
         }
+        this.img = undefined;
     }
 
     /**
@@ -155,6 +156,7 @@ World.Room = class {
             currentTile.setPos(currentPos);
             this.grid[x][y] = currentTile;
         }
+        this.img=undefined;
     }
 
     /**
@@ -223,6 +225,7 @@ World.Room = class {
                 this.grid[x][y] = currentTile;
             }
         }
+        this.img = undefined;
 
         //this.generatePG();
     }
@@ -280,6 +283,7 @@ World.Room = class {
             }
         }
         //this.generatePG();
+        this.img=undefined;
     }
 
     /**
@@ -353,7 +357,7 @@ World.Room = class {
         const gridAllignedGridPos = this.getPosOfGrid(xIndex, yIndex);
         newTile.setPos(gridAllignedGridPos);
         this.grid[xIndex][yIndex] = newTile;
-        this.generatePG();
+        this.img = undefined;
     }
 
     /**
@@ -364,6 +368,35 @@ World.Room = class {
             this.generatePG();
         }
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
+    }
+
+    getJSON(name) {
+        if(name==undefined) {
+            const dateStr = new Date().toISOString();
+            name = "Room-" + dateStr;
+        }
+
+        let reducedGrid = [];
+
+        for(let x = 0; x < this.xNumTiles; x++) {
+            let col = [];
+            for(let y = 0; y < this.yNumTiles; y++) {
+                col.push(this.grid[x][y].getName());
+            }
+            reducedGrid.push(col);
+        }
+
+
+        let reducedRoom = {
+            name:name,
+            xNumTiles: this.xNumTiles,
+            yNumTiles: this.yNumTiles,
+            showGrid: this.showGrid,
+            grid: reducedGrid
+
+        }
+
+        return JSON.stringify(reducedRoom, null, "\t");
     }
 };
 
