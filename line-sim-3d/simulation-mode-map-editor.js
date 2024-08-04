@@ -72,6 +72,7 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
 
         this.commandStack = [];
         this.commandStackPointer = -1;
+        this.batchNum = 0;
         this.addNewUIElements();
     }
 
@@ -202,16 +203,54 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         if(this.commandStackPointer < 0) {
             return;
         }
-        this.commandStack[this.commandStackPointer].undo();
-        this.commandStackPointer--;
+
+        if(this.commandStack[this.commandStackPointer].batchNum < 0) {
+            this.commandStack[this.commandStackPointer].undo();
+            this.commandStackPointer--;
+            return;
+        }
+
+        this.undoBatch();
+    }
+
+    undoBatch() {
+        const startBatchNum = this.commandStack[this.commandStackPointer].batchNum;
+
+        while(this.commandStack[this.commandStackPointer].batchNum == startBatchNum) {
+            this.commandStack[this.commandStackPointer].undo();
+            this.commandStackPointer--;
+
+            if(this.commandStackPointer < 0) {
+                return;
+            }
+        }
     }
 
     redo() {
-        if(this.commandStackPointer >= this.commandStack.length - 1 ) {
+        if(this.commandStackPointer + 1 > this.commandStack.length - 1 ) {
             return;
         }
         this.commandStackPointer++;
-        this.commandStack[this.commandStackPointer].redo();
+        if(this.commandStack[this.commandStackPointer].batchNum < 0) {
+            this.commandStack[this.commandStackPointer].redo();
+            return;
+        }
+
+        this.redoBatch();
+    }
+
+    redoBatch() {
+        const startBatchNum = this.commandStack[this.commandStackPointer].batchNum;
+
+        while(this.commandStack[this.commandStackPointer].batchNum == startBatchNum) {
+            this.commandStack[this.commandStackPointer].redo();
+            if(this.commandStackPointer + 1 > this.commandStack.length - 1) {
+                return;
+            }
+            this.commandStackPointer++;
+        }
+        this.commandStackPointer--;
+
     }
 
     /**
@@ -269,17 +308,18 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         if(tile == undefined) {
             tile = this.tile.copy();
         }
+        const batchNum = this.batchNum++;
 
         for(let x = 0; x < this.room.xNumTiles; x++) {
             for(let y = 0; y < this.room.yNumTiles; y++) {
                 const pos = createVector(x * World.gridSize + this.room.pos.x +1,
                     y * World.gridSize + this.room.pos.y + 1);
-                this.changeTileAtPos(pos, tile.copy());
+                this.changeTileAtPos(pos, tile.copy(), batchNum);
             }
         }
     }
 
-    changeTileAtPos(pos, newTile) {
+    changeTileAtPos(pos, newTile, batchNum) {
         const tileAtPos = this.room.getTileAtPos(pos);
 
         if(tileAtPos == undefined) {
@@ -291,7 +331,7 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         }
 
         const command = new Simulation.Mode.MapEditor.EditCommand(
-            this.room, pos, tileAtPos, newTile);
+            this.room, pos, tileAtPos, newTile, batchNum);
 
         this.pushToCommandStack(command);
 
@@ -333,11 +373,13 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
 Simulation.Mode.ModeList.push(Simulation.Mode.MapEditor);
 
 Simulation.Mode.MapEditor.EditCommand = class {
-    constructor(room, mapPos, prevTile, nextTile) {
+    constructor(room, mapPos, prevTile, nextTile, batchNum=-1) {
         this.room = room;
         this.mapPos = mapPos.copy();
         this.prevTile = prevTile.copy();
         this.nextTile = nextTile.copy();
+
+        this.batchNum = batchNum;
     }
 
     undo() {
