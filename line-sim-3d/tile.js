@@ -273,7 +273,7 @@ World.TileSetup = function() {
     World.Tiles.diagonalVRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVRight);
     World.Tiles.diagonalVLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagonalVLeft);
 
-    World.Tiles.diagBoxGapUpLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapDownLeft);
+    World.Tiles.diagBoxGapUpLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapUpLeft);
     World.Tiles.diagBoxGapUpRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapUpRight);
     World.Tiles.diagBoxGapDownLeft = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapDownLeft);
     World.Tiles.diagBoxGapDownRight = new World.Tile.Proxy(World.Tiles.proxySubject.diagBoxGapDownRight);
