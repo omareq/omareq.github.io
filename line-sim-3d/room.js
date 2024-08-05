@@ -398,5 +398,32 @@ World.Room = class {
 
         return JSON.stringify(reducedRoom, null, "\t");
     }
+
+    setFromJSON(reducedRoom) {
+        this.xNumTiles = reducedRoom.xNumTiles;
+        this.yNumTiles = reducedRoom.yNumTiles;
+
+        this.xWidth = World.gridSize * this.xNumTiles;
+        this.yHeight = World.gridSize * this.yNumTiles;
+
+        this.pos = createVector(0, 0);
+
+        this.name = reducedRoom.name;
+        this.showGrid = reducedRoom.showGrid;
+
+        this.createEmptyRoom();
+
+        let reducedGrid = reducedRoom.grid;
+
+        for(let x = 0; x < this.xNumTiles; x++) {
+            for(let y = 0; y < this.yNumTiles; y++) {
+                let currentTile = World.Tiles[reducedGrid[x][y]].copy();
+                const currentPos = this.getPosOfGrid(x, y);
+                currentTile.setPos(currentPos);
+                this.grid[x][y] = currentTile;
+            }
+        }
+        this.img = undefined;
+    }
 };
 
