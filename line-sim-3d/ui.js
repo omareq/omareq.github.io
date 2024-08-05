@@ -116,14 +116,19 @@ UI.setup = function() {
     UI.initPauseButton();
     UI.initResetButton();
     console.debug("UI.setup: End");
+    UI.logUIPollStartAndStop = false;
 };
 
 /**
  * Poll UI elements that require periodic checks
  */
 UI.poll = function() {
-    console.debug("UI.poll: Start");
+    if(UI.logUIPollStartAndStop) {
+        console.debug("UI.poll: Start");
+    }
     UI.updateSimulationModeSelector();
     Simulation.Mode.activeMode.UIPoll();
-    console.debug("UI.poll: End");
+    if(UI.logUIPollStartAndStop) {
+        console.debug("UI.poll: End");
+    }
 };
