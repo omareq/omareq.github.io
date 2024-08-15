@@ -477,10 +477,28 @@ World.Room.validateJSON = function(jsonData) {
         return {valid: false, error: "jsonData.grid does not exist"};
     }
 
-    // TODO: check size of grid in x and y
+    // check size of grid in x and y
+    if(jsonData.grid.length != jsonData.xNumTiles) {
+        return {valid: false, error: "jsonData.grid x size does not match jsonData.xNumTiles"};
+    }
 
+    for(let x = 0; x < jsonData.xNumTiles; x++) {
+        if(jsonData.grid[x].length != jsonData.yNumTiles) {
+            return {valid: false, error: "jsonData.grid y size does not match jsonData.yNumTiles"};
+        }
+    }
 
-    // TODO: check validity of tiles in grid
+    // check validity of tiles in grid
+     for(let x = 0; x < jsonData.xNumTiles; x++) {
+        for(let y = 0; y < jsonData.yNumTiles; y++) {
+            const jsonName = jsonData.grid[x][y];
+            if(World.Tiles[jsonName] === undefined) {
+                const msg = "jsonData.grid["+x+"]["+y+"] does not contain a valid Tile type: " + jsonName;
+                return {valid: false, error: msg};
+            }
+        }
+    }
+
 
     return {valid: true, error: undefined};
 };
