@@ -377,6 +377,13 @@ World.Room = class {
         }
 
         this.pos = pos.copy();
+
+        for(let x = 0; x < this.xNumTiles; x++) {
+            for(let y = 0; y < this.yNumTiles; y++) {
+                const currentPos = this.getPosOfGrid(x, y);
+                this.grid[x][y].setPos(currentPos);
+            }
+        }
     }
 
     getJSON(name) {
