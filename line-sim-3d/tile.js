@@ -43,7 +43,7 @@ World.TilesAddName = function() {
     for(let i = 0; i < keys.length; i++) {
         World.Tiles.proxySubject[keys[i]].setName(keys[i]);
     }
-}
+};
 
 /**
  * Tile setup function.  Calculates all the line and tile sizes with respect to

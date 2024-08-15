@@ -116,7 +116,7 @@ UI.loadRoomFromJSON = async function() {
     }
 
     //  get data
-    const fileData = await fileHandle.getFile()
+    const fileData = await fileHandle.getFile();
     const fileText = await fileData.text();
     let fileJSON;
 

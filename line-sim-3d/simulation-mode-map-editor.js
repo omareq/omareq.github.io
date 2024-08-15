@@ -317,8 +317,9 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
     }
 
     fillRoom(tile) {
+        let fillTile = tile;
         if(tile == undefined) {
-            tile = this.tile.copy();
+            fillTile = this.tile.copy();
         }
         const batchNum = this.batchNum++;
 
@@ -326,7 +327,7 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             for(let y = 0; y < this.room.yNumTiles; y++) {
                 const pos = createVector(x * World.gridSize + this.room.pos.x +1,
                     y * World.gridSize + this.room.pos.y + 1);
-                this.changeTileAtPos(pos, tile.copy(), batchNum);
+                this.changeTileAtPos(pos, fillTile.copy(), batchNum);
             }
         }
     }

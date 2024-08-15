@@ -380,9 +380,10 @@ World.Room = class {
     }
 
     getJSON(name) {
+        let nameInJSON = name;
         if(name==undefined) {
             const dateStr = new Date().toISOString();
-            name = "Room-" + dateStr;
+            nameInJSON = "Room-" + dateStr;
         }
 
         let reducedGrid = [];
@@ -397,13 +398,13 @@ World.Room = class {
 
 
         let reducedRoom = {
-            name:name,
+            name:nameInJSON,
             xNumTiles: this.xNumTiles,
             yNumTiles: this.yNumTiles,
             showGrid: this.showGrid,
             grid: reducedGrid
 
-        }
+        };
 
         return JSON.stringify(reducedRoom, null, "\t");
     }
