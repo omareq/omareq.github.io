@@ -370,6 +370,15 @@ World.Room = class {
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
 
+    setGlobalPos(pos) {
+        if(!(pos instanceof p5.Vector)) {
+            const err = "pos needs to be an instance of p5.Vector";
+            throw err;
+        }
+
+        this.pos = pos.copy();
+    }
+
     getJSON(name) {
         if(name==undefined) {
             const dateStr = new Date().toISOString();
@@ -400,6 +409,10 @@ World.Room = class {
     }
 
     setFromJSON(reducedRoom) {
+        if(!World.Room.validateJSON(reducedRoom).valid) {
+            return;
+        }
+
         this.xNumTiles = reducedRoom.xNumTiles;
         this.yNumTiles = reducedRoom.yNumTiles;
 
@@ -425,5 +438,42 @@ World.Room = class {
         }
         this.img = undefined;
     }
+};
+
+World.Room.validateJSON = function(jsonData) {
+    if(typeof(jsonData.name) != "string") {
+        return {valid: false, error: "jsonData.name is not a string"};
+    }
+
+    if(typeof(jsonData.xNumTiles) != "number") {
+        return {valid: false, error: "jsonData.xNumTiles is not a number"};
+    }
+
+    if(!Number.isInteger(jsonData.xNumTiles) || jsonData.xNumTiles < 1) {
+        return {valid: false, error: "jsonData.xNumTiles is not a positive integer"};
+    }
+
+    if(typeof(jsonData.yNumTiles) != "number") {
+        return {valid: false, error: "jsonData.yNumTiles is not a number"};
+    }
+
+    if(!Number.isInteger(jsonData.yNumTiles) || jsonData.yNumTiles < 1) {
+        return {valid: false, error: "jsonData.yNumTiles is not a positive integer"};
+    }
+
+    if(typeof(jsonData.showGrid) != "boolean") {
+        return {valid: false, error: "jsonData.showGrid is not a boolean"};
+    }
+
+    if(typeof(jsonData.grid) == undefined) {
+        return {valid: false, error: "jsonData.grid does not exist"};
+    }
+
+    // TODO: check size of grid in x and y
+
+
+    // TODO: check validity of tiles in grid
+
+    return {valid: true, error: undefined};
 };
 

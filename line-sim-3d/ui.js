@@ -104,6 +104,80 @@ UI.initResetButton = function() {
     UI.resetButton.mousePressed(Simulation.reset);
 };
 
+UI.loadRoomFromJSON = async function() {
+    const [fileHandle] = await UI.getFile();
+    g_fileHandle = fileHandle; // For Debugging
+
+    // add query permissions
+    const filePermissions = await fileHandle.queryPermission({mode: "read"});
+    if(!filePermissions === "granted") {
+        alert("File Read Permissions Are Denied");
+        return;
+    }
+
+    //  get data
+    const fileData = await fileHandle.getFile()
+    const fileText = await fileData.text();
+    let fileJSON;
+
+    try {
+        fileJSON = await JSON.parse(fileText);
+    } catch (e) {
+        alert("The input file " + fileHandle.name + " is not a valid json file");
+        return;
+    }
+
+    console.log(fileJSON);
+
+    const roomCheck = World.Room.validateJSON(fileJSON);
+    if(!roomCheck.valid) {
+        alert("Input file is invalid: " + roomCheck.error);
+        return;
+    }
+
+    const tilesRatio = fileJSON.xNumTiles / fileJSON.yNumTiles;
+    const pixelsRatio = width / height;
+
+    let gridSize = -1;
+    if(tilesRatio > pixelsRatio) {
+        gridSize = width / fileJSON.xNumTiles;
+    } else {
+        gridSize = height / fileJSON.yNumTiles;
+    }
+
+    World.setGridSize(gridSize);
+
+    const xOffsetRoom = 0.5 * (width - (fileJSON.xNumTiles * World.gridSize));
+    const roomPos = createVector(xOffsetRoom, 0);
+    let newRoom = new World.Room(fileJSON.xNumTiles, fileJSON.yNumTiles);
+    newRoom.setFromJSON(fileJSON);
+    newRoom.setGlobalPos(roomPos);
+    Simulation.Mode.activeMode.room = newRoom;
+
+    return;
+};
+
+var g_fileHandle;// = fileHandle; // For Debugging
+
+UI.getFile = async function() {
+    const pickerOpts = {
+      types: [
+      {
+          description: "JSON File",
+          accept: {
+            "application/json": [".json"],
+        },
+    },
+    ],
+      excludeAcceptAllOption: true,
+      multiple: false,
+  };
+
+    const fileHandle = await window.showOpenFilePicker(pickerOpts);
+    console.log("fileHandle: " + fileHandle);
+    return fileHandle;
+};
+
 
 /**
  * UI setup all UI elements

@@ -98,6 +98,9 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
 
             document.getElementById("sm-me-clear-room-button").children[0].remove();
             document.getElementById("sm-me-fill-room-button").children[0].remove();
+
+            document.getElementById("sm-me-save-room-json-button").children[0].remove();
+            document.getElementById("sm-me-load-room-json-button").children[0].remove();
         }
 
         // room x
@@ -133,6 +136,15 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         this.fillButton = createButton("Fill", "value");
         this.fillButton.parent("sm-me-fill-room-button");
         this.fillButton.mousePressed(Simulation.Mode.MapEditor.fillRoom);
+
+
+        this.saveButton = createButton("Save Room", "value");
+        this.saveButton.parent("sm-me-save-room-json-button");
+        this.saveButton.mousePressed(Simulation.Mode.MapEditor.saveRoomAsJSON);
+
+        this.loadButton = createButton("Upload Room", "value");
+        this.loadButton.parent("sm-me-load-room-json-button");
+        this.loadButton.mousePressed(UI.loadRoomFromJSON);
     }
 
     /**
@@ -338,6 +350,12 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         this.room.setTileAtPos(pos, newTile);
     }
 
+    saveRoomAsJSON() {
+        const roomData = JSON.parse(this.room.getJSON());
+        const stripWhitespace = false;
+        saveJSON(roomData, roomData.name + ".json", stripWhitespace);
+    }
+
     /**
      * Update function that updates the state of the simulation
      */
@@ -389,20 +407,24 @@ Simulation.Mode.MapEditor.EditCommand = class {
     redo() {
         this.room.setTileAtPos(this.mapPos, this.nextTile);
     }
-}
+};
 
 Simulation.Mode.MapEditor.undo = function() {
     Simulation.Mode.activeMode.undo();
-}
+};
 
 Simulation.Mode.MapEditor.redo = function() {
     Simulation.Mode.activeMode.redo();
-}
+};
 
 Simulation.Mode.MapEditor.clearRoom = function() {
     Simulation.Mode.activeMode.clearRoom();
-}
+};
 
 Simulation.Mode.MapEditor.fillRoom = function() {
     Simulation.Mode.activeMode.fillRoom();
-}
+};
+
+Simulation.Mode.MapEditor.saveRoomAsJSON = function() {
+    Simulation.Mode.activeMode.saveRoomAsJSON();
+};
