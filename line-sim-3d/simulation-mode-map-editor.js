@@ -363,7 +363,28 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         }
     }
 
+    fillLoop() {
+        let loopRoom = new World.Room(this.room.xNumTiles,
+            this.room.yNumTiles,
+            this.room.pos.copy());
+
+        loopRoom.fillRoomWithLoopPattern();
+
+        const batchNum = this.batchNum++;
+
+        for(let x = 0; x < this.room.xNumTiles; x++) {
+            for(let y = 0; y < this.room.yNumTiles; y++) {
+                const pos = createVector(x * World.gridSize + this.room.pos.x +1,
+                    y * World.gridSize + this.room.pos.y + 1);
+
+                const snakeTileAtPos = loopRoom.getTileAtPos(pos).copy();
+                this.changeTileAtPos(pos, snakeTileAtPos, batchNum);
+            }
+        }
+    }
+
     changeTileAtPos(pos, newTile, batchNum) {
+        // TODO: check pos, tile and batch types
         const tileAtPos = this.room.getTileAtPos(pos);
 
         if(tileAtPos == undefined) {
@@ -466,5 +487,5 @@ Simulation.Mode.MapEditor.fillSnake = function() {
 };
 
 Simulation.Mode.MapEditor.fillLoop = function() {
-    return;
+    Simulation.Mode.activeMode.fillLoop();
 };

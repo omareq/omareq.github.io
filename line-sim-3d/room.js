@@ -159,6 +159,125 @@ World.Room = class {
         this.img=undefined;
     }
 
+    fillRoomWithLoopPattern() {
+        this.setAllTiles(World.Tiles.horizontalLine.copy());
+
+        // just stop at horizontal lines if there is one row
+        if(this.yNumTiles == 1) {
+            return;
+        }
+
+        // just stop at vertical lines if there is one column
+        if(this.xNumTiles == 1) {
+            this.setAllTiles(World.Tiles.verticalLine.copy());
+            return;
+        }
+
+        // right side down
+        let x = this.xNumTiles - 1;
+        for(let y = 0; y < this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerDownLeft.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        // right side up
+        for(let y = 1; y < this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerUpLeft.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        x = 1;
+        // left side down
+        for(let y = 1; y < this.yNumTiles - 1; y+=2) {
+            let currentTile = World.Tiles.cornerDownRight.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        // left side up
+        for(let y = 2; y < this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerUpRight.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+
+        // vertical return to start tile
+        x = 0;
+        for(let y = 1; y < this.yNumTiles - 1; y++) {
+            let currentTile = World.Tiles.verticalLine.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        // just stop at vertical loop if there is two column
+        x = 1;
+        if(this.xNumTiles == 2) {
+            for(let y = 1; y < this.yNumTiles - 1; y++) {
+                let currentTile = World.Tiles.verticalLine.copy();
+                const currentPos = this.getPosOfGrid(x, y);
+                currentTile.setPos(currentPos);
+                this.grid[x][y] = currentTile;
+            }
+            //bottom right of loop
+            let bottomRightTile = World.Tiles.cornerUpLeft.copy();
+            let bottomRightPos = this.getPosOfGrid(0, this.yNumTiles-1);
+            bottomRightTile.setPos(bottomRightPos);
+            this.grid[1][this.yNumTiles-1] = bottomRightTile;
+        }
+
+        // odd number of rows extend loop down one to complete at the end
+        if(this.yNumTiles%2 == 1) {
+            console.log("Odd num rows");
+            //one above bottom right of loop
+            let aboveBottomRightTile = World.Tiles.verticalLine.copy();
+            let aboveBottomRightPos = this.getPosOfGrid(this.xNumTiles-1, this.yNumTiles-2);
+            aboveBottomRightTile.setPos(aboveBottomRightPos);
+            this.grid[this.xNumTiles-1][this.yNumTiles-2] = aboveBottomRightTile;
+
+            let adjacentBottomLeftTile = World.Tiles.horizontalLine.copy();
+            let adjacentBottomLeftPos = this.getPosOfGrid(1, this.yNumTiles-1);
+            adjacentBottomLeftTile.setPos(adjacentBottomLeftPos);
+            this.grid[1][this.yNumTiles-1] = adjacentBottomLeftTile;
+
+            for(let x = 1; x < this.xNumTiles - 1; x++) {
+                let currentTile = World.Tiles.blankLine.copy();
+                let currentPos = this.getPosOfGrid(x, this.yNumTiles-2);
+                currentTile.setPos(currentPos);
+                this.grid[x][this.yNumTiles-2] = currentTile;
+            }
+        }
+
+        // top left tile
+        let topLeftTile = World.Tiles.cornerDownRight.copy();
+        let topLeftPos = this.getPosOfGrid(0,0);
+        topLeftTile.setPos(topLeftPos);
+        this.grid[0][0] = topLeftTile;
+
+        // bottom left tile
+        let bottomLeftTile = World.Tiles.cornerUpRight.copy();
+        let bottomLeftPos = this.getPosOfGrid(0, this.yNumTiles-1);
+        bottomLeftTile.setPos(bottomLeftPos);
+        this.grid[0][this.yNumTiles-1] = bottomLeftTile;
+
+        //bottom right tile
+        let bottomRightTile = World.Tiles.cornerUpLeft.copy();
+        let bottomRightPos = this.getPosOfGrid(0, this.yNumTiles-1);
+        bottomRightTile.setPos(bottomRightPos);
+        this.grid[this.xNumTiles-1][this.yNumTiles-1] = bottomRightTile;
+
+        // console.log(this.grid);
+
+        this.img=undefined;
+    }
+
     /**
      * create a portable graphics image of all the tiles in the room.
      *
