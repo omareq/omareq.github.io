@@ -99,6 +99,9 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             document.getElementById("sm-me-clear-room-button").children[0].remove();
             document.getElementById("sm-me-fill-room-button").children[0].remove();
 
+            document.getElementById("sm-me-fill-snake-button").children[0].remove();
+            document.getElementById("sm-me-fill-loop-button").children[0].remove();
+
             document.getElementById("sm-me-save-room-json-button").children[0].remove();
             document.getElementById("sm-me-load-room-json-button").children[0].remove();
         }
@@ -136,6 +139,14 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         this.fillButton = createButton("Fill", "value");
         this.fillButton.parent("sm-me-fill-room-button");
         this.fillButton.mousePressed(Simulation.Mode.MapEditor.fillRoom);
+
+        this.clearButton = createButton("Snake", "value");
+        this.clearButton.parent("sm-me-fill-snake-button");
+        this.clearButton.mousePressed(Simulation.Mode.MapEditor.fillSnake);
+
+        this.fillButton = createButton("Loop", "value");
+        this.fillButton.parent("sm-me-fill-loop-button");
+        this.fillButton.mousePressed(Simulation.Mode.MapEditor.fillLoop);
 
 
         this.saveButton = createButton("Save Room", "value");
@@ -332,6 +343,26 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
         }
     }
 
+    fillSnake() {
+        let snakeRoom = new World.Room(this.room.xNumTiles,
+            this.room.yNumTiles,
+            this.room.pos.copy());
+
+        snakeRoom.fillRoomWithSnakePattern();
+
+        const batchNum = this.batchNum++;
+
+        for(let x = 0; x < this.room.xNumTiles; x++) {
+            for(let y = 0; y < this.room.yNumTiles; y++) {
+                const pos = createVector(x * World.gridSize + this.room.pos.x +1,
+                    y * World.gridSize + this.room.pos.y + 1);
+
+                const snakeTileAtPos = snakeRoom.getTileAtPos(pos).copy();
+                this.changeTileAtPos(pos, snakeTileAtPos, batchNum);
+            }
+        }
+    }
+
     changeTileAtPos(pos, newTile, batchNum) {
         const tileAtPos = this.room.getTileAtPos(pos);
 
@@ -428,4 +459,12 @@ Simulation.Mode.MapEditor.fillRoom = function() {
 
 Simulation.Mode.MapEditor.saveRoomAsJSON = function() {
     Simulation.Mode.activeMode.saveRoomAsJSON();
+};
+
+Simulation.Mode.MapEditor.fillSnake = function() {
+    Simulation.Mode.activeMode.fillSnake();
+};
+
+Simulation.Mode.MapEditor.fillLoop = function() {
+    return;
 };
