@@ -299,7 +299,7 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
             console.debug("Simulation Mode Map Editor Check uiPoll: sensor room y slider value has changed to: ",
                 sliderVal);
             this.numTilesY = sliderVal;
-            this.roomYDisplay.elt.innerText = "Room Size X: " + str(this.numTilesY);
+            this.roomYDisplay.elt.innerText = "Room Size Y: " + str(this.numTilesY);
             this.resetRoom();
             if(this.tile && this.currentTileName) {
                 this.tile = World.Tiles[this.currentTileName].copy();
