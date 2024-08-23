@@ -110,6 +110,7 @@ UI.initResetButton = function() {
 };
 
 UI.loadRoomFromJSON = async function() {
+    Simulation.pauseFlagSet();
     const [fileHandle] = await UI.getFile();
     g_fileHandle = fileHandle; // For Debugging
 
@@ -159,6 +160,7 @@ UI.loadRoomFromJSON = async function() {
     newRoom.setGlobalPos(roomPos);
     Simulation.Mode.activeMode.room = newRoom;
 
+    Simulation.pauseFlagUnset();
     return;
 };
 
