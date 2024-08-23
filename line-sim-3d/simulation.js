@@ -200,6 +200,10 @@ Simulation.Mode.setModeByName = function(modeName) {
  * The reset function sets the mode to a new instance of the current mode.
  */
 Simulation.reset = function() {
+    if(Simulation.Mode.activeMode.name == "Debug") {
+        Simulation.Mode.activeMode.reset();
+        return;
+    }
     Simulation.Mode.setModeByName(Simulation.Mode.activeMode.name);
 };
 

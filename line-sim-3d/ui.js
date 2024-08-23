@@ -75,7 +75,12 @@ UI.initSimulationModeSelector = function() {
     UI.modeSelectorLength = Simulation.Mode.ModeList.length;
     UI.modeSelect = createSelect();
     UI.modeSelect.parent("simulation-mode-selector");
+    UI.modeSelect.option("Debug");
     for(let i = 0; i < UI.modeSelectorLength; i++) {
+        const name = Simulation.Mode.ModeList[i].staticName;
+        if(name.startsWith("Debug")) {
+            continue;
+        }
         UI.modeSelect.option(Simulation.Mode.ModeList[i].staticName);
     }
     UI.modeSelect.selected(Simulation.Mode.activeMode.name);
