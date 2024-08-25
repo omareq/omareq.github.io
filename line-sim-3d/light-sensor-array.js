@@ -108,7 +108,7 @@ Robot.LightSensorArray = class {
 
         for(let i = 0; i < this.numSensors; i++) {
             if(!newPositions[i] instanceof p5.Vector) {
-                let err = "The position of sensor ", i, " is not a p5.Vector ";
+                let err = "The position of sensor " + i + " is not a p5.Vector ";
                 throw Error(err);
             }
         }

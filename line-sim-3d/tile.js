@@ -554,10 +554,20 @@ World.Tile = class {
         this.pos = newPos.copy();
     }
 
+    /**
+     * Set the name of the tile
+     *
+     * @param name {string} - name of the tile
+     */
     setName(name) {
         this.name = name;
     }
 
+    /**
+     * get the name of the tile
+     *
+     * @returns {string} - name of the tile
+     */
     getName() {
         return this.name;
     }
@@ -694,10 +704,20 @@ World.Tile.Proxy = class {
         this.tile.setPos(newPos);
     }
 
+    /**
+     * set the name of the tile proxy
+     *
+     * @param name {string} - the name of the tile proxy
+     */
     setName(name) {
         this.tile.setName(name);
     }
 
+    /**
+     * get name of the tile proxy
+     *
+     * @returns {string} - the name of the tile
+     */
     getName() {
         return this.tile.getName();
     }

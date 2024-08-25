@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: simulation-mode-room.js</title>
+    <title>JSDoc: Source: simulation-mode-debug.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: simulation-mode-room.js</h1>
+    <h1 class="page-title">Source: simulation-mode-debug.js</h1>
 
     
 
@@ -28,11 +28,11 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *  @file simulation-mode-room.js Implementation of the room simulation mode.
+ *  @file simulation-mode-debug.js Implementation of debug mode
  *
  *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
- *  @date 30-March-2024
+ *  @date 23-August-2024
  *  @link https://omareq.github.io/line-sim-3d/
  *  @link https://omareq.github.io/line-sim-3d/docs/
  *
@@ -72,123 +72,130 @@ Simulation.Mode = Simulation.Mode || {};
 
 
 /**
- * Class Simulation.Mode.DebugRoom is a simulation that tests that the room
- * class is working correctly.  This is mostly to test that the drawing
- * functionality is correct and that a single light sensor can read the lines
- * as they appear on the canvas.
+ * Class Simulation.Mode.Debug is a simulation mode that allows for all other
+ * debug simulation modes to be displayed
  *
  * @see Simulation.Mode.ModeType
- * @see World.Room
- * @see Robot.AnalogLightSensor
  */
-Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
-    static staticName = "DebugRoom";
+Simulation.Mode.Debug = class extends Simulation.Mode.ModeType {
+    static staticName = "Debug";
+
     /**
      * The constructor that sets up the simulation variables
-     *
-     * @param numTilesX {number} - Positive integer value for the number of
-     *  tiles in the x direction
-     * @param numTilesY {number} - Positive integer value for the number of
-     *  tiles in the y direction
      */
-    constructor(numTilesX=4, numTilesY=4) {
+    constructor() {
         super();
-        this.name = "DebugRoom";
-        this.uiDivID = "simulation-mode-room";
+        this.name = "Debug";
+        this.uiDivID = "simulation-mode-debug";
         this.setupUI();
 
-        let gridSize = -1;
-        if(numTilesX > numTilesY) {
-            gridSize = width / numTilesX;
-        } else {
-            gridSize = height / numTilesY;
-        }
-        gridSize *= 0.9;
-
-        World.setGridSize(gridSize);
-        this.sensorRadius = 0.5;
-        this.sensor = new Robot.AnalogLightSensor(
-            this.sensorRadius * World.lineThickness,
-            createVector(0,0));
-
-        this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
-        this.room.fillRoomWithSnakePattern();
-
+        this.activeMode = new Simulation.Mode.DebugStaticTile();
         this.addNewUIElements();
     }
 
     /**
-     * Adds the UI elements that control the debug room mode simulation
+     * Adds the UI elements that control the static tile mode simulation
      * mode.  This code currently has an inefficiency that deletes DOM elements
      * for the inputs if they already exist.  It would be preferable if a handle
      * could be saved and reused for these elements.
      */
     addNewUIElements() {
         // TODO: save handles when switching simulation mode
-        if(document.getElementById("sm-room-sensor-radius-slider").children.length) {
-            document.getElementById("sm-room-sensor-radius-slider").children[0].remove();
-            document.getElementById("sm-room-sensor-radius-val").children[0].remove();
+        if(document.getElementById("sm-debug-selector").children.length) {
+            document.getElementById("sm-debug-selector").children[0].remove();
         }
 
-        // sensor radius
-        this.sensorRadiusSlider = createSlider(0.1, 4, this.sensorRadius, 0.1);
-        this.sensorRadiusSlider.parent("sm-room-sensor-radius-slider");
+        this.modeSelect = createSelect();
+        this.modeSelect.parent("sm-debug-selector");
 
-        this.sensorRadiusDisplay = createP();
-        this.sensorRadiusDisplay.parent("sm-room-sensor-radius-val");
-        this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(this.sensorRadius);
+        this.modeSelect.option(Simulation.Mode.Empty.staticName);
 
+        for(let i = 0; i &lt; Simulation.Mode.ModeList.length; i++) {
+            const name = Simulation.Mode.ModeList[i].staticName;
+            if(!name.startsWith("Debug")) {
+                continue;
+            }
+            if(name == "Debug") {
+                continue;
+            }
+            this.modeSelect.option(Simulation.Mode.ModeList[i].staticName);
+        }
+        this.modeSelect.selected(this.activeMode.name);
     }
 
     /**
-     * Polls the simulation mode debug room specific UI elements
+     * Sets the active debug mode.
+     *
+     * @param newMode {Simulation.Mode.ModeType} - The new simulation mode
      */
-    UIPoll() {
+    setActiveMode(newMode) {
+        // TODO: add param type check
+        this.activeMode.hideUI();
+        this.activeMode = newMode;
+        Simulation.pauseFlagUnset();
+    }
 
-        let sliderVal = this.sensorRadiusSlider.value();
-        if(sliderVal != this.sensorRadius) {
-            console.debug("Simulation Mode Static Tile Check uiPoll: sensor radius Slider value has changed to: ",
-                sliderVal);
-            this.sensorRadius = sliderVal;
-            this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(sliderVal);
-            this.sensor.setRadius(this.sensorRadius * World.lineThickness);
+    /**
+     * Sets the active mode by name. If invalid the mode is changed to the empty
+     * mode.
+     *
+     * @param modeName {string} - The name of the new mode
+     */
+    setModeByName(modeName) {
+        for(let i = 0; i &lt; Simulation.Mode.ModeList.length; i++) {
+            // TODO: figure out how to do this without for loop
+            if(Simulation.Mode.ModeList[i].staticName == modeName) {
+                this.setActiveMode(new Simulation.Mode.ModeList[i]());
+                return;
+            }
         }
 
+        console.warn("Can't set Simulation Debug mode to: ", modeName);
+        this.setActiveMode(new Simulation.Mode.Empty());
+    }
+
+    /**
+     * Checks if this.UIPanel is defined and hides the panel if it is.  This is
+     * done by setting the visibility to "hidden" and the display style to
+     * "none".
+     */
+    hideUI() {
+        super.hideUI();
+        this.activeMode.hideUI();
+    }
+
+
+    /**
+     * Polls the moving tile mode specific UI elements
+     */
+    UIPoll() {
+        const modeName = this.modeSelect.selected();
+
+        if(this.activeMode.name != modeName) {
+            console.log("Simulation Mode Debug uiPoll: debug mode selector has changed to new debug mode: ",
+                    modeName);
+            this.setModeByName(modeName);
+        }
+
+        this.activeMode.UIPoll();
+    }
+
+    /**
+     * Resets the currently active debug mode.
+     */
+    reset() {
+        this.setModeByName(this.activeMode.name);
     }
 
     /**
      * Update function that updates the state of the simulation
      */
     update() {
-
-        const mousePos = createVector(mouseX, mouseY);
-        this.sensor.setPos(mousePos);
-        this.room.draw();
-
-        let tileUnderSensor = this.room.getTileAtPos(mousePos);
-
-        if(tileUnderSensor == undefined) {
-            return;
-        }
-
-        const brightness = this.sensor.read(tileUnderSensor);
-
-        if(brightness &lt; 1) {
-            console.log("Sensor Val: ", brightness);
-        }
-        const colorVal = floor(brightness * 255);
-
-        push();
-        fill(colorVal);
-        strokeWeight(1);
-        stroke(127, 0, 30);
-        const ellipseSize = 2 * this.sensorRadius * World.lineThickness;
-        ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
-        pop();
+        this.activeMode.update();
     }
 };
 
-Simulation.Mode.ModeList.push(Simulation.Mode.DebugRoom);
+Simulation.Mode.ModeList.push(Simulation.Mode.Debug);
 </code></pre>
         </article>
     </section>

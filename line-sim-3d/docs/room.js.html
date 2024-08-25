@@ -130,6 +130,7 @@ World.Room = class {
             }
             this.grid.push(emptyCol);
         }
+        this.img = undefined;
     }
 
     /**
@@ -183,6 +184,130 @@ World.Room = class {
             currentTile.setPos(currentPos);
             this.grid[x][y] = currentTile;
         }
+        this.img=undefined;
+    }
+
+    /**
+     * Fills the room with horizontal lines and then adds 90 degree corners to
+     * create the back and forth pattern that is connected in a loop.
+     */
+    fillRoomWithLoopPattern() {
+        this.setAllTiles(World.Tiles.horizontalLine.copy());
+
+        // just stop at horizontal lines if there is one row
+        if(this.yNumTiles == 1) {
+            return;
+        }
+
+        // just stop at vertical lines if there is one column
+        if(this.xNumTiles == 1) {
+            this.setAllTiles(World.Tiles.verticalLine.copy());
+            return;
+        }
+
+        // right side down
+        let x = this.xNumTiles - 1;
+        for(let y = 0; y &lt; this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerDownLeft.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        // right side up
+        for(let y = 1; y &lt; this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerUpLeft.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        x = 1;
+        // left side down
+        for(let y = 1; y &lt; this.yNumTiles - 1; y+=2) {
+            let currentTile = World.Tiles.cornerDownRight.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        // left side up
+        for(let y = 2; y &lt; this.yNumTiles; y+=2) {
+            let currentTile = World.Tiles.cornerUpRight.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+
+        // vertical return to start tile
+        x = 0;
+        for(let y = 1; y &lt; this.yNumTiles - 1; y++) {
+            let currentTile = World.Tiles.verticalLine.copy();
+            const currentPos = this.getPosOfGrid(x, y);
+            currentTile.setPos(currentPos);
+            this.grid[x][y] = currentTile;
+        }
+
+        // just stop at vertical loop if there is two column
+        x = 1;
+        if(this.xNumTiles == 2) {
+            for(let y = 1; y &lt; this.yNumTiles - 1; y++) {
+                let currentTile = World.Tiles.verticalLine.copy();
+                const currentPos = this.getPosOfGrid(x, y);
+                currentTile.setPos(currentPos);
+                this.grid[x][y] = currentTile;
+            }
+            //bottom right of loop
+            let bottomRightTile = World.Tiles.cornerUpLeft.copy();
+            let bottomRightPos = this.getPosOfGrid(0, this.yNumTiles-1);
+            bottomRightTile.setPos(bottomRightPos);
+            this.grid[1][this.yNumTiles-1] = bottomRightTile;
+        }
+
+        // odd number of rows extend loop down one to complete at the end
+        if(this.yNumTiles%2 == 1) {
+            console.log("Odd num rows");
+            //one above bottom right of loop
+            let aboveBottomRightTile = World.Tiles.verticalLine.copy();
+            let aboveBottomRightPos = this.getPosOfGrid(this.xNumTiles-1, this.yNumTiles-2);
+            aboveBottomRightTile.setPos(aboveBottomRightPos);
+            this.grid[this.xNumTiles-1][this.yNumTiles-2] = aboveBottomRightTile;
+
+            let adjacentBottomLeftTile = World.Tiles.horizontalLine.copy();
+            let adjacentBottomLeftPos = this.getPosOfGrid(1, this.yNumTiles-1);
+            adjacentBottomLeftTile.setPos(adjacentBottomLeftPos);
+            this.grid[1][this.yNumTiles-1] = adjacentBottomLeftTile;
+
+            for(let x = 1; x &lt; this.xNumTiles - 1; x++) {
+                let currentTile = World.Tiles.blankLine.copy();
+                let currentPos = this.getPosOfGrid(x, this.yNumTiles-2);
+                currentTile.setPos(currentPos);
+                this.grid[x][this.yNumTiles-2] = currentTile;
+            }
+        }
+
+        // top left tile
+        let topLeftTile = World.Tiles.cornerDownRight.copy();
+        let topLeftPos = this.getPosOfGrid(0,0);
+        topLeftTile.setPos(topLeftPos);
+        this.grid[0][0] = topLeftTile;
+
+        // bottom left tile
+        let bottomLeftTile = World.Tiles.cornerUpRight.copy();
+        let bottomLeftPos = this.getPosOfGrid(0, this.yNumTiles-1);
+        bottomLeftTile.setPos(bottomLeftPos);
+        this.grid[0][this.yNumTiles-1] = bottomLeftTile;
+
+        //bottom right tile
+        let bottomRightTile = World.Tiles.cornerUpLeft.copy();
+        let bottomRightPos = this.getPosOfGrid(0, this.yNumTiles-1);
+        bottomRightTile.setPos(bottomRightPos);
+        this.grid[this.xNumTiles-1][this.yNumTiles-1] = bottomRightTile;
+
+        // console.log(this.grid);
+
+        this.img=undefined;
     }
 
     /**
@@ -251,6 +376,7 @@ World.Room = class {
                 this.grid[x][y] = currentTile;
             }
         }
+        this.img = undefined;
 
         //this.generatePG();
     }
@@ -308,6 +434,7 @@ World.Room = class {
             }
         }
         //this.generatePG();
+        this.img=undefined;
     }
 
     /**
@@ -342,6 +469,48 @@ World.Room = class {
         return this.grid[xIndex][yIndex];
     }
 
+
+    /**
+     * sets the tiles in the grid to a new pattern
+     *
+     * @param tilePattern {Array&lt;Array&lt;World.Tile>>} - a 2d array of tiles.
+     */
+    setTileAtPos(pos, tile) {
+        if(!(pos instanceof p5.Vector)) {
+            const err = "pos needs to be an instance of p5.Vector";
+            throw new Error(err);
+        }
+
+        if(!(tile instanceof World.Tile || tile instanceof World.Tile.Proxy)) {
+            const err = "tile needs to be an instance of World.Tile";
+            throw new Error(err);
+        }
+
+        if(tile.getName() == this.getTileAtPos(pos).getName()) {
+            console.log("The tile at this position is already a: ",
+                tile.getName());
+            return;
+        }
+
+        const localPos = pos.copy().sub(this.pos);
+        const xIndex = floor(localPos.x / World.gridSize);
+        const yIndex = floor(localPos.y / World.gridSize);
+
+        if(xIndex &lt; 0 || xIndex > this.xNumTiles - 1) {
+            return undefined;
+        }
+
+        if(yIndex &lt; 0 || yIndex > this.yNumTiles - 1) {
+            return undefined;
+        }
+
+        let newTile = tile.copy();
+        const gridAllignedGridPos = this.getPosOfGrid(xIndex, yIndex);
+        newTile.setPos(gridAllignedGridPos);
+        this.grid[xIndex][yIndex] = newTile;
+        this.img = undefined;
+    }
+
     /**
      * Draws the room at the global position set in the constructor.
      */
@@ -351,6 +520,164 @@ World.Room = class {
         }
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
+
+    /**
+     * Sets the global position of the room.
+     *
+     * @param pos {p5.Vector} - The position of the room
+     *
+     * @throws {Error} - "pos needs to be an instance of p5.Vector"
+     */
+    setGlobalPos(pos) {
+        if(!(pos instanceof p5.Vector)) {
+            const err = "pos needs to be an instance of p5.Vector";
+            throw err;
+        }
+
+        this.pos = pos.copy();
+
+        for(let x = 0; x &lt; this.xNumTiles; x++) {
+            for(let y = 0; y &lt; this.yNumTiles; y++) {
+                const currentPos = this.getPosOfGrid(x, y);
+                this.grid[x][y].setPos(currentPos);
+            }
+        }
+    }
+
+    /**
+     * Serializes the parameters of the room as a JSON object.
+     *
+     * @param name {string} - The name to give the room.  If undefined the date
+     * and time in ISO8901 format used as the room name.
+     *
+     *
+     * @returns {String} - JSON String with tab delimited spaces
+     */
+    getJSON(name) {
+        let nameInJSON = name;
+        if(name==undefined) {
+            const dateStr = new Date().toISOString();
+            nameInJSON = "Room-" + dateStr;
+        }
+
+        let reducedGrid = [];
+
+        for(let x = 0; x &lt; this.xNumTiles; x++) {
+            let col = [];
+            for(let y = 0; y &lt; this.yNumTiles; y++) {
+                col.push(this.grid[x][y].getName());
+            }
+            reducedGrid.push(col);
+        }
+
+
+        let reducedRoom = {
+            name:nameInJSON,
+            xNumTiles: this.xNumTiles,
+            yNumTiles: this.yNumTiles,
+            showGrid: this.showGrid,
+            grid: reducedGrid
+
+        };
+
+        return JSON.stringify(reducedRoom, null, "\t");
+    }
+
+    setFromJSON(reducedRoom) {
+        if(!World.Room.validateJSON(reducedRoom).valid) {
+            return;
+        }
+
+        this.xNumTiles = reducedRoom.xNumTiles;
+        this.yNumTiles = reducedRoom.yNumTiles;
+
+        this.xWidth = World.gridSize * this.xNumTiles;
+        this.yHeight = World.gridSize * this.yNumTiles;
+
+        this.pos = createVector(0, 0);
+
+        this.name = reducedRoom.name;
+        this.showGrid = reducedRoom.showGrid;
+
+        this.createEmptyRoom();
+
+        let reducedGrid = reducedRoom.grid;
+
+        for(let x = 0; x &lt; this.xNumTiles; x++) {
+            for(let y = 0; y &lt; this.yNumTiles; y++) {
+                let currentTile = World.Tiles[reducedGrid[x][y]].copy();
+                const currentPos = this.getPosOfGrid(x, y);
+                currentTile.setPos(currentPos);
+                this.grid[x][y] = currentTile;
+            }
+        }
+        this.img = undefined;
+    }
+};
+
+/**
+ *
+ * Validates a JSON string as a valid room
+ *
+ * @param jsonData {string} - JSON room data
+ *
+ * @returns {Object} - With valid bool and and error string message members
+ */
+World.Room.validateJSON = function(jsonData) {
+    // TOOD: Edit to return array of errors so that all errors can be reported
+    // TODO: Refactor to return specific valid data object with error class
+    if(typeof(jsonData.name) != "string") {
+        return {valid: false, error: "jsonData.name is not a string"};
+    }
+
+    if(typeof(jsonData.xNumTiles) != "number") {
+        return {valid: false, error: "jsonData.xNumTiles is not a number"};
+    }
+
+    if(!Number.isInteger(jsonData.xNumTiles) || jsonData.xNumTiles &lt; 1) {
+        return {valid: false, error: "jsonData.xNumTiles is not a positive integer"};
+    }
+
+    if(typeof(jsonData.yNumTiles) != "number") {
+        return {valid: false, error: "jsonData.yNumTiles is not a number"};
+    }
+
+    if(!Number.isInteger(jsonData.yNumTiles) || jsonData.yNumTiles &lt; 1) {
+        return {valid: false, error: "jsonData.yNumTiles is not a positive integer"};
+    }
+
+    if(typeof(jsonData.showGrid) != "boolean") {
+        return {valid: false, error: "jsonData.showGrid is not a boolean"};
+    }
+
+    if(typeof(jsonData.grid) == undefined) {
+        return {valid: false, error: "jsonData.grid does not exist"};
+    }
+
+    // check size of grid in x and y
+    if(jsonData.grid.length != jsonData.xNumTiles) {
+        return {valid: false, error: "jsonData.grid x size does not match jsonData.xNumTiles"};
+    }
+
+    for(let x = 0; x &lt; jsonData.xNumTiles; x++) {
+        if(jsonData.grid[x].length != jsonData.yNumTiles) {
+            return {valid: false, error: "jsonData.grid y size does not match jsonData.yNumTiles"};
+        }
+    }
+
+    // check validity of tiles in grid
+     for(let x = 0; x &lt; jsonData.xNumTiles; x++) {
+        for(let y = 0; y &lt; jsonData.yNumTiles; y++) {
+            const jsonName = jsonData.grid[x][y];
+            if(World.Tiles[jsonName] === undefined) {
+                const msg = "jsonData.grid["+x+"]["+y+"] does not contain a valid Tile type: " + jsonName;
+                return {valid: false, error: msg};
+            }
+        }
+    }
+
+
+    return {valid: true, error: undefined};
 };
 
 </code></pre>
@@ -363,12 +690,12 @@ World.Room = class {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.Robot.html">Robot</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugLineDistanceCheck.html">DebugLineDistanceCheck</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.Robot.html">Robot</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.Debug.html">Debug</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugLineDistanceCheck.html">DebugLineDistanceCheck</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.MapEditor.html">MapEditor</a></li><li><a href="Simulation.Mode.MapEditor.EditCommand.html">EditCommand</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FSM">FSM</a></li><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 08 2024 15:17:26 GMT+0100 (British Summer Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Aug 25 2024 01:06:15 GMT-0600 (Mountain Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

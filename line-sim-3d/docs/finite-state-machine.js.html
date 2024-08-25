@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: simulation-mode-room.js</title>
+    <title>JSDoc: Source: finite-state-machine.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: simulation-mode-room.js</h1>
+    <h1 class="page-title">Source: finite-state-machine.js</h1>
 
     
 
@@ -28,11 +28,11 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *  @file simulation-mode-room.js Implementation of the room simulation mode.
+ *  @file finite-state-machine.js Implementation of static tile mode.
  *
  *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
- *  @date 30-March-2024
+ *  @date 27-July-2024
  *  @link https://omareq.github.io/line-sim-3d/
  *  @link https://omareq.github.io/line-sim-3d/docs/
  *
@@ -59,136 +59,149 @@
  *****************************************************************************/
 "use strict";
 
-/**
- * Simulation namespace object
- */
-var Simulation = Simulation || {};
 
 /**
- * Simulation Mode nested namespace object
+ * Finite State Machine namespace object
  */
-Simulation.Mode = Simulation.Mode || {};
+var FSM = FSM || {};
 
-
-
-/**
- * Class Simulation.Mode.DebugRoom is a simulation that tests that the room
- * class is working correctly.  This is mostly to test that the drawing
- * functionality is correct and that a single light sensor can read the lines
- * as they appear on the canvas.
- *
- * @see Simulation.Mode.ModeType
- * @see World.Room
- * @see Robot.AnalogLightSensor
- */
-Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
-    static staticName = "DebugRoom";
-    /**
-     * The constructor that sets up the simulation variables
-     *
-     * @param numTilesX {number} - Positive integer value for the number of
-     *  tiles in the x direction
-     * @param numTilesY {number} - Positive integer value for the number of
-     *  tiles in the y direction
-     */
-    constructor(numTilesX=4, numTilesY=4) {
-        super();
-        this.name = "DebugRoom";
-        this.uiDivID = "simulation-mode-room";
-        this.setupUI();
-
-        let gridSize = -1;
-        if(numTilesX > numTilesY) {
-            gridSize = width / numTilesX;
-        } else {
-            gridSize = height / numTilesY;
+FSM.Manager = class {
+    constructor(startingState) {
+        if(!(startingState instanceof FSM.StateInterface)) {
+            const err = "FSM.Manager.constructor(startingState): " +
+            "startingState should be an instance of FSM.StateInterface";
+            throw(err);
         }
-        gridSize *= 0.9;
 
-        World.setGridSize(gridSize);
-        this.sensorRadius = 0.5;
-        this.sensor = new Robot.AnalogLightSensor(
-            this.sensorRadius * World.lineThickness,
-            createVector(0,0));
+        this.callbackList = [];
 
-        this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
-        this.room.fillRoomWithSnakePattern();
-
-        this.addNewUIElements();
+        this.state = startingState;
+        this.state.setManager(this);
+        this.state.enterState();
+        this.lastInput = undefined;
     }
 
-    /**
-     * Adds the UI elements that control the debug room mode simulation
-     * mode.  This code currently has an inefficiency that deletes DOM elements
-     * for the inputs if they already exist.  It would be preferable if a handle
-     * could be saved and reused for these elements.
-     */
-    addNewUIElements() {
-        // TODO: save handles when switching simulation mode
-        if(document.getElementById("sm-room-sensor-radius-slider").children.length) {
-            document.getElementById("sm-room-sensor-radius-slider").children[0].remove();
-            document.getElementById("sm-room-sensor-radius-val").children[0].remove();
+
+    addStateChangeCallback(callback) {
+        if(!(typeof callback == "function")) {
+            throw new Error("callback needs to be of type function");
         }
-
-        // sensor radius
-        this.sensorRadiusSlider = createSlider(0.1, 4, this.sensorRadius, 0.1);
-        this.sensorRadiusSlider.parent("sm-room-sensor-radius-slider");
-
-        this.sensorRadiusDisplay = createP();
-        this.sensorRadiusDisplay.parent("sm-room-sensor-radius-val");
-        this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(this.sensorRadius);
-
+        this.callbackList.push(callback);
     }
 
-    /**
-     * Polls the simulation mode debug room specific UI elements
-     */
-    UIPoll() {
-
-        let sliderVal = this.sensorRadiusSlider.value();
-        if(sliderVal != this.sensorRadius) {
-            console.debug("Simulation Mode Static Tile Check uiPoll: sensor radius Slider value has changed to: ",
-                sliderVal);
-            this.sensorRadius = sliderVal;
-            this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(sliderVal);
-            this.sensor.setRadius(this.sensorRadius * World.lineThickness);
+    handleAllStateChangeCallbacks(newState) {
+        for(let i = 0; i &lt; this.callbackList.length; i++) {
+            this.callbackList[i](this.state, newState, this.lastInput);
         }
-
     }
 
-    /**
-     * Update function that updates the state of the simulation
-     */
-    update() {
+    handle(input) {
+        this.lastInput = input;
+        this.state.handle(input);
+    }
 
-        const mousePos = createVector(mouseX, mouseY);
-        this.sensor.setPos(mousePos);
-        this.room.draw();
-
-        let tileUnderSensor = this.room.getTileAtPos(mousePos);
-
-        if(tileUnderSensor == undefined) {
-            return;
+    setState(newState) {
+        if(!(newState instanceof FSM.StateInterface)) {
+            const err = "FSM.Manager.setState(newState): " +
+            "newState should be an instance of FSM.StateInterface";
+            throw(err);
         }
 
-        const brightness = this.sensor.read(tileUnderSensor);
-
-        if(brightness &lt; 1) {
-            console.log("Sensor Val: ", brightness);
-        }
-        const colorVal = floor(brightness * 255);
-
-        push();
-        fill(colorVal);
-        strokeWeight(1);
-        stroke(127, 0, 30);
-        const ellipseSize = 2 * this.sensorRadius * World.lineThickness;
-        ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
-        pop();
+        this.state.exitState();
+        this.handleAllStateChangeCallbacks(newState);
+        this.state = newState;
+        this.state.setManager(this);
+        this.state.enterState();
     }
 };
 
-Simulation.Mode.ModeList.push(Simulation.Mode.DebugRoom);
+FSM.StateInterface = class {
+    constructor() {
+        const err = "Abstract class FSM.StateInterface can't be instantiated.";
+        if(this.constructor == FSM.StartStateInterface) {
+          throw new Error(err);
+        }
+    }
+
+    enterState() {
+        throw new Error("Method 'enterState()' must be implemented.");
+    }
+
+    handle(input) {
+        throw new Error("Method 'handle()' must be implemented.");
+    }
+
+    exitState() {
+        throw new Error("Method 'exitState()' must be implemented.");
+    }
+
+    setManager(manager) {
+        if(!(manager instanceof FSM.Manager)) {
+            const err = "FSM.StateInterface.setManager(manager): " +
+            "manager should be an instance of FSM.Manager";
+            throw(err);
+        }
+        this.manager = manager;
+    }
+};
+
+
+FSM.EmptyState = class extends FSM.StateInterface {
+    constructor() { super(); }
+
+    enterState() {};
+
+    handle(input) {};
+
+    exitState() {};
+};
+
+FSM.DebugGreenPrint = class extends FSM.StateInterface {
+    constructor() {
+        super();
+    }
+
+    enterState() {
+        console.log("Entering green state");
+        this.prevTime = millis();
+    };
+
+    handle(input) {
+        if(millis() - this.prevTime > 3500) {
+            console.log("Green");
+            let newState = new FSM.DebugRedPrint();
+            this.manager.setState(newState);
+        }
+    };
+
+    exitState() {
+        console.log("Exiting Green State");
+    };
+};
+
+FSM.DebugRedPrint = class extends FSM.StateInterface {
+    constructor() {
+        super();
+    }
+
+    enterState() {
+        console.log("Entering red state");
+        this.prevTime = millis();
+    };
+
+    handle(input) {
+        if(millis() - this.prevTime > 3500) {
+            console.log("Red");
+            let newState = new FSM.DebugGreenPrint();
+            this.manager.setState(newState);
+        }
+    };
+
+    exitState() {
+        console.log("Exiting red State");
+    };
+};
+
 </code></pre>
         </article>
     </section>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Tile</title>
+    <title>JSDoc: Class: Debug</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Tile</h1>
+    <h1 class="page-title">Class: Debug</h1>
 
     
 
@@ -29,13 +29,10 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#World">World</a>.</span>Tile<span class="signature">(lines, pos)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>Debug<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Tile class that stores a list of lines and encapsulates the position and
-drawing of these lines.  The drawing is done through the use of a portable
-graphics object image.  This is expensive to create so is not generated in
-the constructor.  The image is lazily created when a call to draw is made or
-if getPG is called, whichever happens first.</div>
+            <div class="class-description">Class Simulation.Mode.Debug is a simulation mode that allows for all other
+debug simulation modes to be displayed</div>
         
     
 </header>
@@ -50,7 +47,7 @@ if getPG is called, whichever happens first.</div>
     
 
     
-    <h4 class="name" id="Tile"><span class="type-signature"></span>new Tile<span class="signature">(lines, pos)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Debug"><span class="type-signature"></span>new Debug<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -58,7 +55,7 @@ if getPG is called, whichever happens first.</div>
 
 
 <div class="description">
-    constructor for the Tile
+    The constructor that sets up the simulation variables
 </div>
 
 
@@ -67,78 +64,6 @@ if getPG is called, whichever happens first.</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>lines</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;<a href="World.Line.html">World.Line</a>></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The lines in the tile</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pos</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">p5.Vector</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The position of the tile</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -174,7 +99,7 @@ if getPG is called, whichever happens first.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line511">line 511</a>
+        <a href="simulation-mode-debug.js.html">simulation-mode-debug.js</a>, <a href="simulation-mode-debug.js.html#line52">line 52</a>
     </li></ul></dd>
     
 
@@ -184,11 +109,7 @@ if getPG is called, whichever happens first.</div>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="World.Line.html">World.Line</a></li>
-        
-            <li>World.Tile.proxy</li>
-        
-            <li><a href="World.Room.html">World.Room</a></li>
+            <li><a href="Simulation.Mode.ModeType.html">Simulation.Mode.ModeType</a></li>
         </ul>
     </dd>
     
@@ -223,13 +144,6 @@ if getPG is called, whichever happens first.</div>
     
 
     
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="World.Tile.Proxy.html">Proxy</a></dt>
-            <dd></dd>
-        </dl>
-    
 
     
 
@@ -248,7 +162,7 @@ if getPG is called, whichever happens first.</div>
     
 
     
-    <h4 class="name" id="copy"><span class="type-signature"></span>copy<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="World.Tile.html">World.Tile</a>}</span></h4>
+    <h4 class="name" id="UIPoll"><span class="type-signature"></span>UIPoll<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -256,7 +170,7 @@ if getPG is called, whichever happens first.</div>
 
 
 <div class="description">
-    Copies the all of the lines in the tile object and returns a new tile.
+    Polls the moving tile mode specific UI elements
 </div>
 
 
@@ -300,7 +214,7 @@ if getPG is called, whichever happens first.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line617">line 617</a>
+        <a href="simulation-mode-debug.js.html">simulation-mode-debug.js</a>, <a href="simulation-mode-debug.js.html#line143">line 143</a>
     </li></ul></dd>
     
 
@@ -325,28 +239,6 @@ if getPG is called, whichever happens first.</div>
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - The new tile
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="World.Tile.html">World.Tile</a></span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -358,7 +250,7 @@ if getPG is called, whichever happens first.</div>
     
 
     
-    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addNewUIElements"><span class="type-signature"></span>addNewUIElements<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -366,8 +258,10 @@ if getPG is called, whichever happens first.</div>
 
 
 <div class="description">
-    Draws the tile.  If the tile image hasn't been created it is lazily
-generated before it is drawn.
+    Adds the UI elements that control the static tile mode simulation
+mode.  This code currently has an inefficiency that deletes DOM elements
+for the inputs if they already exist.  It would be preferable if a handle
+could be saved and reused for these elements.
 </div>
 
 
@@ -411,7 +305,7 @@ generated before it is drawn.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line631">line 631</a>
+        <a href="simulation-mode-debug.js.html">simulation-mode-debug.js</a>, <a href="simulation-mode-debug.js.html#line74">line 74</a>
     </li></ul></dd>
     
 
@@ -447,7 +341,7 @@ generated before it is drawn.
     
 
     
-    <h4 class="name" id="generatePG"><span class="type-signature"></span>generatePG<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="hideUI"><span class="type-signature"></span>hideUI<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -455,7 +349,9 @@ generated before it is drawn.
 
 
 <div class="description">
-    Generate the portable graphics image for the tile.
+    Checks if this.UIPanel is defined and hides the panel if it is.  This is
+done by setting the visibility to "hidden" and the display style to
+"none".
 </div>
 
 
@@ -499,7 +395,7 @@ generated before it is drawn.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line578">line 578</a>
+        <a href="simulation-mode-debug.js.html">simulation-mode-debug.js</a>, <a href="simulation-mode-debug.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -535,7 +431,7 @@ generated before it is drawn.
     
 
     
-    <h4 class="name" id="getLines"><span class="type-signature"></span>getLines<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="World.Line.html">World.Line</a>>}</span></h4>
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -543,7 +439,7 @@ generated before it is drawn.
 
 
 <div class="description">
-    Get the lines stored in the tile
+    Resets the currently active debug mode.
 </div>
 
 
@@ -587,7 +483,7 @@ generated before it is drawn.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line529">line 529</a>
+        <a href="simulation-mode-debug.js.html">simulation-mode-debug.js</a>, <a href="simulation-mode-debug.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -612,28 +508,6 @@ generated before it is drawn.
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - The lines stored in the tile
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;<a href="World.Line.html">World.Line</a>></span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -645,7 +519,7 @@ generated before it is drawn.
     
 
     
-    <h4 class="name" id="getName"><span class="type-signature"></span>getName<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="setActiveMode"><span class="type-signature"></span>setActiveMode<span class="signature">(newMode)</span><span class="type-signature"></span></h4>
     
 
     
@@ -653,228 +527,7 @@ generated before it is drawn.
 
 
 <div class="description">
-    get the name of the tile
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line571">line 571</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - name of the tile
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getPG"><span class="type-signature"></span>getPG<span class="signature">()</span><span class="type-signature"> &rarr; {p5.Graphics}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Gets the current image of the tile.  If the tile image hasn't been
-created then it will be lazily generated before being returned.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line605">line 605</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - The tile image
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">p5.Graphics</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="setLines"><span class="type-signature"></span>setLines<span class="signature">(lines)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Sets the lines in the tile
+    Sets the active debug mode.
 </div>
 
 
@@ -910,13 +563,13 @@ created then it will be lazily generated before being returned.
 
         <tr>
             
-                <td class="name"><code>lines</code></td>
+                <td class="name"><code>newMode</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="World.Line.html">World.Line</a>></span>
+<span class="param-type"><a href="Simulation.Mode.ModeType.html">Simulation.Mode.ModeType</a></span>
 
 
             
@@ -926,7 +579,7 @@ created then it will be lazily generated before being returned.
 
             
 
-            <td class="description last">The lines to store in the tile</td>
+            <td class="description last">The new simulation mode</td>
         </tr>
 
     
@@ -967,7 +620,7 @@ created then it will be lazily generated before being returned.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line538">line 538</a>
+        <a href="simulation-mode-debug.js.html">simulation-mode-debug.js</a>, <a href="simulation-mode-debug.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -1003,7 +656,7 @@ created then it will be lazily generated before being returned.
     
 
     
-    <h4 class="name" id="setName"><span class="type-signature"></span>setName<span class="signature">(name)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setModeByName"><span class="type-signature"></span>setModeByName<span class="signature">(modeName)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1011,7 +664,8 @@ created then it will be lazily generated before being returned.
 
 
 <div class="description">
-    Set the name of the tile
+    Sets the active mode by name. If invalid the mode is changed to the empty
+mode.
 </div>
 
 
@@ -1047,7 +701,7 @@ created then it will be lazily generated before being returned.
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>modeName</code></td>
             
 
             <td class="type">
@@ -1063,7 +717,7 @@ created then it will be lazily generated before being returned.
 
             
 
-            <td class="description last">name of the tile</td>
+            <td class="description last">The name of the new mode</td>
         </tr>
 
     
@@ -1104,7 +758,7 @@ created then it will be lazily generated before being returned.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line562">line 562</a>
+        <a href="simulation-mode-debug.js.html">simulation-mode-debug.js</a>, <a href="simulation-mode-debug.js.html#line116">line 116</a>
     </li></ul></dd>
     
 
@@ -1140,7 +794,7 @@ created then it will be lazily generated before being returned.
     
 
     
-    <h4 class="name" id="setPos"><span class="type-signature"></span>setPos<span class="signature">(newPos)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -1148,7 +802,7 @@ created then it will be lazily generated before being returned.
 
 
 <div class="description">
-    Change the position of the tile
+    Update function that updates the state of the simulation
 </div>
 
 
@@ -1157,55 +811,6 @@ created then it will be lazily generated before being returned.
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>newPos</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">p5.Vector</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The new position of the tile</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -1241,7 +846,7 @@ created then it will be lazily generated before being returned.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tile.js.html">tile.js</a>, <a href="tile.js.html#line553">line 553</a>
+        <a href="simulation-mode-debug.js.html">simulation-mode-debug.js</a>, <a href="simulation-mode-debug.js.html#line165">line 165</a>
     </li></ul></dd>
     
 

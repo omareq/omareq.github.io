@@ -71,6 +71,9 @@ UI.canvasLoadingTextHide = function() {
     UI.canvasLoadingText.style.display = "none";
 };
 
+/**
+ * Initialise the simulation mode selector
+ */
 UI.initSimulationModeSelector = function() {
     UI.modeSelectorLength = Simulation.Mode.ModeList.length;
     UI.modeSelect = createSelect();
@@ -86,6 +89,11 @@ UI.initSimulationModeSelector = function() {
     UI.modeSelect.selected(Simulation.Mode.activeMode.name);
 };
 
+/**
+ * Update the simulation mode selector. If this is called and there is a new
+ * Simulation ModeType in the modeList then the new mode is added to the
+ * selector
+ */
 UI.updateSimulationModeSelector = function() {
     if(UI.modeSelectorLength != Simulation.Mode.ModeList.length) {
         UI.initSimulationModeSelector();
@@ -97,22 +105,31 @@ UI.updateSimulationModeSelector = function() {
     }
 };
 
+/**
+ * Initialise the pause button
+ */
 UI.initPauseButton = function() {
     UI.pauseButton = createButton("Pause", "value");
     UI.pauseButton.parent("pause-button");
     UI.pauseButton.mousePressed(Simulation.pauseFlagToggle);
 };
 
+/**
+ * Initialise the reset button
+ */
 UI.initResetButton = function() {
     UI.resetButton = createButton("Reset", "value");
     UI.resetButton.parent("reset-button");
     UI.resetButton.mousePressed(Simulation.reset);
 };
 
+/**
+ * Load a room from a JSON file into the current simulation mode room member
+ * variable
+ */
 UI.loadRoomFromJSON = async function() {
     Simulation.pauseFlagSet();
     const [fileHandle] = await UI.getFile();
-    g_fileHandle = fileHandle; // For Debugging
 
     // add query permissions
     const filePermissions = await fileHandle.queryPermission({mode: "read"});
@@ -164,8 +181,11 @@ UI.loadRoomFromJSON = async function() {
     return;
 };
 
-var g_fileHandle;// = fileHandle; // For Debugging
-
+/**
+ * Uses the file system to get a file handle for a json file.
+ *
+ * @returns {FileSystemFileHandle} A Promise whose fulfilment handler receives an Array of FileSystemFileHandle objects.
+ */
 UI.getFile = async function() {
     const pickerOpts = {
       types: [

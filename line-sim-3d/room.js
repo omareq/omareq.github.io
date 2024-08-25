@@ -159,6 +159,10 @@ World.Room = class {
         this.img=undefined;
     }
 
+    /**
+     * Fills the room with horizontal lines and then adds 90 degree corners to
+     * create the back and forth pattern that is connected in a loop.
+     */
     fillRoomWithLoopPattern() {
         this.setAllTiles(World.Tiles.horizontalLine.copy());
 
@@ -489,6 +493,13 @@ World.Room = class {
         image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
     }
 
+    /**
+     * Sets the global position of the room.
+     *
+     * @param pos {p5.Vector} - The position of the room
+     *
+     * @throws {Error} - "pos needs to be an instance of p5.Vector"
+     */
     setGlobalPos(pos) {
         if(!(pos instanceof p5.Vector)) {
             const err = "pos needs to be an instance of p5.Vector";
@@ -505,6 +516,15 @@ World.Room = class {
         }
     }
 
+    /**
+     * Serializes the parameters of the room as a JSON object.
+     *
+     * @param name {string} - The name to give the room.  If undefined the date
+     * and time in ISO8901 format used as the room name.
+     *
+     *
+     * @returns {String} - JSON String with tab delimited spaces
+     */
     getJSON(name) {
         let nameInJSON = name;
         if(name==undefined) {
@@ -567,7 +587,17 @@ World.Room = class {
     }
 };
 
+/**
+ *
+ * Validates a JSON string as a valid room
+ *
+ * @param jsonData {string} - JSON room data
+ *
+ * @returns {Object} - With valid bool and and error string message members
+ */
 World.Room.validateJSON = function(jsonData) {
+    // TOOD: Edit to return array of errors so that all errors can be reported
+    // TODO: Refactor to return specific valid data object with error class
     if(typeof(jsonData.name) != "string") {
         return {valid: false, error: "jsonData.name is not a string"};
     }

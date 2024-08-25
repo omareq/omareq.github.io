@@ -95,12 +95,24 @@ Simulation.Mode.Debug = class extends Simulation.Mode.ModeType {
         this.modeSelect.selected(this.activeMode.name);
     }
 
+    /**
+     * Sets the active debug mode.
+     *
+     * @param newMode {Simulation.Mode.ModeType} - The new simulation mode
+     */
     setActiveMode(newMode) {
+        // TODO: add param type check
         this.activeMode.hideUI();
         this.activeMode = newMode;
         Simulation.pauseFlagUnset();
     }
 
+    /**
+     * Sets the active mode by name. If invalid the mode is changed to the empty
+     * mode.
+     *
+     * @param modeName {string} - The name of the new mode
+     */
     setModeByName(modeName) {
         for(let i = 0; i < Simulation.Mode.ModeList.length; i++) {
             // TODO: figure out how to do this without for loop
@@ -140,6 +152,9 @@ Simulation.Mode.Debug = class extends Simulation.Mode.ModeType {
         this.activeMode.UIPoll();
     }
 
+    /**
+     * Resets the currently active debug mode.
+     */
     reset() {
         this.setModeByName(this.activeMode.name);
     }
