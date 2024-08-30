@@ -125,6 +125,30 @@ World.TileSetup = function() {
                 createVector(0.500, 0.250)
                 ];
 
+    World.LineConfigs.halfCircleDown = [
+                createVector(1.000, 0.500),
+                createVector(0.950, 0.500),
+                createVector(0.943, 0.578),
+                createVector(0.923, 0.654),
+                createVector(0.890, 0.725),
+                createVector(0.845, 0.789),
+                createVector(0.789, 0.845),
+                createVector(0.725, 0.890),
+                createVector(0.654, 0.923),
+                createVector(0.578, 0.943),
+                createVector(0.500, 0.950),
+                createVector(0.422, 0.943),
+                createVector(0.346, 0.923),
+                createVector(0.275, 0.890),
+                createVector(0.211, 0.845),
+                createVector(0.155, 0.789),
+                createVector(0.110, 0.725),
+                createVector(0.077, 0.654),
+                createVector(0.057, 0.578),
+                createVector(0.050, 0.500),
+                createVector(0.000, 0.500)
+                ];
+
 
     // Lines
     /**************************************************************************/
@@ -160,6 +184,11 @@ World.TileSetup = function() {
 
     World.Lines.zigZagVertical = new World.Line(World.LineConfigs.zigZagVertical);
     World.Lines.zigZagHorizontal = World.Lines.zigZagVertical.copy().flipDiagonal();
+
+    World.Lines.halfCircleDown = new World.Line(World.LineConfigs.halfCircleDown);
+    World.Lines.halfCircleUp = World.Lines.halfCircleDown.copy().flipHorizontal();
+    World.Lines.halfCircleLeft = World.Lines.halfCircleUp.copy().flipDiagonal();
+    World.Lines.halfCircleRight = World.Lines.halfCircleLeft.copy().flipVertical();
 
     // Tiles
     /**************************************************************************/
@@ -236,6 +265,10 @@ World.TileSetup = function() {
     World.Tiles.proxySubject.zigZagVertical = new World.Tile([World.Lines.zigZagVertical.copy()]);
     World.Tiles.proxySubject.zigZagHorizontal = new World.Tile([World.Lines.zigZagHorizontal.copy()]);
 
+    World.Tiles.proxySubject.halfCircleUp = new World.Tile([World.Lines.halfCircleUp.copy()]);
+    World.Tiles.proxySubject.halfCircleDown = new World.Tile([World.Lines.halfCircleDown.copy()]);
+    World.Tiles.proxySubject.halfCircleLeft = new World.Tile([World.Lines.halfCircleLeft.copy()]);
+    World.Tiles.proxySubject.halfCircleRight = new World.Tile([World.Lines.halfCircleRight.copy()]);
 
     // Tiles Proxies
     /**************************************************************************/
@@ -290,6 +323,11 @@ World.TileSetup = function() {
 
     World.Tiles.zigZagVertical = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagVertical);
     World.Tiles.zigZagHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.zigZagHorizontal);
+
+    World.Tiles.halfCircleUp = new World.Tile.Proxy(World.Tiles.proxySubject.halfCircleUp);
+    World.Tiles.halfCircleDown = new World.Tile.Proxy(World.Tiles.proxySubject.halfCircleDown);
+    World.Tiles.halfCircleLeft = new World.Tile.Proxy(World.Tiles.proxySubject.halfCircleLeft);
+    World.Tiles.halfCircleRight = new World.Tile.Proxy(World.Tiles.proxySubject.halfCircleRight);
 
     World.TilesAddName();
 };
