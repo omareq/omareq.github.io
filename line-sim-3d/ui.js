@@ -131,6 +131,11 @@ UI.loadRoomFromJSON = async function() {
     Simulation.pauseFlagSet();
     const [fileHandle] = await UI.getFile();
 
+    if(fileHandle == undefined) {
+        Simulation.pauseFlagUnset();
+        return;
+    }
+
     // add query permissions
     const filePermissions = await fileHandle.queryPermission({mode: "read"});
     if(!filePermissions === "granted") {
@@ -184,7 +189,9 @@ UI.loadRoomFromJSON = async function() {
 /**
  * Uses the file system to get a file handle for a json file.
  *
- * @returns {FileSystemFileHandle} A Promise whose fulfilment handler receives an Array of FileSystemFileHandle objects.
+ * @returns {FileSystemFileHandle} A Promise whose fulfilment handler receives
+ * an Array of FileSystemFileHandle objects. Undefined array elements if error
+ * occurs
  */
 UI.getFile = async function() {
     const pickerOpts = {
@@ -200,9 +207,14 @@ UI.getFile = async function() {
       multiple: false,
   };
 
-    const fileHandle = await window.showOpenFilePicker(pickerOpts);
-    console.log("fileHandle: " + fileHandle);
-    return fileHandle;
+    try {
+        const fileHandle = await window.showOpenFilePicker(pickerOpts);
+        console.log("fileHandle: " + fileHandle);
+        return fileHandle;
+    } catch (error) {
+        console.warn("FileIO Error: ", error);
+        return [undefined];
+    }
 };
 
 
