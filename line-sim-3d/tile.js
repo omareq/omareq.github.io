@@ -149,6 +149,29 @@ World.TileSetup = function() {
                 createVector(0.000, 0.500)
                 ];
 
+    World.LineConfigs.smallHalfCircleDownLeftSide = [
+                createVector(0.500, 0.500),
+                createVector(0.497, 0.539),
+                createVector(0.486, 0.577),
+                createVector(0.470, 0.613),
+                createVector(0.447, 0.645),
+                createVector(0.420, 0.672),
+                createVector(0.388, 0.695),
+                createVector(0.352, 0.711),
+                createVector(0.314, 0.722),
+                createVector(0.275, 0.725),
+                createVector(0.236, 0.722),
+                createVector(0.198, 0.711),
+                createVector(0.163, 0.695),
+                createVector(0.130, 0.672),
+                createVector(0.103, 0.645),
+                createVector(0.080, 0.613),
+                createVector(0.064, 0.577),
+                createVector(0.053, 0.539),
+                createVector(0.050, 0.500),
+                createVector(0.000, 0.500)
+                ];
+
 
     // Lines
     /**************************************************************************/
@@ -189,6 +212,18 @@ World.TileSetup = function() {
     World.Lines.halfCircleUp = World.Lines.halfCircleDown.copy().flipHorizontal();
     World.Lines.halfCircleLeft = World.Lines.halfCircleUp.copy().flipDiagonal();
     World.Lines.halfCircleRight = World.Lines.halfCircleLeft.copy().flipVertical();
+
+    World.Lines.smallHalfCircleDownLeftSide = new World.Line(World.LineConfigs.smallHalfCircleDownLeftSide);
+    World.Lines.smallHalfCircleDownRightSide = World.Lines.smallHalfCircleDownLeftSide.copy().flipVertical();
+
+    World.Lines.smallHalfCircleUpRightSide = World.Lines.smallHalfCircleDownLeftSide.copy().flipHorizontal().flipVertical();
+    World.Lines.smallHalfCircleUpLeftSide = World.Lines.smallHalfCircleDownLeftSide.copy().flipHorizontal();
+
+    World.Lines.smallHalfCircleRightBottom = World.Lines.smallHalfCircleDownLeftSide.copy().flipDiagonal().flipVertical();
+    World.Lines.smallHalfCircleRightTop = World.Lines.smallHalfCircleRightBottom.copy().flipHorizontal();
+
+    World.Lines.smallHalfCircleLeftTop = World.Lines.smallHalfCircleRightBottom.copy().flipHorizontal().flipVertical();
+    World.Lines.smallHalfCircleLeftBottom = World.Lines.smallHalfCircleLeftTop.copy().flipHorizontal();
 
     // Tiles
     /**************************************************************************/
@@ -270,6 +305,11 @@ World.TileSetup = function() {
     World.Tiles.proxySubject.halfCircleLeft = new World.Tile([World.Lines.halfCircleLeft.copy()]);
     World.Tiles.proxySubject.halfCircleRight = new World.Tile([World.Lines.halfCircleRight.copy()]);
 
+    World.Tiles.proxySubject.sClockwiseHorizontal = new World.Tile([World.Lines.smallHalfCircleUpRightSide.copy(), World.Lines.smallHalfCircleDownLeftSide.copy()]);
+    World.Tiles.proxySubject.sClockwiseVertical = new World.Tile([World.Lines.smallHalfCircleLeftTop.copy(), World.Lines.smallHalfCircleRightBottom.copy()]);
+    World.Tiles.proxySubject.sAntiClockwiseHorizontal = new World.Tile([World.Lines.smallHalfCircleUpLeftSide.copy(), World.Lines.smallHalfCircleDownRightSide.copy()]);
+    World.Tiles.proxySubject.sAntiClockwiseVertical = new World.Tile([World.Lines.smallHalfCircleLeftBottom.copy(), World.Lines.smallHalfCircleRightTop.copy()]);
+
     // Tiles Proxies
     /**************************************************************************/
     World.Tiles.blankLine = new World.Tile.Proxy(World.Tiles.proxySubject.blankLine);
@@ -328,6 +368,11 @@ World.TileSetup = function() {
     World.Tiles.halfCircleDown = new World.Tile.Proxy(World.Tiles.proxySubject.halfCircleDown);
     World.Tiles.halfCircleLeft = new World.Tile.Proxy(World.Tiles.proxySubject.halfCircleLeft);
     World.Tiles.halfCircleRight = new World.Tile.Proxy(World.Tiles.proxySubject.halfCircleRight);
+
+    World.Tiles.sClockwiseHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.sClockwiseHorizontal);
+    World.Tiles.sClockwiseVertical = new World.Tile.Proxy(World.Tiles.proxySubject.sClockwiseVertical);
+    World.Tiles.sAntiClockwiseHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.sAntiClockwiseHorizontal);
+    World.Tiles.sAntiClockwiseVertical = new World.Tile.Proxy(World.Tiles.proxySubject.sAntiClockwiseVertical);
 
     World.TilesAddName();
 };
