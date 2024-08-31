@@ -24,6 +24,43 @@ Created using [p5.js](https://p5js.org/)
 
     - [x] room of tiles with LS array
 
+## Example Room Json
+
+The map editor offers the capability to design a specific room to test the
+capability of a particular line following algorithm.  These rooms can be saved
+in json form and reloaded when required and multiple algorithms can be run on
+the same room.  An example of a very basic room can be seen in the code block
+below.
+
+```js
+{
+  "name": "Room-Example-3x3-Loop",
+  "xNumTiles": 3,
+  "yNumTiles": 3,
+  "showGrid": true,
+  "grid": [
+    [
+      "cornerDownRight",
+      "verticalLine",
+      "cornerUpRight"
+    ],
+    [
+      "horizontalLine",
+      "blankLine",
+      "horizontalLine"
+    ],
+    [
+      "cornerDownLeft",
+      "verticalLine",
+      "cornerUpLeft"
+    ]
+  ]
+}
+```
+
+![Image of a 3x3 Room with a Loop](./imgs/Room-Example-3x3-Loop.webp)
+
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
 
