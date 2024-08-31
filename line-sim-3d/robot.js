@@ -180,6 +180,13 @@ Robot.Robot = class{
         this.setRotationRate(movementCommands.rotationRate);
 
         this.bearing += this.rotationRate * Simulation.dtSeconds;
+        if(this.bearing > TWO_PI) {
+            this.bearing -= TWO_PI;
+        }
+
+        if(this.bearing < 0) {
+            this.bearing += TWO_PI;
+        }
         let vel = createVector(0, this.vel).mult(Simulation.dtSeconds);
         vel = vel.rotate(this.bearing);
         this.pos.add(vel);

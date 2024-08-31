@@ -126,6 +126,8 @@ UI.initResetButton = function() {
 /**
  * Load a room from a JSON file into the current simulation mode room member
  * variable
+ *
+ * @returns {boolean} Success value
  */
 UI.loadRoomFromJSON = async function() {
     Simulation.pauseFlagSet();
