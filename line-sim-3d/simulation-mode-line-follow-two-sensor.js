@@ -120,6 +120,8 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
             document.getElementById("sm-lfts-pd-vel-slider").children[0].remove();
             document.getElementById("sm-lfts-pd-vel-val").children[0].remove();
+
+            document.getElementById("sm-lfts-load-room-json-button").children[0].remove();
         }
 
         // show grid check box
@@ -167,6 +169,10 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
         this.velDisplay = createP();
         this.velDisplay.parent("sm-lfts-pd-vel-val");
         this.velDisplay.elt.innerText = "Vel: " + str(this.algorithmForwardVel);
+
+        this.loadRoomButton = createButton("Upload Room", "value");
+        this.loadRoomButton.parent("sm-lfts-load-room-json-button");
+        this.loadRoomButton.mousePressed(UI.loadRoomFromJSON);
     }
 
     /**
