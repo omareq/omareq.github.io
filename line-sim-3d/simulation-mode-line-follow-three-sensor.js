@@ -377,4 +377,4 @@ Simulation.Mode.LineFollowThreeSensor.loadRoom = async function() {
     if(successful) {
         Simulation.Mode.activeMode.setupRobot();
     }
-}
+};

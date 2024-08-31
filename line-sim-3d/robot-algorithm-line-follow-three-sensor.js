@@ -93,7 +93,7 @@ Robot.Algorithm.ThreeSensorFollow = class extends Robot.Algorithm.LineFollow {
      * @returns {Robot.MovementCommands} - The commands for the robot effectors.
      */
     follow(robotData) {
-        const robotMovementCommand = this.StateMachine.handle(robotData)
+        const robotMovementCommand = this.StateMachine.handle(robotData);
 
         return robotMovementCommand;
     };
@@ -129,7 +129,7 @@ Robot.Algorithm.ThreeSensorFollowState.PDLineFollow = class extends FSM.StateInt
                 "slow down speed (px/s): ", forwardVel);
         }
 
-        if(error == 0) {
+        if(error < 0.05 && robotData.sensorVals[1] > 0.995) {
             forwardVel = 0.4 * World.gridSize;
             const gapCrossState = new Robot.Algorithm.ThreeSensorFollowState.CrossGapSearch(
                 forwardVel, this);
@@ -150,7 +150,7 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapStraightLine = class extends FSM.
         super();
         this.forwardVel = forwardVel;
         this.detectionThreshold = detectionThreshold;
-        this.lineFollowState = lineFollowState
+        this.lineFollowState = lineFollowState;
     }
 
     enterState() {

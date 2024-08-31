@@ -374,4 +374,4 @@ Simulation.Mode.LineFollowTwoSensor.loadRoom = async function() {
     if(successful) {
         Simulation.Mode.activeMode.setupRobot();
     }
-}
+};
