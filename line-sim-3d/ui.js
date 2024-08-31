@@ -133,14 +133,14 @@ UI.loadRoomFromJSON = async function() {
 
     if(fileHandle == undefined) {
         Simulation.pauseFlagUnset();
-        return;
+        return false;
     }
 
     // add query permissions
     const filePermissions = await fileHandle.queryPermission({mode: "read"});
     if(!filePermissions === "granted") {
         alert("File Read Permissions Are Denied");
-        return;
+        return false;
     }
 
     //  get data
@@ -152,7 +152,7 @@ UI.loadRoomFromJSON = async function() {
         fileJSON = await JSON.parse(fileText);
     } catch (e) {
         alert("The input file " + fileHandle.name + " is not a valid json file");
-        return;
+        return false;
     }
 
     console.log(fileJSON);
@@ -160,7 +160,7 @@ UI.loadRoomFromJSON = async function() {
     const roomCheck = World.Room.validateJSON(fileJSON);
     if(!roomCheck.valid) {
         alert("Input file is invalid: " + roomCheck.error);
-        return;
+        return false;
     }
 
     const tilesRatio = fileJSON.xNumTiles / fileJSON.yNumTiles;
@@ -183,7 +183,7 @@ UI.loadRoomFromJSON = async function() {
     Simulation.Mode.activeMode.room = newRoom;
 
     Simulation.pauseFlagUnset();
-    return;
+    return true;
 };
 
 /**

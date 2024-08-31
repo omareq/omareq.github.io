@@ -172,7 +172,7 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 
         this.loadRoomButton = createButton("Upload Room", "value");
         this.loadRoomButton.parent("sm-lfts-load-room-json-button");
-        this.loadRoomButton.mousePressed(UI.loadRoomFromJSON);
+        this.loadRoomButton.mousePressed(Simulation.Mode.LineFollowTwoSensor.loadRoom);
     }
 
     /**
@@ -368,3 +368,10 @@ Simulation.Mode.LineFollowTwoSensor = class extends Simulation.Mode.ModeType {
 };
 
 Simulation.Mode.ModeList.push(Simulation.Mode.LineFollowTwoSensor);
+
+Simulation.Mode.LineFollowTwoSensor.loadRoom = async function() {
+    let successful = await UI.loadRoomFromJSON();
+    if(successful) {
+        Simulation.Mode.activeMode.setupRobot();
+    }
+}
