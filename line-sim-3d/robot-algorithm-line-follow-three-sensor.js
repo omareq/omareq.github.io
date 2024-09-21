@@ -194,7 +194,7 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapSearch = class extends FSM.StateI
         this.rotationRate = radians(120); // 60 degs per second
         this.forwardCount = 0;
         this.forwardCountThresh = 40;
-    }
+    };
 
     enterState() {
         console.log("Entering CrossGapSearch state");
@@ -215,7 +215,7 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapSearch = class extends FSM.StateI
         console.debug("Left Bearing: ", degrees(this.leftBearing));
         console.debug("Front Bearing: ", degrees(this.forwardBearing));
         console.debug("Right Bearing: ", degrees(this.rightBearing));
-    }
+    };
 
     handle(robotData) {
         for(let i = 0; i < robotData.sensorVals.length; i++) {

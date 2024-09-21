@@ -156,7 +156,7 @@ World.setupLineConfigs = function() {
                 createVector(0.050, 0.500),
                 createVector(0.000, 0.500)
                 ];
-}
+};
 
 World.setupLines = function() {
     World.Lines = {};
@@ -208,7 +208,7 @@ World.setupLines = function() {
 
     World.Lines.smallHalfCircleLeftTop = World.Lines.smallHalfCircleRightBottom.copy().flipHorizontal().flipVertical();
     World.Lines.smallHalfCircleLeftBottom = World.Lines.smallHalfCircleLeftTop.copy().flipHorizontal();
-}
+};
 
 World.setupTiles = function() {
     World.Tiles = {};
@@ -298,7 +298,7 @@ World.setupTiles = function() {
     World.Tiles.proxySubject.tUp = new World.Tile([World.Lines.halfLineUp.copy(), World.Lines.horizontalLine.copy()]);
     World.Tiles.proxySubject.tLeft = new World.Tile([World.Lines.halfLineLeft.copy(), World.Lines.verticalLine.copy()]);
     World.Tiles.proxySubject.tRight = new World.Tile([World.Lines.halfLineRight.copy(), World.Lines.verticalLine.copy()]);
-}
+};
 
 World.setupTileProxies = function() {
     World.Tiles = World.Tiles || {};
@@ -369,4 +369,4 @@ World.setupTileProxies = function() {
     World.Tiles.tUp = new World.Tile.Proxy(World.Tiles.proxySubject.tUp);
     World.Tiles.tLeft = new World.Tile.Proxy(World.Tiles.proxySubject.tLeft);
     World.Tiles.tRight = new World.Tile.Proxy(World.Tiles.proxySubject.tRight);
-}
+};
