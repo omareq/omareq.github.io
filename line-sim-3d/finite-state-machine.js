@@ -79,11 +79,11 @@ FSM.Manager = class {
             throw(err);
         }
 
-        this.state.exitState();
+        this.state.exitState(this.lastInput);
         this.handleAllStateChangeCallbacks(newState);
         this.state = newState;
         this.state.setManager(this);
-        this.state.enterState();
+        this.state.enterState(this.lastInput);
     }
 };
 

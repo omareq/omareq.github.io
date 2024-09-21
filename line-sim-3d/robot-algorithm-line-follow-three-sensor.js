@@ -109,11 +109,26 @@ Robot.Algorithm.ThreeSensorFollowState.PDLineFollow = class extends FSM.StateInt
         this.pError = 0;
     }
 
-    enterState() {
+    enterState(robotData) {
         console.log("Entering PDLineFollow state");
     };
 
+    checkForIntersection(robotData) {
+        const sensor0 = robotData.sensorVals[0] < 0.25;
+        const sensor1 = robotData.sensorVals[1] < 0.15;
+        const sensor2 = robotData.sensorVals[2] < 0.25;
+
+        if(sensor0 + sensor1 + sensor2 >= 2) {
+            let intersectionState =
+                new Robot.Algorithm.ThreeSensorFollowState.LineIntersection(
+                    this);
+
+            this.manager.setState(intersectionState);
+        }
+    }
+
     handle(robotData) {
+        this.checkForIntersection(robotData);
         let forwardVel = this.forwardVel;
 
         // Simple PD controller
@@ -140,7 +155,7 @@ Robot.Algorithm.ThreeSensorFollowState.PDLineFollow = class extends FSM.StateInt
         return new Robot.MovementCommands(forwardVel, rotationRate);
     };
 
-    exitState() {
+    exitState(robotData) {
         console.log("Exiting PDLineFollow State");
     };
 };
@@ -153,7 +168,7 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapStraightLine = class extends FSM.
         this.lineFollowState = lineFollowState;
     }
 
-    enterState() {
+    enterState(robotData) {
         console.log("Entering CrossGapStraightLine state");
     };
 
@@ -168,7 +183,7 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapStraightLine = class extends FSM.
         return new Robot.MovementCommands(this.forwardVel, 0);
     };
 
-    exitState() {
+    exitState(robotData) {
         console.log("Exiting CrossGapStraightLine State");
     };
 };
@@ -196,11 +211,12 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapSearch = class extends FSM.StateI
         this.forwardCountThresh = 40;
     };
 
-    enterState() {
+    enterState(robotData) {
         console.log("Entering CrossGapSearch state");
+        this.calculateBearings(robotData.bearing);
     };
 
-    calculateBearigns(forwardBearing) {
+    calculateBearings(forwardBearing) {
         this.forwardBearing = forwardBearing;
 
         this.leftBearing = this.forwardBearing - this.turnOffset;
@@ -223,10 +239,6 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapSearch = class extends FSM.StateI
                 this.manager.setState(this.lineFollowState);
                 break;
             }
-        }
-
-        if(this.forwardBearing == undefined) {
-            this.calculateBearigns(robotData.bearing);
         }
 
         let forwardVel = this.forwardVel;
@@ -258,7 +270,7 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapSearch = class extends FSM.StateI
                     this.movementDir = this.direction.LEFT;
                     this.forwardCount = 0;
                     this.turnOffset *= 1.25;
-                    this.calculateBearigns(this.forwardBearing);
+                    this.calculateBearings(this.forwardBearing);
                 }
                 break;
         }
@@ -266,8 +278,184 @@ Robot.Algorithm.ThreeSensorFollowState.CrossGapSearch = class extends FSM.StateI
         return new Robot.MovementCommands(forwardVel, rotationRate);
     };
 
-    exitState() {
+    exitState(robotData) {
         console.log("Exiting CrossGapSearch State");
+
+    };
+};
+
+
+Robot.Algorithm.ThreeSensorFollowState.LineIntersection = class extends FSM.StateInterface {
+    constructor(lineFollowState, detectionThreshold = 0.5) {
+        super();
+        this.lineFollowState = lineFollowState;
+        this.scanBearings = [];
+        this.scanSensorValsRaw = [];
+        this.scanSensorVals = [];
+
+        const Mode = {
+            MOVE_FORWARDS: 1,
+            TURN_TO_START_BEARING: 2,
+            SCAN: 3,
+            TURN_TO_FINAL_BEARING: 4
+        };
+        this.mode = Object.freeze(Mode);
+        this.currentMode = this.mode.MOVE_FORWARDS;
+        this.rotationRate = radians(180); // 60 degs per second
+        this.detectionThreshold = detectionThreshold;
+        this.forwardCount = 0;
+        this.forwardCountThresh = 18;
+    };
+
+    calculateBearings(forwardBearing) {
+        this.forwardBearing = forwardBearing;
+        const turnOffset = 1.1 * HALF_PI;
+
+        this.leftBearing = this.forwardBearing - turnOffset;
+        if(this.leftBearing < 0) {
+            this.leftBearing += TWO_PI;
+        }
+
+        this.rightBearing = this.forwardBearing + turnOffset;
+        if(this.rightBearing > TWO_PI) {
+            this.rightBearing -= TWO_PI;
+        }
+        console.debug("Left Bearing: ", degrees(this.leftBearing));
+        console.debug("Front Bearing: ", degrees(this.forwardBearing));
+        console.debug("Right Bearing: ", degrees(this.rightBearing));
+
+        this.finalBearing = this.forwardBearing;
+    };
+
+    decideOnFinalBearing() {
+        console.debug(this.scanSensorVals);
+        let scanValsSimple = [];
+        let bearingSimple = [];
+
+        let lastVal = this.scanSensorVals[0];
+        let lineCount = 0;
+        if(lastVal) {
+            lineCount++;
+        }
+
+        scanValsSimple.push(lastVal);
+        bearingSimple.push(this.scanBearings[0]);
+
+        for(let i = 1; i < this.scanSensorVals.length; i++) {
+            if(this.scanSensorVals[i] != lastVal) {
+                lastVal = this.scanSensorVals[i];
+                scanValsSimple.push(lastVal);
+                bearingSimple.push(this.scanBearings[i]);
+
+                if(lastVal) {
+                    lineCount++;
+                }
+            }
+        }
+
+        console.log(scanValsSimple);
+        console.log(bearingSimple);
+        console.log("Line Count: ", lineCount);
+
+        switch(lineCount) {
+            case 1:
+                // turn to the only line
+                for(let i = 0; i < scanValsSimple.length; i++) {
+                    if(scanValsSimple[i]) {
+                        this.finalBearing = bearingSimple[i];
+                        return;
+                    }
+                }
+            break;
+
+            case 2:
+                // turn to the right most line
+                // turn to the only line
+                for(let i = scanValsSimple.length - 1; i >=0; i--) {
+                    if(scanValsSimple[i]) {
+                        this.finalBearing = bearingSimple[i];
+                        return;
+                    }
+                }
+            break;
+
+            case 3:
+                // turn to the middle line
+                let secondLine = false;
+                for(let i = 0; i < scanValsSimple.length; i++) {
+                    if(scanValsSimple[i] && !secondLine) {
+                        secondLine = true;
+                        continue;
+                    }
+
+                    if(scanValsSimple[i] && secondLine) {
+                        this.finalBearing = bearingSimple[i];
+                        return;
+                    }
+                }
+            break;
+
+            default:
+                // erm how did that happen
+                // turn back to the start bearing and go forwards
+                this.finalBearing = this.forwardBearing;
+            break;
+
+
+        }
+    }
+
+    enterState(robotData) {
+        console.log("Entering LineIntersection state");
+        this.calculateBearings(robotData.bearing);
+    };
+
+    handle(robotData) {
+        let forwardVel = 0;
+        let rotationRate = this.rotationRate;
+
+
+
+        switch(this.currentMode) {
+            case this.mode.MOVE_FORWARDS:
+                rotationRate = 0;
+                forwardVel = 50;
+                this.forwardCount++;
+                if(this.forwardCount > this.forwardCountThresh) {
+                    this.currentMode++;
+                }
+
+                break;
+            case this.mode.TURN_TO_START_BEARING:
+                forwardVel = 0;
+                rotationRate *= -1;
+                if(abs(robotData.bearing - this.leftBearing) < 0.1) {
+                    this.currentMode++;
+                }
+                break;
+            case this.mode.SCAN:
+                rotationRate*= 0.5;
+                this.scanBearings.push(robotData.bearing);
+                this.scanSensorValsRaw.push(robotData.sensorVals[1]);
+                this.scanSensorVals.push(robotData.sensorVals[1] < this.detectionThreshold);
+
+                if(abs(robotData.bearing - this.rightBearing) < 0.1) {
+                    this.decideOnFinalBearing();
+                    this.currentMode++;
+                }
+                break;
+            case this.mode.TURN_TO_FINAL_BEARING:
+                rotationRate=-1;
+                if(abs(robotData.bearing - this.finalBearing) < 0.1) {
+                    this.manager.setState(this.lineFollowState);
+                }
+                break;
+        }
+        return new Robot.MovementCommands(forwardVel, rotationRate);
+    };
+
+    exitState(robotData) {
+        console.log("Exiting LineIntersection State");
     };
 };
 
