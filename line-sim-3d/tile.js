@@ -310,6 +310,11 @@ World.TileSetup = function() {
     World.Tiles.proxySubject.sAntiClockwiseHorizontal = new World.Tile([World.Lines.smallHalfCircleUpLeftSide.copy(), World.Lines.smallHalfCircleDownRightSide.copy()]);
     World.Tiles.proxySubject.sAntiClockwiseVertical = new World.Tile([World.Lines.smallHalfCircleLeftBottom.copy(), World.Lines.smallHalfCircleRightTop.copy()]);
 
+    World.Tiles.proxySubject.tDown = new World.Tile([World.Lines.halfLineDown.copy(), World.Lines.horizontalLine.copy()]);
+    World.Tiles.proxySubject.tUp = new World.Tile([World.Lines.halfLineUp.copy(), World.Lines.horizontalLine.copy()]);
+    World.Tiles.proxySubject.tLeft = new World.Tile([World.Lines.halfLineLeft.copy(), World.Lines.verticalLine.copy()]);
+    World.Tiles.proxySubject.tRight = new World.Tile([World.Lines.halfLineRight.copy(), World.Lines.verticalLine.copy()]);
+
     // Tiles Proxies
     /**************************************************************************/
     World.Tiles.blankLine = new World.Tile.Proxy(World.Tiles.proxySubject.blankLine);
@@ -373,6 +378,11 @@ World.TileSetup = function() {
     World.Tiles.sClockwiseVertical = new World.Tile.Proxy(World.Tiles.proxySubject.sClockwiseVertical);
     World.Tiles.sAntiClockwiseHorizontal = new World.Tile.Proxy(World.Tiles.proxySubject.sAntiClockwiseHorizontal);
     World.Tiles.sAntiClockwiseVertical = new World.Tile.Proxy(World.Tiles.proxySubject.sAntiClockwiseVertical);
+
+    World.Tiles.tDown = new World.Tile.Proxy(World.Tiles.proxySubject.tDown);
+    World.Tiles.tUp = new World.Tile.Proxy(World.Tiles.proxySubject.tUp);
+    World.Tiles.tLeft = new World.Tile.Proxy(World.Tiles.proxySubject.tLeft);
+    World.Tiles.tRight = new World.Tile.Proxy(World.Tiles.proxySubject.tRight);
 
     World.TilesAddName();
 };
