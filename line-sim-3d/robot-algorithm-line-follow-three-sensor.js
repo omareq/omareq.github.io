@@ -303,13 +303,12 @@ Robot.Algorithm.ThreeSensorFollowState.LineIntersection = class extends FSM.Stat
         this.currentMode = this.mode.MOVE_FORWARDS;
         this.rotationRate = radians(180); // 60 degs per second
         this.detectionThreshold = detectionThreshold;
-        this.forwardCount = 0;
-        this.forwardCountThresh = 18;
+        this.distThresh = 0.5;
     };
 
     calculateBearings(forwardBearing) {
         this.forwardBearing = forwardBearing;
-        const turnOffset = 1.1 * HALF_PI;
+        const turnOffset = 1.25 * HALF_PI;
 
         this.leftBearing = this.forwardBearing - turnOffset;
         if(this.leftBearing < 0) {
@@ -408,20 +407,21 @@ Robot.Algorithm.ThreeSensorFollowState.LineIntersection = class extends FSM.Stat
     enterState(robotData) {
         console.log("Entering LineIntersection state");
         this.calculateBearings(robotData.bearing);
+        this.startPos = robotData.pos.copy();
+        this.forwardDistThreshRobot = this.distThreshNorm * robotData.robotSize;
     };
 
     handle(robotData) {
         let forwardVel = 0;
         let rotationRate = this.rotationRate;
 
-
-
         switch(this.currentMode) {
             case this.mode.MOVE_FORWARDS:
                 rotationRate = 0;
                 forwardVel = 50;
-                this.forwardCount++;
-                if(this.forwardCount > this.forwardCountThresh) {
+                const dist = this.startPos.copy().sub(robotData.pos.copy()).mag();
+
+                if(dist > this.forwardDistThreshRobot) {
                     this.currentMode++;
                 }
 

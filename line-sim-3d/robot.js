@@ -52,6 +52,7 @@ Robot.RobotTelemetryData = class {
      * @param robot {Robot.Robot} - The robot to save the data for.
      */
     constructor(robot) {
+        this.robotSize = robot.size;
         this.pos = robot.pos.copy();
         this.bearing = robot.bearing;
         this.vel = robot.bearing;
