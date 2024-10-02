@@ -45,7 +45,7 @@ python3 -m http.server 8990
 Open Google Chrome and enter [localhost:8990](http://localhost:8990/) into the
 address bar.
 
-### Add and deleting projects
+### Adding and deleting projects
 
 Project manipulation from the terminal.  This allows you to create and remove
 projects at will without having to manually edit HTML.
@@ -53,6 +53,9 @@ projects at will without having to manually edit HTML.
 cd ./omareq.github.io
 
 # Add a new project
+# Once you have one all set up don't forget to add a 1:1 aspect ratio image to
+# the imgs directory with the correct project id.  This will change the preview
+# image from a white square to the image you choose.
 ./control.py add GreatNewProject "The best project of all time"
 
 # Archive Project
