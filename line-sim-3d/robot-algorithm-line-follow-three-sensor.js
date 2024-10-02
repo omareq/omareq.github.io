@@ -303,7 +303,7 @@ Robot.Algorithm.ThreeSensorFollowState.LineIntersection = class extends FSM.Stat
         this.currentMode = this.mode.MOVE_FORWARDS;
         this.rotationRate = radians(180); // 60 degs per second
         this.detectionThreshold = detectionThreshold;
-        this.distThresh = 0.5;
+        this.distThreshNorm = 0.5;
     };
 
     calculateBearings(forwardBearing) {

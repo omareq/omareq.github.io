@@ -233,7 +233,7 @@
   	     <div id="sketch">
           <div id="canvas-loading-text">
             <p>Canvas is loading.  Please wait.</p>
-            <img src="../imgs/loading.gif" style="max-width:320px">
+            <img src="../imgs/loading.gif" loading="eager" style="max-width:320px">
           </div>
         </div>
         </div>
@@ -246,12 +246,12 @@
         <div class="col-sm-12">
           Github Repo
           <a href="https://github.com/omareq/omareq.github.io/tree/master/line-sim-3d/">
-              <img src="../imgs/github-logo.png" alt="Link to github repository"
+              <img src="../imgs/github-logo.png" loading="lazy" alt="Link to github repository"
                    style="max-width:75px">
           </a>
           Docs
           <a href="./docs/" rel="nofollow">
-              <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
+              <img src="../imgs/docs-logo.png" loading="lazy" alt="Link to source code documentation"
                    style="max-width:75px">
           </a>
         </div>
@@ -301,6 +301,181 @@
       </div>
     </section>
 
+    <section class="container" style="padding-top: 2.5rem">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h5> Rules </h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <b> 1) </b>
+              The robot must follow the line at all times.  If the robot loses
+              the line it must start again from the beginning.
+            </li>
+
+            <li class="list-group-item">
+              <b> 2) </b>
+              The robot must cross gaps without accidentally rejoining the line
+              in the wrong position.
+            </li>
+
+            <li class="list-group-item">
+              <b> 3) </b>
+              At <em>"+"</em> intersections the robot must go forwards.
+            </li>
+
+            <li class="list-group-item">
+              <b> 4) </b>
+              At <em>"T"</em> intersections the robot must take the right most
+              path.
+            </li>
+
+            <li class="list-group-item">
+              <b> 5) </b>
+              When there is an immovable object on the line the robot must find
+              a way around the object and back to the line within one tile.
+            </li>
+
+            <li class="list-group-item">
+              <b> 6) </b>
+              The faster the robot completes the course the better the score.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+     <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <h2> One Sensor is All I Need </h2>
+          <p>
+            The most simplistic method to follow a line is with a single light
+            sensor.  This works in a very basic manner, if the light sensor is
+            over the line turn right, otherwise turn left.  This leads to a
+            snake like back and forth motion.  The behaviour that emerges from
+            this is known as an edge follower, where the robot appears to be
+            following the edge of the line rather than the centre of the line.
+            There are a few variables in the algorithm that can be adjusted to
+            slightly change the behaviour of the robot: the line detection
+            threshold, the size of the light sensor and the turning speed.
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <img src="imgs/1-sensor-line-follow-gap-failure.webp" loading="lazy"
+          style="border: 2px solid #888888;max-width: 100%">
+          <em><p>
+            Animation of a robot with one light sensor failing to cross a gap in
+            the line that it is following.
+          </p></em>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <p>
+            All the changes and adjustments to the algorithm above can not
+            account for a fundamental lack of information to base decisions on.
+            This leads to the inability of the robot to cross gaps in the line.
+            A robot with a single light sensor and a bearing sensor (be that a
+            gyro or a compass) could reject turns over a white region that
+            have a wide angle and back track.  This could allow the robot to
+            start a scanning routine to find the line on the other side of the
+            gap.
+          </p>
+        </div>
+      </div>
+    </section>
+
+     <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <h2> Ok Maybe Two is Better </h2>
+          <p>
+            Twice the light sensors, twice the information.  When you have two
+            light sensors you can make more informed decisions about how to
+            act in different scenarios.  One method for following a line with
+            two sensors is to use something known as a
+            <a href="https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller">
+            PID Control Loop</a>.
+            This takes a desired value and an error value and steers you towards
+            the desired value based on how far away you are.  The further away
+            you are from the goal the harder you steer.  For a line following
+            robot you want both sensors to be on either side of the line and
+            to read the same value.  You can make the error the difference
+            between the two light sensor readings.  Just using the error value
+            is called a P-controller, because your steering is proportional
+            to the error.
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <img src="imgs/2-sensor-line-follow-PID.webp" loading="lazy"
+          style="border: 2px solid #888888;max-width: 100%;">
+          <em><p>
+            Image of how two light sensors follow a line depending on which
+            sensor has a darker reading.
+          </p></em>
+        </div>
+      </div>
+    </section>
+
+     <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <p>
+            A nice side effect of this system is that now when the robot is
+            directly on the line it will go straight forwards, this is much
+            quicker than constantly turning like with the one light sensor
+            algorithm.  It gets even better, now if the robot is not on a line
+            it will still go forwards because the light sensor values are the
+            same.  This means that as long as the line preceding a gap is
+            straight the robot with be able to cross the gap.  If the
+            line preceding the gap is at an angle, for example after a turn, the
+            robot might miss the line on the other side.  This is still an
+            an improvement, but there is still not enough information to cross
+            intersections in the correct direction.
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <img src="imgs/2-sensor-line-follow-gap-crossing.webp" loading="lazy"
+          style="border: 2px solid #888888; max-width: 100%;">
+          <em><p>
+            Animation of a robot with two light sensors crossing multiple gaps.
+          </p></em>
+        </div>
+      </div>
+    </section>
+
+     <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-8">
+          <h2> Third Time is the Charm </h2>
+          <p>
+            The third central light sensor, is the key to negotiating
+            intersections. In normal line following mode this sensor doesn't do
+            much, the outer two sensors operate the same was as the two sensor
+            algorithm.  The third sensor provides an indication as to when the
+            robot is over an intersection.  When this is detected the robot can
+            then complete a sweep and figure out which direction is the correct
+            one to go in.  The light sensor size and separation are crucial to
+            this working as intended.
+          </p>
+        </div>
+
+        <div class="col-sm-4">
+          <img src="imgs/3-sensor-line-follow-intersections.webp" loading="lazy"
+          style="border: 2px solid #888888; max-width: 100%;">
+          <em><p>
+            Animation of a robot with three light sensors negotiating line
+            intersections.
+          </p></em>
+        </div>
+      </div>
+    </section>
+
+
     <section class="container" style="padding-top:2rem">
       <div class="row text-left">
         <div class="col-sm-12">
@@ -339,7 +514,7 @@
 
         <div class="col-sm-4">
           <!-- Picture of line representation here -->
-          <img src="./imgs/vertical-line-representation.webp"
+          <img src="./imgs/vertical-line-representation.webp" loading="lazy"
           style="border: 2px solid #888888; max-width: 80%">
           <p> <em>
             Image showing the individual points that represent a line.
@@ -369,7 +544,7 @@
 
         <!-- Picture of sensor representation here -->
         <div class="col-sm-4">
-          <img src="./imgs/sensor-line-point-distance.webp"
+          <img src="./imgs/sensor-line-point-distance.webp" loading="lazy"
           style="border: 2px solid #888888; max-width: 80%">
           <p> <em>
             Image showing that the light sensor only looks at the closest line
@@ -442,7 +617,7 @@
     <section class="container" style="padding-top:2rem">
       <div class="row text-left">
         <div class="col-sm-3">
-          <img src="./imgs/line-point-circles.webp"
+          <img src="./imgs/line-point-circles.webp" loading="lazy"
           style="border: 2px solid #888888; max-width: 90%">
           <em><p>
             Exaggerated line point spacing showing how lines behave.
@@ -450,7 +625,7 @@
         </div>
 
         <div class="col-sm-3">
-          <img src="./imgs/line-point-circles-filled.webp"
+          <img src="./imgs/line-point-circles-filled.webp" loading="lazy"
           style="border: 2px solid #888888; max-width: 90%">
           <em><p>
             Condensed line point spacing still showing small gaps at the edges.
@@ -458,7 +633,7 @@
         </div>
 
         <div class="col-sm-6" >
-          <img src="./imgs/line-dist-check-ps-0_25lt-ls-all.webp"
+          <img src="./imgs/line-dist-check-ps-0_25lt-ls-all.webp" loading="lazy"
           style="border: 2px solid #888888; max-width: 76%">
           <em><p>
             Graph showing how the light sensor value changes due to the line
@@ -501,36 +676,12 @@
           </p>
         </div>
         <div class="col-sm-6">
-          <img src="./imgs/line-dist-check-stats-all-percentage.webp"
+          <img src="./imgs/line-dist-check-stats-all-percentage.webp" loading="lazy"
           style="border: 2px solid #888888; max-width: 98%">
         </div>
       </div>
     </section>
 
-<!--      <section class="container" style="padding-top:10px">
-      <div class="row text-left">
-        <div class="col-sm-12">
-          <h2> One Sensor is All I Need </h2>
-        </div>
-      </div>
-    </section> -->
-
-<!--      <section class="container" style="padding-top:10px">
-      <div class="row text-left">
-        <div class="col-sm-12">
-          <h2> Ok Maybe Two is Better </h2>
-        </div>
-      </div>
-    </section> -->
-
-<!--      <section class="container" style="padding-top:10px">
-      <div class="row text-left">
-        <div class="col-sm-12">
-          <h2> Third Time is the Charm </h2>
-        </div>
-      </div>
-    </section>
- -->
     <div>
       <section class="container" style="padding-top:10px">
         <div class="row text-left">
@@ -549,7 +700,7 @@
             <div class="project-card" id="previous">
               <h5 id="prev-title">Maze Sim 3D</h5>
               <a id="prev-url" href="../maze-sim-3d/" class="project-demo">
-                <img id="prev-img" src="../imgs/p_023.jpg">
+                <img id="prev-img" loading="lazy" src="../imgs/p_023.jpg">
               </a>
             </div>
           </div>
@@ -558,7 +709,7 @@
            <div class="project-card" id="previous">
             <h5 id="prev-title">Quadruped Robot</h5>
             <a id="prev-url" href="../quadruped/" class="project-demo">
-              <img id="prev-img" src="../imgs/p_019.jpg">
+              <img id="prev-img" loading="lazy" src="../imgs/p_019.jpg">
             </a>
           </div>
         </div>
@@ -571,7 +722,7 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <a id="external_link" href="../projects.html" >
-                    <img src="../imgs/all-projects-button.jpg" style="max-width: 70%;" alt="Link to all projects page">
+                    <img src="../imgs/all-projects-button.jpg" loading="lazy" style="max-width: 70%;" alt="Link to all projects page">
                 </a>
             </div>
             <div class="col-sm-4"></div>
@@ -584,7 +735,7 @@
           <div class="project-card" id="previous">
             <h5 id="prev-title">Hang man</h5>
             <a id="prev-url" href="../hang-man/" class="project-demo">
-              <img id="prev-img" src="../imgs/p_026.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the previous project, /**PREV TITLE**/">
+              <img id="prev-img" src="../imgs/p_026.jpg" loading="lazy" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the previous project, Hang man">
             </a>
           </div>
         </div>
@@ -595,7 +746,7 @@
           <div class="project-card" id="next">
 						<h5 id="next-title">Elastic string</h5>
 						<a id="next-url" href="../elastic-string/" class="project-demo">
-							<img id="next-img" src="../imgs/p_028.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
+							<img id="next-img" src="../imgs/p_028.jpg" loading="lazy" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
             </a>
           </div>
         </div>
