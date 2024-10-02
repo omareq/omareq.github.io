@@ -21,6 +21,9 @@ Run the following commands in a terminal.
 git clone https://github.com/omareq/omareq.github.io.git
 cd ./omareq.github.io
 
+# Make control script executable
+sudo chmod +x ./control.py
+
 # will read package.json and install npm dependencies
 # these are only used for testing if you don't want to install them that is fine
 npm install
