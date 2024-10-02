@@ -17,7 +17,7 @@ For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 
 Run the following commands in a terminal.
 
-```
+```sh
 git clone https://github.com/omareq/omareq.github.io.git
 cd ./omareq.github.io
 
@@ -35,7 +35,7 @@ pip3 install simple_http_server
 ## Usage
 
 ### Run the repo locally
-```
+```sh
 cd ./omareq.github.io
 
 python3 -m http.server 8990
@@ -49,7 +49,8 @@ address bar.
 
 Project manipulation from the terminal.  This allows you to create and remove
 projects at will without having to manually edit HTML.
-```
+
+```sh
 cd ./omareq.github.io
 
 # Add a new project
@@ -79,7 +80,7 @@ project has it's own documentation.  This can be built with the command below.
 The configuration file will ensure that the docs match the theme of the rest
 of the repository.
 
-```
+```sh
 cd ./omareq.github.io/projectDir
 jsdoc -c ../.jsdoc-conf.json *.js
 
@@ -95,7 +96,7 @@ project, making sure the projects.json file is correct and linting the js files.
 In future this will be expanded to include a headless browser to test the
 components of each project individually.
 
-```
+```sh
 cd ./omareq.github.io/
 qunit
 ```
