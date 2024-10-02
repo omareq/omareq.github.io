@@ -9,8 +9,25 @@ Over the years I have made a lot of very small and fun programs on my computer. 
 
 For now just enjoy my mini library of fun [here](https://omareq.github.io/).
 
+## Installation
+
+```
+git clone https://github.com/omareq/omareq.github.io.git
+cd ./omareq.github.io
+
+# will read package.json and install npm dependencies
+# these are only used for testing if you don't want to install them that is fine
+npm install
+
+# This is to run a local server to use the project locally
+# If you have another server setup then you don't need to install this
+# This should come as default with the python standard library
+pip3 install simple_http_server
+```
+
 ## Todo
 
+- [ ]   Move todo list to github issues
 - [ ]   Testing, make sure that all js files are linked in index.html, spell check, markdown validator, html validator
 - [ ]   Add "/" to end of links in README files so that Google doesn't ignore them during indexing due to file redirect protocols, redo docs.  Also add "/" to end of links to docs in project index.html files
 - [ ]   Adjusting mailto links with subject line for each project
