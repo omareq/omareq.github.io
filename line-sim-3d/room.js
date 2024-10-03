@@ -490,7 +490,13 @@ World.Room = class {
         if(this.img == undefined) {
             this.generatePG();
         }
-        image(this.img, this.pos.x, this.pos.y, this.xWidth, this.yHeight);
+
+        push();
+        translate(this.pos.x + 0.5 * this.xWidth, this.pos.y + 0.5 * this.yHeight, 0);
+        texture(this.img);
+        noStroke();
+        plane(this.xWidth, this.yHeight);
+        pop();
     }
 
     /**

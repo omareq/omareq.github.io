@@ -145,7 +145,10 @@ Simulation.update = function() {
     Simulation.lastFrameTime = Simulation.currentFrameData.frameTime;
 
     background(127);
+    push();
+    translate(-width/2, -height/2);
     Simulation.Mode.activeMode.update();
+    pop();
 };
 
 /**

@@ -41,7 +41,7 @@ function setup() {
 	} else {
 		cnvSize = windowWidth;
 	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
+	let cnv = createCanvas(cnvSize, 0.7 * cnvSize, WEBGL);
 	cnv.parent('sketch');
 	frameRate(60);
 	World.TileSetup();
