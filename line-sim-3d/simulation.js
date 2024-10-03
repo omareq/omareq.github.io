@@ -92,7 +92,7 @@ Simulation.FrameData = class {
         this.frameTime = Date.now();
 
         this.dt = this.frameTime - Simulation.lastFrameTime;
-        if(this.dt > 100) {
+        if(this.dt > 100 || Simulation.speedUp != 1) {
             // this is done to remove jumping effects when you switch windows
             // contexts by changing tab or application.
             this.dt = 10;
@@ -122,6 +122,8 @@ Simulation.setup = function() {
     Simulation.currentFrameData = null;
     Simulation.frame = 0;
 
+    Simulation.speedUp = 1;
+
     if(Simulation.Mode.activeMode == undefined) {
         Simulation.Mode.setActive(new Simulation.Mode.Empty());
     }
@@ -147,7 +149,9 @@ Simulation.update = function() {
     background(127);
     push();
     translate(-width/2, -height/2);
-    Simulation.Mode.activeMode.update();
+    for(let i = 0; i < Simulation.speedUp; i++) {
+        Simulation.Mode.activeMode.update();
+    }
     pop();
 };
 
