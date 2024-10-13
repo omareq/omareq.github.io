@@ -470,7 +470,8 @@ class Robot {
         model(this.robotChasis);
         pop();
         stroke(10);
-        line(0,0,this.depth/2, 0, -this.breadth/2, this.depth/2);
+        line(-0.05*this.breadth, -0.12*this.breadth, 0.35*this.depth,
+             -0.05*this.breadth, -0.50*this.breadth, 0.35*this.depth);
         pop();
     }
 }
