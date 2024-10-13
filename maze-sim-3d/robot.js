@@ -308,7 +308,7 @@ class Robot {
             if(endSimulationFlag) {
                 console.debug("robot.turnLeft: endSimulationFlag");
                 return;
-            }  else if(pauseSimulationFlag) {
+            } else if(pauseSimulationFlag) {
                 console.debug("robot.turnLeft: pauseSimulationFlag");
                 await delay(pauseDelay);
                 continue;
@@ -338,7 +338,7 @@ class Robot {
             if(endSimulationFlag) {
                 console.debug("robot.turnRight: endSimulationFlag");
                 return;
-            }  else if(pauseSimulationFlag) {
+            } else if(pauseSimulationFlag) {
                 console.debug("robot.turnRight: pauseSimulationFlag");
                 await delay(pauseDelay);
                 continue;
