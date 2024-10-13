@@ -267,7 +267,6 @@ class Room {
 
     generateMazeGeometry(showWall=false) {
         beginGeometry();
-        // this.fovCulling();
         push();
         this.batchDrawWalls();
         pop();
@@ -297,8 +296,15 @@ class Room {
         if(this.mazeGeometry==undefined) {
             this.generateMazeGeometry(showWall);
         }
+// The weakness of the geometry object is that FOV culling is no longer possible
+// once the object has been created that is it.  this means that at larger map
+// sizes there is wasted computation on rendering portions of the maze that are
+// outside of the cameras FOV.  This limits the maximum map size that can be
+// accommodated.
+// TODO: FOV cull the faces in the geometry object or split into sections
         model(this.mazeGeometry);
 
+        this.fovCulling();
         for(let y = 0; y < this.mapY; y++) {
             for(let x = 0; x < this.mapX; x++) {
                 push();

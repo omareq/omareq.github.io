@@ -306,6 +306,7 @@ class Tile {
             translate(0, 0, 1);
             texture(this.pg);
             noStroke();
+    // TODO: tile graphics to larger room graphics obj to only call plane once
             plane(this.gridSize - 4);
         }
 
