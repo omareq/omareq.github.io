@@ -200,7 +200,7 @@ Robot.Robot = class{
         push();
         rectMode(CENTER);
         fill(127);
-        translate(this.pos.x, this.pos.y);
+        translate(this.pos.x, this.pos.y, 1);
         rotate(this.bearing);
 
         // robot rectangle
@@ -215,7 +215,10 @@ Robot.Robot = class{
         this.sensorArray.setBearing(this.bearing);
         let rotatedSensorPos = this.sensorArrayPos.copy().rotate(this.bearing);
         this.sensorArray.setPos(this.pos.copy().add(rotatedSensorPos));
+        push();
+        translate(0, 0, 1);
         this.sensorArray.draw();
+        pop();
     }
 };
 
