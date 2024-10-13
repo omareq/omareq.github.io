@@ -115,7 +115,7 @@ UI.createButton = function(label, parentDiv, callback) {
 
     document.getElementById(parentDiv).appendChild(button);
     return button;
-}
+};
 
 
 /**
