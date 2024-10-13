@@ -308,6 +308,10 @@ class Robot {
             if(endSimulationFlag) {
                 console.debug("robot.turnLeft: endSimulationFlag");
                 return;
+            }  else if(pauseSimulationFlag) {
+                console.debug("robot.turnLeft: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
             }
             let error = this.bearing - endBearing;
             let kp = 0.8 * error;
@@ -334,6 +338,10 @@ class Robot {
             if(endSimulationFlag) {
                 console.debug("robot.turnRight: endSimulationFlag");
                 return;
+            }  else if(pauseSimulationFlag) {
+                console.debug("robot.turnRight: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
             }
             let error = this.bearing - endBearing;
             let kp = 0.8 * error;
@@ -381,6 +389,10 @@ class Robot {
             if(endSimulationFlag) {
                 console.debug("robot.moveForward: endSimulationFlag");
                 return;
+            } else if(pauseSimulationFlag) {
+                console.debug("robot.moveForward: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
             }
             this.pos.add(this.posIncrement);
             let distance = dist(this.pos.x, this.pos.y, this.endPos.x, this.endPos.y);

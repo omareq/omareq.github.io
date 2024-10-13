@@ -74,7 +74,9 @@ let cameraPosDisplay;
 
 let resetButton;
 let endSimulationFlag = false;
+let pauseSimulationFlag = false;
 let confirmEndOfSimulationFlag = true;
+let pauseDelay = 3;
 
 function algorithmSelectorSetup() {
     selectAlgorithm = createSelect();
@@ -209,7 +211,16 @@ async function reset() {
     }
     endSimulationFlag = false;
     confirmEndOfSimulationFlag = false;
+    pauseSimulationFlag = false;
     runSimulation();
+}
+
+function pauseButtonSetup() {
+    uiCreateButton("Pause", "pause-button", pause);
+}
+
+function pause() {
+    pauseSimulationFlag = !pauseSimulationFlag;
 }
 
 function mapSizeSliderSetup() {
@@ -248,6 +259,7 @@ function uiSetup() {
     mapSizeSliderSetup();
     mapSeedInputSetup();
     resetButtonSetup();
+    pauseButtonSetup();
 }
 
 function uiPoll() {
