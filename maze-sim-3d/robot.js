@@ -31,7 +31,7 @@
  *****************************************************************************/
 
 
-let speedUp = 10;
+var speedUp = 2;
 
 class RescueKit {
     constructor(worldPos, kitSize, gridPos=createVector(-1, -1)) {
@@ -308,6 +308,10 @@ class Robot {
             if(endSimulationFlag) {
                 console.debug("robot.turnLeft: endSimulationFlag");
                 return;
+            } else if(pauseSimulationFlag) {
+                console.debug("robot.turnLeft: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
             }
             let error = this.bearing - endBearing;
             let kp = 0.8 * error;
@@ -334,6 +338,10 @@ class Robot {
             if(endSimulationFlag) {
                 console.debug("robot.turnRight: endSimulationFlag");
                 return;
+            } else if(pauseSimulationFlag) {
+                console.debug("robot.turnRight: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
             }
             let error = this.bearing - endBearing;
             let kp = 0.8 * error;
@@ -381,6 +389,10 @@ class Robot {
             if(endSimulationFlag) {
                 console.debug("robot.moveForward: endSimulationFlag");
                 return;
+            } else if(pauseSimulationFlag) {
+                console.debug("robot.moveForward: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
             }
             this.pos.add(this.posIncrement);
             let distance = dist(this.pos.x, this.pos.y, this.endPos.x, this.endPos.y);
@@ -470,7 +482,8 @@ class Robot {
         model(this.robotChasis);
         pop();
         stroke(10);
-        line(0,0,this.depth/2, 0, -this.breadth/2, this.depth/2);
+        line(-0.05*this.breadth, -0.12*this.breadth, 0.35*this.depth,
+             -0.05*this.breadth, -0.50*this.breadth, 0.35*this.depth);
         pop();
     }
 }
