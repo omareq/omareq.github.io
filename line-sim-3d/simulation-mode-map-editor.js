@@ -124,38 +124,14 @@ Simulation.Mode.MapEditor = class extends Simulation.Mode.ModeType {
 
         this.addTileSelector();
 
-        this.undoButton = createButton("Undo", "value");
-        this.undoButton.parent("sm-me-undo-button");
-        this.undoButton.mousePressed(Simulation.Mode.MapEditor.undo);
-
-        this.redoButton = createButton("Redo", "value");
-        this.redoButton.parent("sm-me-redo-button");
-        this.redoButton.mousePressed(Simulation.Mode.MapEditor.redo);
-
-        this.clearButton = createButton("Clear", "value");
-        this.clearButton.parent("sm-me-clear-room-button");
-        this.clearButton.mousePressed(Simulation.Mode.MapEditor.clearRoom);
-
-        this.fillButton = createButton("Fill", "value");
-        this.fillButton.parent("sm-me-fill-room-button");
-        this.fillButton.mousePressed(Simulation.Mode.MapEditor.fillRoom);
-
-        this.clearButton = createButton("Snake", "value");
-        this.clearButton.parent("sm-me-fill-snake-button");
-        this.clearButton.mousePressed(Simulation.Mode.MapEditor.fillSnake);
-
-        this.fillButton = createButton("Loop", "value");
-        this.fillButton.parent("sm-me-fill-loop-button");
-        this.fillButton.mousePressed(Simulation.Mode.MapEditor.fillLoop);
-
-
-        this.saveButton = createButton("Save Room", "value");
-        this.saveButton.parent("sm-me-save-room-json-button");
-        this.saveButton.mousePressed(Simulation.Mode.MapEditor.saveRoomAsJSON);
-
-        this.loadButton = createButton("Upload Room", "value");
-        this.loadButton.parent("sm-me-load-room-json-button");
-        this.loadButton.mousePressed(UI.loadRoomFromJSON);
+        this.undoButton = UI.createButton("Undo", "sm-me-undo-button", Simulation.Mode.MapEditor.undo);
+        this.redoButton = UI.createButton("Redo", "sm-me-redo-button", Simulation.Mode.MapEditor.redo);
+        this.clearButton = UI.createButton("Clear", "sm-me-clear-room-button", Simulation.Mode.MapEditor.clearRoom);
+        this.fillButton = UI.createButton("Fill", "sm-me-fill-room-button", Simulation.Mode.MapEditor.fillRoom);
+        this.fillSnakeButton = UI.createButton("Snake", "sm-me-fill-snake-button", Simulation.Mode.MapEditor.fillSnake);
+        this.fillLoopButton = UI.createButton("Loop", "sm-me-fill-loop-button", Simulation.Mode.MapEditor.fillLoop);
+        this.saveButton = UI.createButton("Save", "sm-me-save-room-json-button", Simulation.Mode.MapEditor.saveRoomAsJSON);
+        this.loadButton = UI.createButton("Upload Room", "sm-me-load-room-json-button", UI.loadRoomFromJSON);
     }
 
     /**

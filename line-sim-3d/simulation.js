@@ -150,6 +150,7 @@ Simulation.update = function() {
     push();
     translate(-width/2, -height/2);
     for(let i = 0; i < Simulation.speedUp; i++) {
+// TODO: separate simulation update and draw so that render logic isn't repeated
         Simulation.Mode.activeMode.update();
     }
     pop();

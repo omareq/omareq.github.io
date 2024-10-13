@@ -170,9 +170,7 @@ Simulation.Mode.LineFollowThreeSensor = class extends Simulation.Mode.ModeType {
         this.velDisplay.parent("sm-lf3s-pd-vel-val");
         this.velDisplay.elt.innerText = "Vel: " + str(this.algorithmForwardVel);
 
-        this.loadRoomButton = createButton("Upload Room", "value");
-        this.loadRoomButton.parent("sm-lf3s-load-room-json-button");
-        this.loadRoomButton.mousePressed(Simulation.Mode.LineFollowTwoSensor.loadRoom);
+        this.loadRoomButton = UI.createButton("Upload Room", "sm-lf3s-load-room-json-button", Simulation.Mode.LineFollowThreeSensor.loadRoom);
     }
 
     /**

@@ -105,22 +105,31 @@ UI.updateSimulationModeSelector = function() {
     }
 };
 
+UI.createButton = function(label, parentDiv, callback) {
+    let button = document.createElement('button');
+    button.innerText = label;
+
+    button.addEventListener('click', () => {
+        callback();
+    });
+
+    document.getElementById(parentDiv).appendChild(button);
+    return button;
+}
+
+
 /**
  * Initialise the pause button
  */
 UI.initPauseButton = function() {
-    UI.pauseButton = createButton("Pause", "value");
-    UI.pauseButton.parent("pause-button");
-    UI.pauseButton.mousePressed(Simulation.pauseFlagToggle);
+    UI.testButton = UI.createButton("Pause", "pause-button", Simulation.pauseFlagToggle);
 };
 
 /**
  * Initialise the reset button
  */
 UI.initResetButton = function() {
-    UI.resetButton = createButton("Reset", "value");
-    UI.resetButton.parent("reset-button");
-    UI.resetButton.mousePressed(Simulation.reset);
+    UI.testButton = UI.createButton("Reset", "reset-button", Simulation.reset);
 };
 
 /**
@@ -224,6 +233,13 @@ UI.getFile = async function() {
  * UI setup all UI elements
  */
 UI.setup = function() {
+    // TODO: Fix buttons
+    // Buttons don't work with p5.js1.9.2
+    // https://github.com/processing/p5.js/issues/3163
+    // https://github.com/processing/p5.js/issues/3141
+    //
+    // Need 1.9.2 for WEBGL Plane and Textures to work correctly
+    // Might need to implement buttons manually without p5.js
     console.debug("UI.setup: Start");
     UI.canvasLoadingTextHide();
     UI.controlPanelSetup();
