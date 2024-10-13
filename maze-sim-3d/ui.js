@@ -124,6 +124,18 @@ function algorithmSelectEvent() {
     reset();
 }
 
+function uiCreateButton(label, parentDiv, callback) {
+    let button = document.createElement('button');
+    button.innerText = label;
+
+    button.addEventListener('click', () => {
+        callback();
+    });
+
+    document.getElementById(parentDiv).appendChild(button);
+    return button;
+}
+
 function controlPanelSetup() {
     controlPanel = document.getElementById("control-panel");
     controlPanelShow();
@@ -143,13 +155,8 @@ function cameraControlsSetup() {
     cameraPosDisplay.parent("camera-view-display");
     cameraPosDisplay.elt.innerText = "View: " + str(viewPosKey);
 
-    cameraPrevButton = createButton("Prev View", "value");
-    cameraPrevButton.parent("camera-prev-button");
-    cameraPrevButton.mousePressed(cameraPreviousView);
-
-    cameraNextButton = createButton("Next View", "value");
-    cameraNextButton.parent("camera-next-button");
-    cameraNextButton.mousePressed(cameraNextView);
+    uiCreateButton("Prev View", "camera-prev-button", cameraPreviousView);
+    uiCreateButton("Next View", "camera-next-button", cameraNextView);
 
     cameraZoomSlider = createSlider(1, 10, zoom, 1);
     cameraZoomSlider.parent("camera-zoom-slider");
@@ -160,9 +167,7 @@ function cameraControlsSetup() {
 }
 
 function resetButtonSetup() {
-    resetButton = createButton("Reset", "value");
-    resetButton.parent("reset-button");
-    resetButton.mousePressed(reset);
+    uiCreateButton("Reset", "reset-button", reset);
 }
 
 async function reset() {

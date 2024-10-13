@@ -261,7 +261,7 @@ class Tile {
         this.west.resetWall();
     }
 
-    show(showWall=false) {
+    show(showWall=false, showVictim=false) {
         if(!this.hasWalls && this.visit == 0) {
             return;
         }
@@ -276,28 +276,28 @@ class Tile {
             if(this.north.getIsWall()) {
                 push();
                 translate(0, -this.gridSize / 2, 0);
-                this.north.show(showWall);
+                this.north.show(showWall, showVictim);
                 pop();
             }
             if(this.east.getIsWall()) {
                 push();
                 translate(this.gridSize / 2, 0, 0);
                 rotateZ(HALF_PI);
-                this.east.show(showWall);
+                this.east.show(showWall, showVictim);
                 pop();
             }
             if(this.south.getIsWall()) {
                 push();
                 translate(0, this.gridSize / 2, 0);
                 rotateZ(PI);
-                this.south.show(showWall);
+                this.south.show(showWall, showVictim);
                 pop();
             }
             if(this.west.getIsWall()) {
                 push();
                 translate(-this.gridSize / 2, 0, 0);
                 rotateZ(3 * HALF_PI);
-                this.west.show(showWall);
+                this.west.show(showWall, showVictim);
                 pop();
             }
         }
@@ -306,6 +306,7 @@ class Tile {
             translate(0, 0, 1);
             texture(this.pg);
             noStroke();
+    // TODO: tile graphics to larger room graphics obj to only call plane once
             plane(this.gridSize - 4);
         }
 
