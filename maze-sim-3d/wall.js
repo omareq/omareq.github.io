@@ -60,7 +60,7 @@ class Wall {
         return this.victim;
     }
 
-    show(showWall=false) {
+    show(showWall=false, showVictim=false) {
         if(this.isWall) {
             push();
             translate(0, 0, this.wallHeight / 2 + 2);
@@ -69,7 +69,7 @@ class Wall {
             if(showWall) {
                 box(this.gridSize, 1, this.wallHeight);
             }
-            if (!(this.victim == 0)) {
+            if (showVictim && !(this.victim == 0)) {
                 fill(255, 0, 0);
                 push();
                 translate(0, 1, this.wallHeight/ 4);

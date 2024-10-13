@@ -37,6 +37,7 @@ class Room {
         this.gridSize = gridSize;
         this.tileCount = 0;
         this.grid = [];
+        this.mazeGeometry = undefined;
 
         // let emptyTile = Tile(false, false, false, false, this.gridSize);
         for(let x = 0; x < this.mapX; x++) {
@@ -262,9 +263,26 @@ class Room {
                 this.grid[x][y].isCulled = angle > fovLimit;
             }
         }
+    }
 
+    generateMazeGeometry(showWall=false) {
+        beginGeometry();
+        // this.fovCulling();
+        push();
+        this.batchDrawWalls();
+        pop();
 
+        const showVictim = true;
+        for(let y = 0; y < this.mapY; y++) {
+            for(let x = 0; x < this.mapX; x++) {
+                push();
+                translate(x * this.gridSize , y * this.gridSize,0);
+                this.grid[x][y].show(showWall, showVictim);
+                pop();
+            }
+        }
 
+        this.mazeGeometry = endGeometry();
     }
 
     show(showWall=false) {
@@ -276,11 +294,10 @@ class Room {
         rect(0,0, this.mapX * this.gridSize, this.mapY * this.gridSize);
         pop();
 
-        this.fovCulling();
-
-        push();
-        this.batchDrawWalls();
-        pop();
+        if(this.mazeGeometry==undefined) {
+            this.generateMazeGeometry(showWall);
+        }
+        model(this.mazeGeometry);
 
         for(let y = 0; y < this.mapY; y++) {
             for(let x = 0; x < this.mapX; x++) {
