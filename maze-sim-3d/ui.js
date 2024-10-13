@@ -164,6 +164,13 @@ function cameraControlsSetup() {
     cameraZoomDisplay = createP(zoom);
     cameraZoomDisplay.parent("camera-zoom-val");
     cameraZoomDisplay.elt.innerText = "Zoom: " + str(zoom);
+
+    speedUpSlider = createSlider(1, 10, speedUp, 1);
+    speedUpSlider.parent("speedup-slider");
+
+    speedUpDisplay = createP(speedUp);
+    speedUpDisplay.parent("speedup-val");
+    speedUpDisplay.elt.innerText = "Speed Up: x" + str(speedUp);
 }
 
 function resetButtonSetup() {
@@ -268,5 +275,13 @@ function uiPoll() {
             sliderVal);
         zoom = sliderVal;
         cameraZoomDisplay.elt.innerText = "Zoom: " + str(zoom);
+    }
+
+    sliderVal = speedUpSlider.value();
+    if(sliderVal != speedUp) {
+        console.debug("uiPoll: speed up Slider value has changed to: ",
+            sliderVal);
+        speedUp = sliderVal;
+        speedUpDisplay.elt.innerText = "Speed Up: x" + str(speedUp);
     }
 }

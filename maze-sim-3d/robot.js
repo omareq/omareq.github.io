@@ -31,7 +31,7 @@
  *****************************************************************************/
 
 
-let speedUp = 10;
+var speedUp = 2;
 
 class RescueKit {
     constructor(worldPos, kitSize, gridPos=createVector(-1, -1)) {
