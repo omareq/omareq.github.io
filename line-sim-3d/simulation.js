@@ -127,6 +127,8 @@ Simulation.setup = function() {
     if(Simulation.Mode.activeMode == undefined) {
         Simulation.Mode.setActive(new Simulation.Mode.Empty());
     }
+
+    Simulation.activeCameraMode = new Simulation.CameraControl.Modes.Default2D();
 };
 
 /**
@@ -154,6 +156,8 @@ Simulation.update = function() {
         Simulation.Mode.activeMode.update();
     }
     pop();
+
+    Simulation.activeCameraMode.update();
 };
 
 /**
