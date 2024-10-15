@@ -105,6 +105,38 @@ UI.updateSimulationModeSelector = function() {
     }
 };
 
+/**
+ * Initialise the camera mode selector
+ */
+UI.initCameraModeSelector = function() {
+    const keys = Object.keys(Simulation.CameraControl.Modes);
+    UI.cameraModeSelectLength = keys.length;
+    UI.cameraModeSelect = createSelect();
+    UI.cameraModeSelect.parent("camera-mode-selector");
+
+    for(let i = 0; i < keys.length; i++) {
+        UI.cameraModeSelect.option(keys[i]);
+    }
+    UI.cameraModeSelect.selected("Default2D");
+};
+
+/**
+ * Update the camera mode selector.
+ */
+UI.updateCameraModeSelector = function() {
+    if(Simulation.activeCameraMode.name != UI.cameraModeSelect.selected()) {
+        console.debug("Changing Camera Mode: ", UI.cameraModeSelect.selected());
+        Simulation.activeCameraMode = new Simulation.CameraControl.Modes[UI.cameraModeSelect.selected()];
+    }
+};
+
+/**
+ * Create a UI button in the control panel
+ *
+ * @param label {String} - The label displayed on the buttond
+ * @param parentDIv {string} - The id of the parent div
+ * @param callback {function} - The callback function for when the button is pressed
+ */
 UI.createButton = function(label, parentDiv, callback) {
     let button = document.createElement('button');
     button.innerText = label;
@@ -244,6 +276,7 @@ UI.setup = function() {
     UI.canvasLoadingTextHide();
     UI.controlPanelSetup();
     UI.initSimulationModeSelector();
+    UI.initCameraModeSelector();
     UI.initPauseButton();
     UI.initResetButton();
     console.debug("UI.setup: End");
@@ -258,6 +291,7 @@ UI.poll = function() {
         console.debug("UI.poll: Start");
     }
     UI.updateSimulationModeSelector();
+    UI.updateCameraModeSelector();
     Simulation.Mode.activeMode.UIPoll();
     if(UI.logUIPollStartAndStop) {
         console.debug("UI.poll: End");

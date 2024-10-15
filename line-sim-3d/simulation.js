@@ -157,6 +157,7 @@ Simulation.update = function() {
     }
     pop();
 
+// TODO: once draw is separated do camera updates even when paused
     Simulation.activeCameraMode.update();
 };
 

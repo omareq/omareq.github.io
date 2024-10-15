@@ -54,6 +54,7 @@ Simulation.CameraControl.CameraMode = class {
     }
 
     update() {
+        this.is3d = !this.is2d;
         let err = "Abstract class Simulation.CameraControl.CameraMode can't be instantiated.";
         if(this.constructor == Simulation.CameraControl.CameraMode) {
           throw new Error(err);
@@ -64,6 +65,8 @@ Simulation.CameraControl.CameraMode = class {
 Simulation.CameraControl.Modes.Default2D = class extends Simulation.CameraControl.CameraMode {
     constructor() {
         super();
+        this.name = "Default2D";
+        this.is2d = true;
     }
 
     update() {}
@@ -72,6 +75,8 @@ Simulation.CameraControl.Modes.Default2D = class extends Simulation.CameraContro
 Simulation.CameraControl.Modes.Orbit3D = class extends Simulation.CameraControl.CameraMode {
     constructor() {
         super();
+        this.name = "Orbit3D";
+        this.is2d = false;
     }
 
     update() {
