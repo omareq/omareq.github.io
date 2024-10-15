@@ -227,7 +227,7 @@ Robot.Robot = class{
         if(Simulation.activeCameraMode.is2d) {
             this.sensorArray.draw();
         } else {
-            translate(0,0, 0.45 * this.robotHeight - 2)
+            translate(0,0, 0.45 * this.robotHeight - 2);
             this.sensorArray.draw(0.65 * this.robotHeight);
         }
         pop();
