@@ -257,12 +257,20 @@ Robot.LightSensorArray = class {
                 translate(x, y, 0);
                 rotateX(HALF_PI);
                 cylinder(0.5 * r, height);
+                pop();
+
+                push();
+                colorMode(RGB);
+                fill(2.55 * b);
+                translate(x, y, 1.1 * height);
+                noStroke();
+                sphere(0.5 * r);
+                pop();
 
                 // TODO: add working spot light
                 // spotLight(0, 0, b, 0, 0, -0.5 * height + 1, 0, 0, -1);
                 // spotLight(0, 0, b, 0, 0, 2 * height + 1, 0, 0, -1);
                 // sphere(0.5 * r);
-                pop();
 
                 if(v.x != -1 && v.y != -1) {
                     translate(0, 0, -0.5 * height);
