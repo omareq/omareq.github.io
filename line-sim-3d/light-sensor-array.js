@@ -230,7 +230,7 @@ Robot.LightSensorArray = class {
     /**
      * Draw the light sensor array.  Colour each sensor independently.
      */
-    draw() {
+    draw(height=10) {
         for(let i = 0; i < this.numSensors; i++) {
             const x = this.sensors[i].pos.x;
             const y = this.sensors[i].pos.y;
@@ -244,12 +244,32 @@ Robot.LightSensorArray = class {
             stroke(100 * i / this.numSensors, 100, 100);
             strokeWeight(0.2 * r);
 
-            if(v.x != -1 && v.y != -1) {
-                ellipse(v.x, v.y, 0.25 * r, 0.25 * r);
-                line(x, y, v.x, v.y);
-            }
 
-            ellipse(x, y, r, r);
+
+            if(Simulation.activeCameraMode.is2d) {
+                if(v.x != -1 && v.y != -1) {
+                    ellipse(v.x, v.y, 0.25 * r, 0.25 * r);
+                    line(x, y, v.x, v.y);
+                }
+                ellipse(x, y, r, r);
+            } else {
+                push();
+                translate(x, y, 0);
+                rotateX(HALF_PI);
+                cylinder(0.5 * r, height);
+
+                // TODO: add working spot light
+                // spotLight(0, 0, b, 0, 0, -0.5 * height + 1, 0, 0, -1);
+                // spotLight(0, 0, b, 0, 0, 2 * height + 1, 0, 0, -1);
+                // sphere(0.5 * r);
+                pop();
+
+                if(v.x != -1 && v.y != -1) {
+                    translate(0, 0, -0.5 * height);
+                    ellipse(v.x, v.y, 0.25 * r, 0.25 * r);
+                    line(x, y, v.x, v.y);
+                }
+            }
             pop();
         }
     }

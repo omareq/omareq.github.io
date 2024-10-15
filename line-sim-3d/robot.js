@@ -110,6 +110,7 @@ Robot.Robot = class{
         this.pos = pos.copy();
         this.bearing = bearing;
         this.size = size;
+        this.robotHeight = 0.45 * this.size;
         this.sensorArray = sensorArray;//.copy();
         this.sensorArrayPos = sensorArrayPos.copy();
         this.algorithm = algorithm;
@@ -207,10 +208,9 @@ Robot.Robot = class{
         if(Simulation.activeCameraMode.is2d) {
             rect(0,0, this.size, this.size, 0.15 * this.size);
         } else {
-            const robotHeight = 0.4 * this.size;
-            translate(0, 0, 0.5 * robotHeight);
-            box(this.size, this.size, robotHeight);
-            translate(0, 0, 0.5 * robotHeight);
+            translate(0, 0, 0.5 * this.robotHeight);
+            box(this.size, this.size, this.robotHeight);
+            translate(0, 0, 0.5 * this.robotHeight);
         }
 
         // forward pointing line
@@ -224,7 +224,12 @@ Robot.Robot = class{
         this.sensorArray.setPos(this.pos.copy().add(rotatedSensorPos));
         push();
         translate(0, 0, 1);
-        this.sensorArray.draw();
+        if(Simulation.activeCameraMode.is2d) {
+            this.sensorArray.draw();
+        } else {
+            translate(0,0, 0.45 * this.robotHeight - 2)
+            this.sensorArray.draw(0.65 * this.robotHeight);
+        }
         pop();
     }
 };
