@@ -55,7 +55,7 @@ Robot.RobotTelemetryData = class {
         this.robotSize = robot.size;
         this.pos = robot.pos.copy();
         this.bearing = robot.bearing;
-        this.vel = robot.bearing;
+        this.vel = robot.vel;
         this.rotationRate = robot.rotationRate;
 
         this.sensorVals = robot.getLastSensorVals();
@@ -171,13 +171,22 @@ Robot.Robot = class{
     }
 
     /**
+     * Gets the last set of telemetry data as calculated in the last time step.
+     *
+     * @returns {Robot.RobotTelemetryData} - Latest telemetry data.
+     */
+    getTelemetryData() {
+        return this.data;
+    }
+
+    /**
      * Robot update function.  This sends a telemetry data object to the line
      * follow algorithm and then updates the movement according the algorithms
      * requested movement commands.
      */
     update() {
-        const data = new Robot.RobotTelemetryData(this);
-        const movementCommands = this.algorithm.follow(data);
+        this.data = new Robot.RobotTelemetryData(this);
+        const movementCommands = this.algorithm.follow(this.data);
         this.setForwardVel(movementCommands.vel);
         this.setRotationRate(movementCommands.rotationRate);
 

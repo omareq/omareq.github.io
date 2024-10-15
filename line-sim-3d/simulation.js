@@ -162,6 +162,7 @@ Simulation.update = function() {
         Simulation.activeCameraMode.update();
     } catch(err) {
         UI.cameraModeSelect.selected("Default2D");
+        alert(err);
     }
 };
 

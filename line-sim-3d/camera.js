@@ -83,3 +83,30 @@ Simulation.CameraControl.Modes.Orbit3D = class extends Simulation.CameraControl.
         orbitControl();
     }
 };
+
+Simulation.CameraControl.Modes.FollowRobotTop3D = class extends Simulation.CameraControl.CameraMode {
+    constructor() {
+        super();
+        this.name = "FollowRobotTop3D";
+        this.is2d = false;
+        if(Simulation.Mode.activeMode.robot == undefined) {
+            throw("There is no robot for the camera to follow");
+        }
+    }
+
+    update() {
+        if(Simulation.Mode.activeMode.robot == undefined) {
+            throw("There is no robot for the camera to follow");
+        }
+        const robotData = Simulation.Mode.activeMode.robot.getTelemetryData();
+
+        let pos = robotData.pos.copy();
+        // translate doesn't work on the cam set position function
+        pos.sub(createVector(width/2, height/2, 0));
+
+        this.cam.setPosition(pos.x,
+            pos.y,
+            pos.z + 15 * robotData.robotSize);
+        this.cam.lookAt(pos.x, pos.y, pos.z);
+    }
+};
