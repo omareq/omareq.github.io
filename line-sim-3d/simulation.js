@@ -158,7 +158,11 @@ Simulation.update = function() {
     pop();
 
 // TODO: once draw is separated do camera updates even when paused
-    Simulation.activeCameraMode.update();
+    try{
+        Simulation.activeCameraMode.update();
+    } catch(err) {
+        UI.cameraModeSelect.selected("Default2D");
+    }
 };
 
 /**
