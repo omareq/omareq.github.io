@@ -126,7 +126,7 @@ UI.initCameraModeSelector = function() {
 UI.updateCameraModeSelector = function() {
     if(Simulation.activeCameraMode.name != UI.cameraModeSelect.selected()) {
         console.debug("Changing Camera Mode: ", UI.cameraModeSelect.selected());
-        Simulation.activeCameraMode = new Simulation.CameraControl.Modes[UI.cameraModeSelect.selected()];
+        Simulation.activeCameraMode = new Simulation.CameraControl.Modes[UI.cameraModeSelect.selected()]();
     }
 };
 
