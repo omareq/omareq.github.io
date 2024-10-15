@@ -204,7 +204,14 @@ Robot.Robot = class{
         rotate(this.bearing);
 
         // robot rectangle
-        rect(0,0, this.size, this.size, 0.15 * this.size);
+        if(Simulation.activeCameraMode.is2d) {
+            rect(0,0, this.size, this.size, 0.15 * this.size);
+        } else {
+            const robotHeight = 0.4 * this.size;
+            translate(0, 0, 0.5 * robotHeight);
+            box(this.size, this.size, robotHeight);
+            translate(0, 0, 0.5 * robotHeight);
+        }
 
         // forward pointing line
         stroke(0);
