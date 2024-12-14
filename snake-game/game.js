@@ -44,10 +44,16 @@ Game.SnakeGameEngine = class {
         this.height = height / this.scale;
         this.width = width / this.scale;
         this.snake = new Game.Snake(this);
+        this.food = new Game.Food(this);
     };
 
     update() {
         this.snake.update();
+        if(this.snake.eat(this.food)) {
+            this.food.newLocation();
+        }
+
+        this.food.draw();
         this.snake.draw();
     };
 };

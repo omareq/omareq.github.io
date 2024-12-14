@@ -60,9 +60,17 @@ Game.Snake = class {
         const startY = this.gameController.height / 2;
         this.startPos = createVector(startX, startY);
         this.body = [this.startPos];
-        this.scale = gameController.scale;
         this.justEaten = false;
 
+    };
+
+    eat(food) {
+        const head = this.body[0].copy();
+        if (food.pos.x == head.x && food.pos.y == head.y) {
+          this.justEaten = true;
+          return true;
+        }
+        return false;
     };
 
     die() {
@@ -119,7 +127,7 @@ Game.Snake = class {
 
     draw() {
         push();
-        const scale = this.scale;
+        const scale = this.gameController.scale;
         for (let i = this.body.length - 1; i >= 0; i --) {
           const section = this.body[i];
           const grey = floor(map(i, 0, this.body.length, 255, 50));

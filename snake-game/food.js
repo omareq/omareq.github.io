@@ -30,3 +30,24 @@
  *
  *****************************************************************************/
 "use strict";
+
+
+Game.Food = class {
+  constructor(gameController) {
+    this.gameController = gameController;
+    this.newLocation();
+  };
+
+  newLocation() { // TODO: adjust so that it is not on the snake body
+    this.pos = createVector(floor(random(this.gameController.width)),
+        floor(random(this.gameController.height)));
+  };
+
+  draw() {
+    push();
+    fill(0, 255, 0);
+    const scale = this.gameController.scale;
+    rect(this.pos.x * scale, this.pos.y * scale, scale, scale);
+    pop();
+  };
+};
