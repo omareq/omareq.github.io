@@ -50,14 +50,18 @@ Game.snakeSetup = function() {
         DOWN: createVector(0, 1),
         RIGHT: createVector(1, 0)
     });
+
+    Game.getOppositeDirection = function(direction) {
+        return (direction-1 + 2) % 4 + 1;
+    };
 };
 
 Game.Snake = class {
     constructor(gameController) {
         this.gameController = gameController;
         this.direction = Game.SNAKE_DIRECTION.LEFT;
-        const startX = this.gameController.width / 2;
-        const startY = this.gameController.height / 2;
+        const startX = floor(this.gameController.width / 2);
+        const startY = floor(this.gameController.height / 2);
         this.startPos = createVector(startX, startY);
         this.body = [this.startPos.copy()];
         this.justEaten = false;
@@ -77,6 +81,19 @@ Game.Snake = class {
         console.log("DIE");
         this.body = [this.startPos.copy()];
         this.direction = Game.SNAKE_DIRECTION.LEFT;
+    };
+
+
+    setDirection(newDirection) {
+        if(newDirection < 1 || newDirection > 4) {
+            return;
+        }
+
+        if(newDirection == Game.getOppositeDirection(this.direction)) {
+            return;
+        }
+
+        this.direction = newDirection;
     };
 
     update() {

@@ -40,14 +40,26 @@ Game.SnakeGameEngine = class {
     constructor() {
         Game.snakeSetup();
         frameRate(10);
-        this.scale = width / 35; // TODO: do this in a clever way
-        this.height = height / this.scale;
-        this.width = width / this.scale;
+        this.height = 35;
+        this.width = this.height;
+        this.scale = height / this.height; // TODO: do this in a clever way
         this.snake = new Game.Snake(this);
         this.food = new Game.Food(this);
     };
 
     update() {
+        if(keyIsPressed) {
+            if (keyIsDown(LEFT_ARROW) || key.toLowerCase() == "a") {
+                this.snake.setDirection(Game.SNAKE_DIRECTION.LEFT);
+            } else if (keyIsDown(RIGHT_ARROW) || key.toLowerCase() == "d") {
+                this.snake.setDirection(Game.SNAKE_DIRECTION.RIGHT);
+            } else if (keyIsDown(UP_ARROW) || key.toLowerCase() == "w") {
+                this.snake.setDirection(Game.SNAKE_DIRECTION.UP);
+            } else if (keyIsDown(DOWN_ARROW) || key.toLowerCase() == "s") {
+                this.snake.setDirection(Game.SNAKE_DIRECTION.DOWN);
+            }
+        }
+
         this.snake.update();
         if(this.snake.eat(this.food)) {
             this.food.newLocation();
