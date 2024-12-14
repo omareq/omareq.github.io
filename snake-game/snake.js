@@ -122,7 +122,7 @@ Game.Snake = class {
           }
         } else if(this.direction == Game.SNAKE_DIRECTION.DOWN) {
           nextPos.add(Game.SNAKE_VEL.DOWN);
-          if (nextPos.y >=  this.gameController.height) {
+          if (nextPos.y >= this.gameController.height) {
             nextPos.y = 0;
           }
         } else if(this.direction == Game.SNAKE_DIRECTION.RIGHT) {
@@ -157,5 +157,3 @@ Game.Snake = class {
         pop();
     };
 };
-
-
