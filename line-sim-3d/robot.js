@@ -56,6 +56,7 @@ Robot.RobotTelemetryData = class {
         this.pos = robot.pos.copy();
         this.bearing = robot.bearing;
         this.vel = robot.vel;
+        this.maxVel = robot.maxVel;
         this.rotationRate = robot.rotationRate;
 
         this.sensorVals = robot.getLastSensorVals();

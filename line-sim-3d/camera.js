@@ -84,6 +84,70 @@ Simulation.CameraControl.Modes.Orbit3D = class extends Simulation.CameraControl.
     }
 };
 
+Simulation.CameraControl.Modes.FollowRobot3D = class extends Simulation.CameraControl.CameraMode {
+    constructor() {
+        super();
+        this.name = "FollowRobot3D";
+        this.is2d = false;
+        if(Simulation.Mode.activeMode.robot == undefined) {
+            throw("There is no robot for the camera to follow");
+        }
+    }
+
+    update() {
+        if(Simulation.Mode.activeMode.robot == undefined) {
+            throw("There is no robot for the camera to follow");
+        }
+        const robotData = Simulation.Mode.activeMode.robot.getTelemetryData();
+
+        if(robotData.vel < 0.1 * robotData.maxVel) {
+            return;
+        }
+
+        const lookAheadDist = 7 * robotData.robotSize;
+        const camFollowDist = 1 * robotData.robotSize;
+        const camHeight = 1 * robotData.robotSize;
+
+        let pos = robotData.pos.copy();
+        // translate doesn't work on the cam set position function
+        pos.sub(createVector(width/2, height/2, 0));
+
+        let aim = createVector(1, 0, 0);
+        aim.setMag(lookAheadDist);
+        aim.setHeading(robotData.bearing + HALF_PI);
+        aim.add(pos);
+        aim.sub(createVector(width/2, height/2));
+
+        let cam = pos.copy().sub(aim.copy().setMag(camFollowDist));
+        cam.add(createVector(0,0, camHeight));
+        cam.sub(createVector(width/2, height/2));
+
+
+
+
+        this.cam.setPosition(cam.x, cam.y, cam.z);
+        this.cam.lookAt(aim.x, aim.y, pos.z);
+
+        push();
+        colorMode(RGB);
+        translate(width/2, height/2, 4);
+        stroke(0);
+        fill(255, 0, 0);
+        ellipse(cam.x, cam.y, 5, 5);
+        fill(0, 255, 0);
+        ellipse(aim.x, aim.y, 5, 5);
+        line(aim.x, aim.y, cam.x, cam.y);
+        pop();
+
+        // this.cam.setPosition(pos.x,
+        //     pos.y,
+        //     pos.z + 35 * robotData.robotSize);
+        // this.cam.lookAt(pos.x, pos.y, pos.z);
+        // orbitControl();
+
+    }
+};
+
 Simulation.CameraControl.Modes.FollowRobotTop3D = class extends Simulation.CameraControl.CameraMode {
     constructor() {
         super();
