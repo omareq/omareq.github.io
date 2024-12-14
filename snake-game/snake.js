@@ -59,7 +59,7 @@ Game.Snake = class {
         const startX = this.gameController.width / 2;
         const startY = this.gameController.height / 2;
         this.startPos = createVector(startX, startY);
-        this.body = [this.startPos];
+        this.body = [this.startPos.copy()];
         this.justEaten = false;
 
     };
@@ -75,6 +75,8 @@ Game.Snake = class {
 
     die() {
         console.log("DIE");
+        this.body = [this.startPos.copy()];
+        this.direction = Game.SNAKE_DIRECTION.LEFT;
     };
 
     update() {
@@ -118,7 +120,7 @@ Game.Snake = class {
           const section = this.body[i];
           if (section.x == nextPos.x && section.y == nextPos.y) {
             this.die();
-            break;
+            return;
           }
         }
 
