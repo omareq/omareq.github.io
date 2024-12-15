@@ -45,6 +45,19 @@ Game.SnakeGameEngine = class {
         this.scale = height / this.height; // TODO: do this in a clever way
         this.snake = new Game.Snake(this);
         this.food = new Game.Food(this);
+        this.obstacles = [];
+        this.obstacles.push(new Game.Obstacle(this, 0, 0, 1, this.height));
+        this.obstacles.push(new Game.Obstacle(this, this.width-1, 0, 1, this.height));
+    };
+
+    draw() {
+        this.snake.draw();
+
+        for(let i = 0; i < this.obstacles.length; i++) {
+            this.obstacles[i].draw();
+        }
+
+        this.food.draw();
     };
 
     update() {
@@ -61,11 +74,15 @@ Game.SnakeGameEngine = class {
         }
 
         this.snake.update();
+
         if(this.snake.eat(this.food)) {
             this.food.newLocation();
         }
 
-        this.food.draw();
-        this.snake.draw();
+        if(this.snake.collide(this.obstacles)) {
+            this.snake.die();
+        }
+
+        this.draw();
     };
 };

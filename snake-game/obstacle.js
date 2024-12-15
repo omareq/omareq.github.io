@@ -30,3 +30,40 @@
  *
  *****************************************************************************/
 "use strict";
+
+Game.Obstacle = class {
+    constructor(gameController, x, y, w=1, h=1) {
+        // TODO: check input params are correct types
+        this.gameController = gameController;
+        this.pos = createVector(x, y);
+        this.width = w;
+        this.height = h;
+    };
+
+    contains(location) {
+        // TODO: check input params are correct types
+        if(location.x < this.pos.x || location.x >= (this.pos.x + this.width)) {
+            return false;
+        }
+
+        if(location.y < this.pos.y || location.y >= (this.pos.y + this.height)) {
+            return false;
+        }
+
+        return true;
+    };
+
+    draw() {
+        push();
+        fill(170, 10, 10);
+        const scale = this.gameController.scale;
+        for(let x = 0; x < this.width; x ++) {
+            for(let y = 0; y < this.height; y++) {
+                rect((this.pos.x + x) * scale,
+                    (this.pos.y + y) * scale,
+                    scale, scale);
+            }
+        }
+        pop();
+    };
+};

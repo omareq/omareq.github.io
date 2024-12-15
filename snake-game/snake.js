@@ -77,6 +77,20 @@ Game.Snake = class {
         return false;
     };
 
+    collide(obstacles) {
+        for(let i = 0; i < obstacles.length; i++) {
+            const obstacle = obstacles[i];
+            for(let j = 0; j < this.body.length; j++) {
+                const bodySection = this.body[j];
+                if(obstacle.contains(bodySection)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    };
+
     die() {
         console.log("DIE");
         this.body = [this.startPos.copy()];
