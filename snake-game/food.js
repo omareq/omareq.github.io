@@ -38,7 +38,7 @@ Game.Food = class {
     this.newLocation();
   };
 
-  newLocation() { // TODO: adjust so that it is not on the snake body
+  newLocation() {
     this.pos = createVector(floor(random(this.gameController.width)),
         floor(random(this.gameController.height)));
   };

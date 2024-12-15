@@ -60,6 +60,21 @@ Game.SnakeGameEngine = class {
         this.food.draw();
     };
 
+    generateNewFoodLocation() { // TODO: adjust so not on snake body
+        let badLocation = true;
+        while(badLocation) {
+            this.food.newLocation();
+            badLocation = false;
+            for(let i = 0; i < this.obstacles.length; i++) {
+                if(this.obstacles[i].contains(this.food.pos)) {
+                    badLocation = true;
+                    console.log("Bad food location moving");
+                    break;
+                }
+            }
+        }
+    };
+
     update() {
         if(keyIsPressed) {
             if (keyIsDown(LEFT_ARROW) || key.toLowerCase() == "a") {
@@ -76,7 +91,7 @@ Game.SnakeGameEngine = class {
         this.snake.update();
 
         if(this.snake.eat(this.food)) {
-            this.food.newLocation();
+            this.generateNewFoodLocation();
         }
 
         if(this.snake.collide(this.obstacles)) {
