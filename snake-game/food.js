@@ -31,22 +31,26 @@
  *****************************************************************************/
 "use strict";
 
+/**
+ * Game Namespace Object
+ */
+var Game = Game || {};
 
 Game.Food = class {
-  constructor(gameController) {
-    this.gameController = gameController;
+  constructor(resolution) {
+    this.res = resolution;
     this.newLocation();
   };
 
   newLocation() {
-    this.pos = createVector(floor(random(this.gameController.width)),
-        floor(random(this.gameController.height)));
+    this.pos = createVector(floor(random(this.res.width)),
+        floor(random(this.res.height)));
   };
 
   draw() {
     push();
     fill(0, 255, 0);
-    const scale = this.gameController.scale;
+    const scale = this.res.scale;
     rect(this.pos.x * scale, this.pos.y * scale, scale, scale);
     pop();
   };

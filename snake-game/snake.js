@@ -57,12 +57,10 @@ Game.snakeSetup = function() {
 };
 
 Game.Snake = class {
-    constructor(gameController) {
-        this.gameController = gameController;
-        this.direction = Game.SNAKE_DIRECTION.LEFT;
-        const startX = floor(this.gameController.width / 2);
-        const startY = floor(this.gameController.height / 2);
-        this.startPos = createVector(startX, startY);
+    constructor(startPos, startDir, resolution) {
+        this.res = resolution;
+        this.direction = startDir;
+        this.startPos = startPos;
         this.body = [this.startPos.copy()];
         this.justEaten = false;
 
@@ -127,21 +125,21 @@ Game.Snake = class {
         if(this.direction == Game.SNAKE_DIRECTION.UP) {
           nextPos.add(Game.SNAKE_VEL.UP);
           if (nextPos.y < 0) {
-            nextPos.y = this.gameController.height - 1;
+            nextPos.y = this.res.height - 1;
           }
         } else if(this.direction == Game.SNAKE_DIRECTION.LEFT) {
           nextPos.add(Game.SNAKE_VEL.LEFT);
           if (nextPos.x < 0) {
-            nextPos.x = this.gameController.width - 1;
+            nextPos.x = this.res.width - 1;
           }
         } else if(this.direction == Game.SNAKE_DIRECTION.DOWN) {
           nextPos.add(Game.SNAKE_VEL.DOWN);
-          if (nextPos.y >= this.gameController.height) {
+          if (nextPos.y >= this.res.height) {
             nextPos.y = 0;
           }
         } else if(this.direction == Game.SNAKE_DIRECTION.RIGHT) {
           nextPos.add(Game.SNAKE_VEL.RIGHT);
-          if (nextPos.x >= this.gameController.width) {
+          if (nextPos.x >= this.res.width) {
             nextPos.x = 0;
           }
         }
@@ -160,7 +158,7 @@ Game.Snake = class {
 
     draw() {
         push();
-        const scale = this.gameController.scale;
+        const scale = this.res.scale;
         for (let i = this.body.length - 1; i >= 0; i --) {
           const section = this.body[i];
           const grey = floor(map(i, 0, this.body.length, 255, 50));

@@ -31,10 +31,15 @@
  *****************************************************************************/
 "use strict";
 
+/**
+ * Game Namespace Object
+ */
+var Game = Game || {};
+
 Game.Obstacle = class {
-    constructor(gameController, x, y, w=1, h=1) {
+    constructor(resolution, x, y, w=1, h=1) {
         // TODO: check input params are correct types
-        this.gameController = gameController;
+        this.res = resolution;
         this.pos = createVector(x, y);
         this.width = w;
         this.height = h;
@@ -56,7 +61,7 @@ Game.Obstacle = class {
     draw() {
         push();
         fill(170, 10, 10);
-        const scale = this.gameController.scale;
+        const scale = this.res.scale;
         for(let x = 0; x < this.width; x ++) {
             for(let y = 0; y < this.height; y++) {
                 rect((this.pos.x + x) * scale,

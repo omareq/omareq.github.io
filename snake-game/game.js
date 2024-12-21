@@ -39,65 +39,39 @@ var Game = Game || {};
 Game.SnakeGameEngine = class {
     constructor() {
         Game.snakeSetup();
+        Game.levelSetup();
         frameRate(10);
-        this.height = 35;
-        this.width = this.height;
-        this.scale = height / this.height; // TODO: do this in a clever way
-        this.snake = new Game.Snake(this);
-        this.food = new Game.Food(this);
-        this.obstacles = [];
-        this.obstacles.push(new Game.Obstacle(this, 0, 0, 1, this.height));
-        this.obstacles.push(new Game.Obstacle(this, this.width-1, 0, 1, this.height));
+        this.currentLevelIndex = 0;
+        const levelData = Game.levelData[this.currentLevelIndex];
+        this.currentLevel = new Game.Level(levelData);
+
+        this.height = this.currentLevel.height;
+        this.width = this.currentLevel.width;
+        this.scale = this.currentLevel.scale;
     };
+
+    nextLevel() {
+        this.currentLevelIndex++;
+        if(this.currentLevelIndex >= Game.levelData.length) {
+            this.currentLevelIndex = 0; // TODO: completed game
+        }
+
+        const levelData = Game.levelData[this.currentLevelIndex];
+        this.currentLevel = new Game.Level(levelData);
+
+        this.height = this.currentLevel.height;
+        this.width = this.currentLevel.width;
+        this.scale = this.currentLevel.scale;
+    }
 
     draw() {
-        this.snake.draw();
-
-        for(let i = 0; i < this.obstacles.length; i++) {
-            this.obstacles[i].draw();
-        }
-
-        this.food.draw();
-    };
-
-    generateNewFoodLocation() { // TODO: adjust so not on snake body
-        let badLocation = true;
-        while(badLocation) {
-            this.food.newLocation();
-            badLocation = false;
-            for(let i = 0; i < this.obstacles.length; i++) {
-                if(this.obstacles[i].contains(this.food.pos)) {
-                    badLocation = true;
-                    console.log("Bad food location moving");
-                    break;
-                }
-            }
-        }
+        this.currentLevel.draw();
     };
 
     update() {
-        if(keyIsPressed) {
-            if (keyIsDown(LEFT_ARROW) || key.toLowerCase() == "a") {
-                this.snake.setDirection(Game.SNAKE_DIRECTION.LEFT);
-            } else if (keyIsDown(RIGHT_ARROW) || key.toLowerCase() == "d") {
-                this.snake.setDirection(Game.SNAKE_DIRECTION.RIGHT);
-            } else if (keyIsDown(UP_ARROW) || key.toLowerCase() == "w") {
-                this.snake.setDirection(Game.SNAKE_DIRECTION.UP);
-            } else if (keyIsDown(DOWN_ARROW) || key.toLowerCase() == "s") {
-                this.snake.setDirection(Game.SNAKE_DIRECTION.DOWN);
-            }
+        this.currentLevel.update();
+        if(this.currentLevel.complete()) {
+            this.nextLevel();
         }
-
-        this.snake.update();
-
-        if(this.snake.eat(this.food)) {
-            this.generateNewFoodLocation();
-        }
-
-        if(this.snake.collide(this.obstacles)) {
-            this.snake.die();
-        }
-
-        this.draw();
     };
 };
