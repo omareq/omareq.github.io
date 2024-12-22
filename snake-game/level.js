@@ -63,7 +63,7 @@ Game.Level = class {
                 levelData.obstacles[i].y,
                 levelData.obstacles[i].width,
                 levelData.obstacles[i].height
-                ))
+                ));
 
             obstacleArea += levelData.obstacles[i].width * levelData.obstacles[i].height;
         }
