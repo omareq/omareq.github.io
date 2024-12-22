@@ -122,10 +122,12 @@ Game.Level = class {
 
         if(this.snake.eat(this.food)) {
             this.generateNewFoodLocation();
+            console.log("Percent Complete: ", this.snake.body.length / (0.1 * this.freeArea));
         }
 
-        if(this.snake.collide(this.obstacles)) {
+        if(this.snake.collide(this.obstacles) || this.snake.lostLife) {
             this.snake.die();
+            this.lostLife = true;
         }
 
         this.draw();

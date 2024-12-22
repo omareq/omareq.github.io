@@ -48,6 +48,8 @@ Game.SnakeGameEngine = class {
         this.height = this.currentLevel.height;
         this.width = this.currentLevel.width;
         this.scale = this.currentLevel.scale;
+
+        this.playerLives = 3;
     };
 
     nextLevel() {
@@ -72,6 +74,17 @@ Game.SnakeGameEngine = class {
         this.currentLevel.update();
         if(this.currentLevel.complete()) {
             this.nextLevel();
+        }
+        if(this.currentLevel.lostLife) {
+            this.playerLives--;
+            console.log("Player Lives: ", this.playerLives);
+            if(this.playerLives < 1) {
+                this.currentLevelIndex = -1;
+                this.nextLevel();
+                console.log("Out of Lives Game Over");
+                this.playerLives = 3;
+            }
+            this.currentLevel.lostLife = false;
         }
     };
 };

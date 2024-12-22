@@ -109,6 +109,7 @@ Game.Snake = class {
     };
 
     update() {
+        this.lostLife = false;
         if(this.justEaten) {
           const tail = this.body[this.body.length - 1].copy();
           this.body.push(tail);
@@ -149,6 +150,7 @@ Game.Snake = class {
           const section = this.body[i];
           if (section.x == nextPos.x && section.y == nextPos.y) {
             this.die();
+            this.lostLife = true;
             return;
           }
         }
