@@ -287,7 +287,7 @@ class Mesh {
 			[b.x, b.y, b.x**2 + b.y**2, 1],
 			[c.x, c.y, c.x**2 + c.y**2, 1],
 			[d.x, d.y, d.x**2 + d.y**2, 1]
-			]
+			];
 
 		return math.det(matrix) > 0;
 	}
