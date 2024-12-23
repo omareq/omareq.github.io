@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ui.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ui.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *  @file ui.js A file with all the the ui handlers
+ *
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 15-March-2024
+ *  @link https://omareq.github.io/line-sim-3d/
+ *  @link https://omareq.github.io/line-sim-3d/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2024 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+"use strict";
+
+/**
+ * UI Namespace Object
+ */
+var UI = UI || {};
+
+
+/**
+ * UI control panel setup function that assigns the handler and makes the
+ * control panel visible
+ */
+UI.controlPanelSetup = function() {
+    UI.controlPanel = document.getElementById("control-panel");
+    UI.controlPanelShow();
+};
+
+/**
+ * UI control panel show function makes the control panel visible
+ */
+UI.controlPanelShow = function() {
+    UI.controlPanel.style.visibility = "visible";
+    UI.controlPanel.style.display = "inline";
+};
+
+/**
+ * UI control panel hide function makes the control panel hidden
+ */
+UI.controlPanelHide = function() {
+    UI.controlPanel.style.visibility = "hidden";
+    UI.controlPanel.style.display = "none";
+};
+
+/**
+ * UI canvas loading text hide function
+ */
+UI.canvasLoadingTextHide = function() {
+    UI.canvasLoadingText = document.getElementById("canvas-loading-text");
+    UI.canvasLoadingText.style.visibility = "hidden";
+    UI.canvasLoadingText.style.display = "none";
+};
+
+/**
+ * Initialise the simulation mode selector
+ */
+UI.initSimulationModeSelector = function() {
+    UI.modeSelectorLength = Simulation.Mode.ModeList.length;
+    UI.modeSelect = createSelect();
+    UI.modeSelect.parent("simulation-mode-selector");
+    UI.modeSelect.option("Debug");
+    for(let i = 0; i &lt; UI.modeSelectorLength; i++) {
+        const name = Simulation.Mode.ModeList[i].staticName;
+        if(name.startsWith("Debug")) {
+            continue;
+        }
+        UI.modeSelect.option(Simulation.Mode.ModeList[i].staticName);
+    }
+    UI.modeSelect.selected(Simulation.Mode.activeMode.name);
+};
+
+/**
+ * Update the simulation mode selector. If this is called and there is a new
+ * Simulation ModeType in the modeList then the new mode is added to the
+ * selector
+ */
+UI.updateSimulationModeSelector = function() {
+    if(UI.modeSelectorLength != Simulation.Mode.ModeList.length) {
+        UI.initSimulationModeSelector();
+    }
+
+    if(Simulation.Mode.activeMode.name != UI.modeSelect.selected()) {
+        console.debug("Changing Mode: ", UI.modeSelect.selected());
+        Simulation.Mode.setModeByName(UI.modeSelect.selected());
+    }
+};
+
+/**
+ * Initialise the pause button
+ */
+UI.initPauseButton = function() {
+    UI.pauseButton = createButton("Pause", "value");
+    UI.pauseButton.parent("pause-button");
+    UI.pauseButton.mousePressed(Simulation.pauseFlagToggle);
+};
+
+/**
+ * Initialise the reset button
+ */
+UI.initResetButton = function() {
+    UI.resetButton = createButton("Reset", "value");
+    UI.resetButton.parent("reset-button");
+    UI.resetButton.mousePressed(Simulation.reset);
+};
+
+/**
+ * Load a room from a JSON file into the current simulation mode room member
+ * variable
+ */
+UI.loadRoomFromJSON = async function() {
+    Simulation.pauseFlagSet();
+    const [fileHandle] = await UI.getFile();
+
+    if(fileHandle == undefined) {
+        Simulation.pauseFlagUnset();
+        return;
+    }
+
+    // add query permissions
+    const filePermissions = await fileHandle.queryPermission({mode: "read"});
+    if(!filePermissions === "granted") {
+        alert("File Read Permissions Are Denied");
+        return;
+    }
+
+    //  get data
+    const fileData = await fileHandle.getFile();
+    const fileText = await fileData.text();
+    let fileJSON;
+
+    try {
+        fileJSON = await JSON.parse(fileText);
+    } catch (e) {
+        alert("The input file " + fileHandle.name + " is not a valid json file");
+        return;
+    }
+
+    console.log(fileJSON);
+
+    const roomCheck = World.Room.validateJSON(fileJSON);
+    if(!roomCheck.valid) {
+        alert("Input file is invalid: " + roomCheck.error);
+        return;
+    }
+
+    const tilesRatio = fileJSON.xNumTiles / fileJSON.yNumTiles;
+    const pixelsRatio = width / height;
+
+    let gridSize = -1;
+    if(tilesRatio > pixelsRatio) {
+        gridSize = width / fileJSON.xNumTiles;
+    } else {
+        gridSize = height / fileJSON.yNumTiles;
+    }
+
+    World.setGridSize(gridSize);
+
+    const xOffsetRoom = 0.5 * (width - (fileJSON.xNumTiles * World.gridSize));
+    const roomPos = createVector(xOffsetRoom, 0);
+    let newRoom = new World.Room(fileJSON.xNumTiles, fileJSON.yNumTiles);
+    newRoom.setFromJSON(fileJSON);
+    newRoom.setGlobalPos(roomPos);
+    Simulation.Mode.activeMode.room = newRoom;
+
+    Simulation.pauseFlagUnset();
+    return;
+};
+
+/**
+ * Uses the file system to get a file handle for a json file.
+ *
+ * @returns {FileSystemFileHandle} A Promise whose fulfilment handler receives
+ * an Array of FileSystemFileHandle objects. Undefined array elements if error
+ * occurs
+ */
+UI.getFile = async function() {
+    const pickerOpts = {
+      types: [
+      {
+          description: "JSON File",
+          accept: {
+            "application/json": [".json"],
+        },
+    },
+    ],
+      excludeAcceptAllOption: true,
+      multiple: false,
+  };
+
+    try {
+        const fileHandle = await window.showOpenFilePicker(pickerOpts);
+        console.log("fileHandle: " + fileHandle);
+        return fileHandle;
+    } catch (error) {
+        console.warn("FileIO Error: ", error);
+        return [undefined];
+    }
+};
+
+
+/**
+ * UI setup all UI elements
+ */
+UI.setup = function() {
+    console.debug("UI.setup: Start");
+    UI.canvasLoadingTextHide();
+    UI.controlPanelSetup();
+    UI.initSimulationModeSelector();
+    UI.initPauseButton();
+    UI.initResetButton();
+    console.debug("UI.setup: End");
+    UI.logUIPollStartAndStop = false;
+};
+
+/**
+ * Poll UI elements that require periodic checks
+ */
+UI.poll = function() {
+    if(UI.logUIPollStartAndStop) {
+        console.debug("UI.poll: Start");
+    }
+    UI.updateSimulationModeSelector();
+    Simulation.Mode.activeMode.UIPoll();
+    if(UI.logUIPollStartAndStop) {
+        console.debug("UI.poll: End");
+    }
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.Robot.html">Robot</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.Debug.html">Debug</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugLineDistanceCheck.html">DebugLineDistanceCheck</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.MapEditor.html">MapEditor</a></li><li><a href="Simulation.Mode.MapEditor.EditCommand.html">EditCommand</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FSM">FSM</a></li><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Aug 30 2024 16:12:53 GMT-0600 (Mountain Daylight Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

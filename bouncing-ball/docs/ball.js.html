@@ -61,7 +61,47 @@ class Ball {
 	}
 
 	/**
+	 * Sets the x position of the ball.
+	 *
+	 * @param {number} newX - The new x value of the ball.
+	 */
+	setX(newX) {
+		this.x = newX;
+	}
+
+	/**
+	 * Sets the y position of the ball.
+	 *
+	 * @param {number} newY - The new y value of the ball.
+	 */
+	setY(newY) {
+		this.y = newY;
+	}
+
+	/**
+	 * Sets the x velocity of the ball.
+	 *
+	 * @param {number} newVelX - The new x velocity of the ball.
+	 */
+	setVelX(newVelX) {
+		this.vx = newVelX;
+	}
+
+	/**
+	 * Sets the y velocity of the ball.
+	 *
+	 * @param {number} newVelY - The new y velocity of the ball.
+	 */
+	setVelY(newVelY) {
+		this.vy = newVelY;
+	}
+
+	/**
 	*	Applies a single force to the Ball.
+	*
+	*	@param {number} fx  - The x component of the force.
+	*	@param {number} fy  - The y component of the force.
+	*	@param {number} dt  - The time step.
 	*/
 	applyForce(fx, fy, dt) {
 		let ax = fx/this.m;
@@ -77,31 +117,99 @@ class Ball {
 	*	Checks to see if the Ball has left the boundaries of the canvas. If
 	*	they have the ball will bounce back with 90% of it's original speed.
 	*/
-	checkEdges() {
+	checkEdges(ballWallPseudoCOR) {
+		const cor = constrain(ballWallPseudoCOR, 0, 1);
 		if(this.x + this.r > width) {
 			this.x = width - this.r;
-			this.vx *= -0.9;
+			this.vx *= -cor;
 			this.colour = color(255, 0, 0);
 		}
 		if(this.y + this.r > height) {
 			this.y = height - this.r;
-			this.vy *= -0.9;
+			this.vy *= -cor;
 			this.colour = color(0, 255, 0);
 		}
 		if(this.x - this.r &lt; 0) {
 			this.x = this.r;
-			this.vx *= -0.9;
+			this.vx *= -cor;
 			this.colour = color(0, 0, 255);
 		}
 		if(this.y - this.r &lt; 0) {
 			this.y = this.r;
-			this.vy *= -0.9;
-			if(random() &lt;= 0.25) {
-				this.vy += 3.0;
-				this.vy *= 1.2;
-			}
+			this.vy *= -cor;
 			this.colour = color(255, 255, 255);
 		}
+	}
+
+	/**
+	*	Checks to see if the given ball collides with this ball.
+	*
+	*	@param {number} ball - The ball to check the collision against.
+	*/
+	hits(ball) {
+		let distSqr = (this.x - ball.x)**2 + (this.y - ball.y)**2;
+		if(distSqr &lt;= (this.r + ball.r)**2	) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	*	Applies physics for elastic collision between balls.
+	*
+	*	@param {number} ball - The ball to do the collision against.
+	*/
+	collidePhysics(ball) {
+		let distSqr = abs(this.x - ball.x)**2 + abs(this.y - ball.y)**2;
+		let crossoverLen = this.r - (sqrt(distSqr) - ball.r);
+		let normalX = ball.x - this.x;
+		let normalY = ball.y - this.y;
+		let normalisationConst = 1.0 / sqrt(normalX**2 + normalY**2);
+		normalX *= normalisationConst;
+		normalY *= normalisationConst;
+
+		// let tangentX = -normalY;
+		// let tangentY = normalX;
+
+		this.x -= 0.5 * crossoverLen * normalX;
+		this.y -= 0.5 * crossoverLen * normalY;
+		ball.setX(ball.x + 0.5 * crossoverLen * normalX);
+		ball.setY(ball.y + 0.5 * crossoverLen * normalY);
+
+		// let collisionPointX = this.x + normalX * this.r;
+		// let collisionPointY = this.y + normalY * this.r;
+
+		let kebefore = 0.5 * this.m * (this.vx**2 + this.vy**2);
+		kebefore += 0.5 + ball.m * (ball.vx**2 + ball.vy**2);
+
+
+		let m1Reduced = 2.0 * ball.m / (this.m + ball.m);
+		let inner12 = (this.vx - ball.vx) * (this.x - ball.x);
+		inner12 += (this.vy - ball.vy) * (this.y - ball.y);
+
+		let d12Recip = 1.0 / (this.r + ball.r)**2;
+		// let d12Recip = 1.0 / ((this.x - ball.x)**2 + (this.y - ball.y)**2);
+
+		this.vx -= m1Reduced * inner12 * d12Recip * (this.x - ball.x);
+		this.vy -= m1Reduced * inner12 * d12Recip * (this.y - ball.y);
+
+
+		let m2Reduced = 2.0 * ball.m / (this.m + ball.m);
+		let inner21 = (ball.vx - this.vx) * (ball.x - this.x);
+		inner21 += (ball.vy - this.vy) * (ball.y - this.y);
+
+		let d21Recip = 1.0 / (this.r + ball.r)**2;
+		// let d21Recip = 1.0 / ((ball.x - this.x)**2 + (ball.y - this.y)**2);
+
+		ball.setVelX(ball.vx -
+			m2Reduced * inner21 * d21Recip * (ball.x - this.x));
+		ball.setVelY(ball.vy -
+			m2Reduced * inner21 * d21Recip * (ball.y - this.y));
+
+		let keafter = 0.5 * this.m * (this.vx**2 + this.vy**2);
+		keafter += 0.5 + ball.m * (ball.vx**2 + ball.vy**2);
+
+		console.log("KE Before: ", kebefore, " KE After: ", keafter);
 	}
 
 	/**
@@ -113,7 +221,8 @@ class Ball {
 		ellipse(this.x, height - this.y, 2 * this.r, 2 * this.r);
 		pop();
 	}
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 
@@ -123,12 +232,12 @@ class Ball {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ball.html">Ball</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#randBall">randBall</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ball.html">Ball</a></li></ul><h3>Global</h3><ul><li><a href="global.html#balls">balls</a></li><li><a href="global.html#controlPanel">controlPanel</a></li><li><a href="global.html#controlPanelHide">controlPanelHide</a></li><li><a href="global.html#controlPanelSetup">controlPanelSetup</a></li><li><a href="global.html#controlPanelShow">controlPanelShow</a></li><li><a href="global.html#deleteBall">deleteBall</a></li><li><a href="global.html#deleteBallButton">deleteBallButton</a></li><li><a href="global.html#deleteBallButtonSetup">deleteBallButtonSetup</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#drawGravity">drawGravity</a></li><li><a href="global.html#dt">dt</a></li><li><a href="global.html#gravitySliderSetup">gravitySliderSetup</a></li><li><a href="global.html#gravityVectorButtonsSetup">gravityVectorButtonsSetup</a></li><li><a href="global.html#gravityX">gravityX</a></li><li><a href="global.html#gravityXDisplay">gravityXDisplay</a></li><li><a href="global.html#gravityXSlider">gravityXSlider</a></li><li><a href="global.html#gravityY">gravityY</a></li><li><a href="global.html#gravityYDisplay">gravityYDisplay</a></li><li><a href="global.html#gravityYSlider">gravityYSlider</a></li><li><a href="global.html#hideGravity">hideGravity</a></li><li><a href="global.html#hideGravityVectorButton">hideGravityVectorButton</a></li><li><a href="global.html#maxNumBalls">maxNumBalls</a></li><li><a href="global.html#maxNumBallsDisplay">maxNumBallsDisplay</a></li><li><a href="global.html#maxNumBallsSlider">maxNumBallsSlider</a></li><li><a href="global.html#maxNumBallsSliderSetup">maxNumBallsSliderSetup</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#newBall">newBall</a></li><li><a href="global.html#newBallButton">newBallButton</a></li><li><a href="global.html#newBallButtonSetup">newBallButtonSetup</a></li><li><a href="global.html#numBallsDisplay">numBallsDisplay</a></li><li><a href="global.html#numBallsDisplaySetup">numBallsDisplaySetup</a></li><li><a href="global.html#pseudoBallWallCOR">pseudoBallWallCOR</a></li><li><a href="global.html#pseudoBallWallCORDisplay">pseudoBallWallCORDisplay</a></li><li><a href="global.html#pseudoBallWallCORSlider">pseudoBallWallCORSlider</a></li><li><a href="global.html#pseudoBallWallCORSliderSetup">pseudoBallWallCORSliderSetup</a></li><li><a href="global.html#randBall">randBall</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#resetButton">resetButton</a></li><li><a href="global.html#resetButtonSetup">resetButtonSetup</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#showGravity">showGravity</a></li><li><a href="global.html#showGravityVector">showGravityVector</a></li><li><a href="global.html#showGravityVectorButton">showGravityVectorButton</a></li><li><a href="global.html#showNumBalls">showNumBalls</a></li><li><a href="global.html#uiPoll">uiPoll</a></li><li><a href="global.html#uiSetup">uiSetup</a></li><li><a href="global.html#updatesPerFrame">updatesPerFrame</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Jun 05 2022 20:30:21 GMT+0100 (BST)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Feb 04 2024 18:35:38 GMT+0000 (Greenwich Mean Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

@@ -15,6 +15,8 @@
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script>
+  <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script language="javascript" type="text/javascript" src="../libraries/run_prettify.js"></script>
 
   <link type="text/css" rel="stylesheet" href="../main.css">
@@ -55,13 +57,72 @@
                    style="max-width:75px">
           </a>
           Docs
-          <a href="./docs/">
+          <a href="./docs/" rel="nofollow">
               <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
                    style="max-width:75px">
           </a>
         </div>
       </div>
     </section>
+
+    <section class="container">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h2> Complex Maths </h2>
+
+          <p> The Mandelbrot set is a 2D set which lies in the complex plane.
+              It has been featured in a lot of popular culture  a prominent
+              example being in the novel "The Ghost from the Grand Banks"
+              written by Arthur C Clarke.  There are a few attractions to this
+              particular set, I personally find the self repeating nature to be
+              attractive, in this particular case the Mandelbrot set is a
+              fractal.
+          </p>
+
+          <p>
+            The mathematical description of the Mandelbrot set is fairly simple.
+            The set is defined in the complex plane as the complex numbers \(c\)
+            for which the function \(f_{c}(z) = z^{2} + c\) does not diverge to
+            infinity when iterated starting at \(z=0\).  This is difficult to
+            visualise even for those familiar with complex functions, therefore
+            the pseudo code for generating the plot above is shown below.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2> Pseudocode Example</h2>
+        <pre>
+          <code class="prettyprint lang-js">
+let xx = linspace(xLowerLimit, xUpperLimit, xNumPts);
+let yy = linspace(yLowerLimit, yUpperLimit, yNumPts);
+
+let img = createImage(xNumPts, yNumPts);
+
+for(let i = 0; i < xx.length; i++) {
+    for(let j = 0; j < yy.length; j++) {
+        x = xx[i];
+        y = yy[j];
+
+        let c = math.complex(x, y);
+        let itt = 1;
+        let z = c;
+
+        while(itt < maxSteps && z.mul(z.conjugate()).re < threshold) {
+            z = z * z + c;
+            itt ++;
+        }
+        img.set(i, j, color(255 - itt * itt, 255 - itt, 255 - itt));
+    }
+}
+          </code>
+        </pre>
+      </div>
+    </div>
+  </section>
 
     <section class="container">
         <div class="row">

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: simulation-mode-room.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: simulation-mode-room.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *  @file simulation-mode-room.js Implementation of the room simulation mode.
+ *
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 30-March-2024
+ *  @link https://omareq.github.io/line-sim-3d/
+ *  @link https://omareq.github.io/line-sim-3d/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2024 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+"use strict";
+
+/**
+ * Simulation namespace object
+ */
+var Simulation = Simulation || {};
+
+/**
+ * Simulation Mode nested namespace object
+ */
+Simulation.Mode = Simulation.Mode || {};
+
+
+
+/**
+ * Class Simulation.Mode.DebugRoom is a simulation that tests that the room
+ * class is working correctly.  This is mostly to test that the drawing
+ * functionality is correct and that a single light sensor can read the lines
+ * as they appear on the canvas.
+ *
+ * @see Simulation.Mode.ModeType
+ * @see World.Room
+ * @see Robot.AnalogLightSensor
+ */
+Simulation.Mode.DebugRoom = class extends Simulation.Mode.ModeType {
+    static staticName = "DebugRoom";
+    /**
+     * The constructor that sets up the simulation variables
+     *
+     * @param numTilesX {number} - Positive integer value for the number of
+     *  tiles in the x direction
+     * @param numTilesY {number} - Positive integer value for the number of
+     *  tiles in the y direction
+     */
+    constructor(numTilesX=4, numTilesY=4) {
+        super();
+        this.name = "DebugRoom";
+        this.uiDivID = "simulation-mode-room";
+        this.setupUI();
+
+        let gridSize = -1;
+        if(numTilesX > numTilesY) {
+            gridSize = width / numTilesX;
+        } else {
+            gridSize = height / numTilesY;
+        }
+        gridSize *= 0.9;
+
+        World.setGridSize(gridSize);
+        this.sensorRadius = 0.5;
+        this.sensor = new Robot.AnalogLightSensor(
+            this.sensorRadius * World.lineThickness,
+            createVector(0,0));
+
+        this.room = new World.Room(numTilesX, numTilesY, createVector(0, 0));
+        this.room.fillRoomWithSnakePattern();
+
+        this.addNewUIElements();
+    }
+
+    /**
+     * Adds the UI elements that control the debug room mode simulation
+     * mode.  This code currently has an inefficiency that deletes DOM elements
+     * for the inputs if they already exist.  It would be preferable if a handle
+     * could be saved and reused for these elements.
+     */
+    addNewUIElements() {
+        // TODO: save handles when switching simulation mode
+        if(document.getElementById("sm-room-sensor-radius-slider").children.length) {
+            document.getElementById("sm-room-sensor-radius-slider").children[0].remove();
+            document.getElementById("sm-room-sensor-radius-val").children[0].remove();
+        }
+
+        // sensor radius
+        this.sensorRadiusSlider = createSlider(0.1, 4, this.sensorRadius, 0.1);
+        this.sensorRadiusSlider.parent("sm-room-sensor-radius-slider");
+
+        this.sensorRadiusDisplay = createP();
+        this.sensorRadiusDisplay.parent("sm-room-sensor-radius-val");
+        this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(this.sensorRadius);
+
+    }
+
+    /**
+     * Polls the simulation mode debug room specific UI elements
+     */
+    UIPoll() {
+
+        let sliderVal = this.sensorRadiusSlider.value();
+        if(sliderVal != this.sensorRadius) {
+            console.debug("Simulation Mode Static Tile Check uiPoll: sensor radius Slider value has changed to: ",
+                sliderVal);
+            this.sensorRadius = sliderVal;
+            this.sensorRadiusDisplay.elt.innerText = "Radius / Line Thickness: " + str(sliderVal);
+            this.sensor.setRadius(this.sensorRadius * World.lineThickness);
+        }
+
+    }
+
+    /**
+     * Update function that updates the state of the simulation
+     */
+    update() {
+
+        const mousePos = createVector(mouseX, mouseY);
+        this.sensor.setPos(mousePos);
+        this.room.draw();
+
+        let tileUnderSensor = this.room.getTileAtPos(mousePos);
+
+        if(tileUnderSensor == undefined) {
+            return;
+        }
+
+        const brightness = this.sensor.read(tileUnderSensor);
+
+        if(brightness &lt; 1) {
+            console.log("Sensor Val: ", brightness);
+        }
+        const colorVal = floor(brightness * 255);
+
+        push();
+        fill(colorVal);
+        strokeWeight(1);
+        stroke(127, 0, 30);
+        const ellipseSize = 2 * this.sensorRadius * World.lineThickness;
+        ellipse(mouseX, mouseY, ellipseSize, ellipseSize);
+        pop();
+    }
+};
+
+Simulation.Mode.ModeList.push(Simulation.Mode.DebugRoom);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.Robot.html">Robot</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.Debug.html">Debug</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugLineDistanceCheck.html">DebugLineDistanceCheck</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.MapEditor.html">MapEditor</a></li><li><a href="Simulation.Mode.MapEditor.EditCommand.html">EditCommand</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FSM">FSM</a></li><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Aug 30 2024 16:12:53 GMT-0600 (Mountain Daylight Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

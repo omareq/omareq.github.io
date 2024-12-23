@@ -8,17 +8,50 @@
 *
 *******************************************************************************/
 
-let ball;
+/**
+*   A global variable that stores all of the balls being rendered.
+*
+*   @type{Array<Ball>}
+*/
 let balls = [];
+
+/**
+ * A global variable that stores the time step for the physics stimulation.
+ */
 let dt;
 
 /**
-*	Generates a ball with a random velocity and a random radius positiones at
+ * A global variable that stores the number of physics updates per frame.
+ */
+let updatesPerFrame = 1;
+
+/**
+ * Draw the gravity vector that is currently being applied to all the balls.
+ */
+function drawGravity() {
+	if(showGravityVector) {
+		push();
+		strokeWeight(2);
+		stroke(155);
+		fill(155);
+		ellipse(0.5 * width, 0.5 * height, 10, 10);
+
+		const scale = 10;
+		line(0.5 * width, 0.5 * height,
+			0.5 * width + gravityX * scale, 0.5 * height + gravityY * scale);
+
+		pop();
+	}
+}
+
+/**
+*	Generates a ball with a random velocity and a random radius positions at
 *	the current location of the mouse.
 *
 *	@returns {Ball} Ball Object with random velocity at the pointer location.
 */
 function randBall() {
+	console.log("New Random Ball");
 	let randvx = random(-50, 50);
 	let randvy = random(-50, 50);
 	let randr = random(3, 20);
@@ -29,7 +62,15 @@ function randBall() {
 *	When the mouse is pressed a new ball is added to the balls array.
 */
 function mousePressed() {
-	balls.push(randBall());
+	if(mouseX < 0 || mouseX > width) {
+		return;
+	}
+
+	if(mouseY < 0 || mouseY > height) {
+		return;
+	}
+
+	newBall();
 }
 
 /**
@@ -40,8 +81,9 @@ function setup() {
 	let canvas = createCanvas(500, 500);
 	canvas.parent('sketch');
 	background(0);
-	balls.push(randBall());
-	dt = 0.1;
+
+	uiSetup();
+	reset();
 }
 
 /**
@@ -49,14 +91,38 @@ function setup() {
 *	frame
 */
 function draw() {
+	uiPoll();
 	background(0);
-	for(let i = 0; i < balls.length; i++) {
-		ball = balls[i];
-		ball.show();
-		ball.checkEdges();
-		ball.applyForce(0, -10, dt);
+
+	drawGravity();
+
+	for(let updates = 0; updates < updatesPerFrame; updates++) {
+		for(let i = 0; i < balls.length; i++) {
+			let ball = balls[i];
+			ball.checkEdges(pseudoBallWallCOR);
+			ball.applyForce(gravityX, -gravityY, dt);
+			// ball.applyForce(0, 0, dt);
+
+			// for(let j = 0; j < balls.length; j++) {
+			// 	if(i == j) {
+			// 		continue;
+			// 	}
+
+			// 	target = balls[j];
+			// 	if(ball.hits(target)) {
+			// 		ball.collidePhysics(target);
+			// 	}
+
+			// }
+		}
 	}
-	//console.log(ball.y)
+
+	for(let i = 0; i < balls.length; i++) {
+		let ball = balls[i];
+		// add option to show ball trail or ghost of previous locations
+		ball.show();
+	}
+
 	push();
 	fill(255, 155);
 	textSize(0.05 * height);

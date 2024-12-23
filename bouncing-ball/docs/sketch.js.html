@@ -36,17 +36,50 @@
 *
 *******************************************************************************/
 
-let ball;
+/**
+*   A global variable that stores all of the balls being rendered.
+*
+*   @type{Array&lt;Ball>}
+*/
 let balls = [];
+
+/**
+ * A global variable that stores the time step for the physics stimulation.
+ */
 let dt;
 
 /**
-*	Generates a ball with a random velocity and a random radius positiones at
+ * A global variable that stores the number of physics updates per frame.
+ */
+let updatesPerFrame = 1;
+
+/**
+ * Draw the gravity vector that is currently being applied to all the balls.
+ */
+function drawGravity() {
+	if(showGravityVector) {
+		push();
+		strokeWeight(2);
+		stroke(155);
+		fill(155);
+		ellipse(0.5 * width, 0.5 * height, 10, 10);
+
+		const scale = 10;
+		line(0.5 * width, 0.5 * height,
+			0.5 * width + gravityX * scale, 0.5 * height + gravityY * scale);
+
+		pop();
+	}
+}
+
+/**
+*	Generates a ball with a random velocity and a random radius positions at
 *	the current location of the mouse.
 *
 *	@returns {Ball} Ball Object with random velocity at the pointer location.
 */
 function randBall() {
+	console.log("New Random Ball");
 	let randvx = random(-50, 50);
 	let randvy = random(-50, 50);
 	let randr = random(3, 20);
@@ -57,7 +90,15 @@ function randBall() {
 *	When the mouse is pressed a new ball is added to the balls array.
 */
 function mousePressed() {
-	balls.push(randBall());
+	if(mouseX &lt; 0 || mouseX > width) {
+		return;
+	}
+
+	if(mouseY &lt; 0 || mouseY > height) {
+		return;
+	}
+
+	newBall();
 }
 
 /**
@@ -68,8 +109,9 @@ function setup() {
 	let canvas = createCanvas(500, 500);
 	canvas.parent('sketch');
 	background(0);
-	balls.push(randBall());
-	dt = 0.1;
+
+	uiSetup();
+	reset();
 }
 
 /**
@@ -77,14 +119,38 @@ function setup() {
 *	frame
 */
 function draw() {
+	uiPoll();
 	background(0);
-	for(let i = 0; i &lt; balls.length; i++) {
-		ball = balls[i];
-		ball.show();
-		ball.checkEdges();
-		ball.applyForce(0, -10, dt);
+
+	drawGravity();
+
+	for(let updates = 0; updates &lt; updatesPerFrame; updates++) {
+		for(let i = 0; i &lt; balls.length; i++) {
+			let ball = balls[i];
+			ball.checkEdges(pseudoBallWallCOR);
+			ball.applyForce(gravityX, -gravityY, dt);
+			// ball.applyForce(0, 0, dt);
+
+			// for(let j = 0; j &lt; balls.length; j++) {
+			// 	if(i == j) {
+			// 		continue;
+			// 	}
+
+			// 	target = balls[j];
+			// 	if(ball.hits(target)) {
+			// 		ball.collidePhysics(target);
+			// 	}
+
+			// }
+		}
 	}
-	//console.log(ball.y)
+
+	for(let i = 0; i &lt; balls.length; i++) {
+		let ball = balls[i];
+		// add option to show ball trail or ghost of previous locations
+		ball.show();
+	}
+
 	push();
 	fill(255, 155);
 	textSize(0.05 * height);
@@ -123,7 +189,8 @@ function draw() {
 	strokeWeight(wallWidth);
 	line(0, 0, 0, height);
 	pop();
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 
@@ -133,12 +200,12 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ball.html">Ball</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#randBall">randBall</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ball.html">Ball</a></li></ul><h3>Global</h3><ul><li><a href="global.html#balls">balls</a></li><li><a href="global.html#controlPanel">controlPanel</a></li><li><a href="global.html#controlPanelHide">controlPanelHide</a></li><li><a href="global.html#controlPanelSetup">controlPanelSetup</a></li><li><a href="global.html#controlPanelShow">controlPanelShow</a></li><li><a href="global.html#deleteBall">deleteBall</a></li><li><a href="global.html#deleteBallButton">deleteBallButton</a></li><li><a href="global.html#deleteBallButtonSetup">deleteBallButtonSetup</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#drawGravity">drawGravity</a></li><li><a href="global.html#dt">dt</a></li><li><a href="global.html#gravitySliderSetup">gravitySliderSetup</a></li><li><a href="global.html#gravityVectorButtonsSetup">gravityVectorButtonsSetup</a></li><li><a href="global.html#gravityX">gravityX</a></li><li><a href="global.html#gravityXDisplay">gravityXDisplay</a></li><li><a href="global.html#gravityXSlider">gravityXSlider</a></li><li><a href="global.html#gravityY">gravityY</a></li><li><a href="global.html#gravityYDisplay">gravityYDisplay</a></li><li><a href="global.html#gravityYSlider">gravityYSlider</a></li><li><a href="global.html#hideGravity">hideGravity</a></li><li><a href="global.html#hideGravityVectorButton">hideGravityVectorButton</a></li><li><a href="global.html#maxNumBalls">maxNumBalls</a></li><li><a href="global.html#maxNumBallsDisplay">maxNumBallsDisplay</a></li><li><a href="global.html#maxNumBallsSlider">maxNumBallsSlider</a></li><li><a href="global.html#maxNumBallsSliderSetup">maxNumBallsSliderSetup</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#newBall">newBall</a></li><li><a href="global.html#newBallButton">newBallButton</a></li><li><a href="global.html#newBallButtonSetup">newBallButtonSetup</a></li><li><a href="global.html#numBallsDisplay">numBallsDisplay</a></li><li><a href="global.html#numBallsDisplaySetup">numBallsDisplaySetup</a></li><li><a href="global.html#pseudoBallWallCOR">pseudoBallWallCOR</a></li><li><a href="global.html#pseudoBallWallCORDisplay">pseudoBallWallCORDisplay</a></li><li><a href="global.html#pseudoBallWallCORSlider">pseudoBallWallCORSlider</a></li><li><a href="global.html#pseudoBallWallCORSliderSetup">pseudoBallWallCORSliderSetup</a></li><li><a href="global.html#randBall">randBall</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#resetButton">resetButton</a></li><li><a href="global.html#resetButtonSetup">resetButtonSetup</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#showGravity">showGravity</a></li><li><a href="global.html#showGravityVector">showGravityVector</a></li><li><a href="global.html#showGravityVectorButton">showGravityVectorButton</a></li><li><a href="global.html#showNumBalls">showNumBalls</a></li><li><a href="global.html#uiPoll">uiPoll</a></li><li><a href="global.html#uiSetup">uiSetup</a></li><li><a href="global.html#updatesPerFrame">updatesPerFrame</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Jun 05 2022 20:30:21 GMT+0100 (BST)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Feb 04 2024 18:35:38 GMT+0000 (Greenwich Mean Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

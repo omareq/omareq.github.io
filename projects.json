@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_026",
+            "prev-id": "p_029",
             "status": "active",
             "tags": [
                 "fun"
@@ -165,10 +165,10 @@
             "brief": "My concept of the classic Lissajous patterns",
             "demo-url": "/lissajous/",
             "docs-url": "/lissajous/docs/",
-            "gif-url": "imgs/p_010.gif",
+            "gif-url": "imgs/p_010.webp",
             "id": "p_010",
             "name": "Lissajous",
-            "next-id": "p_010",
+            "next-id": "p_011",
             "pic-url": "imgs/p_010.jpg",
             "prev-id": "p_009",
             "status": "active",
@@ -188,7 +188,7 @@
             "next-id": "p_012",
             "pic-url": "imgs/p_011.jpg",
             "prev-id": "p_010",
-            "status": "archived",
+            "status": "active",
             "tags": [
                 "science"
             ],
@@ -418,7 +418,7 @@
             "gif-url": "imgs/p_026.gif",
             "id": "p_026",
             "name": "Hang man",
-            "next-id": "p_000",
+            "next-id": "p_027",
             "pic-url": "imgs/p_026.jpg",
             "prev-id": "p_025",
             "status": "active",
@@ -426,6 +426,53 @@
                 "game"
             ],
             "vid-url": "vids/p_026.mp4"
+        },
+        "p_027": {
+            "brief": "A simulation to model a line following robot",
+            "demo-url": "/line-sim-3d/",
+            "docs-url": "/line-sim-3d/docs/",
+            "gif-url": "imgs/p_027.gif",
+            "id": "p_027",
+            "name": "Line sim 3d",
+            "next-id": "p_028",
+            "pic-url": "imgs/p_027.jpg",
+            "prev-id": "p_026",
+            "status": "active",
+            "tags": [
+                "robot",
+                "science"
+            ],
+            "vid-url": "vids/p_027.mp4"
+        },
+        "p_028": {
+            "brief": "A quick simulation to test elasticity",
+            "demo-url": "/elastic-string/",
+            "docs-url": "/elastic-string/docs/",
+            "gif-url": "imgs/p_028.gif",
+            "id": "p_028",
+            "name": "Elastic string",
+            "next-id": "p_029",
+            "pic-url": "imgs/p_028.jpg",
+            "prev-id": "p_027",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_028.mp4"
+        },
+        "p_029": {
+            "brief": "A quick and dirty snake game",
+            "demo-url": "/snake-game/",
+            "docs-url": "/snake-game/docs/",
+            "gif-url": "imgs/p_029.gif",
+            "id": "p_029",
+            "name": "Snake game",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_029.webp",
+            "prev-id": "p_028",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_029.mp4"
         }
     }
 }

@@ -13,6 +13,7 @@
   <script language="javascript" type="text/javascript" src="../libraries/p5.dom.js"></script>
   <script language="javascript" type="text/javascript" src="sketch.js"></script>
   <script language="javascript" type="text/javascript" src="ball.js"></script>
+  <script language="javascript" type="text/javascript" src="ui.js"></script>
 
 
     <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
@@ -37,10 +38,143 @@
       </div>
     </section>
 
-    <div id="sketch">
+    <section class="container">
+      <div class="row">
 
-    </div>
+        <div id="control-panel" class="col-sm-3" style="margin-bottom:10px; border: 2px solid purple; border-radius: 10px; visibility:hidden;">
+          <p style="font-weight: bold"> Control Panel <p>
+
+          <div id="reset-button" style="display: inline-block; margin-bottom: 10px; margin-top: 10px"></div>
+           <div>
+              <div id="new-ball-button" style="display: inline-block; margin-bottom: 10px; margin-top: 10px"></div>
+              <div id="delete-ball-button" style="display: inline-block; margin-bottom: 10px; margin-top: 10px"></div>
+          </div>
+
+           <!-- Number of Balls Display -->
+          <div id="num-balls-display"></div>
+
+          <!-- Max Number of Balls Slider -->
+          <div id="max-num-balls-display"></div>
+          <div id="max-num-balls-slider"></div>
+
+          <!-- Pseudo Coefficient of Restitution (COR) Slider -->
+          <div id="pseudo-ball-wall-cor-display"></div>
+          <div id="pseudo-ball-wall-cor-slider"></div>
+
+          <!-- Gravity Slider -->
+          <div>
+            <p><u> Mavity Control </u></p>
+            <div id="gravity-x-display"></div>
+            <div id="gravity-x-slider"></div>
+
+            <div id="gravity-y-display"></div>
+            <div id="gravity-y-slider"></div>
+
+            <div>
+              <p> Show Gravity Vector </p>
+              <div id="show-gravity-vector-button" style="display: inline-block; margin-bottom: 10px;"></div>
+              <div id="hide-gravity-vector-button" style="display: inline-block; margin-bottom: 10px;"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-sm-6">
+         <div id="sketch"></div>
+        </div>
+
+        <div class="col-sm-3"></div>
+      </div>
+    </section>
   </div>
+
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2>Bouncing Ball</h2>
+
+        <p>
+          This is a quick project created to test the physics of bouncing balls.
+          The interactivity is an essential goal to this project and provides
+          a means for learning and understanding about the physics of simple
+          bodies in a vacuum.  The main elements that can be updated in real
+          time are: gravity and an analogue for the coefficient of restitution
+          (COR).
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2>Change the laws of physics</h2>
+
+        <p>
+          The force of gravity is a universal force which acts on all particles
+          with mass.  The larger the mass of an object the greater the force it
+          applies to other bodies.  The force of gravity is also dependent on
+          the distance between the two objects.  In the case where an object is
+          on the surface of a planet the distance is taken as the radius of the
+          planet, this leads to a constant acceleration due to gravity.  On
+          earth this is 9.81 m/s/s.  In this simulation the can change the
+          direction as well as the magnitude of the gravitational acceleration.
+        </p>
+
+        <p>
+          The interaction between the balls and the walls are known as
+          collisions.  An ideal collision is known as an elastic collision and
+          during this process the ball will maintain all of it's energy.  In
+          terms of bouncing on the floor this means that a ball will bounce back
+          to the same heigh over and over again without getting lower.  This is
+          not realistic to the natural world.  A more realistic scenario is a
+          collision where energy is lost, this is known as an inelastic
+          collision.  In these cases energy is lost to the generation of heat
+          in the ball and sound production.  Some examples of bouncing with
+          different elasticities are shown below.  The variable which controls
+          the elasticity of a collision is called the coefficient of restitution
+          (COR).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+      <div class="col-sm-4">
+        <img src="./imgs/bouncing-ball-cor-1-gif-small.gif">
+        <p>
+        <em>
+          Animation showing how a bouncing ball in a perfectly elastic
+          collision returns to the same height after bouncing on the floor.
+        </em>
+        </p>
+      </div>
+
+      <div class="col-sm-4">
+        <img src="./imgs/bouncing-ball-cor-0_75-gif-small.gif">
+        <p>
+        <em>
+          Animation showing how a bouncing ball in an inelastic collision
+          does not return to the same height after bouncing on the floor.
+        </em>
+        </p>
+      </div>
+
+      <div class="col-sm-4">
+        <img src="./imgs/bouncing-ball-cor-0_5-gif-small.gif">
+        <p>
+        <em>
+          Animation showing how a bouncing ball in an inelastic collision
+          with an extremely low coefficient of restitution almost stops when
+          bouncing on the floor.
+        </em>
+        </p>
+      </div>
+    </div>
+  </section>
 
   <section class="container" style="padding-top:10px">
       <div class="row text-center">
@@ -51,7 +185,7 @@
                    style="max-width:75px">
           </a>
           Docs
-          <a href="./docs">
+          <a href="./docs" rel="nofollow"> rel="nofollow"
               <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
                    style="max-width:75px">
           </a>

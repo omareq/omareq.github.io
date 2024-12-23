@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
-  <meta charset="UTF-8">
+  <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script>
 
   <link type="text/css" rel="stylesheet" href="../main.css">
 
@@ -48,7 +48,7 @@
                    style="max-width:75px">
           </a>
           Docs
-          <a href="./docs">
+          <a href="./docs" rel="nofollow">
               <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
                    style="max-width:75px">
           </a>
@@ -56,16 +56,96 @@
       </div>
   </section>
 
-  <section class="container">
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <a id="external_link" href="../projects.html" >
-                    <img src="../imgs/all-projects-button.jpg" style="max-width: 11em;">
-                </a>
+    <section>
+      <div class="row text-left">
+       <div class="col-sm-12">
+        <h2> The Family Of The Curve </h2>
+        <p>
+          The Lissajous curves are a series of curves described by the
+          parametric equation shown below.  The \(x\) and \(y\) values are
+          independent of each other and both oscillate back and forth at
+          different frequencies and amplitudes in a simple harmonic motion (SHM).
+          Additionally the \(\phi\) term shows a phase difference which can
+          effect the shape of the curve produced.  For example when the
+          frequency and amplitude is exactly the same and the phase difference
+          is \(\frac{\pi}{2}\) radians then you get a circle.
+        </p>
+
+        <p>
+          $$
+            x = A sin(\alpha t + \phi), y = B sin(\beta t)
+          $$
+        </p>
+
+        <p>
+          The family of curves can be created in a variety of ways.  The
+          original manner was to release sand from a pendulum.  It should be
+          noted that whilst the period of a pendulum is theoretically only
+          dependent on the length and not on the weight that larger bobs will
+          create increased drag at the pivot point.  This will slow the
+          pendulum down faster and changing the weight over time will subtly
+          create a change in the shape of the Lissajous curve.  This fascinating
+          change creates complex harmonic motion rather than simple harmonic
+          motion and includes an exponential decay term.  Whilst this is
+          interesting I wanted to investigate the SHM family of curves.
+        </p>
+
+        <p>
+          With this in mind I chose to create an animation that mimics an
+          oscilloscope making a Lissajous curve.  This is where the theme of a
+          green line on a black background originates from.  Perhaps a bluer
+          tinge to the background and some flowing shader effects on the green
+          line would produce a more realistic oscilloscope rendering. This is
+          left as an exercise for the reader :)
+        </p>
+       </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-center">
+        <div class="col-sm-4">
+            <p><b>\(A=10, B=10, \phi = \frac{\pi}{2} \)</b></p>
+            <div style="max-width: 100%">
+              <video width="300" height="300" autoplay muted>
+                <source src="./vids/lissajous-10-10-half-pi.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
             </div>
-            <div class="col-sm-4"></div>
         </div>
+
+         <div class="col-sm-4">
+            <p><b>\(A=10, B=20, \phi = 0 \)</b></p>
+            <div>
+              <video width="300" height="300" autoplay muted>
+                <source src="./vids/lissajous-10-20-quarter-pi.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+        </div>
+
+         <div class="col-sm-4">
+            <p><b>\(A=10, B=20, \phi = \frac{\pi}{4}\)</b></p>
+            <div>
+              <video width="300" height="300" autoplay muted>
+                <source src="./vids/lissajous-10-20-zero-pi.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+              <a id="external_link" href="../projects.html" >
+                  <img src="../imgs/all-projects-button.jpg" style="max-width: 11em;">
+              </a>
+          </div>
+          <div class="col-sm-4"></div>
+      </div>
     </section>
 
   <section class="container">
@@ -83,9 +163,9 @@
 
       <div class="col-sm-3">
         <div class="project-card" id="next">
-          <h5 id="next-title">Towers of Hanoi</h5>
-          <a id="next-url" href="../towers-of-hanoi/" class="project-demo">
-            <img id="next-img" src="../imgs/p_012.jpg">
+						<h5 id="next-title">Swarm Optimiser</h5>
+						<a id="next-url" href="../particle-swarm-optimiser/" class="project-demo">
+							<img id="next-img" src="../imgs/p_011.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
           </a>
         </div>
       </div>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: finite-state-machine.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: finite-state-machine.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *  @file finite-state-machine.js Implementation of static tile mode.
+ *
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 27-July-2024
+ *  @link https://omareq.github.io/line-sim-3d/
+ *  @link https://omareq.github.io/line-sim-3d/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2024 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+"use strict";
+
+
+/**
+ * Finite State Machine namespace object
+ */
+var FSM = FSM || {};
+
+FSM.Manager = class {
+    constructor(startingState) {
+        if(!(startingState instanceof FSM.StateInterface)) {
+            const err = "FSM.Manager.constructor(startingState): " +
+            "startingState should be an instance of FSM.StateInterface";
+            throw(err);
+        }
+
+        this.callbackList = [];
+
+        this.state = startingState;
+        this.state.setManager(this);
+        this.state.enterState();
+        this.lastInput = undefined;
+    }
+
+
+    addStateChangeCallback(callback) {
+        if(!(typeof callback == "function")) {
+            throw new Error("callback needs to be of type function");
+        }
+        this.callbackList.push(callback);
+    }
+
+    handleAllStateChangeCallbacks(newState) {
+        for(let i = 0; i &lt; this.callbackList.length; i++) {
+            this.callbackList[i](this.state, newState, this.lastInput);
+        }
+    }
+
+    handle(input) {
+        this.lastInput = input;
+        this.state.handle(input);
+    }
+
+    setState(newState) {
+        if(!(newState instanceof FSM.StateInterface)) {
+            const err = "FSM.Manager.setState(newState): " +
+            "newState should be an instance of FSM.StateInterface";
+            throw(err);
+        }
+
+        this.state.exitState();
+        this.handleAllStateChangeCallbacks(newState);
+        this.state = newState;
+        this.state.setManager(this);
+        this.state.enterState();
+    }
+};
+
+FSM.StateInterface = class {
+    constructor() {
+        const err = "Abstract class FSM.StateInterface can't be instantiated.";
+        if(this.constructor == FSM.StartStateInterface) {
+          throw new Error(err);
+        }
+    }
+
+    enterState() {
+        throw new Error("Method 'enterState()' must be implemented.");
+    }
+
+    handle(input) {
+        throw new Error("Method 'handle()' must be implemented.");
+    }
+
+    exitState() {
+        throw new Error("Method 'exitState()' must be implemented.");
+    }
+
+    setManager(manager) {
+        if(!(manager instanceof FSM.Manager)) {
+            const err = "FSM.StateInterface.setManager(manager): " +
+            "manager should be an instance of FSM.Manager";
+            throw(err);
+        }
+        this.manager = manager;
+    }
+};
+
+
+FSM.EmptyState = class extends FSM.StateInterface {
+    constructor() { super(); }
+
+    enterState() {};
+
+    handle(input) {};
+
+    exitState() {};
+};
+
+FSM.DebugGreenPrint = class extends FSM.StateInterface {
+    constructor() {
+        super();
+    }
+
+    enterState() {
+        console.log("Entering green state");
+        this.prevTime = millis();
+    };
+
+    handle(input) {
+        if(millis() - this.prevTime > 3500) {
+            console.log("Green");
+            let newState = new FSM.DebugRedPrint();
+            this.manager.setState(newState);
+        }
+    };
+
+    exitState() {
+        console.log("Exiting Green State");
+    };
+};
+
+FSM.DebugRedPrint = class extends FSM.StateInterface {
+    constructor() {
+        super();
+    }
+
+    enterState() {
+        console.log("Entering red state");
+        this.prevTime = millis();
+    };
+
+    handle(input) {
+        if(millis() - this.prevTime > 3500) {
+            console.log("Red");
+            let newState = new FSM.DebugGreenPrint();
+            this.manager.setState(newState);
+        }
+    };
+
+    exitState() {
+        console.log("Exiting red State");
+    };
+};
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.Robot.html">Robot</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.Debug.html">Debug</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugLineDistanceCheck.html">DebugLineDistanceCheck</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.MapEditor.html">MapEditor</a></li><li><a href="Simulation.Mode.MapEditor.EditCommand.html">EditCommand</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FSM">FSM</a></li><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Aug 30 2024 16:12:53 GMT-0600 (Mountain Daylight Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

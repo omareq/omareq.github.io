@@ -36,11 +36,17 @@ class Tile {
         this.east = new Wall(east , false, gridSize);
         this.south = new Wall(south, false, gridSize);
         this.west = new Wall(west , false, gridSize);
+        this.hasWalls = north || east || south || west;
         this.gridSize = gridSize;
         this.visit = 0;
         this.order = 0;
         this.isBlack = false;
         this.isSilver = false;
+        this.pg = createGraphics(this.gridSize, this.gridSize);
+        this.grey = 225;
+        this.black = 0;
+        this.white = 255;
+        this.isCulled = false;
     }
 
     resetTile() {
@@ -104,6 +110,45 @@ class Tile {
         this.west.setVictim(false);
     }
 
+    updatePg() {
+        // visit information
+        this.pg.background(this.white);
+        if(this.visit > 0) {
+            push();
+            translate(0, 0, 1);
+            this.pg.textSize(this.gridSize / 2);
+            this.pg.textAlign(CENTER, CENTER);
+
+            // text colour
+            if(this.isBlack) {
+                this.pg.fill(this.white);
+            } else {
+                this.pg.fill(this.black);
+            }
+
+            this.pg.text(str(this.visit), this.gridSize / 2, this.gridSize / 2);
+            pop();
+        }
+
+        // order information
+        if(this.order > 0) {
+            push();
+            translate(0, 0, 2);
+            this.pg.textSize(this.gridSize / 4);
+            this.pg.textAlign(CENTER, CENTER);
+
+            // text colour
+            if(this.isBlack) {
+                this.pg.fill(this.white);
+            } else {
+                this.pg.fill(this.black);
+            }
+
+            this.pg.text(str(this.order), this.gridSize / 4, this.gridSize / 4);
+            pop();
+        }
+    }
+
 
     getVisit() {
         return this.visit;
@@ -111,15 +156,18 @@ class Tile {
 
     incrementVist() {
         this.visit += 1;
+        this.updatePg();
         return this.visit;
     }
 
     resetVisit() {
         this.vist = 0;
+        this.pg.background(this.white);
     }
 
     setOrder(newVisitOrder) {
         this.order = newVisitOrder;
+        this.updatePg();
     }
 
     getOrder() {
@@ -128,6 +176,7 @@ class Tile {
 
     resetOrder() {
         this.order = 0;
+        this.pg.background(this.white);
     }
 
     hasVictim(direction) {
@@ -212,92 +261,55 @@ class Tile {
         this.west.resetWall();
     }
 
-    show() {
-        let pg = createGraphics(this.gridSize, this.gridSize);
+    show(showWall=false, showVictim=false) {
+        if(!this.hasWalls && this.visit == 0) {
+            return;
+        }
 
-        const grey = 225;
-        const black = 0;
-        const white = 255;
+        if(this.isCulled) {
+            return;
+        }
+
         push();
-        // if(this.isBlack) {
-        //     pg.background(black);
-        //     fill(black);
-        // } else if(this.isSilver) {
-        //     fill(grey);
-        //     pg.background(grey);
-        // } else {
-        //     fill(white);
-        //     pg.background(white);
-        // }
 
-        stroke(white);
-        rect(0,0,this.gridSize, this.gridSize);
-
-        if(this.north.getIsWall()) {
-            push();
-            translate(0, -this.gridSize / 2, 0);
-            this.north.show();
-            pop();
+        if(this.hasWalls) {
+            if(this.north.getIsWall()) {
+                push();
+                translate(0, -this.gridSize / 2, 0);
+                this.north.show(showWall, showVictim);
+                pop();
+            }
+            if(this.east.getIsWall()) {
+                push();
+                translate(this.gridSize / 2, 0, 0);
+                rotateZ(HALF_PI);
+                this.east.show(showWall, showVictim);
+                pop();
+            }
+            if(this.south.getIsWall()) {
+                push();
+                translate(0, this.gridSize / 2, 0);
+                rotateZ(PI);
+                this.south.show(showWall, showVictim);
+                pop();
+            }
+            if(this.west.getIsWall()) {
+                push();
+                translate(-this.gridSize / 2, 0, 0);
+                rotateZ(3 * HALF_PI);
+                this.west.show(showWall, showVictim);
+                pop();
+            }
         }
-        if(this.east.getIsWall()) {
-            push();
-            translate(this.gridSize / 2, 0, 0);
-            rotateZ(HALF_PI);
-            this.east.show();
-            pop();
-        }
-        if(this.south.getIsWall()) {
-            push();
-            translate(0, this.gridSize / 2, 0);
-            rotateZ(PI);
-            this.south.show();
-            pop();
-        }
-        if(this.west.getIsWall()) {
-            push();
-            translate(-this.gridSize / 2, 0, 0);
-            rotateZ(3 * HALF_PI);
-            this.west.show();
-            pop();
-        }
-
 
         if(this.visit > 0) {
-            push();
             translate(0, 0, 1);
-            pg.textSize(this.gridSize / 2);
-            pg.textAlign(CENTER, CENTER);
-
-            if(this.isBlack) {
-                pg.fill(white);
-            } else {
-                pg.fill(black);
-            }
-
-            pg.text(str(this.visit), this.gridSize / 2, this.gridSize / 2);
-            pop();
+            texture(this.pg);
+            noStroke();
+    // TODO: tile graphics to larger room graphics obj to only call plane once
+            plane(this.gridSize - 4);
         }
 
-        if(this.order > 0) {
-            push();
-            translate(0, 0, 2);
-            pg.textSize(this.gridSize / 4);
-            pg.textAlign(CENTER, CENTER);
-
-            if(this.isBlack) {
-                pg.fill(white);
-            } else {
-                pg.fill(black);
-            }
-
-            pg.text(str(this.order), this.gridSize / 4, this.gridSize / 4);
-            pop();
-        }
-        translate(0, 0, 1);
-        texture(pg);
-        noStroke();
-
-        plane(this.gridSize - 4);
         pop();
     }
 }

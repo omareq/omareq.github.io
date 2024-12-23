@@ -261,7 +261,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line25">line 25</a>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -317,7 +317,7 @@
     
 
     
-    <h4 class="name" id="applyForce"><span class="type-signature"></span>applyForce<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="applyForce"><span class="type-signature"></span>applyForce<span class="signature">(fx, fy, dt)</span><span class="type-signature"></span></h4>
     
 
     
@@ -334,6 +334,101 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The x component of the force.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The y component of the force.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The time step.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -369,7 +464,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line38">line 38</a>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -457,7 +552,829 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line52">line 52</a>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line92">line 92</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="collidePhysics"><span class="type-signature"></span>collidePhysics<span class="signature">(ball)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Applies physics for elastic collision between balls.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ball</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ball to do the collision against.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="hits"><span class="type-signature"></span>hits<span class="signature">(ball)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks to see if the given ball collides with this ball.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ball</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ball to check the collision against.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line121">line 121</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setVelX"><span class="type-signature"></span>setVelX<span class="signature">(newVelX)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sets the x velocity of the ball.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newVelX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new x velocity of the ball.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setVelY"><span class="type-signature"></span>setVelY<span class="signature">(newVelY)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sets the y velocity of the ball.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newVelY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new y velocity of the ball.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setX"><span class="type-signature"></span>setX<span class="signature">(newX)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sets the x position of the ball.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new x value of the ball.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setY"><span class="type-signature"></span>setY<span class="signature">(newY)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sets the y position of the ball.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new y value of the ball.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -545,7 +1462,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line82">line 82</a>
+        <a href="ball.js.html">ball.js</a>, <a href="ball.js.html#line190">line 190</a>
     </li></ul></dd>
     
 
@@ -591,12 +1508,12 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ball.html">Ball</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#randBall">randBall</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ball.html">Ball</a></li></ul><h3>Global</h3><ul><li><a href="global.html#balls">balls</a></li><li><a href="global.html#controlPanel">controlPanel</a></li><li><a href="global.html#controlPanelHide">controlPanelHide</a></li><li><a href="global.html#controlPanelSetup">controlPanelSetup</a></li><li><a href="global.html#controlPanelShow">controlPanelShow</a></li><li><a href="global.html#deleteBall">deleteBall</a></li><li><a href="global.html#deleteBallButton">deleteBallButton</a></li><li><a href="global.html#deleteBallButtonSetup">deleteBallButtonSetup</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#drawGravity">drawGravity</a></li><li><a href="global.html#dt">dt</a></li><li><a href="global.html#gravitySliderSetup">gravitySliderSetup</a></li><li><a href="global.html#gravityVectorButtonsSetup">gravityVectorButtonsSetup</a></li><li><a href="global.html#gravityX">gravityX</a></li><li><a href="global.html#gravityXDisplay">gravityXDisplay</a></li><li><a href="global.html#gravityXSlider">gravityXSlider</a></li><li><a href="global.html#gravityY">gravityY</a></li><li><a href="global.html#gravityYDisplay">gravityYDisplay</a></li><li><a href="global.html#gravityYSlider">gravityYSlider</a></li><li><a href="global.html#hideGravity">hideGravity</a></li><li><a href="global.html#hideGravityVectorButton">hideGravityVectorButton</a></li><li><a href="global.html#maxNumBalls">maxNumBalls</a></li><li><a href="global.html#maxNumBallsDisplay">maxNumBallsDisplay</a></li><li><a href="global.html#maxNumBallsSlider">maxNumBallsSlider</a></li><li><a href="global.html#maxNumBallsSliderSetup">maxNumBallsSliderSetup</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#newBall">newBall</a></li><li><a href="global.html#newBallButton">newBallButton</a></li><li><a href="global.html#newBallButtonSetup">newBallButtonSetup</a></li><li><a href="global.html#numBallsDisplay">numBallsDisplay</a></li><li><a href="global.html#numBallsDisplaySetup">numBallsDisplaySetup</a></li><li><a href="global.html#pseudoBallWallCOR">pseudoBallWallCOR</a></li><li><a href="global.html#pseudoBallWallCORDisplay">pseudoBallWallCORDisplay</a></li><li><a href="global.html#pseudoBallWallCORSlider">pseudoBallWallCORSlider</a></li><li><a href="global.html#pseudoBallWallCORSliderSetup">pseudoBallWallCORSliderSetup</a></li><li><a href="global.html#randBall">randBall</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#resetButton">resetButton</a></li><li><a href="global.html#resetButtonSetup">resetButtonSetup</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#showGravity">showGravity</a></li><li><a href="global.html#showGravityVector">showGravityVector</a></li><li><a href="global.html#showGravityVectorButton">showGravityVectorButton</a></li><li><a href="global.html#showNumBalls">showNumBalls</a></li><li><a href="global.html#uiPoll">uiPoll</a></li><li><a href="global.html#uiSetup">uiSetup</a></li><li><a href="global.html#updatesPerFrame">updatesPerFrame</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Jun 05 2022 20:30:21 GMT+0100 (BST)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Feb 04 2024 18:35:38 GMT+0000 (Greenwich Mean Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

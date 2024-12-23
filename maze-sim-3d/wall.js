@@ -60,22 +60,23 @@ class Wall {
         return this.victim;
     }
 
-    show() {
+    show(showWall=false, showVictim=false) {
         if(this.isWall) {
             push();
             translate(0, 0, this.wallHeight / 2 + 2);
             fill(255);
             stroke(0);
-            box(this.gridSize, 1, this.wallHeight);
-            if (!(this.victim == 0)) {
+            if(showWall) {
+                box(this.gridSize, 1, this.wallHeight);
+            }
+            if (showVictim && !(this.victim == 0)) {
                 fill(255, 0, 0);
                 push();
                 translate(0, 1, this.wallHeight/ 4);
+                fill(255, 0, 0);
                 box(this.wallHeight/3, 1, this.wallHeight/3);
                 push();
                 translate(0,0, this.wallHeight);
-                const alphaVal = map(millis() % 2000, 0, 2000, 0, 255);
-                fill(255, alphaVal, alphaVal);
                 box(this.wallHeight / 4, 1, this.wallHeight / 4);
                 pop();
                 line(0,0,0,0,0,this.wallHeight);

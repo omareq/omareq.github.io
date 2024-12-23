@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: DebugRoom</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: DebugRoom</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="global.html#Simulation">Simulation</a><a href="global.html#Simulation#.Mode">.Mode</a>.</span>DebugRoom<span class="signature">(numTilesX, numTilesY)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Class Simulation.Mode.DebugRoom is a simulation that tests that the room
+class is working correctly.  This is mostly to test that the drawing
+functionality is correct and that a single light sensor can read the lines
+as they appear on the canvas.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="DebugRoom"><span class="type-signature"></span>new DebugRoom<span class="signature">(numTilesX, numTilesY)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The constructor that sets up the simulation variables
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>numTilesX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    4
+                
+                </td>
+            
+
+            <td class="description last">Positive integer value for the number of
+ tiles in the x direction</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>numTilesY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    4
+                
+                </td>
+            
+
+            <td class="description last">Positive integer value for the number of
+ tiles in the y direction</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="simulation-mode-room.js.html">simulation-mode-room.js</a>, <a href="simulation-mode-room.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Simulation.Mode.ModeType.html">Simulation.Mode.ModeType</a></li>
+        
+            <li><a href="World.Room.html">World.Room</a></li>
+        
+            <li><a href="Robot.AnalogLightSensor.html">Robot.AnalogLightSensor</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="UIPoll"><span class="type-signature"></span>UIPoll<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Polls the simulation mode debug room specific UI elements
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="simulation-mode-room.js.html">simulation-mode-room.js</a>, <a href="simulation-mode-room.js.html#line118">line 118</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addNewUIElements"><span class="type-signature"></span>addNewUIElements<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Adds the UI elements that control the debug room mode simulation
+mode.  This code currently has an inefficiency that deletes DOM elements
+for the inputs if they already exist.  It would be preferable if a handle
+could be saved and reused for these elements.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="simulation-mode-room.js.html">simulation-mode-room.js</a>, <a href="simulation-mode-room.js.html#line98">line 98</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Update function that updates the state of the simulation
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="simulation-mode-room.js.html">simulation-mode-room.js</a>, <a href="simulation-mode-room.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.Robot.html">Robot</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.Debug.html">Debug</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugLineDistanceCheck.html">DebugLineDistanceCheck</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.MapEditor.html">MapEditor</a></li><li><a href="Simulation.Mode.MapEditor.EditCommand.html">EditCommand</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FSM">FSM</a></li><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Aug 30 2024 16:12:54 GMT-0600 (Mountain Daylight Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
