@@ -216,4 +216,20 @@ Game.levelSetup = function() {
         ]
     });
 
+    Game.levelData.push({
+        width: 35,
+        height: 35,
+        snakeX: 5,
+        snakeY: 5,
+        snakeDir: Game.SNAKE_DIRECTION.RIGHT,
+        obstacles: [
+            {x:0, y:0, width:1, height:35},
+            {x:34, y:0, width:1, height:35},
+            {x:0, y:0, width:35, height:1},
+            {x:0, y:34, width:35, height:1},
+            {x:7, y:17, width:21, height:1},
+            {x:17, y:7, width:1, height:21}
+        ]
+    });
+
 };
