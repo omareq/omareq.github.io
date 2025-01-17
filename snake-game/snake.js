@@ -59,7 +59,8 @@ Game.snakeSetup = function() {
 Game.Snake = class {
     constructor(startPos, startDir, resolution) {
         this.res = resolution;
-        this.direction = startDir;
+        this.startDir = startDir;
+        this.direction = this.startDir;
         this.startPos = startPos;
         this.body = [this.startPos.copy()];
         this.justEaten = false;
@@ -92,7 +93,7 @@ Game.Snake = class {
     die() {
         console.log("DIE");
         this.body = [this.startPos.copy()];
-        this.direction = Game.SNAKE_DIRECTION.LEFT;
+        this.direction = this.startDir;
     };
 
 
