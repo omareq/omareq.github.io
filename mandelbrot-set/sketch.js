@@ -30,29 +30,67 @@
  *
  *****************************************************************************/
 
-/**
- * A function that generates an array of evenly spaced numbers in a closed
- * interval
- *
- * @param      {number}  start   The start of the interval
- * @param      {number}  stop    The end of the interval
- * @param      {number}  [numPts=100]  The number of points in the interval
- * @return     {Array}  The array containing the evenly spaced numbers
- */
-function linspace(start, stop, numPts=100) {
-    let [begin, end] = [start, stop];
-    if(stop < start) {
-        [begin, end] = [stop, start];
+let img = undefined;
+let workers = [];
+let workerTasks = [];
+
+function clearImage() {
+    img.loadPixels();
+    for(let i = 0; i < img.width; i++) {
+        for(let j = 0; j < img.height; j++) {
+            img.set(i, j, color(0,0,0));
+        }
     }
-
-    let a = Array.from(Array(numPts).keys());
-
-    let range = end - begin;
-
-    return a.map(function(num){
-        return num * range / (numPts - 1) + start;
-    });
+    img.updatePixels();
 }
+
+function updateImage(rowNumber, rowArray) {
+    img.loadPixels();
+
+    for(let i = 0; i < rowArray.length; i++) {
+        const itt = rowArray[i];
+        img.set(i, rowNumber, color(255 - itt * itt, 255 - itt, 255 - itt));
+
+        // Should be faster than img.set()?
+        // const d = 1; // pixel density
+        // const x = rowArray.length;
+        // const y = x;
+
+        // let index = 4 * ((y * d + rowNumber) * width * d + (x * d + i));
+        // img.pixels[index + 0] = 255 - itt * itt;
+        // img.pixels[index + 1] = 255 - itt;
+        // img.pixels[index + 2] = 255 - itt;
+        // img.pixels[index + 3] = 255;
+    }
+    img.updatePixels();
+}
+
+function setupWorkerTasks(defaultTask, numRows) {
+    for(let i = 0; i < numRows; i++) {
+        let nextTask = {...defaultTask};
+        nextTask.row = i;
+        workerTasks.push(nextTask);
+    }
+}
+
+function activateWorkers(numWorkers=1) {
+    for(let i = 0; i < numWorkers; i ++) {
+        workers[i] = new Worker("worker.js");
+        const task = workerTasks.shift();
+        workers[i].postMessage(task);
+
+
+        workers[i].onmessage = (e) => {
+            updateImage(e.data.row, [...e.data.array]);
+            const newTask = workerTasks.shift();
+
+            if(newTask != undefined) {
+                workers[i].postMessage(newTask);
+            }
+        };
+    }
+}
+
 
 /**
  * A function that generates a picture of the Mandelbrot set
@@ -73,30 +111,24 @@ function generateMandelbrotSet(
     maxSteps = 255,
     threshold = 4 ) {
 
-    let xx = linspace(xLimits[0], xLimits[1], xNumPts);
-    let yy = linspace(yLimits[0], yLimits[1], yNumPts);
+    const defaultMessage = {
+        row: -1,
+        xNumPts: xNumPts,
+        yNumPts: yNumPts,
+        xLimits: xLimits,
+        yLimits: yLimits,
+        maxSteps: maxSteps,
+        threshold: threshold,
+    };
 
-    let img = createImage(xNumPts, yNumPts);
-    img.loadPixels();
+    console.debug("Default message: ", defaultMessage);
 
-    for(let i = 0; i < xx.length; i++) {
-        for(let j = 0; j < yy.length; j++) {
-            x = xx[i];
-            y = yy[j];
+    img = createImage(xNumPts, yNumPts);
+    //clearImage();
 
-            let c = math.complex(x, y);
-            let itt = 1;
-            let z = c;
-
-            while(itt < maxSteps && z.mul(z.conjugate()).re < threshold) {
-                z = z.mul(z).add(c);
-                itt ++;
-            }
-            img.set(i, j, color(255 - itt * itt, 255 - itt, 255 - itt));
-        }
-    }
-    img.updatePixels();
-    return img;
+    setupWorkerTasks(defaultMessage, yNumPts);
+    const numWorkers = 8;
+    activateWorkers(numWorkers);
 }
 
 
@@ -114,15 +146,14 @@ function setup() {
 	cnv.parent('sketch');
 
     colorMode(HSB, 255);
-    let img = generateMandelbrotSet(floor(width), floor(height));
+    generateMandelbrotSet(floor(width), floor(height));
     image(img, 0, 0, width, height);
-    noLoop();
 }
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-
+    image(img, 0, 0, width, height);
 }
 
