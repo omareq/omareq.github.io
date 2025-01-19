@@ -40,7 +40,7 @@ let noWorkerData = {
     xIndex:0,
     yIndex:0,
     defaultTask: undefined
-}
+};
 
 function setupColorLUT() {
     for(let i = 0; i < 256; i++) {
@@ -153,7 +153,8 @@ function generateMandelbrotSet(
             activateWorkers(numWorkers);
         }, 0);
     } else {
-        noWorkerData.defaultTask = defaultMessage;    }
+        noWorkerData.defaultTask = defaultMessage;
+    }
 }
 
 
