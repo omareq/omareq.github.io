@@ -33,12 +33,20 @@
 let img = undefined;
 let workers = [];
 let workerTasks = [];
+let colorLUT = [];
+
+function setupColorLUT() {
+    for(let i = 0; i < 256; i++) {
+        const gb = 255 - i;
+        colorLUT[i] = color(255 - i * i, gb, gb);
+    }
+}
 
 function clearImage() {
     img.loadPixels();
     for(let i = 0; i < img.width; i++) {
         for(let j = 0; j < img.height; j++) {
-            img.set(i, j, color(0,0,0));
+            img.set(i, j, colorLUT[255]);
         }
     }
     img.updatePixels();
@@ -49,18 +57,7 @@ function updateImage(rowNumber, rowArray) {
 
     for(let i = 0; i < rowArray.length; i++) {
         const itt = rowArray[i];
-        img.set(i, rowNumber, color(255 - itt * itt, 255 - itt, 255 - itt));
-
-        // Should be faster than img.set()?
-        // const d = 1; // pixel density
-        // const x = rowArray.length;
-        // const y = x;
-
-        // let index = 4 * ((y * d + rowNumber) * width * d + (x * d + i));
-        // img.pixels[index + 0] = 255 - itt * itt;
-        // img.pixels[index + 1] = 255 - itt;
-        // img.pixels[index + 2] = 255 - itt;
-        // img.pixels[index + 3] = 255;
+        img.set(i, rowNumber, colorLUT[itt]);
     }
     img.updatePixels();
 }
@@ -86,9 +83,25 @@ function activateWorkers(numWorkers=1) {
 
             if(newTask != undefined) {
                 workers[i].postMessage(newTask);
+            } else {
+                workers[i].terminate();
+                workers[i] = undefined;
+
+                if(allWorkersTerminated()) {
+                    noLoop();
+                }
             }
         };
     }
+}
+
+function allWorkersTerminated() {
+    for(let i = 0; i < workers.length; i++) {
+        if(workers[i] != undefined) {
+            return false;
+        }
+    }
+    return true;
 }
 
 
@@ -124,11 +137,13 @@ function generateMandelbrotSet(
     console.debug("Default message: ", defaultMessage);
 
     img = createImage(xNumPts, yNumPts);
-    //clearImage();
+    clearImage();
 
-    setupWorkerTasks(defaultMessage, yNumPts);
-    const numWorkers = 8;
-    activateWorkers(numWorkers);
+    setTimeout(() => {
+        setupWorkerTasks(defaultMessage, yNumPts);
+        const numWorkers = 8;
+        activateWorkers(numWorkers);
+    }, 0);
 }
 
 
@@ -146,8 +161,8 @@ function setup() {
 	cnv.parent('sketch');
 
     colorMode(HSB, 255);
+    setupColorLUT();
     generateMandelbrotSet(floor(width), floor(height));
-    image(img, 0, 0, width, height);
 }
 
 /**
