@@ -1,5 +1,7 @@
+"use strict";
+
 importScripts("../libraries/mathjs-10.6.0.min.js");
-importScripts("mandelbrot.js")
+importScripts("mandelbrot.js");
 
 /**
  * A function that generates an array of evenly spaced numbers in a closed

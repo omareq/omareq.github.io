@@ -1,3 +1,5 @@
+"use strict";
+
 function mandelbrot(x, y, maxSteps, threshold) {
     let c = math.complex(x, y);
     let itt = 1;

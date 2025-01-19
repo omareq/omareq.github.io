@@ -29,6 +29,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
+"use strict";
 
 let img = undefined;
 let workers = [];
