@@ -36,6 +36,12 @@ let workers = [];
 let workerTasks = [];
 let colorLUT = [];
 
+let noWorkerData = {
+    xIndex:0,
+    yIndex:0,
+    defaultTask: undefined
+}
+
 function setupColorLUT() {
     for(let i = 0; i < 256; i++) {
         const gb = 255 - i;
@@ -54,7 +60,7 @@ function clearImage() {
 }
 
 function updateImage(rowNumber, rowArray) {
-    img.loadPixels();
+    // img.loadPixels();
 
     for(let i = 0; i < rowArray.length; i++) {
         const itt = rowArray[i];
@@ -140,11 +146,14 @@ function generateMandelbrotSet(
     img = createImage(xNumPts, yNumPts);
     clearImage();
 
-    setTimeout(() => {
-        setupWorkerTasks(defaultMessage, yNumPts);
-        const numWorkers = 8;
-        activateWorkers(numWorkers);
-    }, 0);
+    if(window.Worker) {
+        setTimeout(() => {
+            setupWorkerTasks(defaultMessage, yNumPts);
+            const numWorkers = 8;
+            activateWorkers(numWorkers);
+        }, 0);
+    } else {
+        noWorkerData.defaultTask = defaultMessage;    }
 }
 
 
@@ -163,6 +172,7 @@ function setup() {
 
     colorMode(HSB, 255);
     setupColorLUT();
+    // window.Worker = undefined;
     generateMandelbrotSet(floor(width), floor(height));
 }
 
@@ -170,6 +180,40 @@ function setup() {
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
+    if(window.Worker == undefined) {
+        const xNumPts = noWorkerData.defaultTask.xNumPts;
+        const yNumPts = noWorkerData.defaultTask.yNumPts;
+        const xLimits = noWorkerData.defaultTask.xLimits;
+        const yLimits = noWorkerData.defaultTask.yLimits;
+        const maxSteps = noWorkerData.defaultTask.maxSteps;
+        const threshold = noWorkerData.defaultTask.threshold;
+
+        const xx = linspace(xLimits[0], xLimits[1], xNumPts);
+        const yy = linspace(yLimits[0], yLimits[1], yNumPts);
+
+        for(let i = 0; i < 50; i++) {
+            const itt = mandelbrot(
+                xx[noWorkerData.xIndex],
+                yy[noWorkerData.yIndex],
+                maxSteps,
+                threshold
+            );
+
+            // img.loadPixels();
+            img.set(noWorkerData.xIndex, noWorkerData.yIndex, colorLUT[itt]);
+            img.updatePixels();
+
+            noWorkerData.xIndex++;
+            if(noWorkerData.xIndex >= xNumPts) {
+                noWorkerData.xIndex = 0;
+                noWorkerData.yIndex++;
+                if(noWorkerData.yIndex >= yNumPts) {
+                    noLoop();
+                }
+            }
+        }
+    }
+
     image(img, 0, 0, width, height);
 }
 
