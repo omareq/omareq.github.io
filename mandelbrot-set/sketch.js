@@ -30,18 +30,51 @@
  *
  *****************************************************************************/
 "use strict";
-
+/**
+ * The image of the mandelbrot set.
+ *
+ * @type{p5.Image}
+ */
 let img = undefined;
+
+/**
+ * The lost of workers that will calculate the 2d surface of the MNandelbrot set.
+ *
+ * @type{Array<window.Worker>}
+ */
 let workers = [];
-let workerTasks = [];
+
+/**
+ * The messages describing the task each worker will need to complete.
+ *
+ * @type{Object}
+ */
+let workerTasksQueue = [];
+
+/**
+ * A look up table which turns the number of iterations it takes to
+ * calculate if a complex number is in the Mandelbrot set or not and turns it
+ * into a p5.color.  The size of this array is 256.
+ *
+ * @type{Array<p5.color>}
+ */
 let colorLUT = [];
 
+/**
+ * Data to describe the operations to calculate the Mandelbrot set if the
+ * browser does not support workers.
+ *
+ * @type{Object}
+ */
 let noWorkerData = {
     xIndex:0,
     yIndex:0,
     defaultTask: undefined
 };
 
+/**
+ * A function to setup the color look up table
+ */
 function setupColorLUT() {
     for(let i = 0; i < 256; i++) {
         const gb = 255 - i;
@@ -49,6 +82,9 @@ function setupColorLUT() {
     }
 }
 
+/**
+ * A function to clear the image before filling it with the Mandelbrot set.
+ */
 function clearImage() {
     img.loadPixels();
     for(let i = 0; i < img.width; i++) {
@@ -59,6 +95,13 @@ function clearImage() {
     img.updatePixels();
 }
 
+/**
+ * A function to update an image with a new row once it has been calculated by
+ * a worker.
+ *
+ * @param   {number}    rowNumber   Which row has been updated
+ * @param   {number}    rowArray    The image data for the given row
+ */
 function updateImage(rowNumber, rowArray) {
     // img.loadPixels();
 
@@ -69,24 +112,35 @@ function updateImage(rowNumber, rowArray) {
     img.updatePixels();
 }
 
-function setupWorkerTasks(defaultTask, numRows) {
-    for(let i = 0; i < numRows; i++) {
+/**
+ * A function to set up all the tasks to calculate the Mandelbrot set
+ *
+ * @param   {Object}    defaultTask The default message to pass to the worker
+ * @param   {number}    totalNumRows    The total number of rows the prepare
+ */
+function setupWorkerTasks(defaultTask, totalNumRows) {
+    for(let i = 0; i < totalNumRows; i++) {
         let nextTask = {...defaultTask};
         nextTask.row = i;
-        workerTasks.push(nextTask);
+        workerTasksQueue.push(nextTask);
     }
 }
 
+/**
+ * A function to activate workers with tasks in the queue.
+ *
+ * @param   {number}    numWorkers The number of workers to use for the calculations
+ */
 function activateWorkers(numWorkers=1) {
     for(let i = 0; i < numWorkers; i ++) {
         workers[i] = new Worker("worker.js");
-        const task = workerTasks.shift();
+        const task = workerTasksQueue.shift();
         workers[i].postMessage(task);
 
 
         workers[i].onmessage = (e) => {
             updateImage(e.data.row, [...e.data.array]);
-            const newTask = workerTasks.shift();
+            const newTask = workerTasksQueue.shift();
 
             if(newTask != undefined) {
                 workers[i].postMessage(newTask);
@@ -102,6 +156,11 @@ function activateWorkers(numWorkers=1) {
     }
 }
 
+/**
+ * Checks if all of the activated workers have been set undefined.
+ *
+ * @return  {boolean}   True if all workers are terminate.
+ */
 function allWorkersTerminated() {
     for(let i = 0; i < workers.length; i++) {
         if(workers[i] != undefined) {

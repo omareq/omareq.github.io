@@ -3,6 +3,11 @@
 importScripts("../libraries/mathjs-10.6.0.min.js");
 importScripts("mandelbrot.js");
 
+/**
+ * On message event that sends data to the worker.
+ *
+ * @param {event} e The on message even information.
+ */
 onmessage = (e) => {
     const row = e.data.row;
     const xNumPts = e.data.xNumPts;

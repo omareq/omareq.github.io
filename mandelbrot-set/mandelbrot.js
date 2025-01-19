@@ -25,6 +25,18 @@ function linspace(start, stop, numPts=100) {
     });
 }
 
+/**
+ * A function to give you the number of itterations it takes to determine if a
+ * coordinate is in the Mandelbrot set.
+ *
+ * @param   {number}    x   x-coordinate
+ * @param   {number}    y   y-coordinate
+ * @param   {number}    maxSteps    The maximum number of iterations
+ * @param   {number}    threshold   The threshold to determine if the complex
+ *                                  number is in the mandelbrot set
+ *
+ * @return  {number}    The number of iterations to determine
+ */
 function mandelbrot(x, y, maxSteps, threshold) {
     let c = math.complex(x, y);
     let itt = 1;

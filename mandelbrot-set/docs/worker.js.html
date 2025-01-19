@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: worker.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,46 +17,61 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: worker.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>Mandelbrot set</h1>
-<p>A script to generate the mandelbrot-set</p>
-<p>Check out the <a href="https://omareq.github.io/mandelbrot-set/">Demo</a>.</p>
-<p>Check out the <a href="https://omareq.github.io/mandelbrot-set/docs/">Docs</a>.</p>
-<p>Created using <a href="https://p5js.org/">p5.js</a></p>
-<h2>Example</h2>
-<p>An example of the Mandelbrot set.</p>
-<p><img src="https://omareq.github.io/imgs/p_025.jpg" alt="Example of the Mandelbrot set"></p>
-<h2>Contact Details</h2>
-<p><strong>Programmer:</strong> Omar Essilfie-Quaye (omareq08+githubio@gmail.com)</p>
-<p>(This is an auto-generated document, not all links will necessarily work)</p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+
+importScripts("../libraries/mathjs-10.6.0.min.js");
+importScripts("mandelbrot.js");
+
+/**
+ * On message event that sends data to the worker.
+ *
+ * @param {event} e The on message even information.
+ */
+onmessage = (e) => {
+    const row = e.data.row;
+    const xNumPts = e.data.xNumPts;
+    const yNumPts = e.data.yNumPts;
+    const xLimits = e.data.xLimits;
+    const yLimits = e.data.yLimits;
+    const maxSteps = e.data.maxSteps;
+    const threshold = e.data.threshold;
+
+    const xx = linspace(xLimits[0], xLimits[1], xNumPts);
+    const yy = linspace(yLimits[0], yLimits[1], yNumPts);
+
+    let arr = [];
+    let xy = [];
+
+    for(let i = 0; i &lt; xx.length; i++) {
+        arr[i] = (mandelbrot(xx[i], yy[row], maxSteps, threshold));
+
+        xy[i] = (
+            {
+                x:xx[i],
+                y:yy[row]
+            }
+        );
+    }
+
+    const result = {
+        row: row,
+        array: arr,
+    };
+
+    postMessage(result);
+};
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

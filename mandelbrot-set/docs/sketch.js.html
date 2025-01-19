@@ -57,30 +57,147 @@
  *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
+"use strict";
+/**
+ * The image of the mandelbrot set.
+ *
+ * @type{p5.Image}
+ */
+let img = undefined;
 
 /**
- * A function that generates an array of evenly spaced numbers in a closed
- * interval
+ * The lost of workers that will calculate the 2d surface of the MNandelbrot set.
  *
- * @param      {number}  start   The start of the interval
- * @param      {number}  stop    The end of the interval
- * @param      {number}  [numPts=100]  The number of points in the interval
- * @return     {Array}  The array containing the evenly spaced numbers
+ * @type{Array&lt;window.Worker>}
  */
-function linspace(start, stop, numPts=100) {
-    let [begin, end] = [start, stop];
-    if(stop &lt; start) {
-        [begin, end] = [stop, start];
+let workers = [];
+
+/**
+ * The messages describing the task each worker will need to complete.
+ *
+ * @type{Object}
+ */
+let workerTasksQueue = [];
+
+/**
+ * A look up table which turns the number of iterations it takes to
+ * calculate if a complex number is in the Mandelbrot set or not and turns it
+ * into a p5.color.  The size of this array is 256.
+ *
+ * @type{Array&lt;p5.color>}
+ */
+let colorLUT = [];
+
+/**
+ * Data to describe the operations to calculate the Mandelbrot set if the
+ * browser does not support workers.
+ *
+ * @type{Object}
+ */
+let noWorkerData = {
+    xIndex:0,
+    yIndex:0,
+    defaultTask: undefined
+};
+
+/**
+ * A function to setup the color look up table
+ */
+function setupColorLUT() {
+    for(let i = 0; i &lt; 256; i++) {
+        const gb = 255 - i;
+        colorLUT[i] = color(255 - i * i, gb, gb);
     }
-
-    let a = Array.from(Array(numPts).keys());
-
-    let range = end - begin;
-
-    return a.map(function(num){
-        return num * range / (numPts - 1) + start;
-    });
 }
+
+/**
+ * A function to clear the image before filling it with the Mandelbrot set.
+ */
+function clearImage() {
+    img.loadPixels();
+    for(let i = 0; i &lt; img.width; i++) {
+        for(let j = 0; j &lt; img.height; j++) {
+            img.set(i, j, colorLUT[255]);
+        }
+    }
+    img.updatePixels();
+}
+
+/**
+ * A function to update an image with a new row once it has been calculated by
+ * a worker.
+ *
+ * @param   {number}    rowNumber   Which row has been updated
+ * @param   {number}    rowArray    The image data for the given row
+ */
+function updateImage(rowNumber, rowArray) {
+    // img.loadPixels();
+
+    for(let i = 0; i &lt; rowArray.length; i++) {
+        const itt = rowArray[i];
+        img.set(i, rowNumber, colorLUT[itt]);
+    }
+    img.updatePixels();
+}
+
+/**
+ * A function to set up all the tasks to calculate the Mandelbrot set
+ *
+ * @param   {Object}    defaultTask The default message to pass to the worker
+ * @param   {number}    totalNumRows    The total number of rows the prepare
+ */
+function setupWorkerTasks(defaultTask, totalNumRows) {
+    for(let i = 0; i &lt; totalNumRows; i++) {
+        let nextTask = {...defaultTask};
+        nextTask.row = i;
+        workerTasksQueue.push(nextTask);
+    }
+}
+
+/**
+ * A function to activate workers with tasks in the queue.
+ *
+ * @param   {number}    numWorkers The number of workers to use for the calculations
+ */
+function activateWorkers(numWorkers=1) {
+    for(let i = 0; i &lt; numWorkers; i ++) {
+        workers[i] = new Worker("worker.js");
+        const task = workerTasksQueue.shift();
+        workers[i].postMessage(task);
+
+
+        workers[i].onmessage = (e) => {
+            updateImage(e.data.row, [...e.data.array]);
+            const newTask = workerTasksQueue.shift();
+
+            if(newTask != undefined) {
+                workers[i].postMessage(newTask);
+            } else {
+                workers[i].terminate();
+                workers[i] = undefined;
+
+                if(allWorkersTerminated()) {
+                    noLoop();
+                }
+            }
+        };
+    }
+}
+
+/**
+ * Checks if all of the activated workers have been set undefined.
+ *
+ * @return  {boolean}   True if all workers are terminate.
+ */
+function allWorkersTerminated() {
+    for(let i = 0; i &lt; workers.length; i++) {
+        if(workers[i] != undefined) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 /**
  * A function that generates a picture of the Mandelbrot set
@@ -101,30 +218,30 @@ function generateMandelbrotSet(
     maxSteps = 255,
     threshold = 4 ) {
 
-    let xx = linspace(xLimits[0], xLimits[1], xNumPts);
-    let yy = linspace(yLimits[0], yLimits[1], yNumPts);
+    const defaultMessage = {
+        row: -1,
+        xNumPts: xNumPts,
+        yNumPts: yNumPts,
+        xLimits: xLimits,
+        yLimits: yLimits,
+        maxSteps: maxSteps,
+        threshold: threshold,
+    };
 
-    let img = createImage(xNumPts, yNumPts);
-    img.loadPixels();
+    console.debug("Default message: ", defaultMessage);
 
-    for(let i = 0; i &lt; xx.length; i++) {
-        for(let j = 0; j &lt; yy.length; j++) {
-            x = xx[i];
-            y = yy[j];
+    img = createImage(xNumPts, yNumPts);
+    clearImage();
 
-            let c = math.complex(x, y);
-            let itt = 1;
-            let z = c;
-
-            while(itt &lt; maxSteps &amp;&amp; z.mul(z.conjugate()).re &lt; threshold) {
-                z = z.mul(z).add(c);
-                itt ++;
-            }
-            img.set(i, j, color(255 - itt * itt, 255 - itt, 255 - itt));
-        }
+    if(window.Worker) {
+        setTimeout(() => {
+            setupWorkerTasks(defaultMessage, yNumPts);
+            const numWorkers = 8;
+            activateWorkers(numWorkers);
+        }, 0);
+    } else {
+        noWorkerData.defaultTask = defaultMessage;
     }
-    img.updatePixels();
-    return img;
 }
 
 
@@ -142,16 +259,50 @@ function setup() {
 	cnv.parent('sketch');
 
     colorMode(HSB, 255);
-    let img = generateMandelbrotSet(floor(width), floor(height));
-    image(img, 0, 0, width, height);
-    noLoop();
+    setupColorLUT();
+    // window.Worker = undefined;
+    generateMandelbrotSet(floor(width), floor(height));
 }
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
+    if(window.Worker == undefined) {
+        const xNumPts = noWorkerData.defaultTask.xNumPts;
+        const yNumPts = noWorkerData.defaultTask.yNumPts;
+        const xLimits = noWorkerData.defaultTask.xLimits;
+        const yLimits = noWorkerData.defaultTask.yLimits;
+        const maxSteps = noWorkerData.defaultTask.maxSteps;
+        const threshold = noWorkerData.defaultTask.threshold;
 
+        const xx = linspace(xLimits[0], xLimits[1], xNumPts);
+        const yy = linspace(yLimits[0], yLimits[1], yNumPts);
+
+        for(let i = 0; i &lt; 50; i++) {
+            const itt = mandelbrot(
+                xx[noWorkerData.xIndex],
+                yy[noWorkerData.yIndex],
+                maxSteps,
+                threshold
+            );
+
+            // img.loadPixels();
+            img.set(noWorkerData.xIndex, noWorkerData.yIndex, colorLUT[itt]);
+            img.updatePixels();
+
+            noWorkerData.xIndex++;
+            if(noWorkerData.xIndex >= xNumPts) {
+                noWorkerData.xIndex = 0;
+                noWorkerData.yIndex++;
+                if(noWorkerData.yIndex >= yNumPts) {
+                    noLoop();
+                }
+            }
+        }
+    }
+
+    image(img, 0, 0, width, height);
 }
 
 </code></pre>
@@ -164,12 +315,12 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#generateMandelbrotSet">generateMandelbrotSet</a></li><li><a href="global.html#linspace">linspace</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateWorkers">activateWorkers</a></li><li><a href="global.html#allWorkersTerminated">allWorkersTerminated</a></li><li><a href="global.html#clearImage">clearImage</a></li><li><a href="global.html#colorLUT">colorLUT</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#generateMandelbrotSet">generateMandelbrotSet</a></li><li><a href="global.html#img">img</a></li><li><a href="global.html#linspace">linspace</a></li><li><a href="global.html#mandelbrot">mandelbrot</a></li><li><a href="global.html#noWorkerData">noWorkerData</a></li><li><a href="global.html#onmessage">onmessage</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#setupColorLUT">setupColorLUT</a></li><li><a href="global.html#setupWorkerTasks">setupWorkerTasks</a></li><li><a href="global.html#updateImage">updateImage</a></li><li><a href="global.html#workerTasksQueue">workerTasksQueue</a></li><li><a href="global.html#workers">workers</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Dec 29 2023 18:02:35 GMT+0000 (Greenwich Mean Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jan 18 2025 19:08:52 GMT-0800 (Pacific Standard Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
