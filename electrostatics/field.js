@@ -70,19 +70,19 @@ class Field {
 	*/
 	addParticle(part) {
 		this.particles.push(part);
-		for(let w = 0; w < this.width; w++) {
-			for(let h = 0; h < this.height; h++) {
-				let px = part.pos.x;
-				let py = part.pos.y;
-				let pc = part.charge;
+		for(let w = 0; w < this.width; w+=this.space) {
+			for(let h = 0; h < this.height; h+=this.space) {
+				const px = part.pos.x;
+				const py = part.pos.y;
+				const pc = part.charge;
 
-				let d2 = (px - w) * (px - w) + (py - h) * (py - h);
+				const d2 = (px - w) * (px - w) + (py - h) * (py - h);
 
-				let vx = w - px;
-				let vy = h - py;
-				let v = createVector(vx, vy);
+				const vx = w - px;
+				const vy = h - py;
+				const v = createVector(vx, vy);
 
-				let e = v.mult(pc / d2);
+				const e = v.mult(pc / d2);
 
 				this.field[w][h] = p5.Vector.add(this.field[w][h], e);
 			}
@@ -132,6 +132,7 @@ class Field {
 	*		field vectors that are drawn.
 	*/
 	draw(space, scale) {
+		this.space = space;
 		stroke(0);
 		for(let w = 0; w < this.width; w += space) {
 			for(let h = 0; h < this.height; h += space) {
