@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_029",
+            "prev-id": "p_030",
             "status": "active",
             "tags": [
                 "fun"
@@ -465,7 +465,7 @@
             "gif-url": "imgs/p_029.gif",
             "id": "p_029",
             "name": "Snake game",
-            "next-id": "p_000",
+            "next-id": "p_030",
             "pic-url": "imgs/p_029.webp",
             "prev-id": "p_028",
             "status": "active",
@@ -473,6 +473,20 @@
                 "game"
             ],
             "vid-url": "vids/p_029.mp4"
+        },
+        "p_030": {
+            "brief": "A take on the classic tanks multiplayer game",
+            "demo-url": "/tanks/",
+            "docs-url": "/tanks/docs/",
+            "gif-url": "imgs/p_030.gif",
+            "id": "p_030",
+            "name": "Tanks",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_030.jpg",
+            "prev-id": "p_029",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_030.mp4"
         }
     }
 }
