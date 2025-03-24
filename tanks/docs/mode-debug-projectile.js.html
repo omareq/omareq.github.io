@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: sketch.js</title>
+    <title>JSDoc: Source: mode-debug-projectile.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: sketch.js</h1>
+    <h1 class="page-title">Source: mode-debug-projectile.js</h1>
 
     
 
@@ -28,13 +28,13 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *	@file sketch.js A take on the classic tanks multiplayer game
+ *  @file mode-debug-projectile.js A file to test projectile motion
  *
- *	@author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
- *	@version 1.0
- *	@date 17-February-2025
- *	@link https://omareq.github.io/tanks/
- *	@link https://omareq.github.io/tanks/docs/
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 12-February-2025
+ *  @link https://omareq.github.io/tanks/
+ *  @link https://omareq.github.io/tanks/docs/
  *
  *******************************************************************************
  *
@@ -59,33 +59,60 @@
  *****************************************************************************/
 "use strict";
 
-let tanksGameEngine = undefined;
-
 /**
- * p5.js setup function, creates canvas.
+ * Class empty mode that doesn't do anything.
+ *
+ * @see TankGame.Mode
  */
-function setup() {
-	let cnvSize;
-	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
-	} else {
-		cnvSize = windowWidth;
-	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
-	cnv.parent('sketch');
+TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
+    /**
+     * Constructor for the Debug projectile mode.
+     */
+    constructor() {
+        super();
+        console.debug("Start the Debug Projectile Mode");
+        this.startSpeed = 100;
+        this.keys = Object.keys(TankGame.ProjectileParamList);
+        this.keysIndex = 0;
+    };
 
-	tanksGameEngine = new TankGame.GameEngine(new TankGame.ModeList.DebugProjectile());
-}
+    /**
+     * Update the projectile debug mode - adds new projectile if there are none
+     * currently in the screen
+     *
+     * @param (number) dt - The time between the current frame and the previous frame.
+     */
+    update(dt) {
+        if(this.gameEngine.projectiles.length==0) {
+            const startPos = createVector(2, 0.75 * height);
+            const speed = this.startSpeed;
+            this.startSpeed -= 10;
+            if(this.startSpeed &lt;= 10) {
+                this.startSpeed = 100;
+                this.keysIndex++;
+                if(this.keysIndex > this.keys.length - 1) {
+                    this.keysIndex = 0;
+                }
+            }
+            const bearing = 45;
+            const key = this.keys[this.keysIndex];
+            const testProjectile = new TankGame.Projectile(
+                startPos,
+                speed,
+                bearing,
+                TankGame.ProjectileParamList[key]);
+            console.debug("Add ", key, " to the projectiles list.");
 
-/**
- * p5.js draw function, is run every frame to create the desired animation
- */
-function draw() {
-	background(0);
-	tanksGameEngine.update();
-}
+            this.gameEngine.addProjectile(testProjectile);
+        }
+    };
 
-</code></pre>
+    /**
+     * exits immediately
+     */
+    draw() {
+    };
+};</code></pre>
         </article>
     </section>
 
