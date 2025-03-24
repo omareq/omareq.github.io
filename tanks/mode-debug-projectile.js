@@ -14,25 +14,34 @@ TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
     constructor() {
         super();
         console.debug("Start the Debug Projectile Mode");
-        const startPos = createVector(0, height / 2);
-        const startVel = createVector(5, -5);
-        this.testProjectile = new TankGame.Projectile(
-            startPos,
-            startVel,
-            TankGame.ProjectileParamList.SmallMissile);
+        this.startSpeed = 100;
     };
 
     /**
      * exits immediately
      */
     update(dt) {
-        this.testProjectile.update(dt);
+        if(this.gameEngine.projectiles.length==0) {
+            const startPos = createVector(2, 0.75 * height);
+            const speed = this.startSpeed;
+            this.startSpeed -= 10;
+            if(this.startSpeed <= 10) {
+                this.startSpeed = 100;
+            }
+            const bearing = 45;
+            const testProjectile = new TankGame.Projectile(
+                startPos,
+                speed,
+                bearing,
+                TankGame.ProjectileParamList.SmallMissile);
+
+            this.gameEngine.addProjectile(testProjectile);
+        }
     };
 
     /**
      * exits immediately
      */
     draw() {
-        this.testProjectile.draw();
     };
 };

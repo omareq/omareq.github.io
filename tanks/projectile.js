@@ -48,9 +48,14 @@ TankGame.ProjectileParamList.LargeMissile =  TankGame.ProjectileParam(75, 5, 150
 
 
 TankGame.Projectile = class {
-    constructor(startPos, starVel, projectileParam) {
+    constructor(startPos, speed, bearing, projectileParam) {
+        this.minSpeed = 0.15;
+
         this.pos = startPos.copy();
-        this.vel = starVel.copy();
+        let startVel = createVector(1, 0);
+        startVel.rotate(-radians(bearing));
+        startVel.setMag(speed * this.minSpeed);
+        this.vel = startVel.copy();
         this.projectileParam = projectileParam;
         this.radius = this.projectileParam.projectileRadius;
         this.mass = PI * this.radius**2;
@@ -58,7 +63,7 @@ TankGame.Projectile = class {
 
     isOffScreen() {
         const horizontal = this.pos.x > width || this.pos.x < 0;
-        const vertical = this.pos.y > height || this.pos.y < 0;
+        const vertical = this.pos.y > height;
         return horizontal || vertical;
     }
 

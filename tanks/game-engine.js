@@ -46,6 +46,7 @@ TankGame.GameEngine = class {
         this.lastFrameTime = this.firstFrameTime;
         this.updateFrameData();
         this.gravity = createVector(0, 0.002);
+        this.projectiles = [];
     };
 
     updateFrameData() {
@@ -60,10 +61,36 @@ TankGame.GameEngine = class {
         );
     }
 
+    addProjectile(newProjectile) {
+        this.projectiles.push(newProjectile);
+    }
+
+    updateProjectiles() {
+        if(this.projectiles.length > 0) {
+            for(let i = this.projectiles.length-1; i >=0; i--) {
+                this.projectiles[i].update(this.currentFrameData.dtSeconds);
+                if(this.projectiles[i].isOffScreen()) {
+                    this.projectiles.splice(i, 1);
+                    console.debug("Remove projectile from list");
+                }
+            }
+        }
+    }
+
+    drawProjectiles() {
+    if(this.projectiles.length > 0) {
+        for(let i = this.projectiles.length-1; i >=0; i--) {
+            this.projectiles[i].draw();
+            }
+        }
+    }
+
     update() {
         this.updateFrameData();
+        this.updateProjectiles();
         this.activeMode.update(this.currentFrameData.dtSeconds);
         this.activeMode.draw();
+        this.drawProjectiles();
     };
 
     setMode(newMode) {
@@ -86,6 +113,7 @@ TankGame.GameEngine = class {
         }
 
         this.activeMode = newMode;
+        this.activeMode.attachTo(this);
     };
 };
 
@@ -103,6 +131,10 @@ TankGame.Mode = class {
           throw new Error(err);
         }
     };
+
+    attachTo(gameEngine) {
+        this.gameEngine = gameEngine;
+    }
 
      /**
        * An abstract method which needs to be overridden.
