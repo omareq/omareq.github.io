@@ -72,7 +72,7 @@ TankGame.GameEngine = class {
         if(this.projectiles.length > 0) {
             for(let i = this.projectiles.length-1; i >=0; i--) {
                 this.projectiles[i].update(this.currentFrameData.dtSeconds);
-                if(this.projectiles[i].isOffScreen()) {
+                if(this.projectiles[i].isOffScreen() || this.projectileHitsTerrain(this.projectiles[i])) {
                     this.projectiles.splice(i, 1);
                     console.debug("Remove projectile from list");
                 }
@@ -86,6 +86,14 @@ TankGame.GameEngine = class {
             this.projectiles[i].draw();
             }
         }
+    }
+
+    projectileHitsTerrain(projectile) {
+        if(projectile.pos.y >= this.terrain.groundHeight[floor(projectile.pos.x)]) {
+            console.debug("Projectile hit terrain");
+            return true;
+        }
+        return false;
     }
 
     addTerrain(terrain) {
