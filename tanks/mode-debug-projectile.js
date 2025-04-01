@@ -55,8 +55,19 @@ TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
      * @param (number) dt - The time between the current frame and the previous frame.
      */
     update(dt) {
+        if(this.gameEngine.terrain == undefined) {
+            const ground = new TankGame.World.Terrain(
+                this.gameEngine.screenWidth,
+                0.85 * this.gameEngine.screenHeight,
+                this.gameEngine.screenHeight,
+                0.009);
+
+            this.gameEngine.addTerrain(ground);
+        }
+
         if(this.gameEngine.projectiles.length==0) {
-            const startPos = createVector(2, 0.75 * height);
+            const startHeight = this.gameEngine.terrain.groundHeight[0];
+            const startPos = createVector(2, startHeight);
             const speed = this.startSpeed;
             this.startSpeed -= 10;
             if(this.startSpeed <= 10) {

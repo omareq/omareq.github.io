@@ -40,6 +40,8 @@ var TankGame = TankGame || {};
 TankGame.GameEngine = class {
     constructor(startingMode) {
         this.setMode(startingMode);
+        this.screenWidth = width;
+        this.screenHeight = height;
 
         this.frameNumber = 0;
         this.firstFrameTime = Date.now();
@@ -47,6 +49,7 @@ TankGame.GameEngine = class {
         this.updateFrameData();
         this.gravity = createVector(0, 0.002);
         this.projectiles = [];
+        this.terrain = undefined;
     };
 
     updateFrameData() {
@@ -85,11 +88,23 @@ TankGame.GameEngine = class {
         }
     }
 
+    addTerrain(terrain) {
+        if(!(terrain instanceof TankGame.World.Terrain)) {
+            let err = "terrain should be an instance of TankGame.World.Terrain\n";
+            console.warn(err);
+            throw(err);
+            return;
+        }
+
+        this.terrain = terrain;
+    }
+
     update() {
         this.updateFrameData();
         this.updateProjectiles();
         this.activeMode.update(this.currentFrameData.dtSeconds);
         this.activeMode.draw();
+        this.terrain.draw();
         this.drawProjectiles();
     };
 
@@ -109,7 +124,6 @@ TankGame.GameEngine = class {
             err += "Switching to TankGame.ModeList.DebugEmpty Mode.";
             console.warn(err);
             return;
-            // throw new Error(err);
         }
 
         this.activeMode = newMode;
