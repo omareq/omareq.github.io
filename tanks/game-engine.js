@@ -45,7 +45,7 @@ TankGame.GameEngine = class {
     /**
      * Creates a new instance of GameEngine
      *
-     * @param (TankGame.Mode) startingMode - The game mode that the game engine
+     * @param {TankGame.Mode} startingMode - The game mode that the game engine
      *                                       will run at startup
      *
      * @see TankGame.Mode
@@ -82,7 +82,7 @@ TankGame.GameEngine = class {
     /**
      * Inserts a projectile into the game engine projectile list
      *
-     * @param (TankGame.Projectile) newProjectile - an instance of
+     * @param {TankGame.Projectile} newProjectile - an instance of
      *                                              TankGame.Projectile
      */
     addProjectile(newProjectile) {
@@ -126,7 +126,7 @@ TankGame.GameEngine = class {
     /**
      * Calculate if a given projectile hits the ground
      *
-     * @param (TankGame.Projectile) projectile - The projectile to test.
+     * @param {TankGame.Projectile} projectile - The projectile to test.
      *
      * @returns {Boolean} - If projectile hits the ground
      */
@@ -141,7 +141,7 @@ TankGame.GameEngine = class {
     /**
      * Add the terrain to the game engine.
      *
-     * @param (TankGame.World.Terrain) terrain - the ground
+     * @param {TankGame.World.Terrain} terrain - the ground
      */
     addTerrain(terrain) {
         if(!(terrain instanceof TankGame.World.Terrain)) {
@@ -174,7 +174,7 @@ TankGame.GameEngine = class {
      * Set the mode of the game engine.  Will return early and set the mode to
      * debug empty if the mode is not a valid instance of TankGame.Mode.
      *
-     * @param (TankGame.Mode) newMode - the new mode
+     * @param {TankGame.Mode} newMode - the new mode
      */
     setMode(newMode) {
         if(newMode == undefined) {

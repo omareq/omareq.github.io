@@ -52,7 +52,7 @@ TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
      * Update the projectile debug mode - adds new projectile if there are none
      * currently in the screen
      *
-     * @param (number) dt - The time between the current frame and the previous frame.
+     * @param {number} dt - The time between the current frame and the previous frame.
      */
     update(dt) {
         if(this.gameEngine.terrain == undefined) {

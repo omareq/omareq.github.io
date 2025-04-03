@@ -66,10 +66,10 @@ TankGame.Projectile = class {
     /**
      * Projectile constructor.
      *
-     * @param (p5.Vector) startPos - Starting position of the projectile
-     * @param (number)    speed    - The start speed from 0-100
-     * @param (number)    bearing  - Bearing to fire the projectile 0-180 in degrees.
-     * @param (ProjectilParam) projectileParam - Struct of projectile parameters.
+     * @param {p5.Vector} startPos - Starting position of the projectile
+     * @param {number}    speed    - The start speed from 0-100
+     * @param {number}    bearing  - Bearing to fire the projectile 0-180 in degrees.
+     * @param {ProjectilParam} projectileParam - Struct of projectile parameters.
      */
     constructor(startPos, speed, bearing, projectileParam) {
         this.minSpeed = 0.15;
@@ -114,7 +114,7 @@ TankGame.Projectile = class {
     /**
      * updates the projectiles position.
      *
-     * @param (number) dt - The time difference between the the current frame
+     * @param {number} dt - The time difference between the the current frame
      * and the previous frame.
      */
     update(dt) {
