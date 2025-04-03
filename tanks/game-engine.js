@@ -111,6 +111,8 @@ TankGame.GameEngine = class {
         this.updateFrameData();
         this.updateProjectiles();
         this.activeMode.update(this.currentFrameData.dtSeconds);
+
+        // cache background drawing as img for faster refresh
         this.activeMode.draw();
         this.terrain.draw();
         this.drawProjectiles();
