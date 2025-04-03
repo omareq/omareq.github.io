@@ -1,4 +1,35 @@
-
+/*******************************************************************************
+ *
+ *  @file World.js A file with the classes for the World elements
+ *
+ *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 12-February-2025
+ *  @link https://omareq.github.io/tanks/
+ *  @link https://omareq.github.io/tanks/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2025 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+"use strict";
 
 
 /**
@@ -7,8 +38,6 @@
 var TankGame = TankGame || {};
 
 TankGame.World = {};
-
-// ground
 
 TankGame.World.Terrain = class {
     constructor(width, minHeight, maxHeight, noiseDetail=1) {
@@ -22,7 +51,7 @@ TankGame.World.Terrain = class {
 
         this.color = color(155, 155, 155);
         this.stepSize = 10;
-    }
+    };
 
     drawTriangleStrip() {
         beginShape(TRIANGLE_STRIP);
@@ -35,13 +64,13 @@ TankGame.World.Terrain = class {
         vertex(this.width, height);
 
         endShape();
-    }
+    };
 
     drawRect() {
         for(let i = 0; i < this.groundHeight.length; i+= this.stepSize) {
             rect(i, this.groundHeight[i], this.stepSize, height - this.groundHeight[i]);
         }
-    }
+    };
 
     draw() {
         stroke(this.color);
@@ -53,8 +82,7 @@ TankGame.World.Terrain = class {
         } else {
             this.drawTriangleStrip();
         }
-
-    }
+    };
 };
 
 // wind

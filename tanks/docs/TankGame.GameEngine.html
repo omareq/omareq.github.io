@@ -29,7 +29,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#TankGame">TankGame</a>.</span>GameEngine<span class="signature">()</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="global.html#TankGame">TankGame</a>.</span>GameEngine<span class="signature">(startingMode)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Class GameEngine that represents the tank game engine</div>
         
@@ -46,7 +46,7 @@
     
 
     
-    <h4 class="name" id="GameEngine"><span class="type-signature"></span>new GameEngine<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="GameEngine"><span class="type-signature"></span>new GameEngine<span class="signature">(startingMode)</span><span class="type-signature"></span></h4>
     
 
     
@@ -90,10 +90,15 @@
 
         <tr>
             
-                <td class="name"><code>(TankGame.Mode)</code></td>
+                <td class="name"><code>startingMode</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><a href="TankGame.Mode.html">TankGame.Mode</a></span>
+
+
             
             </td>
 
@@ -101,7 +106,7 @@
 
             
 
-            <td class="description last">startingMode - The game mode that the game engine
+            <td class="description last">The game mode that the game engine
                                       will run at startup</td>
         </tr>
 
@@ -206,7 +211,7 @@
     
 
     
-    <h4 class="name" id="addProjectile"><span class="type-signature"></span>addProjectile<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addProjectile"><span class="type-signature"></span>addProjectile<span class="signature">(newProjectile)</span><span class="type-signature"></span></h4>
     
 
     
@@ -250,10 +255,15 @@
 
         <tr>
             
-                <td class="name"><code>(TankGame.Projectile)</code></td>
+                <td class="name"><code>newProjectile</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><a href="TankGame.Projectile.html">TankGame.Projectile</a></span>
+
+
             
             </td>
 
@@ -261,7 +271,7 @@
 
             
 
-            <td class="description last">newProjectile - an instance of
+            <td class="description last">an instance of
                                              TankGame.Projectile</td>
         </tr>
 
@@ -339,7 +349,7 @@
     
 
     
-    <h4 class="name" id="addTerrain"><span class="type-signature"></span>addTerrain<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addTerrain"><span class="type-signature"></span>addTerrain<span class="signature">(terrain)</span><span class="type-signature"></span></h4>
     
 
     
@@ -383,10 +393,15 @@
 
         <tr>
             
-                <td class="name"><code>(TankGame.World.Terrain)</code></td>
+                <td class="name"><code>terrain</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type">TankGame.World.Terrain</span>
+
+
             
             </td>
 
@@ -394,7 +409,7 @@
 
             
 
-            <td class="description last">terrain - the ground</td>
+            <td class="description last">the ground</td>
         </tr>
 
     
@@ -559,7 +574,7 @@
     
 
     
-    <h4 class="name" id="projectileHitsTerrain"><span class="type-signature"></span>projectileHitsTerrain<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="projectileHitsTerrain"><span class="type-signature"></span>projectileHitsTerrain<span class="signature">(projectile)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -603,10 +618,15 @@
 
         <tr>
             
-                <td class="name"><code>(TankGame.Projectile)</code></td>
+                <td class="name"><code>projectile</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><a href="TankGame.Projectile.html">TankGame.Projectile</a></span>
+
+
             
             </td>
 
@@ -614,7 +634,7 @@
 
             
 
-            <td class="description last">projectile - The projectile to test.</td>
+            <td class="description last">The projectile to test.</td>
         </tr>
 
     
@@ -713,7 +733,7 @@
     
 
     
-    <h4 class="name" id="setMode"><span class="type-signature"></span>setMode<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setMode"><span class="type-signature"></span>setMode<span class="signature">(newMode)</span><span class="type-signature"></span></h4>
     
 
     
@@ -758,10 +778,15 @@ debug empty if the mode is not a valid instance of TankGame.Mode.
 
         <tr>
             
-                <td class="name"><code>(TankGame.Mode)</code></td>
+                <td class="name"><code>newMode</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><a href="TankGame.Mode.html">TankGame.Mode</a></span>
+
+
             
             </td>
 
@@ -769,7 +794,7 @@ debug empty if the mode is not a valid instance of TankGame.Mode.
 
             
 
-            <td class="description last">newMode - the new mode</td>
+            <td class="description last">the new mode</td>
         </tr>
 
     
@@ -1127,7 +1152,7 @@ off screen or collide with the ground
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Apr 02 2025 20:29:06 GMT-0700 (Pacific Daylight Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Apr 02 2025 20:47:26 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

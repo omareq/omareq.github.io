@@ -90,14 +90,14 @@ TankGame.Projectile = class {
      */
     disableDrag() {
         this.applyDrag = false;
-    }
+    };
 
     /**
      * Enable the drag calculations on the projectile
      */
     enableDrag() {
         this.applyDrag = true;
-    }
+    };
 
     /**
      * Determines if the projectile is off screen or not.  Does not return true
@@ -109,7 +109,7 @@ TankGame.Projectile = class {
         const horizontal = this.pos.x > width || this.pos.x < 0;
         const vertical = this.pos.y > height;
         return horizontal || vertical;
-    }
+    };
 
     /**
      * updates the projectiles position.

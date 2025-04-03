@@ -77,7 +77,7 @@ TankGame.GameEngine = class {
             this.firstFrameTime,
             this.lastFrameTime)
         );
-    }
+    };
 
     /**
      * Inserts a projectile into the game engine projectile list
@@ -93,7 +93,7 @@ TankGame.GameEngine = class {
             return;
         }
         this.projectiles.push(newProjectile);
-    }
+    };
 
     /**
      * Update the position of all the projectiles and delete them if they are
@@ -110,7 +110,7 @@ TankGame.GameEngine = class {
                 }
             }
         }
-    }
+    };
 
     /**
      * Draws all the projectiles
@@ -121,7 +121,7 @@ TankGame.GameEngine = class {
             this.projectiles[i].draw();
             }
         }
-    }
+    };
 
     /**
      * Calculate if a given projectile hits the ground
@@ -136,7 +136,7 @@ TankGame.GameEngine = class {
             return true;
         }
         return false;
-    }
+    };
 
     /**
      * Add the terrain to the game engine.
@@ -153,7 +153,7 @@ TankGame.GameEngine = class {
         }
 
         this.terrain = terrain;
-    }
+    };
 
     /**
      * Updates the game engine and all of the components.  this includes running
@@ -304,5 +304,5 @@ TankGame.FrameData = class {
         this.frame = frameNumber;
         this.timeSinceStart = this.frameTime - firstFrameTime;
         this.timeSinceStartSeconds = 0.001 * this.timeSinceStart;
-    }
+    };
 };
