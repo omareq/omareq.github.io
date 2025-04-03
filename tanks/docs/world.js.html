@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: world.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,43 +17,77 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: world.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>Tanks</h1>
-<p>A take on the classic tanks multiplayer game</p>
-<p>Check out the <a href="https://omareq.github.io/tanks/">Demo</a>.</p>
-<p>Check out the <a href="https://omareq.github.io/tanks/docs/">Docs</a>.</p>
-<p>Created using <a href="https://p5js.org/">p5.js</a></p>
-<h2>Contact Details</h2>
-<p><strong>Programmer:</strong> Omar Essilfie-Quaye (omareq08+githubio@gmail.com)</p>
-<p>(This is an auto-generated document, not all links will necessarily work)</p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+
+
+/**
+ * TankGame namespace object
+ */
+var TankGame = TankGame || {};
+
+TankGame.World = {};
+
+// ground
+
+TankGame.World.Terrain = class {
+    constructor(width, minHeight, maxHeight, noiseDetail=1) {
+        this.width = width;
+        this.groundHeight = [];
+        const heightRange = maxHeight - minHeight;
+        for(let i = 0; i &lt; width; i++) {
+            let nextGroundHeight = heightRange * noise(i * noiseDetail) + minHeight;
+            this.groundHeight.push(nextGroundHeight);
+        }
+
+        this.color = color(155, 155, 155);
+        this.stepSize = 10;
+    }
+
+    drawTriangleStrip() {
+        beginShape(TRIANGLE_STRIP);
+        vertex(0, height);
+        for(let i = 0; i &lt; this.groundHeight.length; i+= this.stepSize) {
+            vertex(i, this.groundHeight[i]);
+            vertex(i + this.stepSize / 2, height);
+        }
+        vertex(this.width, this.groundHeight[this.groundHeight.length - 1]);
+        vertex(this.width, height);
+
+        endShape();
+    }
+
+    drawRect() {
+        for(let i = 0; i &lt; this.groundHeight.length; i+= this.stepSize) {
+            rect(i, this.groundHeight[i], this.stepSize, height - this.groundHeight[i]);
+        }
+    }
+
+    draw() {
+        stroke(this.color);
+        fill(this.color);
+        const drawRetro = true;
+
+        if(drawRetro) {
+            this.drawRect();
+        } else {
+            this.drawTriangleStrip();
+        }
+
+    }
+};
+
+// wind</code></pre>
+        </article>
     </section>
-
-
 
 
 

@@ -60,7 +60,7 @@ TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 150)
 /**
  * Class Projectile that represents the weapons projectiles.
  *
- * @see TankGame.Mode
+ * @see TankGame.Mode.DebudProjectile
  */
 TankGame.Projectile = class {
     /**
@@ -82,7 +82,22 @@ TankGame.Projectile = class {
         this.projectileParam = projectileParam;
         this.radius = this.projectileParam.projectileRadius;
         this.mass = PI * this.radius**2;
+        this.applyDrag = true;
     };
+
+    /**
+     * Disable the drag calculations on the projectile
+     */
+    disableDrag() {
+        this.applyDrag = false;
+    }
+
+    /**
+     * Enable the drag calculations on the projectile
+     */
+    enableDrag() {
+        this.applyDrag = true;
+    }
 
     /**
      * Determines if the projectile is off screen or not.  Does not return true
@@ -108,6 +123,9 @@ TankGame.Projectile = class {
         }
 
         this.vel = this.vel.copy().add(tanksGameEngine.gravity.copy().div(dt));
+        if(this.applyDrag) {
+            this.vel = this.vel.copy().sub(this.vel.mult(0.009));
+        }
         this.pos = this.pos.copy().add(this.vel.copy());
     };
 

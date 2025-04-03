@@ -37,7 +37,19 @@
  */
 var TankGame = TankGame || {};
 
+/**
+ * Class GameEngine that represents the tank game engine
+ *
+ */
 TankGame.GameEngine = class {
+    /**
+     * Creates a new instance of GameEngine
+     *
+     * @param (TankGame.Mode) startingMode - The game mode that the game engine
+     *                                       will run at startup
+     *
+     * @see TankGame.Mode
+     */
     constructor(startingMode) {
         this.setMode(startingMode);
         this.screenWidth = width;
@@ -52,6 +64,9 @@ TankGame.GameEngine = class {
         this.terrain = undefined;
     };
 
+    /**
+     * update the current frame data
+     */
     updateFrameData() {
         this.frameNumber++;
         if(this.currentFrameData != undefined) {
@@ -64,15 +79,32 @@ TankGame.GameEngine = class {
         );
     }
 
+    /**
+     * Inserts a projectile into the game engine projectile list
+     *
+     * @param (TankGame.Projectile) newProjectile - an instance of
+     *                                              TankGame.Projectile
+     */
     addProjectile(newProjectile) {
+        if(!(newProjectile instanceof TankGame.Projectile)) {
+            let err = "newProjectile should be an instance of ";
+            err += "TankGame.Projectile\n";
+            throw(err);
+            return;
+        }
         this.projectiles.push(newProjectile);
     }
 
+    /**
+     * Update the position of all the projectiles and delete them if they are
+     * off screen or collide with the ground
+     */
     updateProjectiles() {
         if(this.projectiles.length > 0) {
             for(let i = this.projectiles.length-1; i >=0; i--) {
                 this.projectiles[i].update(this.currentFrameData.dtSeconds);
-                if(this.projectiles[i].isOffScreen() || this.projectileHitsTerrain(this.projectiles[i])) {
+                if(this.projectiles[i].isOffScreen()
+                    || this.projectileHitsTerrain(this.projectiles[i])) {
                     this.projectiles.splice(i, 1);
                     console.debug("Remove projectile from list");
                 }
@@ -80,6 +112,9 @@ TankGame.GameEngine = class {
         }
     }
 
+    /**
+     * Draws all the projectiles
+     */
     drawProjectiles() {
     if(this.projectiles.length > 0) {
         for(let i = this.projectiles.length-1; i >=0; i--) {
@@ -88,6 +123,13 @@ TankGame.GameEngine = class {
         }
     }
 
+    /**
+     * Calculate if a given projectile hits the ground
+     *
+     * @param (TankGame.Projectile) projectile - The projectile to test.
+     *
+     * @returns {Boolean} - If projectile hits the ground
+     */
     projectileHitsTerrain(projectile) {
         if(projectile.pos.y >= this.terrain.groundHeight[floor(projectile.pos.x)]) {
             console.debug("Projectile hit terrain");
@@ -96,9 +138,15 @@ TankGame.GameEngine = class {
         return false;
     }
 
+    /**
+     * Add the terrain to the game engine.
+     *
+     * @param (TankGame.World.Terrain) terrain - the ground
+     */
     addTerrain(terrain) {
         if(!(terrain instanceof TankGame.World.Terrain)) {
-            let err = "terrain should be an instance of TankGame.World.Terrain\n";
+            let err = "terrain should be an instance of ";
+            err += " TankGame.World.Terrain\n";
             console.warn(err);
             throw(err);
             return;
@@ -107,6 +155,10 @@ TankGame.GameEngine = class {
         this.terrain = terrain;
     }
 
+    /**
+     * Updates the game engine and all of the components.  this includes running
+     * a rendering operation after all updates are complete.
+     */
     update() {
         this.updateFrameData();
         this.updateProjectiles();
@@ -118,6 +170,12 @@ TankGame.GameEngine = class {
         this.drawProjectiles();
     };
 
+    /**
+     * Set the mode of the game engine.  Will return early and set the mode to
+     * debug empty if the mode is not a valid instance of TankGame.Mode.
+     *
+     * @param (TankGame.Mode) newMode - the new mode
+     */
     setMode(newMode) {
         if(newMode == undefined) {
             this.setMode(new TankGame.ModeList.DebugEmpty());
@@ -224,10 +282,7 @@ TankGame.FrameData = class {
      * the Simulation.lastFrameTime and Simulation.firstFrameTime variables.
      *
      * If dt is greater than 100ms (for example when switching windows context,
-     * or by changing tabs) then dt is set to 10ms.  Additionally if dt is
-     * greater than 16ms it is reduced to 16ms to maintain a constant sensor
-     * refresh rate.  If the refresh rate drops below 50Hz then the robot moves
-     * too quickly over the line and misses it. Due to these time manipulations
+     * or by changing tabs) then dt is set to 10ms. Due to this time manipulation
      * the time since start is different to the sum of all dts.  Time since
      * start is always the true difference between the start time and the
      * current frame time.
