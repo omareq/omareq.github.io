@@ -35,32 +35,122 @@ var TankGame = TankGame || {};
 
 /**
  * Struct template to turn a series of keys into a structure.
+ *
+ * @type{Object}
  */
 const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o;} , {})); // eslint-disable-line
 
 /**
  * Structure for projectile parameters.
+ *
+ * @type{Struct}
  */
 TankGame.ProjectileParam = Struct(
     "damage",
     "projectileRadius",
     "explosionRadius",
+    "duplicationFactor",
+    "explodeAtApogee"
 );
 
 /**
  * Dictionary of projectile parameter structs.  Describes the parameters for all
  * the projectile types.
+ *
+ * @see TankGame.ProjectileParam
+ *
+ * @type{Dict<TankGame.ProjectileParam>}
  */
 TankGame.ProjectileParamList = {};
-TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 5, 20);
-TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 5, 30);
-TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 70);
+
+/*******************************************************************************
+ * MISSILES
+ ******************************************************************************/
+
+/**
+ * Small missile.  Pure projectile that explodes on impact.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 5, 20, 0, false);
+
+/**
+ * Medium missile.  Pure projectile that explodes on impact.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 5, 30, 0, false);
+
+/**
+ * Large missile.  Pure projectile that explodes on impact.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 70, 0, false);
+
+/*******************************************************************************
+ * GROUND BURST BOMBS
+ ******************************************************************************/
+
+/**
+ * Small Ground Burst Bomb. Ballistic projectile that splits into 5 small
+ * missiles on impact.  These missiles spread out radially.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 5, 10, 5, false);
+
+/**
+ * Medium Ground Burst Bomb. Ballistic projectile that splits into 7 small
+ * missiles on impact.  These missiles spread out radially.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 5, 10, 7, false);
+
+/**
+ * Large Ground Burst Bomb. Ballistic projectile that splits into 9 small
+ * missiles on impact.  These missiles spread out radially.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 10, 9, false);
+
+/*******************************************************************************
+ * GROUND BURST BOMBS
+ ******************************************************************************/
+
+/**
+ * Small Air Burst Bomb. Ballistic projectile that splits into 5 small
+ * missiles at apogee.  These missiles spread out radially.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 5, 10, 5, true);
+
+
+/**
+ * Medium Air Burst Bomb. Ballistic projectile that splits into 7 small
+ * missiles at apogee.  These missiles spread out radially.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 5, 10, 7, true);
+
+
+/**
+ * Large Air Burst Bomb. Ballistic projectile that splits into 9 small
+ * missiles at apogee.  These missiles spread out radially.
+ *
+ * @type{TankGame.ProjectileParam}
+ */
+TankGame.ProjectileParamList.LargeAirBurst = TankGame.ProjectileParam(25, 5, 10, 9, true);
 
 
 /**
  * Class Projectile that represents the weapons projectiles.
  *
- * @see TankGame.Mode.DebudProjectile
+ * @see TankGame.Mode.DebugProjectile
  */
 TankGame.Projectile = class {
     /**
@@ -92,6 +182,8 @@ TankGame.Projectile = class {
     /**
      * Attach the projectile to the game engine and keep a handle for the
      * game engine.
+     *
+     * @param {TankGame.GameEngine} gameEngine - The game engine.
      */
     attachTo(gameEngine) {
         if(!(gameEngine instanceof TankGame.GameEngine)) {
@@ -128,8 +220,29 @@ TankGame.Projectile = class {
         return horizontal || vertical;
     };
 
+    /**
+     * Set the exploding flag to true to start the animation and produces any
+     * projectiles that are spawned from the explosion.  These new projectiles
+     * are directly added to the game engine.
+     *
+     * @see TankGame.GameEngine
+     */
     explode() {
         this.isExploding = true;
+        const numProjectiles = this.projectileParam.duplicationFactor;
+        if(numProjectiles > 0) {
+            for(let i = 0; i < numProjectiles; i++) {
+                const startPos = this.pos.copy();
+                const speed = 20;
+                const bearing = i * 140 / (this.projectileParam.duplicationFactor) + 30;
+                const testProjectile = new TankGame.Projectile(
+                    startPos,
+                    speed,
+                    bearing,
+                    TankGame.ProjectileParamList["SmallMissile"]);
+                this.gameEngine.addProjectile(testProjectile);
+            }
+        }
     }
 
     /**
@@ -164,6 +277,10 @@ TankGame.Projectile = class {
         }
 
         this.pos = this.pos.copy().add(this.vel.copy());
+
+        if(this.projectileParam["explodeAtApogee"] && this.vel.y > 0) {
+            this.explode();
+        }
     };
 
     /**

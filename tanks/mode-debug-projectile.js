@@ -66,7 +66,10 @@ TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
         }
 
         if(this.gameEngine.projectiles.length==0) {
-            const startHeight = this.gameEngine.terrain.groundHeight[0];
+            let startHeight = this.gameEngine.terrain.groundHeight[0];
+            if(startHeight > this.gameEngine.screenHeight) {
+                startHeight = this.gameEngine.screenHeight;
+            }
             const startPos = createVector(2, startHeight);
             const speed = this.startSpeed;
             this.startSpeed -= 10;

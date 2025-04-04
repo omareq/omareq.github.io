@@ -53,23 +53,27 @@ TankGame.World.Terrain = class {
         this.stepSize = 10;
     };
 
-    removeCircle(xPos, radius) {
-        if(xPos < 0 || xPos > width) {
-            let err = "Can't remove circle that is out of bounds: ";
-            err += " xPos - " + xPos;
+    removeCircle(pos, radius) {
+        if(!(pos instanceof p5.Vector)) {
+            let err = "pos is not an instance of p5.vector";
             throw(err);
         }
-//TODO: Checks that inputs are valid numbers
-        const index = floor(xPos);
+
+        if(pos.x < 0 || pos.x > width) {
+            let err = "Can't remove circle that is out of bounds: ";
+            err += " pos.x - " + pos.x;
+            throw(err);
+        }
+//TODO: Checks that inputs are valid
+        const index = floor(pos.x);
         const r = floor(radius);
-        const yPos = this.groundHeight[index];
 
         for(let i = index - r; i < index + r; i++) {
             // (x - a) ^2 + (y - b) ^2 = r^2
             // (y - b)^2 = r^2 - (x - a)^2
             // y = \sqrt(r^2 - (x - a)^2) + b
 
-            const newY = sqrt(r**2 - (i - xPos)**2) + yPos;
+            const newY = sqrt(r**2 - (i - pos.x)**2) + pos.y;
 
             if(this.groundHeight[i] < newY) {
                 this.groundHeight[i] = newY;

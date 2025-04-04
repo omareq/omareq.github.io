@@ -64,7 +64,7 @@ TankGame.GameEngine = class {
         this.terrain = undefined;
 
         // Good wind values -0.1 to 0.1
-        this.wind = createVector(0.1, 0);
+        this.wind = createVector(-0.02, 0);
         this.isPaused = false;
     };
 
@@ -115,9 +115,9 @@ TankGame.GameEngine = class {
                 }
 
                 if(this.projectiles[i].finishedExploding) {
-                    const xPos = this.projectiles[i].pos.copy().x;
+                    const pos = this.projectiles[i].pos.copy();
                     const radius = this.projectiles[i].projectileParam.explosionRadius;
-                    this.terrain.removeCircle(xPos, radius);
+                    this.terrain.removeCircle(pos, radius);
 
                     this.projectiles.splice(i, 1);
                     console.debug("Remove exploded projectile from list");
