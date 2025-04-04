@@ -83,7 +83,22 @@ TankGame.Projectile = class {
         this.radius = this.projectileParam.projectileRadius;
         this.mass = PI * this.radius**2;
         this.applyDrag = true;
+        this.applyWind = true;
+        this.gameEngine = undefined;
     };
+
+    /**
+     * Attach the projectile to the game engine and keep a handle for the
+     * game engine.
+     */
+    attachTo(gameEngine) {
+        if(!(gameEngine instanceof TankGame.GameEngine)) {
+            let err = "gameEngine should be an instance of ";
+            err += "TankGame.GameEngine\n";
+            throw(err);
+        }
+        this.gameEngine = gameEngine;
+    }
 
     /**
      * Disable the drag calculations on the projectile
@@ -122,10 +137,15 @@ TankGame.Projectile = class {
             return;
         }
 
-        this.vel = this.vel.copy().add(tanksGameEngine.gravity.copy().div(dt));
+        this.vel = this.vel.copy().add(this.gameEngine.gravity.copy().div(dt));
         if(this.applyDrag) {
             this.vel = this.vel.copy().sub(this.vel.mult(0.009));
         }
+
+        if(this.applyWind) {
+            this.vel = this.vel.copy().add(this.gameEngine.getCurrentWind());
+        }
+
         this.pos = this.pos.copy().add(this.vel.copy());
     };
 

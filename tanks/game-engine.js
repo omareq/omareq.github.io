@@ -62,6 +62,9 @@ TankGame.GameEngine = class {
         this.gravity = createVector(0, 0.002);
         this.projectiles = [];
         this.terrain = undefined;
+
+        // Good wind values -0.1 to 0.1
+        this.wind = createVector(0.1, 0);
     };
 
     /**
@@ -90,8 +93,9 @@ TankGame.GameEngine = class {
             let err = "newProjectile should be an instance of ";
             err += "TankGame.Projectile\n";
             throw(err);
-            return;
         }
+
+        newProjectile.attachTo(this);
         this.projectiles.push(newProjectile);
     };
 
@@ -156,6 +160,15 @@ TankGame.GameEngine = class {
     };
 
     /**
+     * Passes the current global wind vector to the calling function.
+     *
+     * @returns {P5.Vector} - The wind vector
+     */
+    getCurrentWind() {
+        return this.wind.copy();
+    }
+
+    /**
      * Updates the game engine and all of the components.  this includes running
      * a rendering operation after all updates are complete.
      */
@@ -164,7 +177,7 @@ TankGame.GameEngine = class {
         this.updateProjectiles();
         this.activeMode.update(this.currentFrameData.dtSeconds);
 
-        // cache background drawing as img for faster refresh
+// TODO: cache background drawing as img for faster refresh
         this.activeMode.draw();
         this.terrain.draw();
         this.drawProjectiles();
@@ -215,6 +228,12 @@ TankGame.Mode = class {
     };
 
     attachTo(gameEngine) {
+        if(!(gameEngine instanceof TankGame.GameEngine)) {
+            let err = "gameEngine should be an instance of ";
+            err += "TankGame.GameEngine\n";
+            throw(err);
+            return;
+        }
         this.gameEngine = gameEngine;
     }
 

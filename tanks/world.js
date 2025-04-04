@@ -68,6 +68,7 @@ TankGame.World.Terrain = class {
 
     drawRect() {
         for(let i = 0; i < this.groundHeight.length; i+= this.stepSize) {
+//TODO: Try dynamically assigning width of rectangle based on terrain gradient
             rect(i, this.groundHeight[i], this.stepSize, height - this.groundHeight[i]);
         }
     };
