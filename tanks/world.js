@@ -53,6 +53,32 @@ TankGame.World.Terrain = class {
         this.stepSize = 10;
     };
 
+    removeCircle(xPos, radius) {
+        if(xPos < 0 || xPos > width) {
+            let err = "Can't remove circle that is out of bounds: ";
+            err += " xPos - " + xPos;
+            throw(err);
+        }
+//TODO: Checks that inputs are valid numbers
+        const index = floor(xPos);
+        const r = floor(radius);
+        const yPos = this.groundHeight[index];
+
+        for(let i = index - r; i < index + r; i++) {
+            // (x - a) ^2 + (y - b) ^2 = r^2
+            // (y - b)^2 = r^2 - (x - a)^2
+            // y = \sqrt(r^2 - (x - a)^2) + b
+
+            const newY = sqrt(r**2 - (i - xPos)**2) + yPos;
+
+            if(this.groundHeight[i] < newY) {
+                this.groundHeight[i] = newY;
+            }
+        }
+
+        return;
+    };
+
     drawTriangleStrip() {
         beginShape(TRIANGLE_STRIP);
         vertex(0, height);

@@ -52,9 +52,9 @@ TankGame.ProjectileParam = Struct(
  * the projectile types.
  */
 TankGame.ProjectileParamList = {};
-TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 5, 50);
-TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 5, 75);
-TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 150);
+TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 5, 20);
+TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 5, 30);
+TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 70);
 
 
 /**
@@ -85,6 +85,8 @@ TankGame.Projectile = class {
         this.applyDrag = true;
         this.applyWind = true;
         this.gameEngine = undefined;
+        this.isExploding = false;
+        this.finishedExploding = false;
     };
 
     /**
@@ -126,6 +128,10 @@ TankGame.Projectile = class {
         return horizontal || vertical;
     };
 
+    explode() {
+        this.isExploding = true;
+    }
+
     /**
      * updates the projectiles position.
      *
@@ -134,6 +140,17 @@ TankGame.Projectile = class {
      */
     update(dt) {
         if(this.isOffScreen()) {
+            return;
+        }
+
+        if(this.isExploding) {
+            if(this.radius > this.projectileParam.explosionRadius) {
+                this.finishedExploding = true;
+                return;
+            }
+
+//TODO: update the explosion animation by time and easing functions
+            this.radius+=4;
             return;
         }
 

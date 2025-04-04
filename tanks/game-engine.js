@@ -65,6 +65,7 @@ TankGame.GameEngine = class {
 
         // Good wind values -0.1 to 0.1
         this.wind = createVector(0.1, 0);
+        this.isPaused = false;
     };
 
     /**
@@ -107,10 +108,30 @@ TankGame.GameEngine = class {
         if(this.projectiles.length > 0) {
             for(let i = this.projectiles.length-1; i >=0; i--) {
                 this.projectiles[i].update(this.currentFrameData.dtSeconds);
-                if(this.projectiles[i].isOffScreen()
-                    || this.projectileHitsTerrain(this.projectiles[i])) {
+                if(this.projectiles[i].isOffScreen()) {
                     this.projectiles.splice(i, 1);
-                    console.debug("Remove projectile from list");
+                    console.debug("Remove out of bounds projectile from list");
+                    continue;
+                }
+
+                if(this.projectiles[i].finishedExploding) {
+                    const xPos = this.projectiles[i].pos.copy().x;
+                    const radius = this.projectiles[i].projectileParam.explosionRadius;
+                    this.terrain.removeCircle(xPos, radius);
+
+                    this.projectiles.splice(i, 1);
+                    console.debug("Remove exploded projectile from list");
+                    continue;
+                }
+
+                if(this.projectiles[i].isExploding) {
+                    // update terrain
+                    continue;
+                }
+
+                if(this.projectileHitsTerrain(this.projectiles[i])) {
+                    this.projectiles[i].explode();
+                    continue;
                 }
             }
         }
@@ -168,14 +189,24 @@ TankGame.GameEngine = class {
         return this.wind.copy();
     }
 
+    pause() {
+        this.isPaused = true;
+    }
+
+    unpause() {
+        this.isPaused = false;
+    }
+
     /**
      * Updates the game engine and all of the components.  this includes running
      * a rendering operation after all updates are complete.
      */
     update() {
-        this.updateFrameData();
-        this.updateProjectiles();
-        this.activeMode.update(this.currentFrameData.dtSeconds);
+        if(!this.isPaused) {
+            this.updateFrameData();
+            this.updateProjectiles();
+            this.activeMode.update(this.currentFrameData.dtSeconds);
+        }
 
 // TODO: cache background drawing as img for faster refresh
         this.activeMode.draw();
