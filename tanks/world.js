@@ -39,7 +39,22 @@ var TankGame = TankGame || {};
 
 TankGame.World = {};
 
+/**
+ * Class Terrain describes the terrain object that represents the ground. This
+ * is passed into the game engine and can be damaged by projectiles.
+ *
+ * @see TankGame.GameEngine
+ * @see TankGame.Projectile
+ */
 TankGame.World.Terrain = class {
+    /**
+     * constructor of the terrain
+     *
+     * @param {number} width - the width of the screen
+     * @param {number} minHeight - the minimum height of the ground in screen coordinates
+     * @param {number} maxHeight - the maximum height of the ground in screen coordinates
+     * @param {number} noiseDetail - used to scale the period of the perlin noise
+     */
     constructor(width, minHeight, maxHeight, noiseDetail=1) {
         this.width = width;
         this.groundHeight = [];
@@ -53,7 +68,15 @@ TankGame.World.Terrain = class {
         this.stepSize = 10;
     };
 
-    removeCircle(pos, radius) {
+    /**
+     * Function to add a crater in the ground where an explosion occurred.
+     *
+     * @param {p5.Vector} pos - position of the explosion
+     * @param {number} radius - radius of the explosion
+     *
+     * @throws {Error} param pos should be instance of p5.Vector
+     */
+    addCrater(pos, radius) {
         if(!(pos instanceof p5.Vector)) {
             let err = "pos is not an instance of p5.vector";
             throw(err);
@@ -62,7 +85,8 @@ TankGame.World.Terrain = class {
         if(pos.x < 0 || pos.x > width) {
             let err = "Can't remove circle that is out of bounds: ";
             err += " pos.x - " + pos.x;
-            throw(err);
+            console.warn(err);
+            return;
         }
 //TODO: Checks that inputs are valid
         const index = floor(pos.x);
@@ -83,6 +107,10 @@ TankGame.World.Terrain = class {
         return;
     };
 
+    /**
+     * Draw triangular strips for the ground.  This creates a smoother appearance
+     * than rectangles but is more computationally intensive.
+     */
     drawTriangleStrip() {
         beginShape(TRIANGLE_STRIP);
         vertex(0, height);
@@ -96,6 +124,10 @@ TankGame.World.Terrain = class {
         endShape();
     };
 
+    /**
+     * Draw equal rectangles to represent the ground.  This creates a retro
+     * appearance which is desirable and is performance friendly.
+     */
     drawRect() {
         for(let i = 0; i < this.groundHeight.length; i+= this.stepSize) {
 //TODO: Try dynamically assigning width of rectangle based on terrain gradient
@@ -103,6 +135,9 @@ TankGame.World.Terrain = class {
         }
     };
 
+    /**
+     * Draw the ground using the desired method
+     */
     draw() {
         stroke(this.color);
         fill(this.color);

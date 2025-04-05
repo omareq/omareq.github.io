@@ -88,6 +88,8 @@ TankGame.GameEngine = class {
      *
      * @param {TankGame.Projectile} newProjectile - an instance of
      *                                              TankGame.Projectile
+     *
+     * @throws {Error} param newProjectile should be instance of TankGame.Projectile
      */
     addProjectile(newProjectile) {
         if(!(newProjectile instanceof TankGame.Projectile)) {
@@ -117,7 +119,7 @@ TankGame.GameEngine = class {
                 if(this.projectiles[i].finishedExploding) {
                     const pos = this.projectiles[i].pos.copy();
                     const radius = this.projectiles[i].projectileParam.explosionRadius;
-                    this.terrain.removeCircle(pos, radius);
+                    this.terrain.addCrater(pos, radius);
 
                     this.projectiles.splice(i, 1);
                     console.debug("Remove exploded projectile from list");
@@ -167,6 +169,8 @@ TankGame.GameEngine = class {
      * Add the terrain to the game engine.
      *
      * @param {TankGame.World.Terrain} terrain - the ground
+     *
+     * @throws {Error} param terrain should be instance of TankGame.World.Terrain
      */
     addTerrain(terrain) {
         if(!(terrain instanceof TankGame.World.Terrain)) {
@@ -189,10 +193,16 @@ TankGame.GameEngine = class {
         return this.wind.copy();
     }
 
+    /**
+     * Pause the game engine updates
+     */
     pause() {
         this.isPaused = true;
     }
 
+    /**
+     * Resume game engine updates
+     */
     unpause() {
         this.isPaused = false;
     }
@@ -209,9 +219,12 @@ TankGame.GameEngine = class {
         }
 
 // TODO: cache background drawing as img for faster refresh
+
+        p5.disableFriendlyErrors = true;
         this.activeMode.draw();
         this.terrain.draw();
         this.drawProjectiles();
+        p5.disableFriendlyErrors = false;
     };
 
     /**
@@ -245,6 +258,13 @@ TankGame.GameEngine = class {
 
 // Modes
 
+/**
+ * Class Mode that represents variable modes that the game engine can run.  If
+ * there are any issues the game engine will switch to the default game mode
+ * which is the empty mode.
+ *
+ * @see TankGame.ModeList.DebugEmpty
+ */
 TankGame.Mode = class {
      /**
      * An abstract class constructor that throws an error if it is instantiated.
@@ -258,6 +278,15 @@ TankGame.Mode = class {
         }
     };
 
+    /**
+     * Attach the game engine to the mode.  This allows the mode to pull data
+     * such as the frame rate, gravity, screen dimensions etc from the game
+     * engine.
+     *
+     * @param {TankGame.GameEngine} gameEngine - The running game engine
+     *
+     * @throws {Error} input param gameEngine is not instance of TankGame.GameEngine
+     */
     attachTo(gameEngine) {
         if(!(gameEngine instanceof TankGame.GameEngine)) {
             let err = "gameEngine should be an instance of ";

@@ -72,21 +72,21 @@ TankGame.ProjectileParamList = {};
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 5, 20, 0, false);
+TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 2, 15, 0, false);
 
 /**
  * Medium missile.  Pure projectile that explodes on impact.
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 5, 30, 0, false);
+TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 4, 20, 0, false);
 
 /**
  * Large missile.  Pure projectile that explodes on impact.
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 70, 0, false);
+TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 30, 0, false);
 
 /*******************************************************************************
  * GROUND BURST BOMBS
@@ -98,7 +98,7 @@ TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 70, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 5, 10, 5, false);
+TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 2, 15, 5, false);
 
 /**
  * Medium Ground Burst Bomb. Ballistic projectile that splits into 7 small
@@ -106,7 +106,7 @@ TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 5, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 5, 10, 7, false);
+TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 4, 20, 7, false);
 
 /**
  * Large Ground Burst Bomb. Ballistic projectile that splits into 9 small
@@ -114,7 +114,7 @@ TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 5,
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 10, 9, false);
+TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 30, 9, false);
 
 /*******************************************************************************
  * GROUND BURST BOMBS
@@ -126,7 +126,7 @@ TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 5, 10, 5, true);
+TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 2, 15, 5, true);
 
 
 /**
@@ -135,7 +135,7 @@ TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 5, 10,
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 5, 10, 7, true);
+TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 4, 20, 7, true);
 
 
 /**
@@ -144,13 +144,13 @@ TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 5, 10
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeAirBurst = TankGame.ProjectileParam(25, 5, 10, 9, true);
+TankGame.ProjectileParamList.LargeAirBurst = TankGame.ProjectileParam(25, 5, 30, 9, true);
 
 
 /**
  * Class Projectile that represents the weapons projectiles.
  *
- * @see TankGame.Mode.DebugProjectile
+ * @see TankGame.ModeList.DebugProjectile
  */
 TankGame.Projectile = class {
     /**
@@ -159,7 +159,7 @@ TankGame.Projectile = class {
      * @param {p5.Vector} startPos - Starting position of the projectile
      * @param {number}    speed    - The start speed from 0-100
      * @param {number}    bearing  - Bearing to fire the projectile 0-180 in degrees.
-     * @param {ProjectilParam} projectileParam - Struct of projectile parameters.
+     * @param {TankGame.ProjectileParam} projectileParam - Struct of projectile parameters.
      */
     constructor(startPos, speed, bearing, projectileParam) {
         this.minSpeed = 0.15;
@@ -184,6 +184,8 @@ TankGame.Projectile = class {
      * game engine.
      *
      * @param {TankGame.GameEngine} gameEngine - The game engine.
+     *
+     * @throws {Error} param gameEngine should be instance of TankGame.GameEngine
      */
     attachTo(gameEngine) {
         if(!(gameEngine instanceof TankGame.GameEngine)) {
