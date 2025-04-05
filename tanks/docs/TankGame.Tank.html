@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Projectile</title>
+    <title>JSDoc: Class: Tank</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Projectile</h1>
+    <h1 class="page-title">Class: Tank</h1>
 
     
 
@@ -29,9 +29,9 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="global.html#TankGame">TankGame</a>.</span>Projectile<span class="signature">(startPos, speed, bearing, projectileParam)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="global.html#TankGame">TankGame</a>.</span>Tank<span class="signature">(width, pos, colorVal)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class Projectile that represents the weapons projectiles.</div>
+            <div class="class-description">Class Tank that represents the tank object</div>
         
     
 </header>
@@ -46,7 +46,7 @@
     
 
     
-    <h4 class="name" id="Projectile"><span class="type-signature"></span>new Projectile<span class="signature">(startPos, speed, bearing, projectileParam)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Tank"><span class="type-signature"></span>new Tank<span class="signature">(width, pos, colorVal)</span><span class="type-signature"></span></h4>
     
 
     
@@ -54,7 +54,8 @@
 
 
 <div class="description">
-    Projectile constructor.
+    Constructor for the tank object.  The height is determined by the golden
+ratio with respect to the width.
 </div>
 
 
@@ -90,7 +91,30 @@
 
         <tr>
             
-                <td class="name"><code>startPos</code></td>
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the width of the tank</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pos</code></td>
             
 
             <td class="type">
@@ -106,20 +130,20 @@
 
             
 
-            <td class="description last">Starting position of the projectile</td>
+            <td class="description last">the position of the tank</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>speed</code></td>
+                <td class="name"><code>colorVal</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Array.&lt;3, Number></span>
 
 
             
@@ -129,53 +153,7 @@
 
             
 
-            <td class="description last">The start speed from 0-100</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bearing</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Bearing to fire the projectile 0-180 in degrees.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>projectileParam</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TankGame#.ProjectileParam">TankGame.ProjectileParam</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Struct of projectile parameters.</td>
+            <td class="description last">the color of the tank</td>
         </tr>
 
     
@@ -216,19 +194,12 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="projectile.js.html">projectile.js</a>, <a href="projectile.js.html#line155">line 155</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="TankGame.ModeList.DebugProjectile.html">TankGame.ModeList.DebugProjectile</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -287,7 +258,7 @@
 
 
 <div class="description">
-    Attach the projectile to the game engine and keep a handle for the
+    Attach the tank to the game engine and keep a handle for the
 game engine.
 </div>
 
@@ -381,7 +352,7 @@ game engine.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="projectile.js.html">projectile.js</a>, <a href="projectile.js.html#line190">line 190</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line68">line 68</a>
     </li></ul></dd>
     
 
@@ -446,7 +417,7 @@ game engine.
     
 
     
-    <h4 class="name" id="disableDrag"><span class="type-signature"></span>disableDrag<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="decreaseGunAngle"><span class="type-signature"></span>decreaseGunAngle<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -454,7 +425,7 @@ game engine.
 
 
 <div class="description">
-    Disable the drag calculations on the projectile
+    Decrease the gun angle by 1 degree.  Stops at 0.
 </div>
 
 
@@ -498,7 +469,7 @@ game engine.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="projectile.js.html">projectile.js</a>, <a href="projectile.js.html#line202">line 202</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line115">line 115</a>
     </li></ul></dd>
     
 
@@ -542,7 +513,7 @@ game engine.
 
 
 <div class="description">
-    Draws the projectile
+    Draw the entire tank calling the track, gun and body draw functions.
 </div>
 
 
@@ -586,7 +557,7 @@ game engine.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="projectile.js.html">projectile.js</a>, <a href="projectile.js.html#line291">line 291</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -622,7 +593,7 @@ game engine.
     
 
     
-    <h4 class="name" id="enableDrag"><span class="type-signature"></span>enableDrag<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="drawBody"><span class="type-signature"></span>drawBody<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -630,7 +601,7 @@ game engine.
 
 
 <div class="description">
-    Enable the drag calculations on the projectile
+    Draw the body of the tank in the color saved in this.color.
 </div>
 
 
@@ -674,7 +645,7 @@ game engine.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="projectile.js.html">projectile.js</a>, <a href="projectile.js.html#line209">line 209</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line161">line 161</a>
     </li></ul></dd>
     
 
@@ -710,7 +681,7 @@ game engine.
     
 
     
-    <h4 class="name" id="explode"><span class="type-signature"></span>explode<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="drawGun"><span class="type-signature"></span>drawGun<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -718,9 +689,7 @@ game engine.
 
 
 <div class="description">
-    Set the exploding flag to true to start the animation and produces any
-projectiles that are spawned from the explosion.  These new projectiles
-are directly added to the game engine.
+    Draw the gun on the tank at the correct angle
 </div>
 
 
@@ -764,19 +733,12 @@ are directly added to the game engine.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="projectile.js.html">projectile.js</a>, <a href="projectile.js.html#line232">line 232</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line148">line 148</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="TankGame.GameEngine.html">TankGame.GameEngine</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -807,7 +769,7 @@ are directly added to the game engine.
     
 
     
-    <h4 class="name" id="isOffScreen"><span class="type-signature"></span>isOffScreen<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="drawTracks"><span class="type-signature"></span>drawTracks<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -815,8 +777,7 @@ are directly added to the game engine.
 
 
 <div class="description">
-    Determines if the projectile is off screen or not.  Does not return true
-if the projectile is above the screen as it might fall back into view.
+    Draw the tracks at the bottom of the tank
 </div>
 
 
@@ -860,7 +821,95 @@ if the projectile is above the screen as it might fall back into view.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="projectile.js.html">projectile.js</a>, <a href="projectile.js.html#line219">line 219</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getGunAngle"><span class="type-signature"></span>getGunAngle<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get the current angle
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line97">line 97</a>
     </li></ul></dd>
     
 
@@ -889,7 +938,7 @@ if the projectile is above the screen as it might fall back into view.
 
         
 <div class="param-desc">
-    if the projectile is on screen
+    - The current gun angle in degrees between 0 and 180
 </div>
 
 
@@ -900,13 +949,239 @@ if the projectile is above the screen as it might fall back into view.
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">number</span>
 
 
     </dd>
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="increaseGunAngle"><span class="type-signature"></span>increaseGunAngle<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Increase the gun angle by 1 degree.  Stops at 180
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line104">line 104</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setGunAngle"><span class="type-signature"></span>setGunAngle<span class="signature">(newAngle)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Set the gun angle.  If outside of the range 0 and 180 the gun remains at
+the same angle.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newAngle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Angle in degrees between 0 and 180</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line83">line 83</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -926,7 +1201,7 @@ if the projectile is above the screen as it might fall back into view.
 
 
 <div class="description">
-    updates the projectiles position.
+    Update the tanks position according to the game physics
 </div>
 
 
@@ -978,8 +1253,7 @@ if the projectile is above the screen as it might fall back into view.
 
             
 
-            <td class="description last">The time difference between the the current frame
-and the previous frame.</td>
+            <td class="description last">The time between the current frame and the last one</td>
         </tr>
 
     
@@ -1020,7 +1294,7 @@ and the previous frame.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="projectile.js.html">projectile.js</a>, <a href="projectile.js.html#line256">line 256</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line128">line 128</a>
     </li></ul></dd>
     
 

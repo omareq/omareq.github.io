@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: DebugEmpty</title>
+    <title>JSDoc: Class: DebugTank</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: DebugEmpty</h1>
+    <h1 class="page-title">Class: DebugTank</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>DebugEmpty<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>DebugTank<span class="signature">()</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Class empty mode that doesn't do anything.</div>
         
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="DebugEmpty"><span class="type-signature"></span>new DebugEmpty<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="DebugTank"><span class="type-signature"></span>new DebugTank<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Calls super() and exits
+    Constructor for the Debug projectile mode.
 </div>
 
 
@@ -97,7 +97,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game-engine.js.html">game-engine.js</a>, <a href="game-engine.js.html#line373">line 373</a>
+        <a href="mode-debug-tank.js.html">mode-debug-tank.js</a>, <a href="mode-debug-tank.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -160,6 +160,182 @@
     
 
     
+    <h4 class="name" id="createTanks"><span class="type-signature"></span>createTanks<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Create the tanks for testing
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="mode-debug-tank.js.html">mode-debug-tank.js</a>, <a href="mode-debug-tank.js.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createTerrain"><span class="type-signature"></span>createTerrain<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Create the terrain
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="mode-debug-tank.js.html">mode-debug-tank.js</a>, <a href="mode-debug-tank.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -212,7 +388,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game-engine.js.html">game-engine.js</a>, <a href="game-engine.js.html#line389">line 389</a>
+        <a href="mode-debug-tank.js.html">mode-debug-tank.js</a>, <a href="mode-debug-tank.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -248,7 +424,7 @@
     
 
     
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(dt)</span><span class="type-signature"></span></h4>
     
 
     
@@ -256,7 +432,8 @@
 
 
 <div class="description">
-    exits immediately
+    Update the projectile debug mode - adds new projectile if there are none
+currently in the screen
 </div>
 
 
@@ -265,6 +442,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The time between the current frame and the previous frame.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -300,7 +526,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game-engine.js.html">game-engine.js</a>, <a href="game-engine.js.html#line384">line 384</a>
+        <a href="mode-debug-tank.js.html">mode-debug-tank.js</a>, <a href="mode-debug-tank.js.html#line82">line 82</a>
     </li></ul></dd>
     
 

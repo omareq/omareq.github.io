@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: sketch.js</title>
+    <title>JSDoc: Source: mode-debug-tank.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: sketch.js</h1>
+    <h1 class="page-title">Source: mode-debug-tank.js</h1>
 
     
 
@@ -28,13 +28,13 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *	@file sketch.js A take on the classic tanks multiplayer game
+ *  @file mode-debug-projectile.js A file to test projectile motion
  *
- *	@author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
- *	@version 1.0
- *	@date 17-February-2025
- *	@link https://omareq.github.io/tanks/
- *	@link https://omareq.github.io/tanks/docs/
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 12-February-2025
+ *  @link https://omareq.github.io/tanks/
+ *  @link https://omareq.github.io/tanks/docs/
  *
  *******************************************************************************
  *
@@ -59,33 +59,94 @@
  *****************************************************************************/
 "use strict";
 
-let tanksGameEngine = undefined;
-
 /**
- * p5.js setup function, creates canvas.
+ * Class empty mode that doesn't do anything.
+ *
+ * @see TankGame.Mode
  */
-function setup() {
-	let cnvSize;
-	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
-	} else {
-		cnvSize = windowWidth;
-	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
-	cnv.parent('sketch');
+TankGame.ModeList.DebugTank = class extends TankGame.Mode {
+    /**
+     * Constructor for the Debug projectile mode.
+     */
+    constructor() {
+        super();
+        console.debug("Start the Debug Tank Mode");
+        this.mode = "testFalling";
+        this.increaseAngle = true;
+        this.lastTankPosY = 0;
+        this.driveLeft = true;
+    };
 
-	tanksGameEngine = new TankGame.GameEngine(new TankGame.ModeList.DebugTank());
-}
+    /**
+     * Create the terrain
+     */
+    createTerrain() {
+        const ground = new TankGame.World.Terrain(
+            this.gameEngine.screenWidth,
+            0.75 * this.gameEngine.screenHeight,
+            0.90 * this.gameEngine.screenHeight,
+            0.009);
 
-/**
- * p5.js draw function, is run every frame to create the desired animation
- */
-function draw() {
-	background(126, 204, 239);
-	tanksGameEngine.update();
-}
+        this.gameEngine.addTerrain(ground);
+    }
 
-</code></pre>
+    /**
+     * Create the tanks for testing
+     */
+    createTanks() {
+        const tankWidth = width * 0.05;
+        const tankPos = createVector(width / 2, height / 2);
+        this.tank = new TankGame.Tank(tankWidth, tankPos);
+        this.gameEngine.addTank(this.tank);
+
+    };
+
+    /**
+     * Update the projectile debug mode - adds new projectile if there are none
+     * currently in the screen
+     *
+     * @param {number} dt - The time between the current frame and the previous frame.
+     */
+    update(dt) {
+        if(this.gameEngine.terrain == undefined) {
+            this.createTerrain();
+        }
+
+        if(this.gameEngine.tanks.length == 0) {
+            this.createTanks();
+        }
+
+        if(this.mode == "testFalling") {
+            if(this.tank.pos.y == this.lastTankPosY) {
+                this.mode = "testGunAngle";
+            }
+            this.lastTankPosY = this.tank.pos.y;
+        } else if(this.mode == "testGunAngle") {
+            if(this.increaseAngle) {
+                this.tank.increaseGunAngle();
+                if(this.tank.getGunAngle() == 180) {
+                    this.increaseAngle = false;
+                }
+            } else {
+                this.tank.decreaseGunAngle();
+                if(this.tank.getGunAngle() == 45) {
+                    this.mode = "testDriving";
+                }
+            }
+        } else if(this.mode == "testDriving") {
+
+        } else if(this.mode == "testShooting") {
+
+        }
+    };
+
+    /**
+     * exits immediately
+     */
+    draw() {
+        this.tank.draw();
+    };
+};</code></pre>
         </article>
     </section>
 

@@ -66,6 +66,7 @@ TankGame.GameEngine = class {
         // Good wind values -0.1 to 0.1
         this.wind = createVector(-0.02, 0);
         this.isPaused = false;
+        this.tanks = [];
     };
 
     /**
@@ -178,10 +179,51 @@ TankGame.GameEngine = class {
             err += " TankGame.World.Terrain\n";
             console.warn(err);
             throw(err);
-            return;
         }
 
         this.terrain = terrain;
+    };
+
+     /**
+     * Add new tank to the game engine.
+     *
+     * @param {TankGame.Tank} terrain - the ground
+     *
+     * @throws {Error} param newTank should be instance of TankGame.Tank
+     */
+    addTank(newTank) {
+        if(!(newTank instanceof TankGame.Tank)) {
+            let err = "newTank should be an instance of TankGame.Tanks\n";
+            console.warn(err);
+            throw(err);
+        }
+
+        newTank.attachTo(this);
+        this.tanks.push(newTank);
+    };
+
+    /**
+     * Update the tanks according to the game physics
+     */
+    updateTanks() {
+        for(let i = this.tanks.length - 1; i >= 0; i--) {
+            this.tanks[i].update(this.currentFrameData.dtSeconds);
+            const index = floor(this.tanks[i].pos.x);
+            const terrainHeight = this.terrain.groundHeight[index] + 2;
+            if(terrainHeight < this.tanks[i].pos.y) {
+                this.tanks[i].vel = createVector();
+                this.tanks[i].pos.y = terrainHeight+2;
+            }
+        }
+    };
+
+    /**
+     * Draw the tanks
+     */
+    drawTanks() {
+        for(let i = this.tanks.length - 1; i >= 0; i--) {
+            this.tanks[i].draw();
+        }
     };
 
     /**
@@ -215,6 +257,7 @@ TankGame.GameEngine = class {
         if(!this.isPaused) {
             this.updateFrameData();
             this.updateProjectiles();
+            this.updateTanks();
             this.activeMode.update(this.currentFrameData.dtSeconds);
         }
 
@@ -224,6 +267,7 @@ TankGame.GameEngine = class {
         this.activeMode.draw();
         this.terrain.draw();
         this.drawProjectiles();
+        this.drawTanks();
         p5.disableFriendlyErrors = false;
     };
 
