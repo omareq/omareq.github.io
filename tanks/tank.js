@@ -58,6 +58,9 @@ TankGame.Tank = class {
         this.finishedExploding = false;
         this.explosionRadius = 0;
         this.maxExplosionRadius = this.width;
+        this.moveDistance = this.width / 30;
+        this.health = 100;
+        this.firingSpeed = 100;
     };
 
     /**
@@ -127,14 +130,14 @@ TankGame.Tank = class {
      * Move the tank to the left
      */
     moveLeft() {
-        this.pos.x--;
+        this.pos.x -= this.moveDistance;
     };
 
     /**
      * Move the tank to the right
      */
     moveRight() {
-        this.pos.x++;
+        this.pos.x += this.moveDistance;
     };
 
     /**
@@ -165,6 +168,86 @@ TankGame.Tank = class {
     };
 
     /**
+     * Increase the firing speed of the gun.  Only goes as high as the health
+     * of the tank.
+     */
+    increaseFiringSpeed() {
+        if(this.firingSpeed >= this.health) {
+            this.firingSpeed = this.health;
+            return;
+        }
+
+        if(this.firingSpeed == 100) {
+            return;
+        }
+
+        this.firingSpeed++;
+    };
+
+    /**
+     * Decrease the firing speed of the gun.  Does not go below zero.
+     */
+    decreaseFiringSpeed() {
+        if(this.firingSpeed >= this.health) {
+            this.firingSpeed = this.health;
+            return;
+        }
+
+        if(this.firingSpeed == 0) {
+            return;
+        }
+
+        this.firingSpeed--;
+    };
+
+    /**
+     * Shoots the chosen projectile from the tanks gun
+     */
+    shootProjectile(projectileParam) {
+// TODO: Add some kind of recoil animation
+        const projectile = new TankGame.Projectile(
+            this.pos.copy().sub(createVector(0, 0.75 * this.height)),
+            this.firingSpeed,
+            this.gunAngle,
+            projectileParam);
+        this.gameEngine.addProjectile(projectile);
+    };
+
+    /**
+     * Adds damage to the tank.  Does not allow for damage outside of the range
+     * 0 to 100.
+     *
+     * @param {number} damage - the damage to apply to the tank.
+     */
+    addDamage(damage) {
+        if(damage < 0) {
+            console.warn("Damage is less than zero");
+            return;
+        }
+
+        if(damage > 100) {
+            console.warn("Damage is greater than one hundred");
+            return;
+        }
+
+        this.health -= floor(damage);
+        if(this.health < 0) {
+            this.explode();
+        }
+        console.log("Tank Health: ", this.health);
+    };
+
+    /**
+     * Checks fi the tank is dead.  Only returns true after the tanks is
+     * finished exploding.
+     *
+     * @returns {Boolean} - if the tank is dead
+     */
+    isDead() {
+        return this.finishedExploding;
+    };
+
+    /**
      * Update the tanks position according to the game physics
      *
      * @param {number} dt - The time between the current frame and the last one
@@ -174,6 +257,9 @@ TankGame.Tank = class {
         this.pos = this.pos.copy().add(this.vel.copy());
 
         this.checkOffScreen();
+        if(this.health < this.firingSpeed) {
+            this.firingSpeed = this.health;
+        }
     };
 
     /**
@@ -196,7 +282,7 @@ TankGame.Tank = class {
         fill(0)
         translate(this.pos.x, this.pos.y);
         translate(0, -0.8 * this.height);
-        rotate(radians(this.gunAngle));
+        rotate(radians(180 - this.gunAngle));
         rect(-0.5 * this.width, 0, 0.75 * this.width, 0.2 * this.height);
         pop();
     };

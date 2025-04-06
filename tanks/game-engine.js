@@ -122,6 +122,10 @@ TankGame.GameEngine = class {
                     const radius = this.projectiles[i].projectileParam.explosionRadius;
                     this.terrain.addCrater(pos, radius);
 
+                    for(let j = 0; j < this.tanks.length; j++) {
+                        this.projectileHitsTank(this.projectiles[i], this.tanks[j])
+                    }
+
                     this.projectiles.splice(i, 1);
                     console.debug("Remove exploded projectile from list");
                     continue;
@@ -148,6 +152,31 @@ TankGame.GameEngine = class {
         for(let i = this.projectiles.length-1; i >=0; i--) {
             this.projectiles[i].draw();
             }
+        }
+    };
+
+    /**
+     * Determines if a projectile hits a tank and applies the correct damage
+     * based on how far away the tank is from the center of the explosion.
+     *
+     * @param {TankGame.Projectile} projectile - The projectile
+     * @param {TankGame.Tank} tank - The tank
+     */
+    projectileHitsTank(projectile, tank) {
+// TODOD: Add param type checks
+        const distance = dist(projectile.pos.x, projectile.pos.y,
+            tank.pos.x, tank.pos.y);
+        const explosionRadius = projectile.projectileParam.explosionRadius;
+        if(distance < (explosionRadius + tank.width/2)) {
+            const nonOverlapDist = distance;
+            const maxDamage = projectile.projectileParam.damage;
+            const damageStart = map(0, explosionRadius,
+                0, maxDamage,
+                nonOverlapDist);
+            const damage = min(damageStart, maxDamage);
+// TODO: Add some asserts damage > 0, damage less than maxDamage, no undefined
+            tank.addDamage(damage);
+            return;
         }
     };
 
@@ -213,6 +242,11 @@ TankGame.GameEngine = class {
             if(terrainHeight < this.tanks[i].pos.y) {
                 this.tanks[i].vel = createVector();
                 this.tanks[i].pos.y = terrainHeight+2;
+            }
+
+            if(this.tanks[i].isDead()) {
+                this.tanks.splice(i, 1);
+                console.debug("Removing dead tank from the game engine");
             }
         }
     };

@@ -234,7 +234,7 @@ TankGame.Projectile = class {
         const numProjectiles = this.projectileParam.duplicationFactor;
         if(numProjectiles > 0) {
             for(let i = 0; i < numProjectiles; i++) {
-                const startPos = this.pos.copy();
+                const startPos = this.pos.copy().sub(createVector(0, 2));
                 const speed = 20;
                 const bearing = i * 140 / (this.projectileParam.duplicationFactor) + 30;
                 const testProjectile = new TankGame.Projectile(

@@ -66,7 +66,7 @@ TankGame.ModeList.DebugTank = class extends TankGame.Mode {
      * Create the tanks for testing
      */
     createTanks() {
-        const tankWidth = width * 0.05;
+        const tankWidth = width * 0.035;
         const tankPos = createVector(width / 2, height / 2);
         this.tank = new TankGame.Tank(tankWidth, tankPos);
         this.gameEngine.addTank(this.tank);
@@ -91,6 +91,7 @@ TankGame.ModeList.DebugTank = class extends TankGame.Mode {
         if(this.mode == "testFalling") {
             if(this.tank.pos.y == this.lastTankPosY) {
                 this.mode = "testGunAngle";
+                this.lastTankPosY = 0;
             }
             this.lastTankPosY = this.tank.pos.y;
         } else if(this.mode == "testGunAngle") {
@@ -101,7 +102,8 @@ TankGame.ModeList.DebugTank = class extends TankGame.Mode {
                 }
             } else {
                 this.tank.decreaseGunAngle();
-                if(this.tank.getGunAngle() == 45) {
+                if(this.tank.getGunAngle() == 135) {
+                    this.increaseAngle = true;
                     this.mode = "testDriving";
                 }
             }
@@ -113,13 +115,28 @@ TankGame.ModeList.DebugTank = class extends TankGame.Mode {
                 }
             } else {
                 this.tank.moveRight();
-                if(this.tank.pos.x > 0.8 * this.gameEngine.screenWidth) {
+                if(this.tank.pos.x > 0.5 * this.gameEngine.screenWidth) {
                     this.mode = "testShooting";
+                    this.driveLeft = true;
                 }
             }
 
         } else if(this.mode == "testShooting") {
-
+            if(this.gameEngine.projectiles.length == 0) {
+                if(this.tank.getGunAngle() <= 45) {
+                    this.mode = "testFalling";
+                    this.tank.pos = createVector(width/2, height/2);
+                    this.createTerrain();
+                    this.tank.health = 100;
+                    return;
+                }
+                this.tank.setGunAngle(this.tank.getGunAngle() - 5);
+                this.tank.shootProjectile(TankGame.ProjectileParamList.LargeAirBurst);
+            }
+            if(this.gameEngine.tanks.length == 0) {
+                this.mode = "testFalling";
+                this.createTerrain();
+            }
         }
     };
 
