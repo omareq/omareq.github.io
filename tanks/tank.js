@@ -300,6 +300,30 @@ TankGame.Tank = class {
     };
 
     /**
+     * Draw the health bar above the tank
+     */
+    drawHealthBar() {
+        const barMaxWidth = 1.25 * this.width;
+        const barHeight = 0.2 * this.height;
+        let barw = barMaxWidth * this.health / 100;
+        if (barw < 0) {
+            barw = 0;
+        }
+        const barx = this.pos.x;
+        const bary = this.pos.y;
+
+
+        // background
+        fill(0);
+        rect(barx, bary, barMaxWidth, barHeight);
+
+        // health
+        // rectMode()
+        fill(255, 0, 0);
+        rect(barx - 0.5 * (barMaxWidth - barw), bary, barw, barHeight);
+    };
+
+    /**
      * Draw the entire tank calling the track, gun and body draw functions.
      */
     draw() {
@@ -310,6 +334,7 @@ TankGame.Tank = class {
         this.drawTracks();
         this.drawGun();
         this.drawBody();
+        this.drawHealthBar();
 
         pop();
 
