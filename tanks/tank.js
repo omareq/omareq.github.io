@@ -150,12 +150,14 @@ TankGame.Tank = class {
             return;
         }
 
-        if(this.pos.x > this.gameEngine.screenWidth) {
-            this.pos.x = this.gameEngine.screenWidth;
+        if(this.pos.x >= this.gameEngine.screenWidth) {
+            this.pos.x = this.gameEngine.screenWidth - 1;
             return;
         }
 
         if(this.pos.y > this.gameEngine.screenHeight) {
+            this.health = 0;
+            this.explode();
             return;
         }
     };
@@ -172,7 +174,7 @@ TankGame.Tank = class {
      * of the tank.
      */
     increaseFiringSpeed() {
-        if(this.firingSpeed >= this.health) {
+        if(this.firingSpeed > this.health) {
             this.firingSpeed = this.health;
             return;
         }
@@ -182,13 +184,14 @@ TankGame.Tank = class {
         }
 
         this.firingSpeed++;
+        console.debug("New Firing Speed: ", this.firingSpeed);
     };
 
     /**
      * Decrease the firing speed of the gun.  Does not go below zero.
      */
     decreaseFiringSpeed() {
-        if(this.firingSpeed >= this.health) {
+        if(this.firingSpeed > this.health) {
             this.firingSpeed = this.health;
             return;
         }
@@ -198,12 +201,27 @@ TankGame.Tank = class {
         }
 
         this.firingSpeed--;
+        console.debug("New Firing Speed: ", this.firingSpeed);
     };
 
     /**
      * Shoots the chosen projectile from the tanks gun
+     * Contains a debouncing feature to prevent held down keys from shooting
+     * multiple projectiles
+     *
+     * @returns {Boolean} If the projectile was successfully shot
+     *
      */
     shootProjectile(projectileParam) {
+        const currentTime = this.gameEngine.currentFrameData.timeSinceStartSeconds;
+        if(this.lastFiredTime != undefined &&
+            currentTime - this.lastFiredTime < 0.75) {
+            return false;
+        }
+
+        if(this.lastFiredTime == undefined) {
+            this.lastFiredTime = currentTime;
+        }
 // TODO: Add some kind of recoil animation
         const projectile = new TankGame.Projectile(
             this.pos.copy().sub(createVector(0, 0.75 * this.height)),
@@ -211,6 +229,9 @@ TankGame.Tank = class {
             this.gunAngle,
             projectileParam);
         this.gameEngine.addProjectile(projectile);
+
+        this.lastFiredTime = currentTime;
+        return true;
     };
 
     /**

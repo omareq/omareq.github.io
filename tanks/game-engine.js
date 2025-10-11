@@ -67,6 +67,8 @@ TankGame.GameEngine = class {
         this.wind = createVector(-0.02, 0);
         this.isPaused = false;
         this.tanks = [];
+        this.players = [];
+        this.activePlayerIndex = 0;
     };
 
     /**
@@ -261,6 +263,23 @@ TankGame.GameEngine = class {
     };
 
     /**
+     * Add new player to the game engine
+     *
+     * @param {TankGame.Player} player - The new player
+     *
+     * @throws {Error} param player should be instance of TankGame.Player
+     */
+    addPlayer(player) {
+        if(!(player instanceof TankGame.Player)) {
+            let err = "player should be an instance of TankGame.Player\n";
+            console.warn(err);
+            throw(err);
+        }
+        player.attachTo(this);
+        this.players.push(player);
+    }
+
+    /**
      * Passes the current global wind vector to the calling function.
      *
      * @returns {P5.Vector} - The wind vector
@@ -284,11 +303,49 @@ TankGame.GameEngine = class {
     }
 
     /**
+     * Handle key press
+     */
+    handleKeyPress() {
+        if(this.players[this.activePlayerIndex].tank.isDead()) {
+            return;
+        }
+
+        let activePlayer = this.players[this.activePlayerIndex];
+        let activeTank = this.players[this.activePlayerIndex].tank;
+
+        if(key == "w") {
+            activeTank.increaseGunAngle();
+        } else if(key == "s") {
+            activeTank.decreaseGunAngle();
+        } else if(key == "a") {
+            activeTank.moveLeft();
+        } else if(key == "d") {
+            activeTank.moveRight();
+        } else if(key == "o") {
+            activeTank.increaseFiringSpeed();
+        } else if(key == "l") {
+            activeTank.decreaseFiringSpeed();
+        } else if(keyCode == ENTER) {
+            const shot = activeTank.shootProjectile(activePlayer.peekNextWeapon());
+            if(shot) {
+                activePlayer.shootNextWeapon();
+            }
+        } else if(key == "q") {
+            activePlayer.moveToNextWeaponType();
+        } else if(key == "e") {
+            activePlayer.moveToPrevWeaponType();
+        }
+    }
+
+    /**
      * Updates the game engine and all of the components.  this includes running
      * a rendering operation after all updates are complete.
      */
     update() {
         if(!this.isPaused) {
+            if(keyIsPressed) {
+                this.handleKeyPress();
+            }
             this.updateFrameData();
             this.updateProjectiles();
             this.updateTanks();

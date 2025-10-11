@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: mode-debug-projectile.js</title>
+    <title>JSDoc: Source: mode-debug-player.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: mode-debug-projectile.js</h1>
+    <h1 class="page-title">Source: mode-debug-player.js</h1>
 
     
 
@@ -28,11 +28,11 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *  @file mode-debug-projectile.js A file to test projectile motion
+ *  @file mode-debug-projectile.js A file to test player controls
  *
  *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
- *  @date 12-February-2025
+ *  @date 19-April-2025
  *  @link https://omareq.github.io/tanks/
  *  @link https://omareq.github.io/tanks/docs/
  *
@@ -64,17 +64,56 @@
  *
  * @see TankGame.Mode
  */
-TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
+TankGame.ModeList.DebugPlayer = class extends TankGame.Mode {
     /**
      * Constructor for the Debug projectile mode.
      */
     constructor() {
         super();
-        console.debug("Start the Debug Projectile Mode");
-        this.startSpeed = 100;
-        this.keys = Object.keys(TankGame.ProjectileParamList);
-        this.keysIndex = 0;
+        console.debug("Start the Debug Player Mode");
     };
+
+    /**
+     * Create the terrain
+     */
+    createTerrain() {
+        const ground = new TankGame.World.Terrain(
+            this.gameEngine.screenWidth,
+            0.75 * this.gameEngine.screenHeight,
+            0.90 * this.gameEngine.screenHeight,
+            0.009);
+
+        this.gameEngine.addTerrain(ground);
+    }
+
+    /**
+     * create players and attach the tanks to them
+     */
+    createPlayers() {
+        let p1 = new TankGame.Player("Player 1");
+        let p2 = new TankGame.Player("Player 2");
+        let p3 = new TankGame.Player("Player 3");
+
+        this.gameEngine.addPlayer(p1);
+        this.gameEngine.addPlayer(p2);
+        this.gameEngine.addPlayer(p3);
+
+        const tankWidth = width * 0.035;
+        const tank1Pos = createVector(0.3*width, height / 2);
+        const tank2Pos = createVector(0.6*width, height / 2);
+        const tank3Pos = createVector(0.9*width, height / 2);
+
+        let tank1 = new TankGame.Tank(tankWidth, tank1Pos);
+        let tank2 = new TankGame.Tank(tankWidth, tank2Pos);
+        let tank3 = new TankGame.Tank(tankWidth, tank3Pos);
+
+        p1.attachTank(tank1);
+        p2.attachTank(tank2);
+        p3.attachTank(tank3);
+        this.gameEngine.addTank(tank1);
+        this.gameEngine.addTank(tank2);
+        this.gameEngine.addTank(tank3);
+    }
 
     /**
      * Update the projectile debug mode - adds new projectile if there are none
@@ -84,40 +123,8 @@ TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
      */
     update(dt) {
         if(this.gameEngine.terrain == undefined) {
-            const ground = new TankGame.World.Terrain(
-                this.gameEngine.screenWidth,
-                0.85 * this.gameEngine.screenHeight,
-                this.gameEngine.screenHeight,
-                0.009);
-
-            this.gameEngine.addTerrain(ground);
-        }
-
-        if(this.gameEngine.projectiles.length==0) {
-            let startHeight = this.gameEngine.terrain.groundHeight[0];
-            if(startHeight > this.gameEngine.screenHeight) {
-                startHeight = this.gameEngine.screenHeight;
-            }
-            const startPos = createVector(2, startHeight);
-            const speed = this.startSpeed;
-            this.startSpeed -= 10;
-            if(this.startSpeed &lt;= 10) {
-                this.startSpeed = 100;
-                this.keysIndex++;
-                if(this.keysIndex > this.keys.length - 1) {
-                    this.keysIndex = 0;
-                }
-            }
-            const bearing = 45;
-            const key = this.keys[this.keysIndex];
-            const testProjectile = new TankGame.Projectile(
-                startPos,
-                speed,
-                bearing,
-                TankGame.ProjectileParamList[key]);
-            console.debug("Add ", key, " to the projectiles list.");
-
-            this.gameEngine.addProjectile(testProjectile);
+            this.createTerrain();
+            this.createPlayers();
         }
     };
 
@@ -125,6 +132,7 @@ TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
      * exits immediately
      */
     draw() {
+        background(126, 204, 239);
     };
 };</code></pre>
         </article>

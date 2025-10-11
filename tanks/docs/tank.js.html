@@ -178,12 +178,14 @@ TankGame.Tank = class {
             return;
         }
 
-        if(this.pos.x > this.gameEngine.screenWidth) {
-            this.pos.x = this.gameEngine.screenWidth;
+        if(this.pos.x >= this.gameEngine.screenWidth) {
+            this.pos.x = this.gameEngine.screenWidth - 1;
             return;
         }
 
         if(this.pos.y > this.gameEngine.screenHeight) {
+            this.health = 0;
+            this.explode();
             return;
         }
     };
@@ -200,7 +202,7 @@ TankGame.Tank = class {
      * of the tank.
      */
     increaseFiringSpeed() {
-        if(this.firingSpeed >= this.health) {
+        if(this.firingSpeed > this.health) {
             this.firingSpeed = this.health;
             return;
         }
@@ -210,13 +212,14 @@ TankGame.Tank = class {
         }
 
         this.firingSpeed++;
+        console.debug("New Firing Speed: ", this.firingSpeed);
     };
 
     /**
      * Decrease the firing speed of the gun.  Does not go below zero.
      */
     decreaseFiringSpeed() {
-        if(this.firingSpeed >= this.health) {
+        if(this.firingSpeed > this.health) {
             this.firingSpeed = this.health;
             return;
         }
@@ -226,12 +229,27 @@ TankGame.Tank = class {
         }
 
         this.firingSpeed--;
+        console.debug("New Firing Speed: ", this.firingSpeed);
     };
 
     /**
      * Shoots the chosen projectile from the tanks gun
+     * Contains a debouncing feature to prevent held down keys from shooting
+     * multiple projectiles
+     *
+     * @returns {Boolean} If the projectile was successfully shot
+     *
      */
     shootProjectile(projectileParam) {
+        const currentTime = this.gameEngine.currentFrameData.timeSinceStartSeconds;
+        if(this.lastFiredTime != undefined &amp;&amp;
+            currentTime - this.lastFiredTime &lt; 0.75) {
+            return false;
+        }
+
+        if(this.lastFiredTime == undefined) {
+            this.lastFiredTime = currentTime;
+        }
 // TODO: Add some kind of recoil animation
         const projectile = new TankGame.Projectile(
             this.pos.copy().sub(createVector(0, 0.75 * this.height)),
@@ -239,6 +257,9 @@ TankGame.Tank = class {
             this.gunAngle,
             projectileParam);
         this.gameEngine.addProjectile(projectile);
+
+        this.lastFiredTime = currentTime;
+        return true;
     };
 
     /**
@@ -328,6 +349,30 @@ TankGame.Tank = class {
     };
 
     /**
+     * Draw the health bar above the tank
+     */
+    drawHealthBar() {
+        const barMaxWidth = 1.25 * this.width;
+        const barHeight = 0.2 * this.height;
+        let barw = barMaxWidth * this.health / 100;
+        if (barw &lt; 0) {
+            barw = 0;
+        }
+        const barx = this.pos.x;
+        const bary = this.pos.y;
+
+
+        // background
+        fill(0);
+        rect(barx, bary, barMaxWidth, barHeight);
+
+        // health
+        // rectMode()
+        fill(255, 0, 0);
+        rect(barx - 0.5 * (barMaxWidth - barw), bary, barw, barHeight);
+    };
+
+    /**
      * Draw the entire tank calling the track, gun and body draw functions.
      */
     draw() {
@@ -338,6 +383,7 @@ TankGame.Tank = class {
         this.drawTracks();
         this.drawGun();
         this.drawBody();
+        this.drawHealthBar();
 
         pop();
 
@@ -363,12 +409,12 @@ TankGame.Tank = class {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Apr 06 2025 08:39:51 GMT-0700 (Pacific Daylight Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 11 2025 15:57:18 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

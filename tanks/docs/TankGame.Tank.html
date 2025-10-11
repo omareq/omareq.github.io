@@ -352,7 +352,7 @@ ratio with respect to the width.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line222">line 222</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line243">line 243</a>
     </li></ul></dd>
     
 
@@ -696,7 +696,7 @@ bottom of the screen.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line190">line 190</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line193">line 193</a>
     </li></ul></dd>
     
 
@@ -872,7 +872,7 @@ bottom of the screen.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line305">line 305</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line350">line 350</a>
     </li></ul></dd>
     
 
@@ -960,7 +960,7 @@ bottom of the screen.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line293">line 293</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line314">line 314</a>
     </li></ul></dd>
     
 
@@ -1048,7 +1048,95 @@ bottom of the screen.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line280">line 280</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line301">line 301</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="drawHealthBar"><span class="type-signature"></span>drawHealthBar<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Draw the health bar above the tank
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line326">line 326</a>
     </li></ul></dd>
     
 
@@ -1136,7 +1224,7 @@ bottom of the screen.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line268">line 268</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line289">line 289</a>
     </li></ul></dd>
     
 
@@ -1224,7 +1312,7 @@ bottom of the screen.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line166">line 166</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line168">line 168</a>
     </li></ul></dd>
     
 
@@ -1423,7 +1511,7 @@ of the tank.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line174">line 174</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line176">line 176</a>
     </li></ul></dd>
     
 
@@ -1600,7 +1688,7 @@ finished exploding.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line246">line 246</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line267">line 267</a>
     </li></ul></dd>
     
 
@@ -1972,7 +2060,7 @@ the same angle.
     
 
     
-    <h4 class="name" id="shootProjectile"><span class="type-signature"></span>shootProjectile<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="shootProjectile"><span class="type-signature"></span>shootProjectile<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -1981,6 +2069,8 @@ the same angle.
 
 <div class="description">
     Shoots the chosen projectile from the tanks gun
+Contains a debouncing feature to prevent held down keys from shooting
+multiple projectiles
 </div>
 
 
@@ -2024,7 +2114,7 @@ the same angle.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line206">line 206</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line215">line 215</a>
     </li></ul></dd>
     
 
@@ -2049,6 +2139,28 @@ the same angle.
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    If the projectile was successfully shot
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -2161,7 +2273,7 @@ the same angle.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line255">line 255</a>
+        <a href="tank.js.html">tank.js</a>, <a href="tank.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -2207,12 +2319,12 @@ the same angle.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Apr 06 2025 08:39:51 GMT-0700 (Pacific Daylight Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 11 2025 15:57:18 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

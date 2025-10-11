@@ -59,6 +59,35 @@ TankGame.ModeList.DebugPlayer = class extends TankGame.Mode {
     }
 
     /**
+     * create players and attach the tanks to them
+     */
+    createPlayers() {
+        let p1 = new TankGame.Player("Player 1");
+        let p2 = new TankGame.Player("Player 2");
+        let p3 = new TankGame.Player("Player 3");
+
+        this.gameEngine.addPlayer(p1);
+        this.gameEngine.addPlayer(p2);
+        this.gameEngine.addPlayer(p3);
+
+        const tankWidth = width * 0.035;
+        const tank1Pos = createVector(0.3*width, height / 2);
+        const tank2Pos = createVector(0.6*width, height / 2);
+        const tank3Pos = createVector(0.9*width, height / 2);
+
+        let tank1 = new TankGame.Tank(tankWidth, tank1Pos);
+        let tank2 = new TankGame.Tank(tankWidth, tank2Pos);
+        let tank3 = new TankGame.Tank(tankWidth, tank3Pos);
+
+        p1.attachTank(tank1);
+        p2.attachTank(tank2);
+        p3.attachTank(tank3);
+        this.gameEngine.addTank(tank1);
+        this.gameEngine.addTank(tank2);
+        this.gameEngine.addTank(tank3);
+    }
+
+    /**
      * Update the projectile debug mode - adds new projectile if there are none
      * currently in the screen
      *
@@ -67,6 +96,7 @@ TankGame.ModeList.DebugPlayer = class extends TankGame.Mode {
     update(dt) {
         if(this.gameEngine.terrain == undefined) {
             this.createTerrain();
+            this.createPlayers();
         }
     };
 
