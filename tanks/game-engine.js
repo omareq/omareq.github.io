@@ -248,6 +248,7 @@ TankGame.GameEngine = class {
 
             if(this.tanks[i].isDead()) {
                 this.tanks.splice(i, 1);
+// TODO: Detach from player
                 console.debug("Removing dead tank from the game engine");
             }
         }
