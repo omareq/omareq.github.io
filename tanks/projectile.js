@@ -117,7 +117,7 @@ TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 4,
 TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 30, 9, false);
 
 /*******************************************************************************
- * GROUND BURST BOMBS
+ * AIR BURST BOMBS
  ******************************************************************************/
 
 /**
