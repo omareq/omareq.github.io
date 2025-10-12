@@ -156,4 +156,34 @@ TankGame.Player = class {
         this.weaponSwitchTime = currentTime;
         console.debug("Current Weapon: ", this.weapons[this.weaponIndex]);
     }
+
+    /**
+     * Draw the player information in a bar at the top of the screen
+     */
+    draw() {
+        const barHeight = 0.05 * height;
+        fill(125);
+        rect(0,0, width, barHeight);
+
+        fill(0);
+        const r = 0.3 * this.tank.width;
+        ellipse(this.tank.pos.x, this.tank.pos.y - 1.5*this.tank.height, r, r);
+
+        const nameWidth = textWidth(this.name);
+        const padding = 10;
+        textAlign(LEFT, CENTER);
+        textSize(0.85 * barHeight);
+        text(this.name, padding, 0.5 * barHeight);
+
+        let nextX = nameWidth + 2 * padding;
+        let wpnStr = this.weapons[this.weaponIndex].type;
+        wpnStr += ":" + this.weapons[this.weaponIndex].number;
+        text(wpnStr, nextX, 0.5 * barHeight);
+
+        nextX += textWidth(wpnStr) + 2 * padding;
+        let powerStr = "Power:" + this.tank.firingSpeed;
+        text(powerStr, nextX, 0.5*barHeight);
+
+
+    }
 };

@@ -51,7 +51,14 @@ TankGame.GameEngine = class {
      * @see TankGame.Mode
      */
     constructor(startingMode) {
+        this.reset();
         this.setMode(startingMode);
+    };
+
+    /**
+     * reset game engine data
+     */
+    reset() {
         this.screenWidth = width;
         this.screenHeight = height;
 
@@ -69,7 +76,7 @@ TankGame.GameEngine = class {
         this.tanks = [];
         this.players = [];
         this.activePlayerIndex = 0;
-    };
+    }
 
     /**
      * update the current frame data
@@ -125,7 +132,7 @@ TankGame.GameEngine = class {
                     this.terrain.addCrater(pos, radius);
 
                     for(let j = 0; j < this.tanks.length; j++) {
-                        this.projectileHitsTank(this.projectiles[i], this.tanks[j])
+                        this.projectileHitsTank(this.projectiles[i], this.tanks[j]);
                     }
 
                     this.projectiles.splice(i, 1);
@@ -172,10 +179,12 @@ TankGame.GameEngine = class {
         if(distance < (explosionRadius + tank.width/2)) {
             const nonOverlapDist = distance;
             const maxDamage = projectile.projectileParam.damage;
-            const damageStart = map(0, explosionRadius,
-                0, maxDamage,
-                nonOverlapDist);
+            const damageStart = map(nonOverlapDist,
+                0, explosionRadius + tank.width/2,
+                maxDamage, 0);
             const damage = min(damageStart, maxDamage);
+            console.debug("Projectile Tanks Dist: " + distance + " max damage: " + maxDamage
+                + " Damage: " + damage);
 // TODO: Add some asserts damage > 0, damage less than maxDamage, no undefined
             tank.addDamage(damage);
             return;
@@ -281,6 +290,26 @@ TankGame.GameEngine = class {
     }
 
     /**
+     * Moves to the next player with a live tank.
+     *
+     * @returns {Boolean} success of operation
+     */
+    nextPlayer() {
+        if(this.tanks.length <= 1) {
+            return false;
+        }
+
+        do{
+            this.activePlayerIndex++;
+            if(this.activePlayerIndex >= this.players.length) {
+                this.activePlayerIndex = 0;
+            }
+        } while(this.players[this.activePlayerIndex].tank.isDead());
+
+        return true;
+    }
+
+    /**
      * Passes the current global wind vector to the calling function.
      *
      * @returns {P5.Vector} - The wind vector
@@ -360,6 +389,7 @@ TankGame.GameEngine = class {
         this.terrain.draw();
         this.drawProjectiles();
         this.drawTanks();
+        this.players[this.activePlayerIndex].draw();
         p5.disableFriendlyErrors = false;
     };
 
@@ -389,6 +419,7 @@ TankGame.GameEngine = class {
 
         this.activeMode = newMode;
         this.activeMode.attachTo(this);
+        this.activeMode.startup();
     };
 };
 
@@ -450,6 +481,14 @@ TankGame.Mode = class {
     draw() {
         throw new Error("Method 'draw()' must be implemented.");
     };
+
+    /**
+     * An abstract method called when teh mode is started after it is attached
+     * to the game engine
+     */
+    startup() {
+
+    }
 
 
      /**

@@ -46,6 +46,14 @@ TankGame.ModeList.DebugPlayer = class extends TankGame.Mode {
     };
 
     /**
+     * Startup actions that require access to the game engine
+     */
+    startup() {
+        this.createTerrain();
+        this.createPlayers();
+    }
+
+    /**
      * Create the terrain
      */
     createTerrain() {
@@ -88,15 +96,44 @@ TankGame.ModeList.DebugPlayer = class extends TankGame.Mode {
     }
 
     /**
+     * Return the game engine to a fresh state
+     */
+    resetGameEngine() {
+        // The game engine data is not usually reset as switching between modes
+        // can be used to run different operations on the same data. for example
+        // keeping all of the players in the game engine allows for a new mode
+        // where you can purchase new weapons for the player armoury.
+        this.gameEngine.reset();
+        this.gameEngine.setMode(new TankGame.ModeList.DebugPlayer());
+
+    }
+
+
+    /**
      * Update the projectile debug mode - adds new projectile if there are none
      * currently in the screen
      *
      * @param {number} dt - The time between the current frame and the previous frame.
      */
     update(dt) {
-        if(this.gameEngine.terrain == undefined) {
-            this.createTerrain();
-            this.createPlayers();
+        if(keyIsPressed) {
+            const currentTime = this.gameEngine.currentFrameData.timeSinceStartSeconds;
+            if(this.lastKeyPressTime != undefined &&
+                currentTime - this.lastKeyPressTime < 0.35) {
+                return false;
+            }
+
+            if(key == "p") {
+                this.gameEngine.nextPlayer();
+            } else if(key == "r") {
+                this.resetGameEngine();
+            }
+
+            this.lastKeyPressTime = currentTime;
+        }
+
+        if(this.gameEngine.tanks.length <= 1) {
+            this.resetGameEngine();
         }
     };
 

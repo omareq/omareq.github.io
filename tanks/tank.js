@@ -184,7 +184,7 @@ TankGame.Tank = class {
         }
 
         this.firingSpeed++;
-        console.debug("New Firing Speed: ", this.firingSpeed);
+        // console.debug("New Firing Speed: ", this.firingSpeed);
     };
 
     /**
@@ -201,7 +201,7 @@ TankGame.Tank = class {
         }
 
         this.firingSpeed--;
-        console.debug("New Firing Speed: ", this.firingSpeed);
+        // console.debug("New Firing Speed: ", this.firingSpeed);
     };
 
     /**
@@ -242,12 +242,12 @@ TankGame.Tank = class {
      */
     addDamage(damage) {
         if(damage < 0) {
-            console.warn("Damage is less than zero");
+            console.warn("Damage is less than zero: " + damage);
             return;
         }
 
         if(damage > 100) {
-            console.warn("Damage is greater than one hundred");
+            console.warn("Damage is greater than one hundred: " + damage);
             return;
         }
 
@@ -300,7 +300,7 @@ TankGame.Tank = class {
      */
     drawGun() {
         push();
-        fill(0)
+        fill(0);
         translate(this.pos.x, this.pos.y);
         translate(0, -0.8 * this.height);
         rotate(radians(180 - this.gunAngle));
