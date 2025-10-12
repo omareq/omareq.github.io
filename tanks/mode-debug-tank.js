@@ -50,6 +50,15 @@ TankGame.ModeList.DebugTank = class extends TankGame.Mode {
     };
 
     /**
+     * Startup actions that require access to the game engine
+     */
+    startup() {
+        this.gameEngine.reset();
+        this.createTerrain();
+        this.createTanks();
+    }
+
+    /**
      * Create the terrain
      */
     createTerrain() {
@@ -80,14 +89,6 @@ TankGame.ModeList.DebugTank = class extends TankGame.Mode {
      * @param {number} dt - The time between the current frame and the previous frame.
      */
     update(dt) {
-        if(this.gameEngine.terrain == undefined) {
-            this.createTerrain();
-        }
-
-        if(this.gameEngine.tanks.length == 0) {
-            this.createTanks();
-        }
-
         if(this.mode == "testFalling") {
             if(this.tank.pos.y == this.lastTankPosY) {
                 this.mode = "testGunAngle";
@@ -125,16 +126,18 @@ TankGame.ModeList.DebugTank = class extends TankGame.Mode {
             if(this.gameEngine.projectiles.length == 0) {
                 if(this.tank.getGunAngle() <= 45) {
                     this.mode = "testFalling";
-                    this.tank.pos = createVector(width/2, height/2);
                     this.createTerrain();
-                    this.tank.health = 100;
+                    this.createTanks();
                     return;
                 }
-                this.tank.setGunAngle(this.tank.getGunAngle() - 5);
-                this.tank.shootProjectile(TankGame.ProjectileParamList.LargeAirBurst);
+                const shot = this.tank.shootProjectile(TankGame.ProjectileParamList.LargeAirBurst);
+                if(shot) {
+                    this.tank.setGunAngle(this.tank.getGunAngle() - 5);
+                }
             }
-            if(this.gameEngine.tanks.length == 0) {
+            if(this.gameEngine.tanks.length == 0 && this.gameEngine.projectiles.length == 0) {
                 this.mode = "testFalling";
+                this.createTanks();
                 this.createTerrain();
             }
         }

@@ -336,7 +336,7 @@ TankGame.GameEngine = class {
      * Handle key press
      */
     handleKeyPress() {
-        if(this.players[this.activePlayerIndex].tank.isDead()) {
+        if(this.players.length > 0 && this.players[this.activePlayerIndex].tank.isDead()) {
             return;
         }
 
@@ -389,7 +389,9 @@ TankGame.GameEngine = class {
         this.terrain.draw();
         this.drawProjectiles();
         this.drawTanks();
-        this.players[this.activePlayerIndex].draw();
+        if(this.players.length > 0) {
+            this.players[this.activePlayerIndex].draw();
+        }
         p5.disableFriendlyErrors = false;
     };
 

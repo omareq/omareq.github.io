@@ -49,22 +49,26 @@ TankGame.ModeList.DebugProjectile = class extends TankGame.Mode {
     };
 
     /**
+     * Startup actions that require access to the game engine
+     */
+    startup() {
+        this.gameEngine.reset();
+        const ground = new TankGame.World.Terrain(
+            this.gameEngine.screenWidth,
+            0.85 * this.gameEngine.screenHeight,
+            this.gameEngine.screenHeight,
+            0.009);
+
+        this.gameEngine.addTerrain(ground);
+    }
+
+    /**
      * Update the projectile debug mode - adds new projectile if there are none
      * currently in the screen
      *
      * @param {number} dt - The time between the current frame and the previous frame.
      */
     update(dt) {
-        if(this.gameEngine.terrain == undefined) {
-            const ground = new TankGame.World.Terrain(
-                this.gameEngine.screenWidth,
-                0.85 * this.gameEngine.screenHeight,
-                this.gameEngine.screenHeight,
-                0.009);
-
-            this.gameEngine.addTerrain(ground);
-        }
-
         if(this.gameEngine.projectiles.length==0) {
             let startHeight = this.gameEngine.terrain.groundHeight[0];
             if(startHeight > this.gameEngine.screenHeight) {
