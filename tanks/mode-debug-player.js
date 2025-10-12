@@ -62,7 +62,7 @@ TankGame.ModeList.DebugPlayer = class extends TankGame.Mode {
             0.75 * this.gameEngine.screenHeight,
             0.90 * this.gameEngine.screenHeight,
             0.009);
-
+        ground.drawRetro = false;
         this.gameEngine.addTerrain(ground);
     }
 

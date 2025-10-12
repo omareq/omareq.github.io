@@ -181,9 +181,12 @@ TankGame.Player = class {
         text(wpnStr, nextX, 0.5 * barHeight);
 
         nextX += textWidth(wpnStr) + 2 * padding;
-        let powerStr = "Power:" + this.tank.firingSpeed;
-        text(powerStr, nextX, 0.5*barHeight);
+        const powerStr = "Power:" + this.tank.firingSpeed;
+        text(powerStr, nextX, 0.5 * barHeight);
 
+        nextX += textWidth(powerStr) + 2 * padding;
+        const angleStr = "Angle:" + this.tank.gunAngle;
+        text(angleStr, nextX, 0.5 * barHeight);
 
     }
 };

@@ -66,6 +66,7 @@ TankGame.World.Terrain = class {
 
         this.color = color(155, 155, 155);
         this.stepSize = 10;
+        this.drawRetro = true;
     };
 
     /**
@@ -141,9 +142,8 @@ TankGame.World.Terrain = class {
     draw() {
         stroke(this.color);
         fill(this.color);
-        const drawRetro = true;
 
-        if(drawRetro) {
+        if(this.drawRetro) {
             this.drawRect();
         } else {
             this.drawTriangleStrip();

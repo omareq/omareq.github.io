@@ -187,6 +187,15 @@ TankGame.GameEngine = class {
                 + " Damage: " + damage);
 // TODO: Add some asserts damage > 0, damage less than maxDamage, no undefined
             tank.addDamage(damage);
+
+            if(this.players.length > 0) {
+                if(tank == this.players[this.activePlayerIndex].tank) {
+                    this.players[this.activePlayerIndex].score -= round(damage) * 10;
+                    return;
+                }
+
+                this.players[this.activePlayerIndex].score += round(damage) * 10;
+            }
             return;
         }
     };
@@ -391,6 +400,13 @@ TankGame.GameEngine = class {
         this.drawTanks();
         if(this.players.length > 0) {
             this.players[this.activePlayerIndex].draw();
+
+// TODO: sort scores
+            const offset = 0.09 * height;
+            for(let i = 0; i < this.players.length; i++) {
+                const score = this.players[i].name + ":" + this.players[i].score;
+                text(score, 10, offset + 1.15 * i * textSize());
+            }
         }
         p5.disableFriendlyErrors = false;
     };
