@@ -76,6 +76,8 @@ TankGame.GameEngine = class {
         this.tanks = [];
         this.players = [];
         this.activePlayerIndex = 0;
+        this.playerData = [];
+        this.scoresChanged = true;
     }
 
     /**
@@ -189,6 +191,7 @@ TankGame.GameEngine = class {
             tank.addDamage(damage);
 
             if(this.players.length > 0) {
+                this.scoresChanged = true;
                 if(tank == this.players[this.activePlayerIndex].tank) {
                     this.players[this.activePlayerIndex].score -= round(damage) * 10;
                     return;
@@ -296,6 +299,7 @@ TankGame.GameEngine = class {
         }
         player.attachTo(this);
         this.players.push(player);
+        this.scoresChanged = true;
     }
 
     /**
@@ -316,6 +320,30 @@ TankGame.GameEngine = class {
         } while(this.players[this.activePlayerIndex].tank.isDead());
 
         return true;
+    }
+
+    drawPlayerScores() {
+        if(this.scoresChanged || this.playerData.length == 0) {
+            this.playerData = [];
+            for(let i = 0; i < this.players.length; i++) {
+                this.playerData.push(
+                    {
+                        name:this.players[i].name,
+                        score:this.players[i].score,
+                        index: i
+                    }
+                );
+            }
+            this.playerData.sort((a, b) => b.score - a.score);
+        }
+
+        const offset = 0.09 * height;
+        for(let i = 0; i < this.playerData.length; i++) {
+            const score = this.playerData[i].name + ":" + this.playerData[i].score;
+            fill(this.players[this.playerData[i].index].tank.color);
+            noStroke();
+            text(score, 10, offset + 1.15 * i * textSize());
+        }
     }
 
     /**
@@ -348,8 +376,15 @@ TankGame.GameEngine = class {
         if(this.players.length > 0 && this.players[this.activePlayerIndex].tank.isDead()) {
             return;
         }
+        if(this.players.length <= 0) {
+            return;
+        }
 
         let activePlayer = this.players[this.activePlayerIndex];
+        if(activePlayer.isAI()) {
+            // activePlayer.ai.makeMove();
+            return;
+        }
         let activeTank = this.players[this.activePlayerIndex].tank;
 
         if(key == "w") {
@@ -381,6 +416,7 @@ TankGame.GameEngine = class {
      * a rendering operation after all updates are complete.
      */
     update() {
+        this.scoresChanged = false;
         if(!this.isPaused) {
             if(keyIsPressed) {
                 this.handleKeyPress();
@@ -395,18 +431,14 @@ TankGame.GameEngine = class {
 
         p5.disableFriendlyErrors = true;
         this.activeMode.draw();
-        this.terrain.draw();
+        if(this.terrain != undefined) {
+            this.terrain.draw();
+        }
         this.drawProjectiles();
         this.drawTanks();
         if(this.players.length > 0) {
             this.players[this.activePlayerIndex].draw();
-
-// TODO: sort scores
-            const offset = 0.09 * height;
-            for(let i = 0; i < this.players.length; i++) {
-                const score = this.players[i].name + ":" + this.players[i].score;
-                text(score, 10, offset + 1.15 * i * textSize());
-            }
+            this.drawPlayerScores();
         }
         p5.disableFriendlyErrors = false;
     };

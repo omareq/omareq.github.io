@@ -40,7 +40,7 @@ TankGame.Player = class {
     /**
      * Constructor for the player object
      */
-    constructor(playerName) {
+    constructor(playerName, aiMode=false) {
         this.weapons = [
             {type: "SmallMissile", number: 100},
             {type: "LargeMissile", number: 10}
@@ -50,7 +50,13 @@ TankGame.Player = class {
         this.score = 0;
         this.weaponSwitchTime = 0;
         this.weaponSwitchDelay = 0.25;
+        this.aiMode = aiMode;
+        this.ai = undefined; // setup some kind of AI interface
     };
+
+    isAI() {
+        return this.aiMode;
+    }
 
     /**
      * Attach the player to the game engine and keep a handle for the

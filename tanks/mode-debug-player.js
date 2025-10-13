@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- *  @file mode-debug-projectile.js A file to test player controls
+ *  @file mode-debug-player.js A file to test player controls
  *
  *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *  @version 1.0

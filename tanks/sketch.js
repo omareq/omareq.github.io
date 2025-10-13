@@ -46,7 +46,7 @@ function setup() {
 	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
 	cnv.parent('sketch');
 
-	tanksGameEngine = new TankGame.GameEngine(new TankGame.ModeList.DebugPlayer());
+	tanksGameEngine = new TankGame.GameEngine(new TankGame.ModeList.PlayerSetup());
 }
 
 /**
