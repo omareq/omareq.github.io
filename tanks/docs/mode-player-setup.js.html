@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: mode-player-setup.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: mode-player-setup.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *  @file mode-player-setup.js A file to setup players for the game
+ *
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 19-April-2025
+ *  @link https://omareq.github.io/tanks/
+ *  @link https://omareq.github.io/tanks/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2025 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+"use strict";
+
+/**
+ * Class empty mode that doesn't do anything.
+ *
+ * @see TankGame.Mode
+ */
+TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
+    /**
+     * Constructor for the Debug projectile mode.
+     */
+    constructor() {
+        super();
+        console.debug("Start the Player Setup Mode");
+        this.playerNumber = 1;
+        this.name = "";
+        this.defaultColor = color(0,155,10);
+        this.color = this.defaultColor;
+        this.keyPressTime = 0
+
+        this.playerNames = [];
+        this.playerColor = [];
+    };
+
+    /**
+     * Startup actions that require access to the game engine
+     */
+    startup() {
+    }
+
+    shutdown() {
+        this.addPlayersToGameEngine();
+    }
+
+
+    /**
+     * Update the projectile debug mode - adds new projectile if there are none
+     * currently in the screen
+     *
+     * @param {number} dt - The time between the current frame and the previous frame.
+     */
+    update(dt) {
+    };
+
+    isAlphaNumeric(str) {
+        return /^[a-zA-Z0-9]+$/.test(str);
+    }
+
+    submitPlayer() {
+        let playerName = "Player " + this.playerNumber;
+        if(this.name != "") {
+            playerName = this.name;
+        }
+        this.playerNames.push(playerName);
+        this.playerColor.push(this.color);
+
+        this.name = "";
+        this.color = this.defaultColor;
+        this.playerNumber++;
+    };
+
+    addPlayersToGameEngine() {
+        for(let i = 0; i &lt; this.playerNames.length; i++) {
+            let player = new TankGame.Player(this.playerNames[i]);
+
+            this.gameEngine.addPlayer(player);
+
+            const tankWidth = width * 0.035;
+            const x = 10 + width * i / this.playerNames.length;
+            const tankPos = createVector(x, height / 2);
+
+            let tank = new TankGame.Tank(tankWidth, tankPos, this.playerColor[i]);
+
+            player.attachTank(tank);
+            this.gameEngine.addTank(tank);
+        }
+    }
+
+    /**
+     * Draw danger stripes at the top and bottom of the screen
+     */
+    drawDangerStripes() {
+        push();
+        fill(247, 239, 0);
+        rect(-1,-1, width + 1, 0.1 * height);
+        rect(-1,0.9 * height, width + 1, 0.1 * height);
+        const numStripes = 20;
+        for(let i = 0; i &lt; 2 * width; i += width / numStripes) {
+            stroke(0);
+            strokeWeight(width / (2 * numStripes));
+            const x = i - height;
+            line(i, -1, x, height + 1);
+        }
+
+        textSize(0.085 * height);
+        fill(240, 13, 18);
+        stroke(240, 13, 18);
+        strokeWeight(2);
+        text("TOP SECRET", width / 2, 0.05 * height);
+        text("TOP SECRET", width / 2, 0.95 * height);
+
+        pop();
+    }
+
+    /**
+     * Draw the title
+     */
+    drawTitle() {
+        push();
+        fill(45, 12, 230);
+        stroke(45, 12, 230);
+        strokeWeight(3);
+        textSize(0.085 * height);
+        text("TANK GAME", width / 2, 0.2 * height);
+        pop();
+    }
+
+    /**
+     * Draw player select
+     */
+    drawPlayerSelect() {
+        push();
+        rectMode(CENTER);
+        fill(97);
+        rect(width/2, height/2, 0.5 * width, 0.5 * height, 0.03 * height);
+
+        const idStr = "Player " + this.playerNumber;
+        fill(0);
+        textSize(0.05 * height);
+        text(idStr, width / 2, 0.3 * height);
+
+        textAlign(LEFT, CENTER);
+        text("Name: ", 0.3 * width, 0.4 * height);
+        const nameWidth =  textWidth("Name: ");
+        push();
+        rectMode(CORNER);
+        fill(255);
+        // WHITE RECT FOR NAME
+        rect(0.3 * width + nameWidth, 0.4 * height - 0.6 * textSize(),
+            0.4 * width - nameWidth, 1.25 * textSize());
+        pop();
+        if(this.name == "") {
+            fill(155);
+            text("Player " + this.playerNumber,
+                0.3 * width + 1.04 * nameWidth, 0.4 * height);
+        } else {
+            text(this.name, 0.3 * width + 1.04 * nameWidth, 0.4 * height);
+        }
+
+
+        fill(0);
+        text("Color: ", 0.3 * width, 0.5 * height);
+
+        pop();
+    }
+
+
+    /**
+     * draw mode player setup
+     */
+    draw() {
+        if(keyIsPressed &amp;&amp; mouseX > 0 &amp;&amp; mouseX &lt; width &amp;&amp; mouseY > 0 &amp;&amp; mouseY &lt; height) {
+            const currentTime = this.gameEngine.currentFrameData.timeSinceStartSeconds;
+            if(!(this.keyPressTime != undefined &amp;&amp;
+                currentTime - this.keyPressTime &lt; 0.2)) {
+
+                if(keyCode == BACKSPACE) {
+                    if(this.name.length > 0) {
+                        this.name = this.name.slice(0, -1);
+                    }
+                } else if (keyCode == ENTER) {
+                    this.submitPlayer();
+                } else if(this.isAlphaNumeric(key)) {
+                    this.name += key;
+                }
+
+                this.keyPressTime = currentTime;
+            }
+
+        }
+        push();
+        textAlign(CENTER, CENTER);
+        this.drawDangerStripes();
+        this.drawTitle();
+        this.drawPlayerSelect();
+        pop();
+    };
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.ModeList.PlayerSetup.html">PlayerSetup</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 26 2025 14:53:49 GMT-0700 (Pacific Daylight Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

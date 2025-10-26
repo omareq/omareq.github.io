@@ -79,7 +79,14 @@ TankGame.GameEngine = class {
      * @see TankGame.Mode
      */
     constructor(startingMode) {
+        this.reset();
         this.setMode(startingMode);
+    };
+
+    /**
+     * reset game engine data
+     */
+    reset() {
         this.screenWidth = width;
         this.screenHeight = height;
 
@@ -97,7 +104,9 @@ TankGame.GameEngine = class {
         this.tanks = [];
         this.players = [];
         this.activePlayerIndex = 0;
-    };
+        this.playerData = [];
+        this.scoresChanged = true;
+    }
 
     /**
      * update the current frame data
@@ -153,7 +162,7 @@ TankGame.GameEngine = class {
                     this.terrain.addCrater(pos, radius);
 
                     for(let j = 0; j &lt; this.tanks.length; j++) {
-                        this.projectileHitsTank(this.projectiles[i], this.tanks[j])
+                        this.projectileHitsTank(this.projectiles[i], this.tanks[j]);
                     }
 
                     this.projectiles.splice(i, 1);
@@ -200,12 +209,24 @@ TankGame.GameEngine = class {
         if(distance &lt; (explosionRadius + tank.width/2)) {
             const nonOverlapDist = distance;
             const maxDamage = projectile.projectileParam.damage;
-            const damageStart = map(0, explosionRadius,
-                0, maxDamage,
-                nonOverlapDist);
+            const damageStart = map(nonOverlapDist,
+                0, explosionRadius + tank.width/2,
+                maxDamage, 0);
             const damage = min(damageStart, maxDamage);
+            console.debug("Projectile Tanks Dist: " + distance + " max damage: " + maxDamage
+                + " Damage: " + damage);
 // TODO: Add some asserts damage > 0, damage less than maxDamage, no undefined
             tank.addDamage(damage);
+
+            if(this.players.length > 0) {
+                this.scoresChanged = true;
+                if(tank == this.players[this.activePlayerIndex].tank) {
+                    this.players[this.activePlayerIndex].score -= round(damage) * 10;
+                    return;
+                }
+
+                this.players[this.activePlayerIndex].score += round(damage) * 10;
+            }
             return;
         }
     };
@@ -276,6 +297,7 @@ TankGame.GameEngine = class {
 
             if(this.tanks[i].isDead()) {
                 this.tanks.splice(i, 1);
+// TODO: Detach from player
                 console.debug("Removing dead tank from the game engine");
             }
         }
@@ -305,6 +327,51 @@ TankGame.GameEngine = class {
         }
         player.attachTo(this);
         this.players.push(player);
+        this.scoresChanged = true;
+    }
+
+    /**
+     * Moves to the next player with a live tank.
+     *
+     * @returns {Boolean} success of operation
+     */
+    nextPlayer() {
+        if(this.tanks.length &lt;= 1) {
+            return false;
+        }
+
+        do{
+            this.activePlayerIndex++;
+            if(this.activePlayerIndex >= this.players.length) {
+                this.activePlayerIndex = 0;
+            }
+        } while(this.players[this.activePlayerIndex].tank.isDead());
+
+        return true;
+    }
+
+    drawPlayerScores() {
+        if(this.scoresChanged || this.playerData.length == 0) {
+            this.playerData = [];
+            for(let i = 0; i &lt; this.players.length; i++) {
+                this.playerData.push(
+                    {
+                        name:this.players[i].name,
+                        score:this.players[i].score,
+                        index: i
+                    }
+                );
+            }
+            this.playerData.sort((a, b) => b.score - a.score);
+        }
+
+        const offset = 0.09 * height;
+        for(let i = 0; i &lt; this.playerData.length; i++) {
+            const score = this.playerData[i].name + ":" + this.playerData[i].score;
+            fill(this.players[this.playerData[i].index].tank.color);
+            noStroke();
+            text(score, 10, offset + 1.15 * i * textSize());
+        }
     }
 
     /**
@@ -334,11 +401,18 @@ TankGame.GameEngine = class {
      * Handle key press
      */
     handleKeyPress() {
-        if(this.players[this.activePlayerIndex].tank.isDead()) {
+        if(this.players.length > 0 &amp;&amp; this.players[this.activePlayerIndex].tank.isDead()) {
+            return;
+        }
+        if(this.players.length &lt;= 0) {
             return;
         }
 
         let activePlayer = this.players[this.activePlayerIndex];
+        if(activePlayer.isAI()) {
+            // activePlayer.ai.makeMove();
+            return;
+        }
         let activeTank = this.players[this.activePlayerIndex].tank;
 
         if(key == "w") {
@@ -370,6 +444,7 @@ TankGame.GameEngine = class {
      * a rendering operation after all updates are complete.
      */
     update() {
+        this.scoresChanged = false;
         if(!this.isPaused) {
             if(keyIsPressed) {
                 this.handleKeyPress();
@@ -384,9 +459,15 @@ TankGame.GameEngine = class {
 
         p5.disableFriendlyErrors = true;
         this.activeMode.draw();
-        this.terrain.draw();
+        if(this.terrain != undefined) {
+            this.terrain.draw();
+        }
         this.drawProjectiles();
         this.drawTanks();
+        if(this.players.length > 0) {
+            this.players[this.activePlayerIndex].draw();
+            this.drawPlayerScores();
+        }
         p5.disableFriendlyErrors = false;
     };
 
@@ -416,6 +497,7 @@ TankGame.GameEngine = class {
 
         this.activeMode = newMode;
         this.activeMode.attachTo(this);
+        this.activeMode.startup();
     };
 };
 
@@ -477,6 +559,14 @@ TankGame.Mode = class {
     draw() {
         throw new Error("Method 'draw()' must be implemented.");
     };
+
+    /**
+     * An abstract method called when teh mode is started after it is attached
+     * to the game engine
+     */
+    startup() {
+
+    }
 
 
      /**
@@ -558,12 +648,12 @@ TankGame.FrameData = class {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.ModeList.PlayerSetup.html">PlayerSetup</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 11 2025 15:57:18 GMT-0700 (Pacific Daylight Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 26 2025 14:53:48 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
