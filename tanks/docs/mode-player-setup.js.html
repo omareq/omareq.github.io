@@ -73,12 +73,15 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
         console.debug("Start the Player Setup Mode");
         this.playerNumber = 1;
         this.name = "";
-        this.defaultColor = color(0,155,10);
-        this.color = this.defaultColor;
+        this.setupColors();
         this.keyPressTime = 0
 
         this.playerNames = [];
         this.playerColor = [];
+
+        this.setupSubmitButtons();
+        this.setupColorButtons();
+        this.setupAIButtons();
     };
 
     /**
@@ -87,6 +90,89 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
     startup() {
     }
 
+    /**
+     * Setup the default tank colors.
+     */
+    setupColors() {
+        this.black = color(0);
+        this.red = color(155, 0, 10);
+        this.green = color(0, 155, 10);
+        this.blue = color(0, 10, 250);
+        this.defaultColor = this.green;
+        this.color = this.defaultColor;
+    }
+
+    /**
+     * Setup the buttons to submit the current player and start the game.
+     */
+    setupSubmitButtons() {
+        const buttonW = 0.2 * width;
+        const buttonH = 0.1 * height;
+        const npbPos = createVector(0.25 * width, 0.775 * height);
+        const sgbPos = createVector(0.55 * width, 0.775 * height);
+
+        this.nextPlayerButton = new UI.Button(
+            npbPos, buttonW, buttonH, "Next Player", color(200, 28, 49));
+
+        this.startGameButton = new UI.Button(
+            sgbPos, buttonW, buttonH, "Start Game", color(28, 200, 49));
+    }
+
+    /**
+     * Setup the colour radio buttons
+     */
+    setupColorButtons() {
+        const colorButtonSize = 0.075 * height;
+        const kPos = createVector(0.40 * width, 0.46 * height);
+        const rPos = createVector(0.48 * width, 0.46 * height);
+        const gPos = createVector(0.56 * width, 0.46 * height);
+        const bPos = createVector(0.64 * width, 0.46 * height);
+
+        this.colorButtonK = new UI.Button(
+            kPos, colorButtonSize, colorButtonSize, "", this.black);
+
+        this.colorButtonR = new UI.Button(
+            rPos, colorButtonSize, colorButtonSize, "", this.red);
+
+        this.colorButtonG = new UI.Button(
+            gPos, colorButtonSize, colorButtonSize, "", this.green);
+        this.colorButtonG.tick();
+
+        this.colorButtonB = new UI.Button(
+            bPos, colorButtonSize, colorButtonSize, "", this.blue);
+    }
+
+    /**
+     * Setup up the ai buttons
+     */
+    setupAIButtons() {
+        const AIButtonSize = 0.075 * height;
+        const nPos = createVector(0.40 * width, 0.56 * height);
+        const ePos = createVector(0.48 * width, 0.56 * height);
+        const mPos = createVector(0.56 * width, 0.56 * height);
+        const hPos = createVector(0.64 * width, 0.56 * height);
+        const white = color(225);
+        const colEasy = color(10, 225, 10);
+        const colMed = color(225, 127, 5);
+        const colHard = color(225, 25, 5);
+
+        this.aiButtonNone = new UI.Button(
+            nPos, AIButtonSize, AIButtonSize, "N", white);
+        this.aiButtonNone.tick();
+
+        this.aiButtonEasy = new UI.Button(
+            ePos, AIButtonSize, AIButtonSize, "E", colEasy);
+
+        this.aiButtonMed = new UI.Button(
+            mPos, AIButtonSize, AIButtonSize, "M", colMed);
+
+        this.aiButtonHard = new UI.Button(
+            hPos, AIButtonSize, AIButtonSize, "H", colHard);
+    }
+
+    /**
+     * Actions to run on the shutdown of the game mode
+     */
     shutdown() {
         this.addPlayersToGameEngine();
     }
@@ -101,10 +187,39 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
     update(dt) {
     };
 
+    /**
+     * Untick all color buttons
+     */
+    clearColorButtons() {
+        this.colorButtonK.untick();
+        this.colorButtonR.untick();
+        this.colorButtonG.untick();
+        this.colorButtonB.untick();
+    }
+
+    /**
+     * Untick all ai difficulty buttons
+     */
+    clearAIButtons() {
+        this.aiButtonNone.untick();
+        this.aiButtonEasy.untick();
+        this.aiButtonMed.untick();
+        this.aiButtonHard.untick();
+    }
+
+    /**
+     * Check if string is alphanumeric
+     *
+     * @param {String} str - the string
+     */
     isAlphaNumeric(str) {
         return /^[a-zA-Z0-9]+$/.test(str);
     }
 
+    /**
+     * Add the current player information to a list ready to be added to the
+     * game engine
+     */
     submitPlayer() {
         let playerName = "Player " + this.playerNumber;
         if(this.name != "") {
@@ -118,6 +233,9 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
         this.playerNumber++;
     };
 
+    /**
+     * Add all of the players to the game engine
+     */
     addPlayersToGameEngine() {
         for(let i = 0; i &lt; this.playerNames.length; i++) {
             let player = new TankGame.Player(this.playerNames[i]);
@@ -203,19 +321,46 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
             text("Player " + this.playerNumber,
                 0.3 * width + 1.04 * nameWidth, 0.4 * height);
         } else {
-            text(this.name, 0.3 * width + 1.04 * nameWidth, 0.4 * height);
+            let showName = this.name;
+            if(frameCount % 100 &lt; 60) {
+                showName += "|";
+            }
+            text(showName, 0.3 * width + 1.04 * nameWidth, 0.4 * height);
         }
 
 
         fill(0);
         text("Color: ", 0.3 * width, 0.5 * height);
 
+        fill(0);
+        text("AI: ", 0.3 * width, 0.6 * height);
+
         pop();
+    }
+
+    /**
+     * Draw the color selection buttons
+     */
+    drawColorButtons() {
+        this.colorButtonK.draw();
+        this.colorButtonR.draw();
+        this.colorButtonG.draw();
+        this.colorButtonB.draw();
+    }
+
+    /**
+     * Draw the ai buttons
+     */
+    drawAiButtons() {
+        this.aiButtonNone.draw();
+        this.aiButtonEasy.draw();
+        this.aiButtonMed.draw();
+        this.aiButtonHard.draw();
     }
 
 
     /**
-     * draw mode player setup
+     * Draw mode player setup
      */
     draw() {
         if(keyIsPressed &amp;&amp; mouseX > 0 &amp;&amp; mouseX &lt; width &amp;&amp; mouseY > 0 &amp;&amp; mouseY &lt; height) {
@@ -237,11 +382,58 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
             }
 
         }
+
+        if(mouseIsPressed) {
+            if(this.nextPlayerButton.isPressed()) {
+                if(this.name != "") {
+                    this.submitPlayer();
+                } else {
+                    console.log("Please give the player a name");
+                }
+            } else if (this.startGameButton.isPressed()) {
+                if(this.name != "") {
+                    this.submitPlayer();
+                }
+
+                if(this.playerNames.length &lt; 2) {
+                    console.warn("Need at least two players.  Also how did you even get here?");
+                } else {
+                    this.gameEngine.setMode(new TankGame.ModeList.GamePlay());
+                }
+            } else if(this.colorButtonK.isPressed()) {
+                this.clearColorButtons();
+                this.colorButtonK.tick();
+                this.color = this.black;
+            } else if(this.colorButtonR.isPressed()) {
+                this.clearColorButtons();
+                this.colorButtonR.tick();
+                this.color = this.red;
+            } else if(this.colorButtonG.isPressed()) {
+                this.clearColorButtons();
+                this.colorButtonG.tick();
+                this.color = this.green;
+            } else if(this.colorButtonB.isPressed()) {
+                this.clearColorButtons();
+                this.colorButtonB.tick();
+                this.color = this.blue;
+            } else if(this.aiButtonNone.isPressed()) {
+                this.clearAIButtons();
+                this.aiButtonNone.tick();
+            }
+
+        }
+
         push();
         textAlign(CENTER, CENTER);
         this.drawDangerStripes();
         this.drawTitle();
         this.drawPlayerSelect();
+        this.nextPlayerButton.draw();
+        if(this.playerNames.length > 0) {
+            this.startGameButton.draw();
+        }
+        this.drawColorButtons();
+        this.drawAiButtons();
         pop();
     };
 };</code></pre>
@@ -254,12 +446,12 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.ModeList.PlayerSetup.html">PlayerSetup</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.ModeList.GamePlay.html">GamePlay</a></li><li><a href="TankGame.ModeList.PlayerSetup.html">PlayerSetup</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 26 2025 14:53:49 GMT-0700 (Pacific Daylight Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 26 2025 21:14:49 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
