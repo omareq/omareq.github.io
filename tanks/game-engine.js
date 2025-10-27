@@ -322,6 +322,10 @@ TankGame.GameEngine = class {
         return true;
     }
 
+    currentPlayer() {
+        return this.players[this.activePlayerIndex];
+    }
+
     drawPlayerScores() {
         if(this.scoresChanged || this.playerData.length == 0) {
             this.playerData = [];
