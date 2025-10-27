@@ -46,7 +46,7 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
         this.playerNumber = 1;
         this.name = "";
         this.setupColors();
-        this.keyPressTime = 0
+        this.keyPressTime = 0;
 
         this.playerNames = [];
         this.playerColor = [];
@@ -280,7 +280,7 @@ TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
 
         textAlign(LEFT, CENTER);
         text("Name: ", 0.3 * width, 0.4 * height);
-        const nameWidth =  textWidth("Name: ");
+        const nameWidth = textWidth("Name: ");
         push();
         rectMode(CORNER);
         fill(255);

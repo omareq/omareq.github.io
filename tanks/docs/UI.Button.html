@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: GamePlay</title>
+    <title>JSDoc: Class: Button</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: GamePlay</h1>
+    <h1 class="page-title">Class: Button</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>GamePlay<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Button<span class="signature">(pos, width, height-, text, bg_color)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class Game Play</div>
+            <div class="class-description">Class UI.Button class</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="GamePlay"><span class="type-signature"></span>new GamePlay<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Button"><span class="type-signature"></span>new Button<span class="signature">(pos, width, height-, text, bg_color)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Constructor for the Game Play Mode
+    Constructor for the button class
 </div>
 
 
@@ -62,6 +62,147 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pos</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">p5.Vector</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Position of the top left of the button</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">float</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The width of the button</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>height-</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">float</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The height of the button</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The text to display on the button</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bg_color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">p5.Color</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The background color</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -97,19 +238,12 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mode-game-play.js.html">mode-game-play.js</a>, <a href="mode-game-play.js.html#line39">line 39</a>
+        <a href="ui.js.html">ui.js</a>, <a href="ui.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="TankGame.Mode.html">TankGame.Mode</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -160,94 +294,6 @@
     
 
     
-    <h4 class="name" id="createTerrain"><span class="type-signature"></span>createTerrain<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Create the terrain
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mode-game-play.js.html">mode-game-play.js</a>, <a href="mode-game-play.js.html#line59">line 59</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -256,7 +302,7 @@
 
 
 <div class="description">
-    draw background and exit immediately
+    Draws the button
 </div>
 
 
@@ -300,7 +346,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mode-game-play.js.html">mode-game-play.js</a>, <a href="mode-game-play.js.html#line100">line 100</a>
+        <a href="ui.js.html">ui.js</a>, <a href="ui.js.html#line97">line 97</a>
     </li></ul></dd>
     
 
@@ -336,7 +382,7 @@
     
 
     
-    <h4 class="name" id="startup"><span class="type-signature"></span>startup<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="isPressed"><span class="type-signature"></span>isPressed<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -344,7 +390,7 @@
 
 
 <div class="description">
-    Startup actions that require access to the game engine
+    Determines if the button is pressed
 </div>
 
 
@@ -388,7 +434,117 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mode-game-play.js.html">mode-game-play.js</a>, <a href="mode-game-play.js.html#line52">line 52</a>
+        <a href="ui.js.html">ui.js</a>, <a href="ui.js.html#line64">line 64</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - If the button is pressed
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="tick"><span class="type-signature"></span>tick<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Ticks the button
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ui.js.html">ui.js</a>, <a href="ui.js.html#line83">line 83</a>
     </li></ul></dd>
     
 
@@ -424,7 +580,7 @@
     
 
     
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(dt)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="untick"><span class="type-signature"></span>untick<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -432,8 +588,7 @@
 
 
 <div class="description">
-    Update the projectile debug mode - adds new projectile if there are none
-currently in the screen
+    Unticks the button
 </div>
 
 
@@ -442,55 +597,6 @@ currently in the screen
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The time between the current frame and the previous frame.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -526,7 +632,7 @@ currently in the screen
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mode-game-play.js.html">mode-game-play.js</a>, <a href="mode-game-play.js.html#line75">line 75</a>
+        <a href="ui.js.html">ui.js</a>, <a href="ui.js.html#line90">line 90</a>
     </li></ul></dd>
     
 
