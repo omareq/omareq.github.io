@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- *  @file mode-debug-projectile.js A file to test projectile motion
+ *  @file mode-debug-tank.js A file to test tank controls
  *
  *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *  @version 1.0
@@ -32,13 +32,13 @@
 "use strict";
 
 /**
- * Class empty mode that doesn't do anything.
+ * Class Debug Tank to test the tank controls.
  *
  * @see TankGame.Mode
  */
 TankGame.ModeList.DebugTank = class extends TankGame.Mode {
     /**
-     * Constructor for the Debug projectile mode.
+     * Constructor for the Debug Tank mode.
      */
     constructor() {
         super();

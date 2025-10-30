@@ -192,12 +192,12 @@ TankGame.GameEngine = class {
 
             if(this.players.length > 0) {
                 this.scoresChanged = true;
-                if(tank == this.players[this.activePlayerIndex].tank) {
-                    this.players[this.activePlayerIndex].score -= round(damage) * 10;
+                if(tank == this.currentPlayer().tank) {
+                    this.currentPlayer().decreaseScore(round(damage) * 10);
                     return;
                 }
 
-                this.players[this.activePlayerIndex].score += round(damage) * 10;
+                this.currentPlayer().increaseScore(round(damage) * 10);
             }
             return;
         }
@@ -312,16 +312,21 @@ TankGame.GameEngine = class {
             return false;
         }
 
-        do{
+        do {
             this.activePlayerIndex++;
             if(this.activePlayerIndex >= this.players.length) {
                 this.activePlayerIndex = 0;
             }
-        } while(this.players[this.activePlayerIndex].tank.isDead());
+        } while(this.currentPlayer().tank.isDead());
 
         return true;
     }
 
+    /**
+     * Returns a reference to the current active player
+     *
+     * @returns {TankGame.Player} - The current player
+     */
     currentPlayer() {
         return this.players[this.activePlayerIndex];
     }
@@ -377,19 +382,19 @@ TankGame.GameEngine = class {
      * Handle key press
      */
     handleKeyPress() {
-        if(this.players.length > 0 && this.players[this.activePlayerIndex].tank.isDead()) {
+        if(this.players.length > 0 && this.currentPlayer().tank.isDead()) {
             return;
         }
         if(this.players.length <= 0) {
             return;
         }
 
-        let activePlayer = this.players[this.activePlayerIndex];
+        let activePlayer = this.currentPlayer();
         if(activePlayer.isAI()) {
             // activePlayer.ai.makeMove();
             return;
         }
-        let activeTank = this.players[this.activePlayerIndex].tank;
+        let activeTank = this.currentPlayer().tank;
 
         if(key == "w") {
             activeTank.increaseGunAngle();
@@ -435,14 +440,17 @@ TankGame.GameEngine = class {
 
         p5.disableFriendlyErrors = true;
         this.activeMode.draw();
-        if(this.terrain != undefined) {
-            this.terrain.draw();
-        }
-        this.drawProjectiles();
-        this.drawTanks();
-        if(this.players.length > 0) {
-            this.players[this.activePlayerIndex].draw();
-            this.drawPlayerScores();
+        if(this.activeMode.gameMode)
+        {
+            if(this.terrain != undefined) {
+                this.terrain.draw();
+            }
+            this.drawProjectiles();
+            this.drawTanks();
+            if(this.players.length > 0) {
+                this.currentPlayer().draw();
+                this.drawPlayerScores();
+            }
         }
         p5.disableFriendlyErrors = false;
     };
@@ -533,6 +541,7 @@ TankGame.Mode = class {
        * @throws {Error} Method 'draw()' must be implemented
        */
     draw() {
+        background(255, 30, 255);
         throw new Error("Method 'draw()' must be implemented.");
     };
 
@@ -566,6 +575,7 @@ TankGame.ModeList.DebugEmpty = class extends TankGame.Mode {
      */
     constructor() {
         super();
+        this.gameMode = false;
     };
 
     /**

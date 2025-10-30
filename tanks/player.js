@@ -34,7 +34,7 @@
 var TankGame = TankGame || {};
 
 /**
- * Class Tank that represents the tank object
+ * Class Player that represents the player
  */
 TankGame.Player = class {
     /**
@@ -48,12 +48,18 @@ TankGame.Player = class {
         this.weaponIndex = 0;
         this.name = playerName;
         this.score = 0;
+        this.money = 0;
         this.weaponSwitchTime = 0;
         this.weaponSwitchDelay = 0.25;
         this.aiMode = aiMode;
         this.ai = undefined; // setup some kind of AI interface
     };
 
+    /**
+     * Checks if the current player is AI
+     *
+     * @returns {Boolean} If the current player is AI
+     */
     isAI() {
         return this.aiMode;
     }
@@ -78,7 +84,7 @@ TankGame.Player = class {
     /**
      * Add a tank handle to the player
      *
-     *  @param {TankGame.Tank} tank - The tank.
+     * @param {TankGame.Tank} tank - The tank.
      *
      * @throws {Error} param tank should be instance of TankGame.Tank
      */
@@ -97,6 +103,69 @@ TankGame.Player = class {
      */
     dettachTank() {
         this.tank = undefined;
+    }
+
+    /**
+     * Return how many of a particular weapons the player has in their inventory
+     *
+     * @param {String} weaponType - The type of weapon
+     *
+     * @returns {Number} The number of the given weapon type the play has
+     *
+     * @throws {Error} Invalid Weapon type
+     */
+    getWeaponCount(weaponType) {
+        if(!Object.keys(TankGame.ProjectileParamList).includes(weaponType)) {
+            let err = "Invalid weapon type: " + weaponType;
+            err += " is not in TankGame.ProjectileParamList";
+            throw(err);
+        }
+
+        for(let i = 0;i<this.weapons.length; i++) {
+            if(this.weapons[i].type == weaponType) {
+                return this.weapons[i].number;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Adds the weapon to the weapons list if it within the players budget.
+     *
+     * @param {String} newWeapon - The weapon to add to the player
+     *
+     * @param {Number} cost - The cost of the weapon
+     *
+     * @throws {Error} Invalid weapon type
+     */
+    addWeapon(newWeapon, cost) {
+        if(!Object.keys(TankGame.ProjectileParamList).includes(newWeapon)) {
+            let err = "Invalid weapon type: " + newWeapon;
+            err += " is not in TankGame.ProjectileParamList";
+            throw(err);
+        }
+
+        if(cost > this.money) {
+            return;
+        }
+
+        for(let i = 0;i<this.weapons.length; i++) {
+            if(this.weapons[i].type == newWeapon) {
+                this.weapons[i].number++;
+                this.money -= cost;
+                return;
+            }
+        }
+
+        let msg = "Weapon Type is not in weapons list.";
+        msg += "  Adding new type:" + newWeapon;
+        console.debug(msg);
+
+        this.weapons.push({
+            type: newWeapon, number: 1
+        });
+
+        this.money -= cost;
     }
 
     /**
@@ -119,7 +188,32 @@ TankGame.Player = class {
      */
     shootNextWeapon() {
         this.weapons[this.weaponIndex].number--;
+
+        if(this.weapons[this.weaponIndex].number <= 0) {
+            for(let i = 0; i < this.weapons.length; i++) {
+                this.weaponIndex++;
+                if(this.weaponIndex >= this.weapons.length) {
+                    this.weaponIndex = 0;
+                }
+
+                if(this.weapons[this.weaponIndex].number > 0) {
+                    return;
+                }
+            }
+
+            this.weapons[0].number = 100;
+            this.weaponIndex = 0;
+        }
         return;
+    }
+
+    increaseScore(scoreInc) {
+        this.score += scoreInc;
+        this.money += scoreInc;
+    }
+
+    decreaseScore(scoreDec) {
+        this.score -= scoreDec;
     }
 
     /**
@@ -135,9 +229,15 @@ TankGame.Player = class {
             return;
         }
 
-        this.weaponIndex++;
-        if(this.weaponIndex >= this.weapons.length) {
-            this.weaponIndex = 0;
+        for(let i = 0; i < this.weapons.length; i++) {
+            this.weaponIndex++;
+            if(this.weaponIndex >= this.weapons.length) {
+                this.weaponIndex = 0;
+            }
+
+            if(this.weapons[this.weaponIndex].number > 0) {
+                break;
+            }
         }
         this.weaponSwitchTime = currentTime;
         console.debug("Current Weapon: ", this.weapons[this.weaponIndex]);
@@ -149,15 +249,22 @@ TankGame.Player = class {
      * changing weapons too quickly.
      */
     moveToPrevWeaponType() {
+// TODO: figure out what to do when out of a weapon type
         const currentTime = this.gameEngine.currentFrameData.timeSinceStartSeconds;
         if(this.weaponSwitchTime != undefined &&
             currentTime - this.weaponSwitchTime < this.weaponSwitchDelay) {
             return;
         }
 
-        this.weaponIndex--;
-        if(this.weaponIndex < 0) {
-            this.weaponIndex = this.weapons.length - 1;
+        for(let i = 0; i < this.weapons.length; i++) {
+            this.weaponIndex--;
+            if(this.weaponIndex < 0) {
+                this.weaponIndex = this.weapons.length - 1;
+            }
+
+            if(this.weapons[this.weaponIndex].number > 0) {
+                break;
+            }
         }
         this.weaponSwitchTime = currentTime;
         console.debug("Current Weapon: ", this.weapons[this.weaponIndex]);

@@ -32,13 +32,13 @@
 "use strict";
 
 /**
- * Class empty mode that doesn't do anything.
+ * Class that controls the player setup state
  *
  * @see TankGame.Mode
  */
 TankGame.ModeList.PlayerSetup = class extends TankGame.Mode {
     /**
-     * Constructor for the Debug projectile mode.
+     * Constructor for the player setup mode.
      */
     constructor() {
         super();

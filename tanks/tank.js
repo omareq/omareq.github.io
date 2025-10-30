@@ -215,7 +215,7 @@ TankGame.Tank = class {
     shootProjectile(projectileParam) {
         const currentTime = this.gameEngine.currentFrameData.timeSinceStartSeconds;
         if(this.lastFiredTime != undefined &&
-            currentTime - this.lastFiredTime < 0.75) {
+            currentTime - this.lastFiredTime < 2) {
             return false;
         }
 
@@ -255,7 +255,7 @@ TankGame.Tank = class {
         if(this.health < 0) {
             this.explode();
         }
-        console.log("Tank Health: ", this.health);
+        console.debug("Tank Health: ", this.health);
     };
 
     /**

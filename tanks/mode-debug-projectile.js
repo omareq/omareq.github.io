@@ -32,7 +32,7 @@
 "use strict";
 
 /**
- * Class empty mode that doesn't do anything.
+ * Class debug projectile.
  *
  * @see TankGame.Mode
  */

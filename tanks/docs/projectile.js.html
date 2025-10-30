@@ -78,7 +78,8 @@ TankGame.ProjectileParam = Struct(
     "projectileRadius",
     "explosionRadius",
     "duplicationFactor",
-    "explodeAtApogee"
+    "explodeAtApogee",
+    "cost"
 );
 
 /**
@@ -100,21 +101,21 @@ TankGame.ProjectileParamList = {};
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 2, 15, 0, false);
+TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 2, 15, 0, false, 25);
 
 /**
  * Medium missile.  Pure projectile that explodes on impact.
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 4, 20, 0, false);
+TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 4, 20, 0, false, 75);
 
 /**
  * Large missile.  Pure projectile that explodes on impact.
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 30, 0, false);
+TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 30, 0, false, 150);
 
 /*******************************************************************************
  * GROUND BURST BOMBS
@@ -126,7 +127,7 @@ TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 30, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 2, 15, 5, false);
+TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 2, 15, 5, false, 100);
 
 /**
  * Medium Ground Burst Bomb. Ballistic projectile that splits into 7 small
@@ -134,7 +135,7 @@ TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 2, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 4, 20, 7, false);
+TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 4, 20, 7, false, 150);
 
 /**
  * Large Ground Burst Bomb. Ballistic projectile that splits into 9 small
@@ -142,7 +143,7 @@ TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 4,
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 30, 9, false);
+TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 30, 9, false, 200);
 
 /*******************************************************************************
  * AIR BURST BOMBS
@@ -154,7 +155,7 @@ TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 2, 15, 5, true);
+TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 2, 15, 5, true, 175);
 
 
 /**
@@ -163,7 +164,7 @@ TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 2, 15,
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 4, 20, 7, true);
+TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 4, 20, 7, true, 200);
 
 
 /**
@@ -172,7 +173,7 @@ TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 4, 20
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeAirBurst = TankGame.ProjectileParam(25, 5, 30, 9, true);
+TankGame.ProjectileParamList.LargeAirBurst = TankGame.ProjectileParam(25, 5, 30, 9, true, 250);
 
 
 /**
@@ -332,12 +333,12 @@ TankGame.Projectile = class {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.ModeList.GamePlay.html">GamePlay</a></li><li><a href="TankGame.ModeList.PlayerSetup.html">PlayerSetup</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li><li><a href="UI.Button.html">Button</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.BuyWeapons.html">BuyWeapons</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.ModeList.GamePlay.html">GamePlay</a></li><li><a href="TankGame.ModeList.PlayerSetup.html">PlayerSetup</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li><li><a href="UI.Button.html">Button</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 26 2025 22:03:02 GMT-0700 (Pacific Daylight Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Oct 29 2025 23:51:01 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

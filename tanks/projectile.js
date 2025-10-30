@@ -50,7 +50,8 @@ TankGame.ProjectileParam = Struct(
     "projectileRadius",
     "explosionRadius",
     "duplicationFactor",
-    "explodeAtApogee"
+    "explodeAtApogee",
+    "cost"
 );
 
 /**
@@ -72,21 +73,21 @@ TankGame.ProjectileParamList = {};
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 2, 15, 0, false);
+TankGame.ProjectileParamList.SmallMissile = TankGame.ProjectileParam(25, 2, 15, 0, false, 25);
 
 /**
  * Medium missile.  Pure projectile that explodes on impact.
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 4, 20, 0, false);
+TankGame.ProjectileParamList.MediumMissile = TankGame.ProjectileParam(50, 4, 20, 0, false, 75);
 
 /**
  * Large missile.  Pure projectile that explodes on impact.
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 30, 0, false);
+TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 30, 0, false, 150);
 
 /*******************************************************************************
  * GROUND BURST BOMBS
@@ -98,7 +99,7 @@ TankGame.ProjectileParamList.LargeMissile = TankGame.ProjectileParam(75, 5, 30, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 2, 15, 5, false);
+TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 2, 15, 5, false, 100);
 
 /**
  * Medium Ground Burst Bomb. Ballistic projectile that splits into 7 small
@@ -106,7 +107,7 @@ TankGame.ProjectileParamList.SmallGroundBurst = TankGame.ProjectileParam(25, 2, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 4, 20, 7, false);
+TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 4, 20, 7, false, 150);
 
 /**
  * Large Ground Burst Bomb. Ballistic projectile that splits into 9 small
@@ -114,7 +115,7 @@ TankGame.ProjectileParamList.MediumGroundBurst = TankGame.ProjectileParam(25, 4,
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 30, 9, false);
+TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 30, 9, false, 200);
 
 /*******************************************************************************
  * AIR BURST BOMBS
@@ -126,7 +127,7 @@ TankGame.ProjectileParamList.LargeGroundBurst = TankGame.ProjectileParam(25, 5, 
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 2, 15, 5, true);
+TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 2, 15, 5, true, 175);
 
 
 /**
@@ -135,7 +136,7 @@ TankGame.ProjectileParamList.SmallAirBurst = TankGame.ProjectileParam(25, 2, 15,
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 4, 20, 7, true);
+TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 4, 20, 7, true, 200);
 
 
 /**
@@ -144,7 +145,7 @@ TankGame.ProjectileParamList.MediumAirBurst = TankGame.ProjectileParam(25, 4, 20
  *
  * @type{TankGame.ProjectileParam}
  */
-TankGame.ProjectileParamList.LargeAirBurst = TankGame.ProjectileParam(25, 5, 30, 9, true);
+TankGame.ProjectileParamList.LargeAirBurst = TankGame.ProjectileParam(25, 5, 30, 9, true, 250);
 
 
 /**

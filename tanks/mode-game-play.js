@@ -42,8 +42,9 @@ TankGame.ModeList.GamePlay = class extends TankGame.Mode {
      */
     constructor() {
         super();
-        console.debug("Start the Debug Player Mode");
+        console.debug("Start the Game Play Mode");
         this.playerHasShot = false;
+        this.gameMode = true;
     };
 
     /**
@@ -84,7 +85,7 @@ TankGame.ModeList.GamePlay = class extends TankGame.Mode {
 
         if(this.gameEngine.tanks.length <= 1) {
             // go to weapons buying mode
-            console.log("Go To Weapons Buying Mode");
+            this.gameEngine.setMode(new TankGame.ModeList.BuyWeapons());
         }
 
         if(this.gameEngine.currentPlayer().tank.isDead()) {
