@@ -440,8 +440,7 @@ TankGame.GameEngine = class {
 
         p5.disableFriendlyErrors = true;
         this.activeMode.draw();
-        if(this.activeMode.gameMode)
-        {
+        if(this.activeMode.gameMode) {
             if(this.terrain != undefined) {
                 this.terrain.draw();
             }
