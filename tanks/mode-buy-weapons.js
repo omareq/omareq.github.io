@@ -71,14 +71,20 @@ TankGame.ModeList.BuyWeapons = class extends TankGame.Mode {
         // setup tanks
         this.gameEngine.tanks = [];
         const tankWidth = width * 0.035;
+        const offset = 0.5 * width / this.gameEngine.players.length;
+        let indexLists = [...Array(this.gameEngine.players.length).keys()];
         for(let i = 0; i < this.gameEngine.players.length; i++) {
-            const x = 10 + width * i / this.gameEngine.players.length;
+            const randIndex = floor(random() * indexLists.length);
+            console.debug("Random IndexLists Index: " + randIndex + " " + indexLists[randIndex]);
+            console.debug("Random IndexLists: [" + indexLists + "]");
+            const index = indexLists.splice(randIndex, 1);
+            const x = offset + width * i / this.gameEngine.players.length;
             const tankPos = createVector(x, height / 2);
             let newTank = new TankGame.Tank(tankWidth, tankPos,
-                this.gameEngine.players[i].tank.color);
+                this.gameEngine.players[index].tank.color);
 
-            this.gameEngine.players[i].dettachTank();
-            this.gameEngine.players[i].attachTank(newTank);
+            this.gameEngine.players[index].dettachTank();
+            this.gameEngine.players[index].attachTank(newTank);
             this.gameEngine.addTank(newTank);
         }
 
