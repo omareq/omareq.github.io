@@ -71,6 +71,8 @@ TankGame.GameEngine = class {
         this.terrain = undefined;
 
         // Good wind values -0.1 to 0.1
+        this.maxWind = 0.1;
+        this.windNoiseCoord = 0;
         this.wind = createVector(-0.02, 0);
         this.isPaused = false;
         this.tanks = [];
@@ -318,7 +320,7 @@ TankGame.GameEngine = class {
                 this.activePlayerIndex = 0;
             }
         } while(this.currentPlayer().tank.isDead());
-
+        this.updateWind();
         return true;
     }
 
@@ -362,6 +364,37 @@ TankGame.GameEngine = class {
      */
     getCurrentWind() {
         return this.wind.copy();
+    }
+
+    /**
+     * Update the wind vector using perlin noise
+     */
+    updateWind() {
+        this.wind.x = 2 * this.maxWind * noise(0.005 * this.windNoiseCoord) - this.maxWind;
+        this.windNoiseCoord++;
+    }
+
+    /**
+     * Draws the current wind vector to help the player aim.
+     */
+    drawWind() {
+        push();
+        fill(189);
+        rect(0.85 * width, 0, 0.15 * width, 0.05 * height);
+        stroke(0);
+
+        const dotRadius = 0.004 * height;
+        const dotX = 0.97 * width;
+        const dotY = 0.025 * height;
+        const windScale = 200;
+        fill(0);
+        ellipse(dotX, dotY, dotRadius, dotRadius);
+        line(dotX, dotY, dotX + this.wind.x * windScale, dotY);
+
+        textAlign(LEFT, CENTER);
+        text(floor(this.wind.x * 1000), 0.87 * width, 0.025 * height);
+
+        pop();
     }
 
     /**
@@ -450,6 +483,7 @@ TankGame.GameEngine = class {
                 this.currentPlayer().draw();
                 this.drawPlayerScores();
             }
+            this.drawWind();
         }
         p5.disableFriendlyErrors = false;
     };
