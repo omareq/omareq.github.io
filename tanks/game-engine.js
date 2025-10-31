@@ -370,6 +370,7 @@ TankGame.GameEngine = class {
      * Update the wind vector using perlin noise
      */
     updateWind() {
+// TODO(omareq): Start from zero wind at start of level and offset from there
         this.wind.x = 2 * this.maxWind * noise(0.005 * this.windNoiseCoord) - this.maxWind;
         this.windNoiseCoord++;
     }
