@@ -321,9 +321,11 @@ TankGame.Tank = class {
     };
 
     /**
-     * Draw the health bar above the tank
+     * Draw the health bar below the tank.  Color turns red as health is
+     * depleted.
      */
     drawHealthBar() {
+        push();
         const barMaxWidth = 1.25 * this.width;
         const barHeight = 0.2 * this.height;
         let barw = barMaxWidth * this.health / 100;
@@ -339,9 +341,11 @@ TankGame.Tank = class {
         rect(barx, bary, barMaxWidth, barHeight);
 
         // health
-        // rectMode()
-        fill(255, 0, 0);
+        colorMode(HSB);
+        const healthCol = color(120 * this.health / 100, 100, 100);
+        fill(healthCol);
         rect(barx - 0.5 * (barMaxWidth - barw), bary, barw, barHeight);
+        pop();
     };
 
     /**
