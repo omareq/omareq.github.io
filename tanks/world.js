@@ -58,9 +58,10 @@ TankGame.World.Terrain = class {
     constructor(width, minHeight, maxHeight, noiseDetail=1) {
         this.width = width;
         this.groundHeight = [];
+        const offset = frameCount;
         const heightRange = maxHeight - minHeight;
         for(let i = 0; i < width; i++) {
-            let nextGroundHeight = heightRange * noise(i * noiseDetail) + minHeight;
+            let nextGroundHeight = heightRange * noise((i + offset) * noiseDetail) + minHeight;
             this.groundHeight.push(nextGroundHeight);
         }
 

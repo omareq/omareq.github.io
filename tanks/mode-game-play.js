@@ -58,6 +58,7 @@ TankGame.ModeList.GamePlay = class extends TankGame.Mode {
      * Create the terrain
      */
     createTerrain() {
+        console.debug("CreateTerrain");
 // TODO (omareq): randomise terrain type / forest / mountain / desert
         const ground = new TankGame.World.Terrain(
             this.gameEngine.screenWidth,
