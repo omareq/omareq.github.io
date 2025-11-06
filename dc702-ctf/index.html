@@ -251,6 +251,55 @@ def validate(c, i):
         <div class="col-sm-12">
           <h2>RE-Versing - 125 Points</h2>
 
+          <p>
+            A
+            <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x03-re-versing/re-versing"> binary </a>
+            (changed using hexedit to give a different flag to the original)
+            reversing challenge with no instructions just the binary.  Before
+            running the binary I ran the file command against the binary to
+            check what type of binary I was looking at.  I had an unstripped
+            64-bit ELF, this meant I should be expecting to see lots of symbols
+            available and possible code comments when running strings or objdump.
+          </p>
+
+          <pre>
+            <code class="prettyprint lang-sh">
+$ file re-versing
+re-versing: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV),
+dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2,
+BuildID[sha1]=0a46ad920eed87ad3f2039fd7539b02d7a3ed487, for GNU/Linux 3.2.0,
+not stripped
+            </code>
+          </pre>
+
+          <p>
+            My first attempt to obtain the flag involved running the strings
+            command against the binary.  I was hoping to find the raw flag in
+            the output of this command but scrolling up and down quickly showed
+            that this was not the case.  I decided to grep the output for curly
+            braces to save time looking for possible flag candidates.  The
+            output from this command is shown below.
+          </p>
+
+          <pre>
+            <code class="prettyprint lang-sh">
+$ strings re-versing | grep {
+u{UH
+^(D|6)(C|1)7\{[R-V]E(g|p)u(l*)ar(z?)_R[T-F]v3Rs(s*)i(n|j)g_6{3}\}
+            </code>
+          </pre>
+
+          <p>
+            This output from the grep shows what could have been a flag regular
+            expression.  Solving for any valid input for this regular expression
+            creates a valid flag.  Given that some of the groups of the RegEx
+            had ranges of possible values it was clear that you had to find
+            the correct value within the range.  As you solved the RegEx the
+            expected word becomes clear very quickly.  Once solved I ran the
+            binary with my guess to confirm the flag.
+          </p>
+
+          <img src="./0x03-re-versing/re-versing-flag.jpg" loading="lazy" style="max-width: 100%;" alt="The output of the re-versing binary when the user input is correct">
         </div>
       </div>
     </section>
