@@ -1,0 +1,305 @@
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Omar Essilfie-Quaye">
+  <meta name="description" content="A Brief write up of some fun CTF challenges at a DC702 CTF.  This is a project created by Omar Essilfie-Quaye on 05 November 2025.">
+  <meta property="og:title" content="Dc702 ctf">
+  <meta property="og:description" content="A Brief write up of some fun CTF challenges at a DC702 CTF.  This is a project created by Omar Essilfie-Quaye on 05 November 2025.">
+  <meta property="og:image" content="https://omareq.github.io/imgs/p_031.jpg">
+  <meta property="og:url" content="https://omareq.github.io/dc702-ctf/">
+  <meta property="og:site_name" content="Omar EQ Githubio">
+  <meta property="og:locale" content="en_GB" />
+
+  <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script>
+  <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
+  <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../libraries/run_prettify.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="../main.css">
+
+  <title>DC-702 CTF</title>
+
+</head>
+
+<body style="width:100%; text-align:center">
+  <div id="main">
+    <section class="jumbotron jumbotron-main">
+      <div class="container">
+        <div class="row text-center">
+          <h1>DC702 CTF - Write Up</h1>
+        </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          Github Repo
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/">
+              <img src="../imgs/github-logo.png" loading="lazy" alt="Link to github repository"
+                   style="max-width:75px">
+          </a>
+          Docs
+          <a href="./docs/" rel="nofollow">
+              <img src="../imgs/docs-logo.png" loading="lazy" alt="Link to source code documentation"
+                   style="max-width:75px">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h2>The CTF</h2>
+          <p>
+            I was recently able to attend a CTF run by
+            <a href="https://www.dc702.space/"> DC702 </a> and
+            <a href="https://c2society.org/pages/dc702">C2Soc</a>.  It was a
+            relatively short CTF for beginners and and experts alike.  I had
+            4 hours to capture as many flags as possible or be forever known as
+            a newb.  JK the organizers were amazing and were walking around
+            and checking in on everybody to make sure they were having fun and
+            throwing cheeky hints in here and there.
+          </p>
+
+          <p>
+            One thing that was made clear right at the start was that this was
+            a short CTF and at all times the goal was to stay on task.  This was
+            a crucial theme across some of the challenges and if you were not
+            paying attention it could have been easy to fall into a few traps.
+          </p>
+
+          <p>
+            The CTFs were split into a few sections, I focused on some of the
+            reverse engineering based ones and my team mates did some of the
+            others.  In the interest of education i will share some of my
+            solutions to the puzzles that i found the most fun.  I will not be
+            sharing the final flags to respect the integrity of any future
+            DC702 events.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h2>The Summoning Ritual - 80 Points</h2>
+          <p>
+            This CTF has a fairly simple aim to get the flag from the python
+            script
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x01-the-summoning-ritual/summoning_ritual.py">summoning_ritual.py</a>.
+
+          There are a quite a few functions in the script which I gave a quick
+          glance to understand roughly how they work on my way down to the main
+          function.  At the time the checksum function stood out so I was
+          mentally preparing to come back to this when needed.
+          </p>
+
+          <pre>
+            <code class="prettyprint lang-py">
+def display_banner():
+
+def calculate_checksum(data):
+    """Mysterious encryption function for data integrity"""
+
+def validate_incantation(user_input):
+    """The sacred cipher - DO NOT MODIFY - DELETE AFTER DEBUG"""
+
+def initialize_ritual_components():
+    """Setup the ancient digital components"""
+            </code>
+          </pre>
+
+          <p>
+            A more detailed inspection of the main function shown below led me
+            to realise a few things:
+          </p>
+
+          <ol>
+            <li> The user input is taken in, capitalised and a checksum calculated.
+            But this checksum is not saved in any variable. </li>
+            <li> The validate_incantation() function is the main function of
+            importance </li>
+            <li> The flag is basically the user input wrapped in curly braces as
+            per the standard format in most CTFs.</li>
+          </ol>
+
+
+          <pre>
+            <code class="prettyprint lang-py">
+def main():
+    ...
+    try:
+        user_input = input().strip().upper()
+    ...
+    calculate_checksum(user_input)
+    ...
+    if validate_incantation(user_input):
+        ...
+        print(f"The spirits whisper: 'flag{{{user_input}}}'")
+        print("\nCongratulations! You have found the magic word!")
+    else:
+        ...
+            </code>
+          </pre>
+
+          <p>
+            A refocus on the validate_incantation() function very quickly
+            reveals that the sacred_word variable is the required input for
+            the python script to get the flag.
+          </p>
+          <pre>
+            <code class="prettyprint lang-py">
+def validate_incantation(user_input):
+    """The sacred cipher - DO NOT MODIFY - DELETE AFTER DEBUG"""
+    sacred_word = "CTF-REDACTED-THE-SACRED-WORD-TO-GET-THE-FLAG-REDACTED-CTF"
+
+    if len(user_input) != len(sacred_word):
+        return False
+
+    for i in range(len(sacred_word)):
+        if user_input[i] != sacred_word[i]:
+            return False
+
+    return True
+            </code>
+          </pre>
+
+          <p>
+            The first flag and the lesson is already being made clear.  Stay on
+            task! Don't waste time looking at things which don't get you to the
+            flag.  It would have been very easy to waste a lot of time trying
+            to reverse the calculate_checksum() function.  I was lucky that I
+            decided to get an overall understanding of the control flow of the
+            script before getting drawn down a rabbit hole with zero benefit.
+          </p>
+
+          <img src="./0x01-the-summoning-ritual/the-summoning-ritual-flag.jpg" loading="lazy" style="max-width: 100%;" alt="The output of the summoning ritual script when the user input is correct">
+
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h2>NohtyP - 100 Points</h2>
+          <p>
+            This flag is similar to the summoning ritual but has a slightly
+            increased difficulty.  In this case the flag isn't directly in the
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x02-nohty-p/its-pithon.py">python script</a>.
+            and you have to understand how python works a little bit to
+            figure out the puzzle.
+          </p>
+
+          <pre>
+            <code class="prettyprint lang-py">
+def validate(c, i):
+    if (i == 0 or i == 9) and c == "t":
+        return True
+    if (i == 1) and (ord(c) == 104):
+        return True
+    if (i == 2) and (c == "secure"[4]):
+        return True
+    if (i == 3 or i == 4) and (c == chr(ord("g")-2)):
+        return True
+    if i in [5,6,7,8,9]:
+        if c == "tniop"[::-1][i-5]:
+            return True
+    if i in range(10,21):
+        doot = base64.b64decode("MWZvdXIxZml2ZTk=".encode("ascii")).decode("ascii")
+        if c == doot[i - 10]:
+            return True
+    if i in range(21, 31):
+        if c == "GANGALF-TON-"[::-1][i-21]:
+            return True
+    return False
+            </code>
+          </pre>
+
+          <p>
+            The crux of the problem is the validate character function which
+            takes in a character and an index and checks if the character is
+            correct.  Manually going through the first few quickly reveals a
+            pattern, the number pi.  The flag is the first few digits of pi
+            in an alternating pattern back and forth as numbers and words.
+            I was able to use the expected length of the password to figure out
+            at what point to stop and plugging it in to the script revealed the
+            flag.
+          </p>
+
+          <img src="./0x02-nohty-p/nohty-p-flag.jpg" loading="lazy" style="max-width: 100%;" alt="The output of the its pithon script when the user input is correct">
+
+          <p>
+            There was another lovely clue there with the file name for the python
+            script being "its_pithon.py".  That should have been a giveaway
+            but that was a small clue I missed that could have saved me some time.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <h2>RE-Versing - 125 Points</h2>
+
+        </div>
+      </div>
+    </section>
+
+
+    <section class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <a id="external_link" href="../projects.html" >
+                    <img src="../imgs/all-projects-button.jpg" loading="lazy" style="max-width: 70%;" alt="Link to all projects page">
+                </a>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </section>
+
+    <section class="container">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="project-card" id="previous">
+            <h5 id="prev-title">Tanks</h5>
+            <a id="prev-url" href="../tanks/" class="project-demo">
+              <img id="prev-img" src="../imgs/p_030.jpg" loading="lazy" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the previous project, /**PREV TITLE**/">
+            </a>
+          </div>
+        </div>
+
+        <div class="col-sm-6"></div>
+
+        <div class="col-sm-3">
+          <div class="project-card" id="next">
+            <h5 id="next-title">Snowman</h5>
+            <a id="next-url" href="../snowman/" class="project-demo">
+              <img id="next-img" src="../imgs/p_000.jpg" loading="lazy" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the next project, /**NEXT TITLE**/">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye" rel="nofollow"><span>iamoquaye</span></a>
+    </div>
+  </footer>
+
+</body>
+</html>
