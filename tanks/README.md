@@ -36,6 +36,12 @@ Plan of the game state machine flow
     |  Weapons Buying |
     -------------------
 
+## Assets
+
+[Tank Picture](depositphotos.com/)
+
+[Explosion Spritesheet](cdnb.artstation.com/)
+
 
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
