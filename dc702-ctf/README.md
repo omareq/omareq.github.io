@@ -2,11 +2,26 @@
 
 A Brief write up of some fun CTF challenges at a DC702 CTF
 
-Check out the [Demo](https://omareq.github.io/dc702-ctf/).
+Check out the [Write Up](https://omareq.github.io/dc702-ctf/).
 
-Check out the [Docs](https://omareq.github.io/dc702-ctf/docs/).
+## The Challenges
 
-Created using [p5.js](https://p5js.org/)
+### The Summoning Ritual
+
+A quick python script RE challenge.
+
+### Nohty-P
+
+A slightly more in depth python RE challenge.
+
+### RE-Versing
+
+Basic binary RE challenge.
+
+### Tesl Cybertruck Infotainment
+
+C source code RE challenge.
+
 
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
