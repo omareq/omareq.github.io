@@ -456,6 +456,35 @@ void process_special_mode() {
             never calculated a solution.  I might be wrong and using
             angr to double check is probably a sensible test.
           </ol>
+
+          <h5> GDB Debugger </h5>
+
+          <p>
+            I just briefly got bored and thought I would try the debugger variant
+            to make sure i remember how to use GDB.  Make sure to compile the
+            cybertruck source code with debug symbols before running in GDB by
+            using the flag "-ggdb".
+          </p>
+
+          <pre>
+            <code class="prettyprint lang-sh">
+$ g++ -ggdb cybertruck.c -o cybertruck
+$ gdb cybertruck
+(gdb) break process_special_mode
+            </code>
+          </pre>
+
+          <p>
+            It took me a minute to figure out why there was no useful information
+            in the local symbols when I first reached the breakpoint.  Of course
+            the debugger had paused execution before any operations happened in
+            the function so the local variables all had garbage data in them.
+            I stepped forward using next a few times and once I had gone passed
+            the get_system_strings() function I had a look at the local variables
+            and saw the flag hiding in sys_str1 as expected.
+          </p>
+
+          <img src="./0x04-tesla-cybertruck-infotainment/cybertruck-gdb-flag.jpg" loading="lazy" style="max-width: 100%;" alt="obtaining the flag using a debugger">
         </div>
       </div>
     </section>
