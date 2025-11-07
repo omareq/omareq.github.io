@@ -58,14 +58,15 @@
         <div class="col-sm-12">
           <h2>The CTF</h2>
           <p>
-            I was recently able to attend a CTF run by
+            I was recently able to attend a Capture The Flag (CTF) event run by
             <a href="https://www.dc702.space/"> DC702 </a> and
             <a href="https://c2society.org/pages/dc702">C2Soc</a>.  It was a
             relatively short CTF for beginners and and experts alike.  I had
             4 hours to capture as many flags as possible or be forever known as
             a newb.  JK the organizers were amazing and were walking around
             and checking in on everybody to make sure they were having fun and
-            throwing cheeky hints in here and there.
+            throwing cheeky hints in here and there.  These hints were much
+            appreciated as I am definitely a n00b.
           </p>
 
           <p>
@@ -87,10 +88,16 @@
       </div>
     </section>
 
+
     <section class="container" style="padding-top:10px">
       <div class="row text-left">
-        <div class="col-sm-12">
-          <h2>The Summoning Ritual - 80 Points</h2>
+        <h2> -
+          <a data-toggle="collapse" href="#summoning-ritual" role="button" aria-expanded="false" aria-controls="summoning-ritual">
+            The Summoning Ritual
+          </a>
+            - 80 Points
+        </h2>
+        <div class="col-sm-12 collapse" id="summoning-ritual">
           <p>
             This CTF has a fairly simple aim to get the flag from the python
             script
@@ -124,9 +131,10 @@ def initialize_ritual_components():
 
           <ol>
             <li> The user input is taken in, capitalised and a checksum calculated.
-            But this checksum is not saved in any variable. </li>
+            But this checksum is not saved in any variable and does not need to
+            be analysed. </li>
             <li> The validate_incantation() function is the main function of
-            importance </li>
+            importance. </li>
             <li> The flag is basically the user input wrapped in curly braces as
             per the standard format in most CTFs.</li>
           </ol>
@@ -189,8 +197,13 @@ def validate_incantation(user_input):
 
     <section class="container" style="padding-top:10px">
       <div class="row text-left">
-        <div class="col-sm-12">
-          <h2>NohtyP - 100 Points</h2>
+      <h2> -
+          <a data-toggle="collapse" href="#nohty-p" role="button" aria-expanded="false" aria-controls="nohty-p">
+           Nohty P
+          </a>
+            - 100 Points
+        </h2>
+        <div class="col-sm-12 collapse" id="nohty-p">
           <p>
             This flag is similar to the summoning ritual but has a slightly
             increased difficulty.  In this case the flag isn't directly in the
@@ -239,8 +252,13 @@ def validate(c, i):
 
           <p>
             There was another lovely clue there with the file name for the python
-            script being "its_pithon.py".  That should have been a giveaway
+            script being "its_<b>pi</b>thon.py".  That should have been a giveaway
             but that was a small clue I missed that could have saved me some time.
+            If you want to do the CTF slightly faster than me you can automate
+            checking each password character with a quick python script.  I
+            generated a
+            <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x02-nohty-p/flag-gen.py"> flag-gen.py </a>
+            script after the CTF was over.
           </p>
         </div>
       </div>
@@ -248,13 +266,20 @@ def validate(c, i):
 
     <section class="container" style="padding-top:10px">
       <div class="row text-left">
-        <div class="col-sm-12">
-          <h2>RE-Versing - 125 Points</h2>
+      <h2> -
+          <a data-toggle="collapse" href="#re-versing" role="button" aria-expanded="false" aria-controls="re-versing">
+           RE-Versing
+          </a>
+            - 125 Points
+        </h2>
+        <div class="col-sm-12 collapse" id="re-versing">
 
           <p>
             A
             <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x03-re-versing/re-versing"> binary </a>
-            (changed using hexedit to give a different flag to the original)
+            (changed using
+            <a href="https://linux.die.net/man/1/hexedit"> hexedit </a>
+            to give a different flag to the original)
             reversing challenge with no instructions just the binary.  Before
             running the binary I ran the file command against the binary to
             check what type of binary I was looking at.  I had an unstripped
@@ -290,9 +315,12 @@ u{UH
           </pre>
 
           <p>
-            This output from the grep shows what could have been a flag regular
-            expression.  Solving for any valid input for this regular expression
-            creates a valid flag.  Given that some of the groups of the RegEx
+            This output from the grep shows what could have been a flag
+            <a href="https://en.wikipedia.org/wiki/Regular_expression"> regular expression</a>.
+            Solving for any valid input for this regular expression
+            creates a valid flag.  I was able to test possible match strings on
+            <a href="https://regex101.com/"> regex101.com</a>.
+            Given that some of the groups of the RegEx
             had ranges of possible values it was clear that you had to find
             the correct value within the range.  As you solved the RegEx the
             expected word becomes clear very quickly.  Once solved I ran the
