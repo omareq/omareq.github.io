@@ -79,10 +79,20 @@
           <p>
             The CTFs were split into a few sections, I focused on some of the
             reverse engineering based ones and my team mates did some of the
-            others.  In the interest of education i will share some of my
-            solutions to the puzzles that i found the most fun.  I will not be
+            others.  In the interest of education I will share some of my
+            solutions to the puzzles that I found the most fun.  I will not be
             sharing the final flags to respect the integrity of any future
             DC702 events.
+          </p>
+
+          <p>
+            For useful CTF tools online explore the
+            <a href="https://cyberchef.org/"> CyberChef</a>
+            website.  It has almost everything you can think of in terms of
+            quick little tools to help get things done.  I do try and use local
+            tooling where possible at CTF's in case there is unreliable network
+            connections, but if you ever need a cyber Swiss army knife this is
+            the place to look.
           </p>
         </div>
       </div>
@@ -535,6 +545,57 @@ $ gdb cybertruck
             </p>
 
             <img src="./0x05-fizz-buzz/fizz-buzz-flag.jpg" loading="lazy" style="max-width: 100%;" alt="obtaining the fizz buzz flag using a python script">
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <h2> -
+          <a data-toggle="collapse" href="#tell-tale-heart" role="button" aria-expanded="false" aria-controls="tell-tale-heart">
+           Tell Tale Heart
+          </a>
+            - 100 Points
+        </h2>
+        <div class="col-sm-12 collapse" id="tell-tale-heart">
+          <p>
+            The premise if simple, you are given two copies of a file.  Use them
+            to find the flag.  The two files you are given are
+            <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x06-tell-tale-heart/copy_1.pdf"> copy_1.pdf</a>
+            and
+            <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x06-tell-tale-heart/copy_2.pdf"> copy_2.pdf</a>.
+            These files contain the short story "The Tell Tale Heart" by Edgar
+            Allen Poe.  A quick glance shows no visual difference between the
+            files which led me to check if there were any differences in the
+            file data.  I ran the diff command as shown below against the two
+            files.
+          </p>
+
+           <pre>
+            <code class="prettyprint lang-sh">
+$ diff copy_1.pdf copy_2.pdf
+            </code>
+          </pre>
+
+          <p>
+            The output of the diff command can be seen in the image below.  It
+            looks like some data has been removed from copy_1.pdf.  The format
+            of the data looks like a hex representation of characters.
+          </p>
+
+           <img src="./0x06-tell-tale-heart/diff-output.jpg" loading="lazy" style="max-width: 100%;" alt="the output of the diff command between copy_1.pdf and copy_2.pdf">
+
+           <p>
+             I piped the output of diff into a file
+             <a href="./0x06-tell-tale-heart/diff.txt"> diff.txt</a>
+             and I cleaned up the excess characters
+             <a href="./0x06-tell-tale-heart/diff-clean.txt"> diff-clean.txt</a>.
+             You can then take this clean data and run it through the "from Hex"
+             recipe on cyberChef. This should reveal the flag.
+           </p>
+
+           <img src="./0x06-tell-tale-heart/tell-tale-heart-flag.jpg" loading="lazy" style="max-width: 100%;" alt="the output of the cyber chef 'from Hex' recipe with the flag">
+
         </div>
       </div>
     </section>
