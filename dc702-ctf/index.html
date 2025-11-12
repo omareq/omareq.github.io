@@ -491,6 +491,54 @@ $ gdb cybertruck
       </div>
     </section>
 
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <h2> -
+          <a data-toggle="collapse" href="#fizz-buzz" role="button" aria-expanded="false" aria-controls="fizz-buzz">
+           Fizz Buzz
+          </a>
+            - 100 Points
+        </h2>
+        <div class="col-sm-12 collapse" id="fizz-buzz">
+          <p>
+            A CTF spin on the classic fizz buzz challenge.  For all number from 1
+            to 1024 inclusive do the following:
+          </p>
+
+            <ol>
+              <li> Print "fizz" if the number is divisible by 3 </li>
+              <li> Print "buzz" if the number is divisible by 7 </li>
+              <li> Print "fizzbuzz" if the number is divisible by 3 and 7 </li>
+            </ol>
+
+            <p>
+              Make a comma separated string of the previous statements.  Ensure
+              that there are no spaces and no newline characters.  Reverse the
+              string and find the MD5 Hash of the string.  The hash is the flag
+              for this challenge and the instructions clear denote that this
+              is a non standard flag format.
+            </p>
+
+            <p>
+              This is a rather simple challenge and once the string has been
+              generated it can be hashed with an online tool such as
+              <a href="https://www.md5hashgenerator.com/">
+                MD5HashGenerator.com
+              </a>.
+              I chose to put everything in a
+              <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x05-fizz-buzz/generate_hash.py"> generate_hash.py </a>
+              python script to generate the hash I needed and quickly iterate
+              through any mistakes.  The quick mistakes I made included: not
+              checking the inclusivity of the problem statement, leaving a
+              trailing comma in the string and forgetting to reverse the string.
+            </p>
+
+            <img src="./0x05-fizz-buzz/fizz-buzz-flag.jpg" loading="lazy" style="max-width: 100%;" alt="obtaining the fizz buzz flag using a python script">
+        </div>
+      </div>
+    </section>
+
 <!--     <section class="container" style="padding-top:10px">
       <div class="row text-left">
         <h2> -
