@@ -18,10 +18,17 @@ A slightly more in depth python RE challenge.
 
 Basic binary RE challenge.
 
-### Tesl Cybertruck Infotainment
+### Tesla Cybertruck Infotainment
 
 C source code RE challenge.
 
+### Fizz Buzzed
+
+A Programming challenge
+
+### Tell Tale Heart
+
+A forensic file challenge
 
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
