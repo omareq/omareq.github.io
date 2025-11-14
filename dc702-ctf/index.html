@@ -609,6 +609,76 @@ $ diff copy_1.pdf copy_2.pdf
       </div>
     </section>
 
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <h2> -
+          <a data-toggle="collapse" href="#secret-checker" role="button" aria-expanded="false" aria-controls="secret-checker">
+           Secret Checker
+          </a>
+            - Post CTF
+        </h2>
+        <div class="col-sm-12 collapse" id="secret-checker">
+
+          <p>
+            This is also a relatively easy python reverse engineering challenge.
+            Take the python file
+            <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x07-secret-checker/secret_checker.py"> secret_checker.py</a> and see if you can get the
+            flag.  The important sections of this script are shown below.
+          </p>
+
+           <pre>
+            <code class="prettyprint lang-py">
+ka = ['x120', 'm120', 'a-1', 'a-103', 'x36', ...
+...
+
+def check_secret(secret):
+    max = 100
+    if (len(secret) * 2) + 18 > max:
+        return False
+
+    base = f"{0.1 + 0.2:.100f}"[18:18 + len(secret)*2]
+    base = [int(base[i:i+2]) for i in range(0, len(base), 2)]
+
+    p = list(map(decode, base, ka))
+    return "".join(p) == secret
+
+def main():
+    secret = sys.argv[1]
+    if check_secret(secret):
+        print(f"Correct! Secret is {secret}")
+    else:
+        print("WRONG!")
+              </code>
+            </pre>
+
+            <p>
+              The check for the flag is done in the check_secret() function.
+              Looking at this function may be intimidating however there are a
+              few things of interest.  Base and ka are invariant for every program
+              execution so the execution of the decode function will always
+              create the same output.  The comparison in the check_secret()
+              function is done on the user input and the decoded ka variable.
+              This means if patch the script to print the p variable just before
+              the function returns you will be given the value of the flag.
+            </p>
+
+           <img src="./0x07-secret-checker/secret-checker-flag-incomplete.jpg" loading="lazy" style="max-width: 100%;" alt="the output of the patched secret check script if the input argument is too short">
+
+           <p>
+            This patch to the script is extremely valuable and saves you from
+            having to reverse the calculations of the base or decoding calculations.
+            The initial output from trying this is shown below.  It can be seen
+            that the output is dependent on the length of the user input.  The
+            entire flag is only revealed if the input longer than the length of
+            the flag.  If the input is too long then the check_secret()
+            function will return early preventing this patch from revealing the
+            secret.
+           </p>
+           <img src="./0x07-secret-checker/secret-checker-flag.jpg" loading="lazy" style="max-width: 100%;" alt="the output of the patched secret check script which shows the full flag">
+        </div>
+      </div>
+    </section>
+
 <!--     <section class="container" style="padding-top:10px">
       <div class="row text-left">
         <h2> -
