@@ -722,6 +722,94 @@ def main():
       </div>
     </section>
 
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+        <h2> -
+          <a data-toggle="collapse" href="#mystery-window" role="button" aria-expanded="false" aria-controls="mystery-window">
+            Mystery Window
+          </a>
+            - Post CTF
+        </h2>
+        <div class="col-sm-12 collapse" id="mystery-window">
+
+        <p>
+          The mystery window challenge is a forensic challenge revolving around
+          extracting data from an image of a
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x09-mystery-window/mystery-window.jpg"> mystery-window.jpg</a>.
+          Sadly opening the image didn't reveal the flag.
+        </p>
+
+        <img src="./0x09-mystery-window/mystery-window.jpg" loading="lazy" style="max-width: 50%;" alt="a mysterious picture of a window with two scary children in it">
+
+        <p>
+          My first thought was to see if there was any Exif data in the image.
+          Running the exif command against the file shows that there is either
+          no exif data or it is corrupt.  Given that I didn't want to write an
+          exif reader to figure out if the possibly corrupt data might have a
+          flag hidden within it I moved on.
+        </p>
+        <img src="./0x09-mystery-window/exif-output.jpg" loading="lazy" style="max-width: 100%;" alt="the output of the exif command fails as there is no exif data">
+
+        <p>
+          Next I ran the file command against the image just to confirm it was
+          what I thought it was.  I probably should have done this first but
+          I don't think I learned anything from this as I had already opened the
+          file in an image viewer so I knew it was a valid image file.
+        </p>
+         <img src="./0x09-mystery-window/file-output.jpg" loading="lazy" style="max-width: 100%;" alt="the output of the file command shows it is just an image">
+
+         <p>
+          Before expending energy down some more expensive steganography techniques
+          I thought I would check if there were any other files hiding in the
+          image file.  I ran the binwalk command on the file to see if there
+          was any hope in this direction.  It seems that there is a second image
+          file hiding at 0x43660 after the first image.
+         </p>
+
+         <img src="./0x09-mystery-window/binwalk-output.jpg" loading="lazy" style="max-width: 100%;" alt="the output of the binwalk command shows what the 3 components in the image are">
+
+
+        <pre>
+          <code class="prettyprint lang-sh">
+$binwalk --dd=".*" mystery-window.jpg
+$ls _mystery-window.jpg.extracted/
+0*    43660*    4367E*
+$file _mystery-window.jpg.extracted/*
+0:     JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1,
+segment length 16, progressive, precision 8, 1500x1384, components 3
+
+43660: JPEG image data, JFIF standard 1.01, resolution (DPI), density
+144x144, segment length 16, Exif Standard: [TIFF image data, big-endian,
+direntries=1, orientation=upper-left], baseline, precision 8, 1500x1384,
+components 3
+
+4367E: TIFF image data, big-endian, direntries=1, orientation=upper-left
+$mv _mystery-window.jpg.extracted/43660 _mystery-window.jpg.extracted/43660.jpg
+          </code>
+        </pre>
+
+        <p>
+          I used binwalk again to extract all of the recognised files from the image.
+          This places them all into an extracted image folder.  The files are
+          named after their address in the original file but they are not named
+          with the correct file extension.  I relabelled the file at 0x43660 as
+          a jpeg and opened it up.  At the bottom of the image is the flag.
+        </p>
+
+        <img src="./0x09-mystery-window/mystery-window-flag.jpg" loading="lazy" style="max-width: 100%;" alt="the extracted image has the flag text at the bottom">
+
+        <p>
+          If you want to skip all of the effort of trying command line tools you
+          can use cyber chef to expedite some of the work.  The image below shows
+          how cyber chef can extract the image file in a similar manner to using
+          binwalk.
+        </p>
+
+        <img src="./0x09-mystery-window/mystery-window-flag-cyber-chef.jpg" loading="lazy" style="max-width: 100%;" alt="using cyber chef to extract the flag">
+        </div>
+      </div>
+    </section>
+
   <!--     <section class="container" style="padding-top:10px">
       <div class="row text-left">
         <h2> -
