@@ -605,6 +605,18 @@ $ diff copy_1.pdf copy_2.pdf
 
            <img src="./0x06-tell-tale-heart/tell-tale-heart-flag-gen.jpg" loading="lazy" style="max-width: 100%;" alt="the output of the flag-gen.py script">
 
+           <p>
+            If you want to try a command line only solution you can use xxd to
+            convert the data from hex to ascii.
+           </p>
+
+           <pre>
+            <code class="prettyprint lang-sh">
+$ xxd -r diff-clean.txt
+TPZ{diff_edgar}
+            </code>
+           </pre>
+
         </div>
       </div>
     </section>
