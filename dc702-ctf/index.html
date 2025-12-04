@@ -872,7 +872,13 @@ $mv _mystery-window.jpg.extracted/43660 _mystery-window.jpg.extracted/43660.jpg
             that into the expected distribution for the language. For example
             in English the letters "e", "t" and "a" are the most commonly seen
             in text.  Checkout the <a href="../hang-man"> hangman </a> project
-            to see a letter frequency graph for the English language.
+            to see a letter frequency graph for the English language.  It should
+            be noted that if the length of the cipher text is not long enough
+            (like with this flag) then a frequency analysis attack may not work.
+            Although this can be bypassed with the
+            <a href="https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later">
+            harvest now decrypt later </a> paradigm.  This allows an attacker to
+            obtain enough cipher text to try a frequency analysis attack.
           </p>
 
           <p>
