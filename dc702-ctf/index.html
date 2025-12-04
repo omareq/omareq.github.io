@@ -822,6 +822,72 @@ $mv _mystery-window.jpg.extracted/43660 _mystery-window.jpg.extracted/43660.jpg
       </div>
     </section>
 
+    <section class="container" style="padding-top:10px">
+      <div class="row text-left">
+        <h2> -
+          <a data-toggle="collapse" href="#easy-does-it" role="button" aria-expanded="false" aria-controls="easy-does-it">
+           Easy Does It
+          </a>
+            - Post CTF
+        </h2>
+        <div class="col-sm-12 collapse" id="easy-does-it">
+          <p>
+            This was a nice and easy one. The one line readme is as follows:
+            Just something easy to get started with. "P2{bu-gur-zntvpny-ebgngvba-bs-13}"
+          </p>
+
+          <p>
+            This one is pretty obviously a ROT13 cipher.  One of the clues that
+            hints at this is that the numbers and special characters are
+            seemingly unchanged.  ROT13 only rotates letters by 13, shifting
+            back around to the start of the alphabet if it overflows.  This
+            leaves all other characters unchanged.  Additionally because each
+            repeating section of plain text is changed to cipher text in the same
+            way each time it is susceptible to
+            <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">
+            "known plain text"</a> and
+            <a href="https://en.wikipedia.org/wiki/Frequency_analysis">
+            "frequency analysis"</a> attacks.
+          </p>
+
+          <p>
+            Known plain text attacks revolve around using known sequences of
+            plain text to decode how a cipher is working.  Common words such
+            as "the", "of", "and" are good examples of this.  For the ROT13
+            cipher specifically the word "the" becomes "gur" in the cipher text.
+            Therefore seeing the word "gur" in the cipher text could be a quick
+            clue that you are looking at a ROT13 cipher.  Whilst the
+            <a href="https://en.wikipedia.org/wiki/Enigma_machine"> Enigma</a>
+            machine used by the Germans in World War 2 was not as simple as a
+            ROT13 cipher, it did fall due to relaxations in operational security
+            from the signallers.  Usage of common phrases such as "Heil Hitler"
+            or the German word for "Weather" in the same place in every message
+            helped the analysts at Bletchley Park to crack Enigma.
+          </p>
+
+          <p>
+            Frequency analysis takes a large portion of cipher text and analyses
+            the number of times each letter occurs.  If patterns emerge where
+            some letters are more common than others it may be able to translate
+            that into the expected distribution for the language. For example
+            in English the letters "e", "t" and "a" are the most commonly seen
+            in text.  Checkout the <a href="../hang-man"> hangman </a> project
+            to see a letter frequency graph for the English language.
+          </p>
+
+          <p>
+            The quick way to get the flag using cyber chef can be seen below.
+            If you want to do it yourself checkout the
+            <a href="https://github.com/omareq/omareq.github.io/tree/master/dc702-ctf/0x0A-easy-does-it/flag-gen.py">
+            flag-gen.py </a> which uses the codecs library to perform the ROT13
+            operation.
+          </p>
+
+          <img src="./0x0A-easy-does-it/flag.jpg"/loading="lazy" style="max-width: 100%;" alt="using cyber chef to get the flag">
+        </div>
+      </div>
+    </section>
+
   <!--     <section class="container" style="padding-top:10px">
       <div class="row text-left">
         <h2> -
