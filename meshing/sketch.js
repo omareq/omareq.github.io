@@ -177,6 +177,39 @@ function cornerSpokes(myHull) {
 	return new Mesh(faces, verticies);
 }
 
+
+function wheelSpokes(myHull) {
+	const v1 = new Vertex(width/2, height/2);
+	const v2 = new Vertex(myHull[0].x, myHull[0].y);
+
+	let verticies = [];
+	verticies.push(v1);
+	verticies.push(v2);
+
+	let faces = [];
+
+	for(let i = 0; i < myHull.length -1; i++) {
+		const v1 = new Vertex(myHull[i+1].x, myHull[i+1].y);
+		verticies.push(v1);
+
+		const face = new Face(verticies[0], verticies[i + 1], verticies[i + 2]);
+		faces.push(face);
+
+		verticies[0].addFace(face);
+		verticies[i + 1].addFace(face);
+		verticies[i + 2].addFace(face);
+	}
+
+	const face = new Face(verticies[0], verticies[1], verticies[verticies.length -1]);
+	faces.push(face);
+
+	verticies[0].addFace(face);
+	verticies[1].addFace(face);
+	verticies[verticies.length -1].addFace(face);
+
+	return new Mesh(faces, verticies);
+}
+
 /**
 *   p5.js setup function, creates canvas.
 */
@@ -206,7 +239,8 @@ function setup() {
 	myHull = grahamScan(myPoints);
 
 	// mesh = cornerSpokes(myHull);
-	mesh = triangleStrip(myHull);
+	// mesh = triangleStrip(myHull);
+	mesh = wheelSpokes(myHull);
 	frameRate(5);
 }
 
