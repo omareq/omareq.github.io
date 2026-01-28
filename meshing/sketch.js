@@ -210,6 +210,15 @@ function wheelSpokes(myHull) {
 	return new Mesh(faces, verticies);
 }
 
+
+function shuffleArrayInPlace(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+}
+
 /**
 *   p5.js setup function, creates canvas.
 */
@@ -241,7 +250,7 @@ function setup() {
 	// mesh = cornerSpokes(myHull);
 	// mesh = triangleStrip(myHull);
 	mesh = wheelSpokes(myHull);
-	frameRate(5);
+	frameRate(3);
 }
 
 /**
@@ -253,11 +262,15 @@ function draw() {
 	drawHull(myHull, 0);
 	mesh.draw();
 	if(myPoints.length) {
+		shuffleArrayInPlace(myPoints);
 		const nextVertex = new Vertex(myPoints[0].x, myPoints[0].y);
 		push();
 		strokeWeight(2);
 		stroke("#00FF00");
 		line(0, nextVertex.y, width, nextVertex.y);
+		line(nextVertex.x, 0, nextVertex.x, height);
+		noFill();
+		ellipse(nextVertex.x, nextVertex.y, 0.05*width, 0.05*width);
 		pop();
 		mesh.addVertex(nextVertex);
 		myPoints.shift();
