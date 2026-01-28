@@ -152,6 +152,31 @@ function triangleStrip(points) {
 	return new Mesh(faces, verticies);
 }
 
+function cornerSpokes(myHull) {
+	const v1 = new Vertex(myHull[0].x, myHull[0].y);
+	const v2 = new Vertex(myHull[1].x, myHull[1].y);
+
+	let verticies = [];
+	verticies.push(v1);
+	verticies.push(v2);
+
+	let faces = [];
+
+	for(let i = 0; i < myHull.length - 2; i++) {
+		const v = new Vertex(myHull[i + 2].x, myHull[i + 2].y);
+		verticies.push(v);
+
+		const face = new Face(verticies[0], verticies[i + 1], verticies[i + 2]);
+		faces.push(face);
+
+		verticies[0].addFace(face);
+		verticies[i + 1].addFace(face);
+		verticies[i + 2].addFace(face);
+	}
+
+	return new Mesh(faces, verticies);
+}
+
 /**
 *   p5.js setup function, creates canvas.
 */
@@ -179,29 +204,8 @@ function setup() {
 	myPoints.sort((a, b) => a.y - b.y);
 
 	myHull = grahamScan(myPoints);
-	// const v1 = new Vertex(myHull[0].x, myHull[0].y);
-	// const v2 = new Vertex(myHull[1].x, myHull[1].y);
 
-	// let verticies = [];
-	// verticies.push(v1);
-	// verticies.push(v2);
-
-	// let faces = [];
-
-	// for(let i = 0; i < myHull.length - 2; i++) {
-	// 	const v = new Vertex(myHull[i + 2].x, myHull[i + 2].y);
-	// 	verticies.push(v);
-
-	// 	const face = new Face(verticies[0], verticies[i + 1], verticies[i + 2]);
-	// 	faces.push(face);
-
-	// 	verticies[0].addFace(face);
-	// 	verticies[i + 1].addFace(face);
-	// 	verticies[i + 2].addFace(face);
-	// }
-
-	// mesh = new Mesh(faces, verticies);
-
+	// mesh = cornerSpokes(myHull);
 	mesh = triangleStrip(myHull);
 	frameRate(5);
 }
