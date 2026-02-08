@@ -6,35 +6,35 @@
     width: 100%;
 }
 
-.textarea span.plus {
+span.plus {
     background-color: ffdddd;
 }
 
-.textarea span.minus {
+span.minus {
     background-color: ffaa66;
 }
 
-.textarea span.gt {
+span.gt {
     background-color: ccffcc;
 }
 
-.textarea span.lt {
+span.lt {
     background-color: ccffcc;
 }
 
-.textarea span.lbrack {
+span.lbrack {
     background-color: aaaaff;
 }
 
-.textarea span.rbrack {
+span.rbrack {
     background-color: aaaaff;
 }
 
-.textarea span.dot {
+span.dot {
     background-color: aaddff;
 }
 
-.textarea span.comma {
+span.comma {
     background-color: ffff55;
 }
 
@@ -53,6 +53,8 @@
     width: 100%;
     height: 15rem;
     border-radius: 0.5rem;
+    border: solid 0.1rem;
+    border-color: aaaaaa;
 }
 
 #control-panel {

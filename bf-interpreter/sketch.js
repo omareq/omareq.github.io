@@ -32,6 +32,7 @@
 "use strict";
 
 let runButton = undefined;
+let lastProgram = undefined;
 
 
 function optimiseRLE(program, char) {
@@ -258,20 +259,16 @@ function run() {
 	// console.log(program);
 	const optimisedProgram = optimiseProgram(program);
 	execute(optimisedProgram);
+	lastProgram = program;
 }
 
 /**
  * p5.js setup function, creates canvas.
  */
 function setup() {
-	// let cnvSize;
-	// if(windowWidth > windowHeight) {
-	// 	cnvSize = windowHeight;
-	// } else {
-	// 	cnvSize = windowWidth;
-	// }
-	// let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
-	// cnv.parent('sketch');
+	let cnvSize;
+	let cnv = createCanvas(1,1);
+	cnv.parent('sketch');
 
 	runButton = createButton("Run", "value");
 	runButton.parent("run-button");
@@ -282,6 +279,6 @@ function setup() {
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(0);
+	background(255);
 }
 

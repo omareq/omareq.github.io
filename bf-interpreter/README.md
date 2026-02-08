@@ -14,9 +14,13 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] Run dynamic number of cycles so that frame is non blocking
 
+- [ ] Move long running program to web worker
+
 - [ ] Buffer I/O operations to prevent excessive html redraws
 
 - [ ] Implement input
+
+- [ ] Program errors to UI / red output console text
 
 - [ ] Debug / step through mode with memory visible
 
@@ -29,6 +33,8 @@ Created using [p5.js](https://p5js.org/)
 - [ ] Save / upload code files
 
 - [ ] Auto formatting
+
+- [ ] Dynamic syntax highlighting
 
 
 ## Contact Details

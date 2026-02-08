@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Omar Essilfie-Quaye">
-  <meta name="description" content="A Brain Fuck Interpreter.  This is a project created by Omar Essilfie-Quaye on 07 February 2026.">
+  <meta name="description" content="An Online Brain Fuck Optimizing Interpreter.  This is a project created by Omar Essilfie-Quaye on 07 February 2026.">
   <meta property="og:title" content="Bf interpreter">
   <meta property="og:description" content="A Brain Fuck Interpreter.  This is a project created by Omar Essilfie-Quaye on 07 February 2026.">
   <meta property="og:image" content="https://omareq.github.io/imgs/p_032.jpg">
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="col-sm-8">
-  	     <!-- <div id="sketch"></div> -->
+  	     <div id="sketch"></div>
          <h2>Program</h2>
                 <div id="input-text" class="textarea" contenteditable="true">
                   <span class="plus"><span class="highlight">+</span>+++++++++</span>
@@ -126,6 +126,110 @@
         </div>
       </div>
     </section>
+
+    <section class="container">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> Brainfuck - The language </h2>
+            <p>
+              Brainfuck is an <a href="https://esolangs.org/wiki/Main_Page">esoteric programming language</a> created by Urban
+              Müller to be extremely minimalistic.  It features only 8 commands
+              but despite this is a Turing complete programming language.
+              Whilst it is technically possible to write a program to solve a
+              large series of problems, in practicality it is very difficult to
+              write anything more than a toy.  Frankly there has been a small
+              wave of people implementing interpreters and compilers for the
+              language and very few people writing anything substantial.  Wilfred
+              Hughes has an interesting <a href="https://www.wilfred.me.uk/blog/2019/03/24/the-siren-song-of-little-languages/"> article </a> about this.
+              I shall, as always, endeavour to be part of the problem!
+            </p>
+
+            <h5> Memory </h5>
+            <p>
+            Brain fuck operates on a simple memory model which has a consecutive
+            series of cells that can store 8 bit numbers.This series of cells
+            is usually known as a tape as a nod to early computing machines
+            which used physical rolls of tape for memory.  A pointer starts at
+            the beginning of the tape and moves around according to the program
+            instructions.  The data at each cell location can be incremented or
+            decremented.
+            </p>
+
+            <p>
+            Usual implementations
+            have 30,000 cells in the tape.  There are a series of edge cases that
+            can be handled slightly differently depending on the implementation.
+            These include: integer overflow, integer underflow, buffer overflow,
+            buffer underflow.  These can be handled by wrapping data or pointers
+            back around to the beginning, infinitely expanding buffers or just
+            crashing the program.  The sensible choice depends on the features
+            used by a given program to do computations.
+            </p>
+
+            <h5> Loops </h5>
+            <p>
+              Loops have the ability to do two things at once: they act as a
+              means to repeat instructions, and they act as conditional checks.
+              In brainfuck the open loop operator will go to the next instruction
+              if the value at the current data cell is not zero, otherwise the
+              execution jumps to the loop end.
+            </p>
+          </div>
+        </div>
+      </section>
+
+       <section class="container">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h5> Operators </h5>
+            <ul class="list-group">
+              <li class="list-group-item"> <span class="plus"><b>+</b></span> Increment Cell</li>
+              <li class="list-group-item"> <span class="minus"><b>-</b></span> Decrement Cell</li>
+              <li class="list-group-item"> <span class="gt"><b>></b></span> Move Pointer Right</li>
+              <li class="list-group-item"> <span class="lt"><b><</b></span> Move Pointer Left</li>
+              <li class="list-group-item"> <span class="lbrack"><b>[</b></span> Loop Start</li>
+              <li class="list-group-item"> <span class="rbrack"><b>]</b></span> Loop End</li>
+              <li class="list-group-item"> <span class="dot"><b>.</b></span> Output Cell (ASCII Char)</li>
+              <li class="list-group-item"> <span class="comma"><b>,</b></span> Input To Cell</li>
+            </li>
+          </ul>
+          </div>
+        </div>
+      </section>
+
+
+
+    <section class="container">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> See Also </h2>
+            <p>
+              Whilst looking for inspiration for this project I found a few cool
+              blog posts about other brainfuck implementations online.  To make
+              it easier for other people to find good resources I have left a
+              few of the ones I really like linked below.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    <section class="container">
+      <div class="row text-left">
+          <div class="col-sm-6">
+            <p><b>Optimization Techniques</b></p>
+            <p><a href="https://www.nayuki.io/page/optimizing-brainfuck-compiler">Nayuki.io - Optimising BF Compiler</a></p>
+            <p><a href="https://calmerthanyouare.org/2015/01/07/optimizing-brainfuck.html">Matslina: BF Optimization Strategies</a></p>
+            <p><a href="https://www.wilfred.me.uk/blog/2015/08/29/an-optimising-bf-compiler/">Wilfred Hughes: An Optimizing BF Compiler</a></p>
+          </div>
+           <div class="col-sm-6">
+            <p><b>Cool UI</b></p>
+            <p><a href="https://monocalc.com/tool/programming/brainfuck_interpreter"> Monocalc BF Interpreter</a></p>
+            <p><a href="https://brainfuck.rmjtromp.dev/">Rmjtromp.dev</a></p>
+            <p><a href="https://minond.xyz/brainfuck/">Marcos Minond: BF</a></p>
+          </div>
+        </div>
+    </section>
+
 
     <section class="container">
         <div class="row">
