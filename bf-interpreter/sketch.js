@@ -31,6 +31,36 @@
  *****************************************************************************/
 "use strict";
 
+function optimiseRLE(program, char) {
+	let optimised = [];
+	let encodeChar = char;
+	for(let i = 0; i < program.length; i++) {
+		if(program[i] == encodeChar && program[i+1] == encodeChar) {
+			let charCount = 1;
+	// TODO: replace while loop with for loop ending at end of program
+			while(program[i + charCount] == encodeChar) {
+				charCount++;
+			}
+
+			optimised.push(charCount + encodeChar);
+			i += charCount -1;
+			continue;
+		}
+
+		optimised.push(program[i]);
+	}
+	// console.log("RLE: " + optimised);
+	return optimised;
+}
+
+function optimiseProgram(program) {
+	let optimised = optimiseRLE(program, "+");
+	optimised = optimiseRLE(optimised, "-");
+	optimised = optimiseRLE(optimised, "<");
+	optimised = optimiseRLE(optimised, ">");
+	return optimised;
+}
+
 function getProgram() {
 	const textInput = document.getElementById("input-text").textContent;
 	const textArr = textInput.split("");
@@ -100,8 +130,8 @@ function getJumpStart(program, jumpEnd) {
 }
 
 function execute(program) {
-	const WATCHDOG_CNT = 1000000;
-	const WATCHDOG_ENABLE = false;
+	const WATCHDOG_CNT = 100000;
+	const WATCHDOG_ENABLE = true;
 	const DATA_SIZE = 30000;
 	const debug = false;
 	document.getElementById("output-text").textContent = "";
@@ -124,8 +154,12 @@ function execute(program) {
 		const instruction = program[instructionPtr];
 		if(instruction == '+') {
 			data[dataPtr] += 1;
+			data[dataPtr] %= 256;
 		} else if(instruction == '-') {
 			data[dataPtr] -= 1;
+			if(data[dataPtr < 0]) {
+				data[dataPtr] = 255;
+			}
 		} else if(instruction == '>') {
 			dataPtr++;
 			if(dataPtr > DATA_SIZE) {
@@ -174,6 +208,34 @@ function execute(program) {
 					break;
 				}
 			}
+		} else if (isFinite(instruction.slice(0, instruction.length-1))) {
+	// TODO: replace whole mechanism with operator functions and IR
+			const count = int(instruction.slice(0, instruction.length-1));
+			const operation = instruction.slice(instruction.length-1);
+
+			if(operation == "+") {
+				data[dataPtr] += count;
+				data[dataPtr] %= 256;
+			} else if(operation == "-") {
+				data[dataPtr] -= count;
+				if(data[dataPtr] < 0) {
+	// TODO: this isn't valid for large RLE compressions
+					data[dataPtr] += 256;
+				}
+			} else if(operation == "<") {
+				dataPtr -= count;
+				if(dataPtr < 0) {
+					console.log("Data Buffer Underflow. Exit Process\n");
+					break;
+				}
+			} else if(operation == ">") {
+				dataPtr += count;
+				if(dataPtr > DATA_SIZE) {
+					console.log("Data Buffer Overflow. Exit Process\n");
+					break;
+				}
+			}
+
 		} else if(instruction == 0) {
 			console.log("Instruction is 0 Exit Process\n");
 			break;
@@ -191,8 +253,8 @@ function execute(program) {
 function run() {
 	const program = getProgram();
 	// console.log(program);
-
-	execute(program);
+	const optimisedProgram = optimiseProgram(program);
+	execute(optimisedProgram);
 }
 
 /**
