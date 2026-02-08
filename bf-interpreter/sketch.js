@@ -54,6 +54,7 @@ function programGetInput() {
 
 function programOutput(char) {
 	console.log(char);
+	document.getElementById("output-text").textContent+=char;
 }
 
 function getJumpEnd(program, jumpStart) {
@@ -103,6 +104,7 @@ function execute(program) {
 	const WATCHDOG_ENABLE = false;
 	const DATA_SIZE = 30000;
 	const debug = false;
+	document.getElementById("output-text").textContent = "";
 
 	let data = new Array(DATA_SIZE);
 	data.fill(0);
@@ -188,7 +190,7 @@ function execute(program) {
 
 function run() {
 	const program = getProgram();
-	console.log(program);
+	// console.log(program);
 
 	execute(program);
 }
