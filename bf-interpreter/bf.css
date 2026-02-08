@@ -4,6 +4,8 @@
     border-color: black;
     border-radius: 0.5rem;
     width: 100%;
+    padding-top:0.5rem;
+    padding-bottom:0.5rem;
 }
 
 span.plus {
@@ -55,6 +57,7 @@ span.comma {
     border-radius: 0.5rem;
     border: solid 0.1rem;
     border-color: aaaaaa;
+    padding: 0.5rem;
 }
 
 #control-panel {
