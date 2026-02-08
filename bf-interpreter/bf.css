@@ -1,0 +1,46 @@
+.textarea {
+    /*background-color: 654a89;*/
+    background-color: eeeeee;
+    border-color: black;
+    border-radius: 0.2rem;
+    width: 90%;
+}
+
+.textarea span.plus {
+    background-color: ffdddd;
+}
+
+.textarea span.minus {
+    background-color: ffaa66;
+}
+
+.textarea span.gt {
+    background-color: ccffcc;
+}
+
+.textarea span.lt {
+    background-color: ccffcc;
+}
+
+.textarea span.lbrack {
+    background-color: aaaaff;
+}
+
+.textarea span.rbrack {
+    background-color: aaaaff;
+}
+
+.textarea span.dot {
+    background-color: aaddff;
+}
+
+.textarea span.comma {
+    background-color: ffff55;
+}
+
+.highlight {
+    border: 0.2rem solid green;
+}
+
+
+

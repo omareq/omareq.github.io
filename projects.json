@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_031",
+            "prev-id": "p_032",
             "status": "active",
             "tags": [
                 "fun"
@@ -506,12 +506,26 @@
             "gif-url": "imgs/p_031.gif",
             "id": "p_031",
             "name": "Dc702 ctf",
-            "next-id": "p_000",
+            "next-id": "p_032",
             "pic-url": "imgs/p_031.jpg",
             "prev-id": "p_030",
             "status": "active",
             "tags": [],
             "vid-url": "vids/p_031.mp4"
+        },
+        "p_032": {
+            "brief": "A Brain Fuck Interpreter",
+            "demo-url": "/bf-interpreter/",
+            "docs-url": "/bf-interpreter/docs/",
+            "gif-url": "imgs/p_032.gif",
+            "id": "p_032",
+            "name": "Bf interpreter",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_032.jpg",
+            "prev-id": "p_031",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_032.mp4"
         }
     }
 }
