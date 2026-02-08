@@ -14,6 +14,8 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] Run dynamic number of cycles so that frame is non blocking
 
+- [ ] Buffer I/O operations to prevent excessive html redraws
+
 - [ ] Implement input
 
 - [ ] Debug / step through mode with memory visible
