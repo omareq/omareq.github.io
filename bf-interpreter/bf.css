@@ -2,8 +2,8 @@
     /*background-color: 654a89;*/
     background-color: eeeeee;
     border-color: black;
-    border-radius: 0.2rem;
-    width: 90%;
+    border-radius: 0.5rem;
+    width: 100%;
 }
 
 .textarea span.plus {
@@ -50,6 +50,13 @@
     display: block;
     resize: auto;
     rows: 10;
+    width: 100%;
     height: 15rem;
+    border-radius: 0.5rem;
+}
+
+#control-panel {
+    border-top: solid 0.1rem;
+    border-color: dddddd;
 }
 

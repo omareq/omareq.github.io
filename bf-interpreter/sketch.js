@@ -31,6 +31,9 @@
  *****************************************************************************/
 "use strict";
 
+let runButton = undefined;
+
+
 function optimiseRLE(program, char) {
 	let optimised = [];
 	let encodeChar = char;
@@ -261,14 +264,18 @@ function run() {
  * p5.js setup function, creates canvas.
  */
 function setup() {
-	let cnvSize;
-	if(windowWidth > windowHeight) {
-		cnvSize = windowHeight;
-	} else {
-		cnvSize = windowWidth;
-	}
-	let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
-	cnv.parent('sketch');
+	// let cnvSize;
+	// if(windowWidth > windowHeight) {
+	// 	cnvSize = windowHeight;
+	// } else {
+	// 	cnvSize = windowWidth;
+	// }
+	// let cnv = createCanvas(cnvSize, 0.7 * cnvSize);
+	// cnv.parent('sketch');
+
+	runButton = createButton("Run", "value");
+	runButton.parent("run-button");
+	runButton.mousePressed(run);
 }
 
 /**
