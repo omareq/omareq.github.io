@@ -50,13 +50,13 @@ function getRawProgramTxt() {
 function run() {
 	const rawProgram = getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
-	const program = new BFProgram(parse(programTxt));
 
 	if(lastProgram != undefined && programTxt.join("") == lastProgram.join("")) {
 		console.log("Same program not running again.");
 		return;
 	}
 
+	const program = new BFProgram(parse(programTxt));
 	let cpu = new BFCpu(8, program, 30000);
 	cpu.execute();
 	lastProgram = programTxt;
