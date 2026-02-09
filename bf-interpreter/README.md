@@ -10,7 +10,9 @@ Created using [p5.js](https://p5js.org/)
 
 ## To do
 
-- [ ] Refactor execution model to use instruction operations and cpu model
+- [x] Refactor execution model to use instruction operations and cpu model
+
+- [ ] Include optimisations in refactored execution model
 
 - [ ] Run dynamic number of cycles so that frame is non blocking
 
