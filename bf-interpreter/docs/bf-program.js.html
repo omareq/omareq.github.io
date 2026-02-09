@@ -1,8 +1,36 @@
-/*******************************************************************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: bf-program.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: bf-program.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
  *  @file bf-program.js A Brain Fuck Program Parser
  *
- *  @author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
  *  @version 1.0
  *  @date 08-February-2026
  *  @link https://omareq.github.io/bf-interpreter/
@@ -26,7 +54,7 @@
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
 "use strict";
@@ -126,7 +154,7 @@ class LShift extends BFInstruction {
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
      */
     constructor(locationIndex) {
-        super("<", locationIndex);
+        super("&lt;", locationIndex);
     }
 
     /**
@@ -332,7 +360,7 @@ function preProcess(rawProgramtext) {
         operation.includes(["-"]) ||
         operation.includes(["."]) ||
         operation.includes([","]) ||
-        operation.includes(["<"]) ||
+        operation.includes(["&lt;"]) ||
         operation.includes([">"]) ||
         operation.includes(["["]) ||
         operation.includes(["]"])
@@ -349,7 +377,7 @@ function preProcess(rawProgramtext) {
 function getJumpEnd(program, jumpStart) {
     // TODO: throw on error
     // TODO: Refactor get jump locations into one function with char params and dir
-    // assert(jumpStart >= program.instructions && jumpStart < program.end);
+    // assert(jumpStart >= program.instructions &amp;&amp; jumpStart &lt; program.end);
     let i_ptr = jumpStart;
 
     let bracket_cnt = 1;
@@ -377,14 +405,14 @@ function getJumpEnd(program, jumpStart) {
  */
 function getJumpStart(program, jumpEnd) {
     // TODO: throw on error
-    // assert(jumpEnd >= program.instructions && jumpEnd < program.end);
+    // assert(jumpEnd >= program.instructions &amp;&amp; jumpEnd &lt; program.end);
     let i_ptr = jumpEnd;
 
     let bracket_cnt = 1;
     while (bracket_cnt > 0) {
         i_ptr--;
 
-        if(i_ptr < 0) {
+        if(i_ptr &lt; 0) {
             return;
         }
 
@@ -406,16 +434,16 @@ function getJumpStart(program, jumpEnd) {
  *
  * Note that the return type is now an array of strings not chars.
  *
- * @param program {Array<Char>} - Array of source code characters
+ * @param program {Array&lt;Char>} - Array of source code characters
  * @param char {char} - The character to compress
  *
- * @returns {Array<String>} - Returns array of RLE compressed source code
+ * @returns {Array&lt;String>} - Returns array of RLE compressed source code
  */
 function optimiseRLE(program, char) {
     let optimised = [];
     let encodeChar = char;
-    for(let i = 0; i < program.length; i++) {
-        if(program[i] == encodeChar && program[i+1] == encodeChar) {
+    for(let i = 0; i &lt; program.length; i++) {
+        if(program[i] == encodeChar &amp;&amp; program[i+1] == encodeChar) {
             let charCount = 1;
     // TODO: replace while loop with for loop ending at end of program
             while(program[i + charCount] == encodeChar) {
@@ -437,14 +465,14 @@ function optimiseRLE(program, char) {
  * Applies optimisations to the source code of the program
  * Note that the return type is now an array of strings not chars.
  *
- * @param program {Array<char>} - The pre processed source code with no comments
+ * @param program {Array&lt;char>} - The pre processed source code with no comments
  *
- * @returns {Array<String>} - The optimised source code
+ * @returns {Array&lt;String>} - The optimised source code
  */
 function optimiseProgramTxt(program) {
     let optimised = optimiseRLE(program, "+");
     optimised = optimiseRLE(optimised, "-");
-    optimised = optimiseRLE(optimised, "<");
+    optimised = optimiseRLE(optimised, "&lt;");
     optimised = optimiseRLE(optimised, ">");
     return optimised;
 }
@@ -452,19 +480,19 @@ function optimiseProgramTxt(program) {
 /**
  * A function to parse the optimised source code into BFInstruction objects
  *
- * @param programText {Array<char>} - The source code
+ * @param programText {Array&lt;char>} - The source code
  *
- * @returns {Array<BFInstruction>} - The list of instructions
+ * @returns {Array&lt;BFInstruction>} - The list of instructions
  */
 function parse(programTxt) {
 //TODO: Search through BFInstructions compare to symbols automatically
     let instructionsList = new Array(programTxt.length);
-    for(let i = 0; i < programTxt.length; i++) {
+    for(let i = 0; i &lt; programTxt.length; i++) {
         if(programTxt[i] == "+") {
             instructionsList[i] = new Plus(i);
         } else if(programTxt[i] == "-") {
             instructionsList[i] = new Minus(i);
-        } else if(programTxt[i] == "<") {
+        } else if(programTxt[i] == "&lt;") {
             instructionsList[i] = new LShift(i);
         } else if(programTxt[i] == ">") {
             instructionsList[i] = new RShift(i);
@@ -490,7 +518,7 @@ class BFProgram {
     /**
      * The constructor for a BF program
      *
-     * @param instructionsList {Array<BFInstructions>} - The instructions list
+     * @param instructionsList {Array&lt;BFInstructions>} - The instructions list
      */
     constructor(instructionsList) {
         this.instructionsList = instructionsList;
@@ -499,3 +527,31 @@ class BFProgram {
     }
 }
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#optimiseProgramTxt">optimiseProgramTxt</a></li><li><a href="global.html#optimiseRLE">optimiseRLE</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Feb 08 2026 18:39:25 GMT-0800 (Pacific Standard Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -34,14 +34,22 @@
 let runButton = undefined;
 let lastProgram = undefined;
 
+/**
+ * Read the string in the input text area and return it
+ *
+ * @returns {String} - The raw program string
+ */
 function getRawProgramTxt() {
 	return document.getElementById("input-text").textContent;
 }
 
+/**
+ * Run the current BF program that is in the input text area
+ */
 function run() {
 	const rawProgram = getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
-	const program = new Program(parse(programTxt));
+	const program = new BFProgram(parse(programTxt));
 
 	let cpu = new BFCpu(8, program, 30000);
 	cpu.execute();

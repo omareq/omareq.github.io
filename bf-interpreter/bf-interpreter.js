@@ -31,8 +31,22 @@
  *****************************************************************************/
 "use strict";
 
-
+/**
+ * A class that stores the CPU model for the BF program execution.  This
+ * includes the: data and instruction pointers, the instruction list, the memory
+ * and the execution counter
+ *
+ * @see Program
+ * @see Instruction
+ */
 class BFCpu {
+    /**
+     * The constructor for the BF CPU
+     *
+     * @param nbits {Number} - The number of bits the architecture supports
+     * @param program {BFProgram} - The program to execute
+     * @param memorySize {Number} - The size of the allocated memory at start up
+     */
     constructor(nbits, program, memorySize) {
         this.nbits = nbits;
         this.program = program;
@@ -42,6 +56,11 @@ class BFCpu {
         this.reset();
     }
 
+    /**
+     * Resets the CPU architecture:  clears the output, zeros memory, moves data
+     * pointer to the start, moves instruction pointer to the start, zeros the
+     * execute counter.
+     */
     reset() {
         document.getElementById("output-text").textContent = "";
         this.data.fill(0);
@@ -50,29 +69,57 @@ class BFCpu {
         this.executeCnt = 0;
     }
 
+    /**
+     * Set the current data cell to a new value.
+     *
+     * @param value {Number} - The new cell value
+     */
     setCurrentCell(value) {
     // TODO: apply n bit overflow calculations
         this.data[this.dataPtr] = value;
     }
 
+    /**
+     * Gets the current data cell value.
+     *
+     * @returns {Number} - The current cell value
+     */
     getCurrentCell() {
         return this.data[this.dataPtr];
     }
 
+    /**
+     * Set the data pointer to a new value
+     *
+     * @param value {Number} - The new data pointer location.
+     */
     setDataPtr(value) {
     // TODO: apply data overflow checks
         this.dataPtr = value;
     }
 
+    /**
+     * Get the current location of the data pointer.
+     *
+     * @returns {Number} - The data pointer location.
+     */
     getDataPtr() {
         return this.dataPtr;
     }
 
+    /**
+     * Set the instruction pointer to a new location
+     *
+     * @param value {Number} - The new instruction location
+     */
     setInstructionPtr(value) {
     //TODO: apply sanity checking
         this.instructionPtr = value;
     }
 
+    /**
+     * Execute one instruction and increment the instruction pointer.
+     */
     step() {
         const instruction = this.program.instructionsList[this.instructionPtr];
         instruction.operation(this);
@@ -80,6 +127,10 @@ class BFCpu {
         this.executeCnt++;
     }
 
+    /**
+     * Execute the entire program until the instruction pointer reaches the end
+     * of the file.
+     */
     execute() {
         while(this.instructionPtr < this.program.size) {
             this.step();

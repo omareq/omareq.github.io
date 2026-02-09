@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: sketch.js</title>
+    <title>JSDoc: Source: bf-interpreter.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: sketch.js</h1>
+    <h1 class="page-title">Source: bf-interpreter.js</h1>
 
     
 
@@ -28,13 +28,13 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*******************************************************************************
  *
- *	@file sketch.js A Brain Fuck Interpreter
+ *  @file bf-program.js A Brain Fuck CPU Interpreter
  *
- *	@author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
- *	@version 1.0
- *	@date 07-February-2026
- *	@link https://omareq.github.io/bf-interpreter/
- *	@link https://omareq.github.io/bf-interpreter/docs/
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 08-February-2026
+ *  @link https://omareq.github.io/bf-interpreter/
+ *  @link https://omareq.github.io/bf-interpreter/docs/
  *
  *******************************************************************************
  *
@@ -59,49 +59,111 @@
  *****************************************************************************/
 "use strict";
 
-let runButton = undefined;
-let lastProgram = undefined;
-
 /**
- * Read the string in the input text area and return it
+ * A class that stores the CPU model for the BF program execution.  This
+ * includes the: data and instruction pointers, the instruction list, the memory
+ * and the execution counter
  *
- * @returns {String} - The raw program string
+ * @see Program
+ * @see Instruction
  */
-function getRawProgramTxt() {
-	return document.getElementById("input-text").textContent;
-}
+class BFCpu {
+    /**
+     * The constructor for the BF CPU
+     *
+     * @param nbits {Number} - The number of bits the architecture supports
+     * @param program {BFProgram} - The program to execute
+     * @param memorySize {Number} - The size of the allocated memory at start up
+     */
+    constructor(nbits, program, memorySize) {
+        this.nbits = nbits;
+        this.program = program;
+        this.memorySize = memorySize;
+        this.data = new Array(this.memorySize);
 
-/**
- * Run the current BF program that is in the input text area
- */
-function run() {
-	const rawProgram = getRawProgramTxt();
-	const programTxt = preProcess(rawProgram);
-	const program = new BFProgram(parse(programTxt));
+        this.reset();
+    }
 
-	let cpu = new BFCpu(8, program, 30000);
-	cpu.execute();
-	lastProgram = program;
-}
+    /**
+     * Resets the CPU architecture:  clears the output, zeros memory, moves data
+     * pointer to the start, moves instruction pointer to the start, zeros the
+     * execute counter.
+     */
+    reset() {
+        document.getElementById("output-text").textContent = "";
+        this.data.fill(0);
+        this.dataPtr = 0;
+        this.instructionPtr = 0;
+        this.executeCnt = 0;
+    }
 
-/**
- * p5.js setup function, creates canvas.
- */
-function setup() {
-	let cnvSize;
-	let cnv = createCanvas(1,1);
-	cnv.parent('sketch');
+    /**
+     * Set the current data cell to a new value.
+     *
+     * @param value {Number} - The new cell value
+     */
+    setCurrentCell(value) {
+    // TODO: apply n bit overflow calculations
+        this.data[this.dataPtr] = value;
+    }
 
-	runButton = createButton("Run", "value");
-	runButton.parent("run-button");
-	runButton.mousePressed(run);
-}
+    /**
+     * Gets the current data cell value.
+     *
+     * @returns {Number} - The current cell value
+     */
+    getCurrentCell() {
+        return this.data[this.dataPtr];
+    }
 
-/**
- * p5.js draw function, is run every frame to create the desired animation
- */
-function draw() {
-	background(255);
+    /**
+     * Set the data pointer to a new value
+     *
+     * @param value {Number} - The new data pointer location.
+     */
+    setDataPtr(value) {
+    // TODO: apply data overflow checks
+        this.dataPtr = value;
+    }
+
+    /**
+     * Get the current location of the data pointer.
+     *
+     * @returns {Number} - The data pointer location.
+     */
+    getDataPtr() {
+        return this.dataPtr;
+    }
+
+    /**
+     * Set the instruction pointer to a new location
+     *
+     * @param value {Number} - The new instruction location
+     */
+    setInstructionPtr(value) {
+    //TODO: apply sanity checking
+        this.instructionPtr = value;
+    }
+
+    /**
+     * Execute one instruction and increment the instruction pointer.
+     */
+    step() {
+        const instruction = this.program.instructionsList[this.instructionPtr];
+        instruction.operation(this);
+        this.instructionPtr++;
+        this.executeCnt++;
+    }
+
+    /**
+     * Execute the entire program until the instruction pointer reaches the end
+     * of the file.
+     */
+    execute() {
+        while(this.instructionPtr &lt; this.program.size) {
+            this.step();
+        }
+    }
 }
 
 </code></pre>
