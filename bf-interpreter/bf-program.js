@@ -41,7 +41,6 @@ class Instruction {
 
         this.symbol = symbol;
         this.locationIndex = locationIndex;
-        this.debugMode
     }
 
     operation(BFCpu) {
