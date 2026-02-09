@@ -18,7 +18,9 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] Move long running program to web worker
 
-- [ ] Buffer I/O operations to prevent excessive html redraws
+- [x] Buffer O operations to prevent excessive html redraws
+
+- [ ] Buffer I operations for performance
 
 - [ ] Implement input
 

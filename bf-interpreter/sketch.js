@@ -33,6 +33,7 @@
 
 let runButton = undefined;
 let lastProgram = undefined;
+let inputTextAreaHandle = undefined;
 
 /**
  * Read the string in the input text area and return it
@@ -40,7 +41,7 @@ let lastProgram = undefined;
  * @returns {String} - The raw program string
  */
 function getRawProgramTxt() {
-	return document.getElementById("input-text").textContent;
+	return inputTextAreaHandle.textContent;
 }
 
 /**
@@ -64,15 +65,16 @@ function setup() {
 	let cnv = createCanvas(1,1);
 	cnv.parent('sketch');
 
+	inputTextAreaHandle = document.getElementById("input-text");
 	runButton = createButton("Run", "value");
 	runButton.parent("run-button");
 	runButton.mousePressed(run);
+	background(255);
 }
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(255);
 }
 

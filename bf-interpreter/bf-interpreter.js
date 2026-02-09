@@ -52,6 +52,7 @@ class BFCpu {
         this.program = program;
         this.memorySize = memorySize;
         this.data = new Array(this.memorySize);
+        this.outputHandle = document.getElementById("output-text");
 
         this.reset();
     }
@@ -62,11 +63,12 @@ class BFCpu {
      * execute counter.
      */
     reset() {
-        document.getElementById("output-text").textContent = "";
+        this.outputHandle.textContent = "";
         this.data.fill(0);
         this.dataPtr = 0;
         this.instructionPtr = 0;
         this.executeCnt = 0;
+        this.outputBuffer = [];
     }
 
     /**
@@ -135,6 +137,7 @@ class BFCpu {
         while(this.instructionPtr < this.program.size) {
             this.step();
         }
+        this.outputHandle.textContent = this.outputBuffer.join("");
     }
 }
 

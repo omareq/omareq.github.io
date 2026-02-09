@@ -209,9 +209,7 @@ class Output extends BFInstruction {
     operation(cpu) {
         const char = cpu.getCurrentCell();
         const ascii = String.fromCharCode(char);
-// TODO: Consider how to buffer
-        console.log(char + " ASCII: " + ascii);
-        document.getElementById("output-text").textContent+=ascii;
+        cpu.outputBuffer.push(ascii);
     }
 }
 
