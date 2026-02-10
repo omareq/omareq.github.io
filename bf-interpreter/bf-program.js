@@ -468,9 +468,11 @@ function parse(programTxt) {
             instructionsList[i] = new RShift(i);
         } else if(programTxt[i] == "[") {
             const jumpEndIndex = getJumpEnd(programTxt, i);
+// TODO: error on unmatched bracket
             instructionsList[i] = new LBrack(i, jumpEndIndex);
         } else if(programTxt[i] == "]") {
             const jumpStartIndex = getJumpStart(programTxt, i);
+// TODO: error on unmatched bracket
             instructionsList[i] = new RBrack(i, jumpStartIndex);
         } else if(programTxt[i] == ".") {
             instructionsList[i] = new Output(i);
