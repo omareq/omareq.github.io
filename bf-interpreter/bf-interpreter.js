@@ -157,7 +157,7 @@ class BFCpu {
                 console.warn("BF CPU WATCHDOG Limit Reached: " + this.WATCH_DOG_COUNT);
                 alert("Brainfuck CPU WATCHDOG Limit Reached: " +
                     this.WATCH_DOG_COUNT + "\nPossible Infinite Loop");
-                return;
+                break;
             }
         }
         this.outputHandle.textContent = this.outputBuffer.join("");
