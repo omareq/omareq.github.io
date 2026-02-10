@@ -10,19 +10,11 @@ Created using [p5.js](https://p5js.org/)
 
 ## To do
 
-- [x] Refactor execution model to use instruction operations and cpu model
-
 - [ ] Include optimisations in refactored execution model
 
 - [ ] Run dynamic number of cycles so that frame is non blocking
 
 - [ ] Move long running program to web worker
-
-- [x] Buffer O operations to prevent excessive html redraws
-
-- [x] Buffer I operations for performance
-
-- [x] Implement input
 
 - [ ] Program errors to UI / red output console text
 

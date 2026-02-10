@@ -31,7 +31,6 @@
  *****************************************************************************/
 "use strict";
 
-let runButton = undefined;
 let lastProgram = undefined;
 let lastInput = undefined;
 let sourceCodeAreaHandle = undefined;
@@ -99,6 +98,16 @@ function run() {
 }
 
 /**
+ * Minify the code in the source code input area
+ */
+function minify() {
+	const rawProgram = getRawProgramTxt();
+	const programTxt = preProcess(rawProgram);
+	sourceCodeAreaHandle.textContent = programTxt.join("");
+}
+
+
+/**
  * p5.js setup function, creates canvas.
  */
 function setup() {
@@ -108,9 +117,14 @@ function setup() {
 
 	sourceCodeAreaHandle = document.getElementById("source-code-text");
 	inputTextAreaHandle = document.getElementById("input-text");
-	runButton = createButton("Run", "value");
+
+	let runButton = createButton("Run", "value");
 	runButton.parent("run-button");
 	runButton.mousePressed(run);
+
+	let minifyButton = createButton("Minify", "value");
+	minifyButton.parent("minify-button");
+	minifyButton.mousePressed(minify);
 	background(255);
 }
 

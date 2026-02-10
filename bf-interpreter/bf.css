@@ -71,5 +71,6 @@ span.comma {
 #control-panel {
     border-top: solid 0.1rem;
     border-color: dddddd;
+    padding-bottom: 1rem;
 }
 
