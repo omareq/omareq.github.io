@@ -46,13 +46,15 @@ class BFCpu {
      * @param nbits {Number} - The number of bits the architecture supports
      * @param program {BFProgram} - The program to execute
      * @param memorySize {Number} - The size of the allocated memory at start up
+     * @param inputCharCodes {Array<Number>} - The ASCII char codes of the input string
      */
-    constructor(nbits, program, memorySize) {
+    constructor(nbits, program, memorySize, inputCharCodes) {
         this.nbits = nbits;
         this.program = program;
         this.memorySize = memorySize;
         this.data = new Array(this.memorySize);
         this.outputHandle = document.getElementById("output-text");
+        this.inputBuffer = inputCharCodes;
 
         this.reset();
     }
@@ -69,6 +71,20 @@ class BFCpu {
         this.instructionPtr = 0;
         this.executeCnt = 0;
         this.outputBuffer = [];
+        this.inputPtr = 0;
+    }
+
+    /**
+     * Get the next input from the input buffer.  Returns zero at the end of the
+     * array if it is not Null terminated.
+     *
+     * @returns {Number} - The ASCII char code
+     */
+    getNextInput() {
+        if(this.inputPtr >= this.inputBuffer.length) {
+            return 0;
+        }
+        return this.inputBuffer[this.inputPtr++];
     }
 
     /**

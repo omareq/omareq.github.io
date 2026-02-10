@@ -61,14 +61,45 @@
 
 let runButton = undefined;
 let lastProgram = undefined;
+let lastInput = undefined;
+let sourceCodeAreaHandle = undefined;
+let inputTextAreaHandle = undefined;
 
 /**
- * Read the string in the input text area and return it
+ * Read the string in the source code text area and return it
  *
  * @returns {String} - The raw program string
  */
 function getRawProgramTxt() {
-	return document.getElementById("input-text").textContent;
+	if(sourceCodeAreaHandle == undefined) {
+		sourceCodeAreaHandle = document.getElementById("source-code-text");
+	}
+	return sourceCodeAreaHandle.textContent;
+}
+
+/**
+ * Read the string in the input text area and return it
+ *
+ * @returns {String} - The raw input string
+ */
+function getInputString() {
+	if(inputTextAreaHandle == undefined) {
+		inputTextAreaHandle = document.getElementById("input-text");
+	}
+	return inputTextAreaHandle.textContent;
+}
+
+/**
+ * Convert a string to ASCII char codes
+ *
+ * @returns {Array&lt;Number>} - The array of ASCII char codes
+ */
+function getCharCodes(inputString) {
+    let charCodeArr = new Array(inputString.length);
+    for (let i = 0; i &lt; inputString.length; i++) {
+        charCodeArr[i] = inputString.charCodeAt(i);
+    }
+    return charCodeArr;
 }
 
 /**
@@ -77,11 +108,22 @@ function getRawProgramTxt() {
 function run() {
 	const rawProgram = getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
-	const program = new BFProgram(parse(programTxt));
+	const input = getInputString();
 
-	let cpu = new BFCpu(8, program, 30000);
+// TODO: check if input is also the same
+	if(lastProgram != undefined &amp;&amp; programTxt.join("") == lastProgram.join("") &amp;&amp;
+		lastInput != undefined &amp;&amp; input == lastInput) {
+		console.log("Same program and input not running again.");
+		return;
+	}
+
+	const asciiCodes = getCharCodes(input);
+
+	const program = new BFProgram(parse(programTxt));
+	let cpu = new BFCpu(8, program, 30000, asciiCodes);
 	cpu.execute();
-	lastProgram = program;
+	lastProgram = programTxt;
+	lastInput = input;
 }
 
 /**
@@ -92,16 +134,18 @@ function setup() {
 	let cnv = createCanvas(1,1);
 	cnv.parent('sketch');
 
+	sourceCodeAreaHandle = document.getElementById("source-code-text");
+	inputTextAreaHandle = document.getElementById("input-text");
 	runButton = createButton("Run", "value");
 	runButton.parent("run-button");
 	runButton.mousePressed(run);
+	background(255);
 }
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
-	background(255);
 }
 
 </code></pre>
@@ -114,12 +158,12 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#optimiseProgramTxt">optimiseProgramTxt</a></li><li><a href="global.html#optimiseRLE">optimiseRLE</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#optimiseProgramTxt">optimiseProgramTxt</a></li><li><a href="global.html#optimiseRLE">optimiseRLE</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Feb 08 2026 18:39:25 GMT-0800 (Pacific Standard Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Feb 09 2026 20:22:50 GMT-0800 (Pacific Standard Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

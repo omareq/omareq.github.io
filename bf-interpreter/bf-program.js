@@ -183,7 +183,7 @@ class Input extends BFInstruction {
      */
     operation(cpu) {
 // TODO: Implement Input
-        cpu.setCurrentCell(0);
+        cpu.setCurrentCell(cpu.getNextInput());
     }
 }
 

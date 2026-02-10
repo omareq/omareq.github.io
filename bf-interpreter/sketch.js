@@ -33,15 +33,45 @@
 
 let runButton = undefined;
 let lastProgram = undefined;
+let lastInput = undefined;
+let sourceCodeAreaHandle = undefined;
 let inputTextAreaHandle = undefined;
 
 /**
- * Read the string in the input text area and return it
+ * Read the string in the source code text area and return it
  *
  * @returns {String} - The raw program string
  */
 function getRawProgramTxt() {
+	if(sourceCodeAreaHandle == undefined) {
+		sourceCodeAreaHandle = document.getElementById("source-code-text");
+	}
+	return sourceCodeAreaHandle.textContent;
+}
+
+/**
+ * Read the string in the input text area and return it
+ *
+ * @returns {String} - The raw input string
+ */
+function getInputString() {
+	if(inputTextAreaHandle == undefined) {
+		inputTextAreaHandle = document.getElementById("input-text");
+	}
 	return inputTextAreaHandle.textContent;
+}
+
+/**
+ * Convert a string to ASCII char codes
+ *
+ * @returns {Array<Number>} - The array of ASCII char codes
+ */
+function getCharCodes(inputString) {
+    let charCodeArr = new Array(inputString.length);
+    for (let i = 0; i < inputString.length; i++) {
+        charCodeArr[i] = inputString.charCodeAt(i);
+    }
+    return charCodeArr;
 }
 
 /**
@@ -50,16 +80,22 @@ function getRawProgramTxt() {
 function run() {
 	const rawProgram = getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
+	const input = getInputString();
 
-	if(lastProgram != undefined && programTxt.join("") == lastProgram.join("")) {
-		console.log("Same program not running again.");
+// TODO: check if input is also the same
+	if(lastProgram != undefined && programTxt.join("") == lastProgram.join("") &&
+		lastInput != undefined && input == lastInput) {
+		console.log("Same program and input not running again.");
 		return;
 	}
 
+	const asciiCodes = getCharCodes(input);
+
 	const program = new BFProgram(parse(programTxt));
-	let cpu = new BFCpu(8, program, 30000);
+	let cpu = new BFCpu(8, program, 30000, asciiCodes);
 	cpu.execute();
 	lastProgram = programTxt;
+	lastInput = input;
 }
 
 /**
@@ -70,6 +106,7 @@ function setup() {
 	let cnv = createCanvas(1,1);
 	cnv.parent('sketch');
 
+	sourceCodeAreaHandle = document.getElementById("source-code-text");
 	inputTextAreaHandle = document.getElementById("input-text");
 	runButton = createButton("Run", "value");
 	runButton.parent("run-button");

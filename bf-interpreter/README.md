@@ -20,9 +20,9 @@ Created using [p5.js](https://p5js.org/)
 
 - [x] Buffer O operations to prevent excessive html redraws
 
-- [ ] Buffer I operations for performance
+- [x] Buffer I operations for performance
 
-- [ ] Implement input
+- [x] Implement input
 
 - [ ] Program errors to UI / red output console text
 
