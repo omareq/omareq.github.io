@@ -32,7 +32,7 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] Example programs to choose from
 
-- [ ] Enable Watchdog
+- [ ] Enable Watchdog - with UI slider for limit / disable enable checkbox
 
 - [ ] Save / upload code files
 

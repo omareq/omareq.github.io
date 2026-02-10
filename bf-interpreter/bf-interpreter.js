@@ -55,6 +55,7 @@ class BFCpu {
         this.data = new Array(this.memorySize);
         this.outputHandle = document.getElementById("output-text");
         this.inputBuffer = inputCharCodes;
+        this.WATCH_DOG_COUNT = 1000000;
 
         this.reset();
     }
@@ -152,6 +153,12 @@ class BFCpu {
     execute() {
         while(this.instructionPtr < this.program.size) {
             this.step();
+            if(this.executeCnt > this.WATCH_DOG_COUNT) {
+                console.warn("BF CPU WATCHDOG Limit Reached: " + this.WATCH_DOG_COUNT);
+                alert("Brainfuck CPU WATCHDOG Limit Reached: " +
+                    this.WATCH_DOG_COUNT + "\nPossible Infinite Loop");
+                return;
+            }
         }
         this.outputHandle.textContent = this.outputBuffer.join("");
     }
