@@ -10,7 +10,9 @@ Created using [p5.js](https://p5js.org/)
 
 ## Todo
 
-- [ ] render in 2d and 3d
+- [ ] ui to load example rooms
+
+- [x] render in 2d and 3d
 
 - [x] show and hide grid lines
 
