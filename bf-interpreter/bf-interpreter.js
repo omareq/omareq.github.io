@@ -48,14 +48,15 @@ class BFCpu {
      * @param memorySize {Number} - The size of the allocated memory at start up
      * @param inputCharCodes {Array<Number>} - The ASCII char codes of the input string
      */
-    constructor(nbits, program, memorySize, inputCharCodes) {
+    constructor(nbits, program, memorySize, inputCharCodes, outputFunction) {
         this.nbits = nbits;
         this.program = program;
         this.memorySize = memorySize;
         this.data = new Array(this.memorySize);
-        this.outputHandle = document.getElementById("output-text");
+        // this.outputHandle = ;
         this.inputBuffer = inputCharCodes;
         this.WATCH_DOG_COUNT = 1000000;
+        this.outputFunction = outputFunction;
 
         this.reset();
     }
@@ -66,7 +67,7 @@ class BFCpu {
      * execute counter.
      */
     reset() {
-        this.outputHandle.textContent = "";
+        this.outputFunction("");
         this.data.fill(0);
         this.dataPtr = 0;
         this.instructionPtr = 0;
@@ -160,7 +161,12 @@ class BFCpu {
                 break;
             }
         }
-        this.outputHandle.textContent = this.outputBuffer.join("");
+        this.outputFunction(this.outputBuffer.join(""));
     }
+}
+
+if (typeof window === 'undefined') {
+    module.exports = { BFCpu };
+    // this is node
 }
 

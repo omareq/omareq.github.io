@@ -499,3 +499,7 @@ class BFProgram {
     }
 }
 
+if (typeof window === 'undefined') {
+    module.exports = { parse, BFProgram };
+    // this is node
+}

@@ -35,6 +35,7 @@ let lastProgram = undefined;
 let lastInput = undefined;
 let sourceCodeAreaHandle = undefined;
 let inputTextAreaHandle = undefined;
+let outputHandle = undefined;
 
 /**
  * Read the string in the source code text area and return it
@@ -73,6 +74,10 @@ function getCharCodes(inputString) {
     return charCodeArr;
 }
 
+function output(outputBuffer) {
+	outputHandle.textContent = outputBuffer;
+}
+
 /**
  * Run the current BF program that is in the input text area
  */
@@ -91,7 +96,7 @@ function run() {
 	const asciiCodes = getCharCodes(input);
 
 	const program = new BFProgram(parse(programTxt));
-	let cpu = new BFCpu(8, program, 30000, asciiCodes);
+	let cpu = new BFCpu(8, program, 30000, asciiCodes, output);
 	cpu.execute();
 	lastProgram = programTxt;
 	lastInput = input;
@@ -149,6 +154,7 @@ function setup() {
 
 	sourceCodeAreaHandle = document.getElementById("source-code-text");
 	inputTextAreaHandle = document.getElementById("input-text");
+	outputHandle = document.getElementById("output-text");
 
 	let runButton = createButton("Run", "value");
 	runButton.parent("run-button");
