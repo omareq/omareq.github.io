@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_028",
+            "prev-id": "p_032",
             "status": "active",
             "tags": [
                 "fun"
@@ -94,7 +94,9 @@
             "pic-url": "imgs/p_005.jpg",
             "prev-id": "p_004",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "learning"
+            ],
             "vid-url": "vids/p_005.mp4"
         },
         "p_006": {
@@ -158,7 +160,9 @@
             "pic-url": "imgs/p_009.jpg",
             "prev-id": "p_008",
             "status": "archived",
-            "tags": [],
+            "tags": [
+                "fun"
+            ],
             "vid-url": "vids/p_009.mp4"
         },
         "p_010": {
@@ -256,7 +260,8 @@
             "prev-id": "p_014",
             "status": "active",
             "tags": [
-                "algorithm"
+                "algorithm",
+                "learning"
             ],
             "vid-url": "vids/p_015.mp4"
         },
@@ -272,7 +277,8 @@
             "prev-id": "p_015",
             "status": "active",
             "tags": [
-                "algorithm"
+                "algorithm",
+                "learning"
             ],
             "vid-url": "vids/p_016.mp4"
         },
@@ -451,12 +457,75 @@
             "gif-url": "imgs/p_028.gif",
             "id": "p_028",
             "name": "Elastic string",
-            "next-id": "p_000",
+            "next-id": "p_029",
             "pic-url": "imgs/p_028.jpg",
             "prev-id": "p_027",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "science",
+                "physics"
+            ],
             "vid-url": "vids/p_028.mp4"
+        },
+        "p_029": {
+            "brief": "A quick and dirty snake game",
+            "demo-url": "/snake-game/",
+            "docs-url": "/snake-game/docs/",
+            "gif-url": "imgs/p_029.gif",
+            "id": "p_029",
+            "name": "Snake game",
+            "next-id": "p_030",
+            "pic-url": "imgs/p_029.webp",
+            "prev-id": "p_028",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_029.mp4"
+        },
+        "p_030": {
+            "brief": "A take on the classic tanks multiplayer game",
+            "demo-url": "/tanks/",
+            "docs-url": "/tanks/docs/",
+            "gif-url": "imgs/p_030.gif",
+            "id": "p_030",
+            "name": "Tanks",
+            "next-id": "p_031",
+            "pic-url": "imgs/p_030.jpg",
+            "prev-id": "p_029",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_030.mp4"
+        },
+        "p_031": {
+            "brief": "A Brief write up of some fun CTF challenges at a DC702 CTF",
+            "demo-url": "/dc702-ctf/",
+            "docs-url": "/dc702-ctf/docs/",
+            "gif-url": "imgs/p_031.gif",
+            "id": "p_031",
+            "name": "Dc702 ctf",
+            "next-id": "p_032",
+            "pic-url": "imgs/p_031.jpg",
+            "prev-id": "p_030",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_031.mp4"
+        },
+        "p_032": {
+            "brief": "A Brain Fuck Interpreter",
+            "demo-url": "/bf-interpreter/",
+            "docs-url": "/bf-interpreter/docs/",
+            "gif-url": "imgs/p_032.gif",
+            "id": "p_032",
+            "name": "Bf interpreter",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_032.jpg",
+            "prev-id": "p_031",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_032.mp4"
         }
     }
 }

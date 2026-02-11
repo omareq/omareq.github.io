@@ -73,6 +73,98 @@
       </div>
   </section>
 
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h2> Meshing - Split it all up</h2>
+        <p>
+          Meshing is the act of splitting a geometric space into neat subdivisions.
+          This may be triangles, squares or hexagons in simple 2d scenarios, but
+          can extend to more complicated shapes in higher dimensions.  Mesh
+          generation is a useful tool as it allows for computations to be split
+          into small chunks that can be run on a small section of a larger
+          problem.  This can be seen in: computer graphics rendering, stress
+          strain modelling, computational fluid dynamics, electromagnetic wave
+          solvers or gravity simulations.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h5> Method </h5>
+        <p>
+          I have devised my own mechanism for generating a mesh from random
+          points.  This is not necessarily an optimal method of doing it but I
+          just wanted to learn about the process and I am not too worried about
+          making something optimal.
+        </p>
+        <div>
+          <ul class="list-group">
+            <li class="list-group-item"> <b>1)</b> Generate a series of random
+            points within the canvas.</li>
+            <li class="list-group-item"> <b>2)</b> Use a
+            <a href="../convex-hull"> convex hull</a> algorithm to enclose the points in one area. </li>
+            <li class="list-group-item"> <b>3)</b> Generate an initial mesh
+            with just the points identified as being on the convex hull.</li>
+            <li class="list-group-item"> <b>4)</b> Initial refinement of the
+            convex hull mesh to reduce refinement complexity later. </li>
+            <li class="list-group-item"> <b>5)</b> Add randomly generated points
+            one at a time with refinement until all points are added. </li>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <h5>Initial Mesh Generation </h5>
+        <p>
+          The creation of the initial mesh can be done in a few ways each with
+          their own pros and cons.  Images of 3 methods are shown in the images
+          below.  I had initially started with the corner spokes method as it was
+          very quick to implement.  I realised that this created an initial mesh
+          which requires a lot of refinement due to the long thing triangles
+          that are created.
+        </p>
+      </div>
+
+      <div>
+        <ul class="list-group">
+          <li class="list-group-item"> <b>1)</b> Triangle Strip - Create a strip of triangles using alternating points back and forth around the convex
+          hull.</li>
+          <li class="list-group-item"> <b>2)</b> Central Spokes - Create a wheel
+          and spoke pattern around a random point located near the centre of
+          the convex hull.</li>
+          <li class="list-group-item"> <b>3)</b> Corner Spokes - Create a spoke
+          pattern around one of the points that is on the convex hull.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="padding-top:10px">
+    <div class="row text-left">
+      <div class="col-sm-4">
+        <img src="./imgs/initial-mesh-method-strip.webp" style="max-width: 100%;">
+        <p><em>Triangle Strip</em></p>
+      </div>
+
+       <div class="col-sm-4">
+        <img src="./imgs/initial-mesh-method-wheel-spokes.webp" style="max-width: 100%;">
+        <p><em>Wheel Spokes</em></p>
+      </div>
+
+      <div class="col-sm-4">
+        <img src="./imgs/initial-mesh-method-corner-spokes.webp" style="max-width: 100%;">
+        <p><em>Corner Spokes</em></p>
+      </div>
+    </div>
+  </section>
+
   <section class="container">
         <div class="row">
             <div class="col-sm-4"></div>

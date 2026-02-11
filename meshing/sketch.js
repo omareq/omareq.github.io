@@ -152,6 +152,74 @@ function triangleStrip(points) {
 	return new Mesh(faces, verticies);
 }
 
+function cornerSpokes(myHull) {
+	const v1 = new Vertex(myHull[0].x, myHull[0].y);
+	const v2 = new Vertex(myHull[1].x, myHull[1].y);
+
+	let verticies = [];
+	verticies.push(v1);
+	verticies.push(v2);
+
+	let faces = [];
+
+	for(let i = 0; i < myHull.length - 2; i++) {
+		const v = new Vertex(myHull[i + 2].x, myHull[i + 2].y);
+		verticies.push(v);
+
+		const face = new Face(verticies[0], verticies[i + 1], verticies[i + 2]);
+		faces.push(face);
+
+		verticies[0].addFace(face);
+		verticies[i + 1].addFace(face);
+		verticies[i + 2].addFace(face);
+	}
+
+	return new Mesh(faces, verticies);
+}
+
+
+function wheelSpokes(myHull) {
+	const v1 = new Vertex(width/2, height/2);
+	const v2 = new Vertex(myHull[0].x, myHull[0].y);
+
+	let verticies = [];
+	verticies.push(v1);
+	verticies.push(v2);
+
+	let faces = [];
+
+	for(let i = 0; i < myHull.length -1; i++) {
+		const v1 = new Vertex(myHull[i+1].x, myHull[i+1].y);
+		verticies.push(v1);
+
+		const face = new Face(verticies[0], verticies[i + 1], verticies[i + 2]);
+		faces.push(face);
+
+		verticies[0].addFace(face);
+		verticies[i + 1].addFace(face);
+		verticies[i + 2].addFace(face);
+	}
+
+	const face = new Face(verticies[0], verticies[1], verticies[verticies.length -1]);
+	faces.push(face);
+
+	verticies[0].addFace(face);
+	verticies[1].addFace(face);
+	verticies[verticies.length -1].addFace(face);
+
+	return new Mesh(faces, verticies);
+}
+
+
+function shuffleArray(originalAarray) {
+  let array = [...originalAarray];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+}
+
 /**
 *   p5.js setup function, creates canvas.
 */
@@ -179,31 +247,11 @@ function setup() {
 	myPoints.sort((a, b) => a.y - b.y);
 
 	myHull = grahamScan(myPoints);
-	// const v1 = new Vertex(myHull[0].x, myHull[0].y);
-	// const v2 = new Vertex(myHull[1].x, myHull[1].y);
 
-	// let verticies = [];
-	// verticies.push(v1);
-	// verticies.push(v2);
-
-	// let faces = [];
-
-	// for(let i = 0; i < myHull.length - 2; i++) {
-	// 	const v = new Vertex(myHull[i + 2].x, myHull[i + 2].y);
-	// 	verticies.push(v);
-
-	// 	const face = new Face(verticies[0], verticies[i + 1], verticies[i + 2]);
-	// 	faces.push(face);
-
-	// 	verticies[0].addFace(face);
-	// 	verticies[i + 1].addFace(face);
-	// 	verticies[i + 2].addFace(face);
-	// }
-
-	// mesh = new Mesh(faces, verticies);
-
-	mesh = triangleStrip(myHull);
-	frameRate(5);
+	// mesh = cornerSpokes(myHull);
+	// mesh = triangleStrip(myHull);
+	mesh = wheelSpokes(myHull);
+	frameRate(3);
 }
 
 /**
@@ -215,11 +263,15 @@ function draw() {
 	drawHull(myHull, 0);
 	mesh.draw();
 	if(myPoints.length) {
+		myPoints = shuffleArray(myPoints);
 		const nextVertex = new Vertex(myPoints[0].x, myPoints[0].y);
 		push();
 		strokeWeight(2);
 		stroke("#00FF00");
 		line(0, nextVertex.y, width, nextVertex.y);
+		line(nextVertex.x, 0, nextVertex.x, height);
+		noFill();
+		ellipse(nextVertex.x, nextVertex.y, 0.05*width, 0.05*width);
 		pop();
 		mesh.addVertex(nextVertex);
 		myPoints.shift();

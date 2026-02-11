@@ -94,9 +94,669 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="colorLUT"><span class="type-signature"></span>colorLUT<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    A look up table which turns the number of iterations it takes to
+calculate if a complex number is in the Mandelbrot set or not and turns it
+into a p5.color.  The size of this array is 256.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="img"><span class="type-signature"></span>img<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The image of the mandelbrot set.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="noWorkerData"><span class="type-signature"></span>noWorkerData<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Data to describe the operations to calculate the Mandelbrot set if the
+browser does not support workers.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line69">line 69</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="workerTasksQueue"><span class="type-signature"></span>workerTasksQueue<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The messages describing the task each worker will need to complete.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line52">line 52</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="workers"><span class="type-signature"></span>workers<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The lost of workers that will calculate the 2d surface of the MNandelbrot set.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="activateWorkers"><span class="type-signature"></span>activateWorkers<span class="signature">(numWorkers)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function to activate workers with tasks in the queue.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>numWorkers</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">The number of workers to use for the calculations</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="allWorkersTerminated"><span class="type-signature"></span>allWorkersTerminated<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks if all of the activated workers have been set undefined.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line164">line 164</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True if all workers are terminate.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="clearImage"><span class="type-signature"></span>clearImage<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function to clear the image before filling it with the Mandelbrot set.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
@@ -156,7 +816,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line125">line 125</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line242">line 242</a>
     </li></ul></dd>
     
 
@@ -508,7 +1168,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line68">line 68</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line185">line 185</a>
     </li></ul></dd>
     
 
@@ -758,7 +1418,7 @@ interval
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line42">line 42</a>
+        <a href="mandelbrot.js.html">mandelbrot.js</a>, <a href="mandelbrot.js.html#line13">line 13</a>
     </li></ul></dd>
     
 
@@ -805,6 +1465,373 @@ interval
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="mandelbrot"><span class="type-signature"></span>mandelbrot<span class="signature">(x, y, maxSteps, threshold)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function to give you the number of itterations it takes to determine if a
+coordinate is in the Mandelbrot set.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">x-coordinate</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">y-coordinate</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>maxSteps</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The maximum number of iterations</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>threshold</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The threshold to determine if the complex
+                                 number is in the mandelbrot set</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="mandelbrot.js.html">mandelbrot.js</a>, <a href="mandelbrot.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The number of iterations to determine
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onmessage"><span class="type-signature"></span>onmessage<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    On message event that sends data to the worker.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">event</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The on message even information.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="worker.js.html">worker.js</a>, <a href="worker.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -868,7 +1895,416 @@ interval
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line106">line 106</a>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line223">line 223</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setupColorLUT"><span class="type-signature"></span>setupColorLUT<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function to setup the color look up table
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setupWorkerTasks"><span class="type-signature"></span>setupWorkerTasks<span class="signature">(defaultTask, totalNumRows)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function to set up all the tasks to calculate the Mandelbrot set
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>defaultTask</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The default message to pass to the worker</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>totalNumRows</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The total number of rows the prepare</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line121">line 121</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateImage"><span class="type-signature"></span>updateImage<span class="signature">(rowNumber, rowArray)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function to update an image with a new row once it has been calculated by
+a worker.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rowNumber</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Which row has been updated</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rowArray</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The image data for the given row</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line105">line 105</a>
     </li></ul></dd>
     
 
@@ -914,12 +2350,12 @@ interval
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#generateMandelbrotSet">generateMandelbrotSet</a></li><li><a href="global.html#linspace">linspace</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateWorkers">activateWorkers</a></li><li><a href="global.html#allWorkersTerminated">allWorkersTerminated</a></li><li><a href="global.html#clearImage">clearImage</a></li><li><a href="global.html#colorLUT">colorLUT</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#generateMandelbrotSet">generateMandelbrotSet</a></li><li><a href="global.html#img">img</a></li><li><a href="global.html#linspace">linspace</a></li><li><a href="global.html#mandelbrot">mandelbrot</a></li><li><a href="global.html#noWorkerData">noWorkerData</a></li><li><a href="global.html#onmessage">onmessage</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#setupColorLUT">setupColorLUT</a></li><li><a href="global.html#setupWorkerTasks">setupWorkerTasks</a></li><li><a href="global.html#updateImage">updateImage</a></li><li><a href="global.html#workerTasksQueue">workerTasksQueue</a></li><li><a href="global.html#workers">workers</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Dec 29 2023 18:02:35 GMT+0000 (Greenwich Mean Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jan 18 2025 19:08:52 GMT-0800 (Pacific Standard Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
