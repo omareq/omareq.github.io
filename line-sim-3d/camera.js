@@ -104,9 +104,9 @@ Simulation.CameraControl.Modes.FollowRobot3D = class extends Simulation.CameraCo
             return;
         }
 
-        const lookAheadDist = 7 * robotData.robotSize;
-        const camFollowDist = 1 * robotData.robotSize;
-        const camHeight = 1 * robotData.robotSize;
+        const lookAheadDist = 7 * Number(robotData.robotSize);
+        const camFollowDist = 1 * Number(robotData.robotSize);
+        const camHeight = 1 * Number(robotData.robotSize);
 
         let pos = robotData.pos.copy();
         // translate doesn't work on the cam set position function
@@ -121,9 +121,6 @@ Simulation.CameraControl.Modes.FollowRobot3D = class extends Simulation.CameraCo
         let cam = pos.copy().sub(aim.copy().setMag(camFollowDist));
         cam.add(createVector(0,0, camHeight));
         cam.sub(createVector(width/2, height/2));
-
-
-
 
         this.cam.setPosition(cam.x, cam.y, cam.z);
         this.cam.lookAt(aim.x, aim.y, pos.z);
