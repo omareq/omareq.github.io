@@ -103,7 +103,39 @@ function run() {
 function minify() {
 	const rawProgram = getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
-	sourceCodeAreaHandle.textContent = programTxt.join("");
+	syntaxHighlightSourceCode(programTxt);
+}
+
+/**
+ * Function to apply the syntax highlighting
+ */
+function syntaxHighlightSourceCode(rawProgram) {
+	let domHtmlText = "";
+	for(let i = 0; i < rawProgram.length; i++) {
+		const char = rawProgram[i];
+		if(char == "+") {
+			domHtmlText += "<span class=\"plus\">+</span>";
+		} else if(char == "-") {
+			domHtmlText += "<span class=\"minus\">-</span>";
+		} else if(char == ">") {
+			domHtmlText += "<span class=\"gt\">&gt;</span>";
+		} else if(char == "<") {
+			domHtmlText += "<span class=\"lt\">&lt;</span>";
+		} else if(char == "[") {
+			domHtmlText += "<span class=\"lbrack\">[</span>";
+		} else if(char == "]") {
+			domHtmlText += "<span class=\"rbrack\">]</span>";
+		} else if(char == ".") {
+			domHtmlText += "<span class=\"dot\">.</span>";
+		} else if(char == ",") {
+			domHtmlText += "<span class=\"comma\">,</span>";
+		} else if(char == "\n") {
+			domHtmlText += "<br>\n</br>";
+		} else {
+			domHtmlText += char;
+		}
+	}
+	sourceCodeAreaHandle.innerHTML = domHtmlText;
 }
 
 
