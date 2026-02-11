@@ -39,3 +39,27 @@ QUnit.test("p_032 BF Interpreter Test: Print A-Z", function(assert) {
     assert.equal(cpu.outputBuffer.join(""), "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "BF Interpreter Test: Print A-Z");
 });
 
+QUnit.test("p_032 BF Interpreter Test: Echo Input", function(assert) {
+    const programText = ",[.,]";
+    const inputAsciiCodes = [65, 66, 67, 68, 69];
+    const program = new BFProgram(parse(programText));
+    const memSize = 10;
+    let cpu = new BFCpu(8, program, memSize, inputAsciiCodes, output);
+    cpu.execute();
+    // console.log(cpu);
+    assert.equal(cpu.outputBuffer.join(""), "ABCDE", "BF Interpreter Test: Echo Input");
+});
+
+QUnit.test("p_032 BF Interpreter Test: Reverse Input", function(assert) {
+    const programText = ">,[>,]<[.<]";
+    const inputAsciiCodes = [65, 66, 67, 68, 69];
+    const program = new BFProgram(parse(programText));
+    const memSize = 10;
+    let cpu = new BFCpu(8, program, memSize, inputAsciiCodes, output);
+    cpu.execute();
+    // console.log(cpu);
+    assert.equal(cpu.outputBuffer.join(""), "EDCBA", "BF Interpreter Test: Reverse Input");
+});
+
+
+
