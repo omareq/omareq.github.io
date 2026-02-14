@@ -1,5 +1,5 @@
 const {BFCpu} = require("../bf-interpreter/bf-interpreter.js");
-const {parse, BFProgram} = require("../bf-interpreter/bf-program.js");
+const {parse, BFProgram, preProcess} = require("../bf-interpreter/bf-program.js");
 
 function output() {} // Inject empty dependency for the BF CPU
 
@@ -7,6 +7,20 @@ QUnit.module("p_032", function (hooks) {
 
 QUnit.test("BF Interpreter: Hello Test", function(assert) {
     assert.ok(1 == "1", "Passed!" );
+});
+
+QUnit.test("BF Interpreter: Parser Simple", function(assert) {
+    const sourceWithComments = "prepended comment to ignore +- appended comment";
+    const instructionsComments = preProcess(sourceWithComments);
+    assert.equal(instructionsComments.length, 2, "BF Preprocessor Remove Comments");
+
+    const sourceCode = "+-,.<>[]";
+    const instructions = parse(sourceCode);
+
+    for(let i = 0; i < instructions.length; i++) {
+        assert.equal(instructions[i].symbol, sourceCode[i],
+            "BF Parser Test: " + sourceCode[i]);
+    }
 });
 
 QUnit.test("BF Interpreter: +", function(assert) {
@@ -17,6 +31,41 @@ QUnit.test("BF Interpreter: +", function(assert) {
     cpu.execute();
     // console.log(cpu);
     assert.equal(cpu.data[0], 1, "BF Interpreter Test: +");
+});
+
+QUnit.test("BF Interpreter: Basic Instructions", function(assert) {
+    const inputAsciiCodes = [65];
+    const program = new BFProgram(parse("+-><,.[-]"));
+    const memSize = 1;
+    let cpu = new BFCpu(8, program, memSize, inputAsciiCodes, output);
+    // console.log(cpu);
+    // +
+    cpu.step();
+    assert.equal(cpu.data[0], 1, "BF Interpreter Test: +");
+
+    // -
+    cpu.step();
+    assert.equal(cpu.data[0], 0, "BF Interpreter Test: -");
+
+    // >
+    cpu.step();
+    assert.equal(cpu.dataPtr, 1, "BF Interpreter Test: >");
+
+    // <
+    cpu.step();
+    assert.equal(cpu.dataPtr, 0, "BF Interpreter Test: <");
+
+    // ,
+    cpu.step();
+    assert.equal(cpu.data[0], inputAsciiCodes[0], "BF Interpreter Test: ,");
+
+    // .
+    cpu.step();
+    assert.equal(cpu.outputBuffer[0], "A", "BF Interpreter Test: .");
+
+    // post [-] should clear cell 0
+    cpu.execute();
+    assert.equal(cpu.data[0], 0, "BF Interpreter Test: [-] Clear cell");
 });
 
 QUnit.test("BF Interpreter: Hello World", function(assert) {

@@ -500,6 +500,6 @@ class BFProgram {
 }
 
 if (typeof window === 'undefined') {
-    module.exports = { parse, BFProgram };
+    module.exports = { parse, BFProgram, preProcess };
     // this is node
 }
