@@ -86,7 +86,6 @@ function run() {
 	const programTxt = preProcess(rawProgram);
 	const input = getInputString();
 
-// TODO: check if input is also the same
 	if(lastProgram != undefined && programTxt.join("") == lastProgram.join("") &&
 		lastInput != undefined && input == lastInput) {
 		console.log("Same program and input not running again.");

@@ -56,6 +56,9 @@ class BFCpu {
         }
         this.program = program;
         this.memorySize = memorySize;
+        if(this.memorySize < 1) {
+            throw "BFCpu Memory Size must be greater than 0";
+        }
 
         if(this.nbits == 8) {
             this.data = new Uint8Array(this.memorySize);
@@ -68,6 +71,7 @@ class BFCpu {
         this.inputBuffer = inputCharCodes;
         this.WATCH_DOG_COUNT = 1000000;
         this.outputFunction = outputFunction;
+        this.dataPtrWrap = true;
 
         this.reset();
     }
@@ -106,7 +110,6 @@ class BFCpu {
      * @param value {Number} - The new cell value
      */
     setCurrentCell(value) {
-    // TODO: apply n bit overflow calculations
         this.data[this.dataPtr] = value;
     }
 
@@ -120,13 +123,34 @@ class BFCpu {
     }
 
     /**
+     * Sets the data pointer mode to either wrap around or throw an error on
+     * overflow and underflow.
+     *
+     * @param mode {Boolean} - True if wrap
+     */
+    setDataPtrWrapMode(mode) {
+        if(typeof mode != "boolean") {
+            throw "BFCpu data pointer wrap mode must be a boolean";
+        }
+        this.dataPtrWrap = mode;
+    }
+
+    /**
      * Set the data pointer to a new value
      *
      * @param value {Number} - The new data pointer location.
      */
     setDataPtr(value) {
-    // TODO: apply data overflow checks
-        this.dataPtr = value;
+        if(this.dataPtrWrap) {
+            this.dataPtr = (value % this.data.length + this.data.length) % this.data.length;
+        } else {
+            this.dataPtr = value;
+            if(this.dataPtr < 0) {
+                throw "BFCpu Data Pointer Underflow: " + this.dataPtr;
+            } else if(this.dataPtr >= this.data.length) {
+                throw "BFCpu Data Pointer Overflow: " + this.dataPtr;
+            }
+        }
     }
 
     /**
@@ -144,7 +168,9 @@ class BFCpu {
      * @param value {Number} - The new instruction location
      */
     setInstructionPtr(value) {
-    //TODO: apply sanity checking
+        if(value < 0 || value >= this.program.size) {
+            throw "BFCpu Instruction Pointer out of bounds";
+        }
         this.instructionPtr = value;
     }
 
@@ -152,7 +178,7 @@ class BFCpu {
      * Execute one instruction and increment the instruction pointer.
      */
     step() {
-        if(this.instructionPtr > this.program.size) {
+        if(this.instructionPtr >= this.program.size) {
             // TODO: throw an error?
             return;
         }

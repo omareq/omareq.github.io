@@ -31,7 +31,7 @@
  *****************************************************************************/
 "use strict";
 
-// TODO: Think about 8/16/32/64/BIGINT bit instruction set
+// TODO: Think about un/signed 8/16/32/64/BIGINT bit instruction set
 
 /**
  * A class which is the interface for CPU Instructions.
@@ -135,6 +135,7 @@ class LShift extends BFInstruction {
      * @param cpu {BFCpu} - The cpu to apply the operation on.
      */
     operation(cpu) {
+        //TODO: Data ptr overflow/underflow error catch rethrow with line num
         cpu.setDataPtr(cpu.getDataPtr() - 1);
     }
 }
@@ -158,6 +159,7 @@ class RShift extends BFInstruction {
      * @param cpu {BFCpu} - The cpu to apply the operation on.
      */
     operation(cpu) {
+        //TODO: Data ptr overflow/underflow error catch rethrow with line num
         cpu.setDataPtr(cpu.getDataPtr() + 1);
     }
 }
@@ -182,7 +184,6 @@ class Input extends BFInstruction {
      * @param cpu {BFCpu} - The cpu to apply the operation on.
      */
     operation(cpu) {
-// TODO: Implement Input
         cpu.setCurrentCell(cpu.getNextInput());
     }
 }
@@ -345,7 +346,7 @@ function preProcess(rawProgramtext) {
  * @returns {Number} - Jump index location
  */
 function getJumpEnd(program, jumpStart) {
-    // TODO: throw on error
+    // TODO: throw on error finding jump end
     // TODO: Refactor get jump locations into one function with char params and dir
     // assert(jumpStart >= program.instructions && jumpStart < program.end);
     let i_ptr = jumpStart;
@@ -374,7 +375,7 @@ function getJumpEnd(program, jumpStart) {
  * @returns {Number} - Jump index location
  */
 function getJumpStart(program, jumpEnd) {
-    // TODO: throw on error
+    // TODO: throw on error finding jump start
     // assert(jumpEnd >= program.instructions && jumpEnd < program.end);
     let i_ptr = jumpEnd;
 

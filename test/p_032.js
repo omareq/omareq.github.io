@@ -63,10 +63,62 @@ QUnit.test("BF Interpreter: NBits Uint[8,16,32] architectures", function(assert)
     }
 });
 
+QUnit.test("BF Interpreter: Memory", function(assert) {
+    const inputAsciiCodes = [0];
+    const underflowProgram = new BFProgram(parse("<"));
+    const overflowProgram = new BFProgram(parse(">>"));
+
+    // memory size -1 throw error
+    assert.throws(function () {
+        let cpu = new BFCpu(8, underflowProgram, -1, inputAsciiCodes, output);
+    },
+    (err) => err.toString() === "BFCpu Memory Size must be greater than 0",
+    "BF Interpreter Test: Memory Size > 0: Value -1"
+    );
+
+    // memory size 0 throw error
+    assert.throws(function () {
+        let cpu = new BFCpu(8, underflowProgram, 0, inputAsciiCodes, output);
+    },
+    (err) => err.toString() === "BFCpu Memory Size must be greater than 0",
+    "BF Interpreter Test: Memory Size > 0: Value 0"
+    );
+
+    // memory underflow in cpu memory error mode
+    assert.throws(function () {
+        let cpu = new BFCpu(8, underflowProgram, 2, inputAsciiCodes, output);
+        cpu.setDataPtrWrapMode(false);
+        cpu.execute();
+    },
+    (err) => err.toString() === "BFCpu Data Pointer Underflow: -1",
+    "BF Interpreter Test: Data pointer wrap mode ERROR: Underflow"
+    );
+
+    // memory overflow in cpu memory error mode
+    assert.throws(function () {
+        let cpu = new BFCpu(8, overflowProgram, 2, inputAsciiCodes, output);
+        cpu.setDataPtrWrapMode(false);
+        cpu.execute();
+    },
+    (err) => err.toString() === "BFCpu Data Pointer Overflow: 2",
+    "BF Interpreter Test: Data pointer wrap mode ERROR: Overflow"
+    );
+
+    // memory underflow in cpu memory wrap mode
+    let cpuunder = new BFCpu(8, underflowProgram, 2, inputAsciiCodes, output);
+    cpuunder.execute();
+    assert.equal(cpuunder.dataPtr, 1, "BF Interpreter Test: Data pointer wrap mode WRAP: Underflow");
+
+    // memory overflow in cpu memory wrap mode
+    let cpuover = new BFCpu(8, overflowProgram, 2, inputAsciiCodes, output);
+    cpuover.execute();
+    assert.equal(cpuover.dataPtr, 0,"BF Interpreter Test: Data pointer wrap mode WRAP: Overflow");
+});
+
 QUnit.test("BF Interpreter: Basic Instructions", function(assert) {
     const inputAsciiCodes = [65];
     const program = new BFProgram(parse("+-><,.[-]"));
-    const memSize = 1;
+    const memSize = 2;
     let cpu = new BFCpu(8, program, memSize, inputAsciiCodes, output);
     // console.log(cpu);
     // +
