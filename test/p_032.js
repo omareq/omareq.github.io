@@ -33,6 +33,36 @@ QUnit.test("BF Interpreter: +", function(assert) {
     assert.equal(cpu.data[0], 1, "BF Interpreter Test: +");
 });
 
+QUnit.test("BF Interpreter: NBits Uint[8,16,32] architectures", function(assert) {
+    const inputAsciiCodes = [0];
+    const underflowProgram = new BFProgram(parse("-"));
+    const memSize = 1;
+    const NBits = [8, 16, 32];
+
+    assert.throws(function () {
+        let cpu = new BFCpu(1, underflowProgram, memSize, inputAsciiCodes, output);
+    },
+    (err) => err.toString() === "BFCpu Architecture NBits must be one of [8, 16, 32]",
+    "BF Interpreter Test: NBits Arch Incorrect NBits selected"
+  );
+
+    // Underflow
+    for(let i = 0; i < NBits.length; i++) {
+        let cpu = new BFCpu(NBits[i], underflowProgram, memSize, inputAsciiCodes, output);
+        cpu.execute();
+        assert.equal(cpu.data[0], 2**NBits[i] - 1, "BF Interpreter Test: NBits Arch Underflow " + NBits[i]);
+    }
+
+    // Overflow
+    for(let i = 0; i < NBits.length; i++) {
+        const overFlowSource = "+".repeat(2**NBits);
+        const overflowProgram = new BFProgram(parse(overFlowSource));
+        let cpu = new BFCpu(NBits[i], overflowProgram, memSize, inputAsciiCodes, output);
+        cpu.execute();
+        assert.equal(cpu.data[0], 0, "BF Interpreter Test: NBits Arch Overflow " + NBits[i]);
+    }
+});
+
 QUnit.test("BF Interpreter: Basic Instructions", function(assert) {
     const inputAsciiCodes = [65];
     const program = new BFProgram(parse("+-><,.[-]"));

@@ -43,17 +43,28 @@ class BFCpu {
     /**
      * The constructor for the BF CPU
      *
-     * @param nbits {Number} - The number of bits the architecture supports
+     * @param nbits {Number} - The number of bits the architecture supports. Must be on of [8, 16, 32]
      * @param program {BFProgram} - The program to execute
      * @param memorySize {Number} - The size of the allocated memory at start up
      * @param inputCharCodes {Array<Number>} - The ASCII char codes of the input string
      */
-    constructor(nbits, program, memorySize, inputCharCodes, outputFunction) {
+    constructor(nbits=8, program, memorySize, inputCharCodes, outputFunction) {
         this.nbits = nbits;
+        const allowedBits = [8, 16, 32];
+        if(!allowedBits.includes(this.nbits)) {
+            throw "BFCpu Architecture NBits must be one of [8, 16, 32]";
+        }
         this.program = program;
         this.memorySize = memorySize;
-        this.data = new Array(this.memorySize);
-        // this.outputHandle = ;
+
+        if(this.nbits == 8) {
+            this.data = new Uint8Array(this.memorySize);
+        } else if(this.nbits == 16) {
+            this.data = new Uint16Array(this.memorySize);
+        } else if(this.nbits == 32) {
+            this.data = new Uint32Array(this.memorySize);
+        }
+
         this.inputBuffer = inputCharCodes;
         this.WATCH_DOG_COUNT = 1000000;
         this.outputFunction = outputFunction;
@@ -141,6 +152,10 @@ class BFCpu {
      * Execute one instruction and increment the instruction pointer.
      */
     step() {
+        if(this.instructionPtr > this.program.size) {
+            // TODO: throw an error?
+            return;
+        }
         const instruction = this.program.instructionsList[this.instructionPtr];
         instruction.operation(this);
         this.instructionPtr++;
