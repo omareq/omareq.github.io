@@ -148,6 +148,12 @@ QUnit.test("BF Interpreter: Basic Instructions", function(assert) {
     // post [-] should clear cell 0
     cpu.execute();
     assert.equal(cpu.data[0], 0, "BF Interpreter Test: [-] Clear cell");
+
+    // Simple paired instruction test []
+    assert.equal(program.instructionsList[6].pairedLocationIndex, 8, "BF Interpreter Test: [ Jump Index")
+    assert.equal(program.instructionsList[8].pairedLocationIndex, 6, "BF Interpreter Test: ] Jump Index")
+
+// TODO: test nested paired instructions to make sure they jump to the correct location
 });
 
 QUnit.test("BF Interpreter: Hello World", function(assert) {
