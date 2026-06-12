@@ -193,6 +193,7 @@ class BFCpu {
      * of the file.
      */
     execute() {
+        const startTime = performance.now();
         while(this.instructionPtr < this.program.size) {
             this.step();
             if(this.executeCnt > this.WATCH_DOG_COUNT) {
@@ -202,6 +203,9 @@ class BFCpu {
                 break;
             }
         }
+        const endTime = performance.now();
+        const executionTime = endTime - startTime;
+        console.log(`Execution Time: ${executionTime} milliseconds`);
         this.outputFunction(this.outputBuffer.join(""));
     }
 }

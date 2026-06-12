@@ -32,6 +32,8 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] Dynamic syntax highlighting
 
+- [ ] Add results to speed test https://esolangs.org/wiki/Talk:Brainfuck_speed_test
+
 
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)

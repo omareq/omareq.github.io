@@ -82,6 +82,7 @@ function output(outputBuffer) {
  * Run the current BF program that is in the input text area
  */
 function run() {
+	const startTime = performance.now();
 	const rawProgram = getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
 	const input = getInputString();
@@ -99,6 +100,9 @@ function run() {
 	cpu.execute();
 	lastProgram = programTxt;
 	lastInput = input;
+	const endTime = performance.now();
+	const totalProcessingTime = endTime - startTime;
+	console.log(`Total Processing Time: ${totalProcessingTime} milliseconds`);
 }
 
 /**
