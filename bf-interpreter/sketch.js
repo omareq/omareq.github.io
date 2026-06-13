@@ -97,11 +97,21 @@ function run() {
 
 	const program = new BFProgram(parse(programTxt));
 	let cpu = new BFCpu(8, program, 30000, asciiCodes, output);
+	const cpuStartTime = performance.now();
 	cpu.execute();
+	const endTime = performance.now();
+
 	lastProgram = programTxt;
 	lastInput = input;
-	const endTime = performance.now();
+
+	const preProcessingTime = cpuStartTime - startTime;
+	const cpuExecutionTime = endTime - cpuStartTime;
 	const totalProcessingTime = endTime - startTime;
+
+	const preProcessingPercent = 100 * preProcessingTime / totalProcessingTime;
+	const cpuExecutionPercent = 100 * cpuExecutionTime / totalProcessingTime;
+	console.log(`Pre Processing Time: ${preProcessingTime} milliseconds ${preProcessingPercent}%`);
+	console.log(`Cpu Execution Time: ${cpuExecutionTime} milliseconds ${cpuExecutionPercent}%`);
 	console.log(`Total Processing Time: ${totalProcessingTime} milliseconds`);
 }
 

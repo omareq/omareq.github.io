@@ -3,7 +3,7 @@ const {parse, BFProgram, preProcess} = require("../bf-interpreter/bf-program.js"
 
 function output() {} // Inject empty dependency for the BF CPU
 
-QUnit.module("p_032", function (hooks) {
+QUnit.module.only("p_032", function (hooks) {
 
 QUnit.test("BF Interpreter: Hello Test", function(assert) {
     assert.ok(1 == "1", "Passed!" );
@@ -213,6 +213,22 @@ QUnit.test("BF Interpreter: Reverse Input", function(assert) {
     assert.equal(cpu.outputBuffer.join(""), "EDCBA", "BF Interpreter Test: Reverse Input");
 });
 
+QUnit.test("BF Interpreter: Speed Test", function(assert) {
+    const expectedTime = 1000; // ms - expecting less than 50ms on i5 at 1.6GHz
+    const startTime = Date.now()
+    const programText = "+++++++++++++++++[>+++++++++++++++<-]>[>+++++++++++++++++[>+++++++++++++++<-]<-]>>>++++++++[<++++++>-]<.";
+    const inputAsciiCodes = [0];
+    const program = new BFProgram(parse(programText));
+    const memSize = 30000;
+    let cpu = new BFCpu(8, program, memSize, inputAsciiCodes, output);
+    cpu.execute();
+    const endTime = Date.now();
+
+    const executionTime = endTime - startTime;
+    assert.equal(cpu.outputBuffer.join(""), "1", "BF Interpreter Test: Speed Test Expected Output");
+    const errorMessage  = `BF Interpreter Test: Execution Speed is insufficient: Execution Time ${executionTime}ms > ${expectedTime}ms budget.`
+    assert.ok(executionTime < expectedTime, errorMessage);
+});
 
 });
 
