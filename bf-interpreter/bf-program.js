@@ -567,6 +567,7 @@ class BFProgram {
             return;
         }
 
+// TODO: optimise RLE use old symbol eg '+'  as well as intermediate rep '__ADD_1__'
         for(let i = 0; i < program.length; i++) {
             if(program[i].symbol == opSymbol && program[i+1].symbol == opSymbol) {
                 let charCount = 1;
