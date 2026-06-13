@@ -34,6 +34,7 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] Add results to speed test https://esolangs.org/wiki/Talk:Brainfuck_speed_test
 
+- [ ] Parse and execute instructions in parallel to increase speed
 
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
