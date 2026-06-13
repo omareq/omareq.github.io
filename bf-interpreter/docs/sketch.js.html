@@ -63,6 +63,7 @@ let lastProgram = undefined;
 let lastInput = undefined;
 let sourceCodeAreaHandle = undefined;
 let inputTextAreaHandle = undefined;
+let outputHandle = undefined;
 
 /**
  * Read the string in the source code text area and return it
@@ -101,15 +102,19 @@ function getCharCodes(inputString) {
     return charCodeArr;
 }
 
+function output(outputBuffer) {
+	outputHandle.textContent = outputBuffer;
+}
+
 /**
  * Run the current BF program that is in the input text area
  */
 function run() {
+	const startTime = performance.now();
 	const rawProgram = getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
 	const input = getInputString();
 
-// TODO: check if input is also the same
 	if(lastProgram != undefined &amp;&amp; programTxt.join("") == lastProgram.join("") &amp;&amp;
 		lastInput != undefined &amp;&amp; input == lastInput) {
 		console.log("Same program and input not running again.");
@@ -119,10 +124,23 @@ function run() {
 	const asciiCodes = getCharCodes(input);
 
 	const program = new BFProgram(parse(programTxt));
-	let cpu = new BFCpu(8, program, 30000, asciiCodes);
+	let cpu = new BFCpu(8, program, 30000, asciiCodes, output);
+	const cpuStartTime = performance.now();
 	cpu.execute();
+	const endTime = performance.now();
+
 	lastProgram = programTxt;
 	lastInput = input;
+
+	const preProcessingTime = cpuStartTime - startTime;
+	const cpuExecutionTime = endTime - cpuStartTime;
+	const totalProcessingTime = endTime - startTime;
+
+	const preProcessingPercent = 100 * preProcessingTime / totalProcessingTime;
+	const cpuExecutionPercent = 100 * cpuExecutionTime / totalProcessingTime;
+	console.log(`Pre Processing Time: ${preProcessingTime} milliseconds ${preProcessingPercent}%`);
+	console.log(`Cpu Execution Time: ${cpuExecutionTime} milliseconds ${cpuExecutionPercent}%`);
+	console.log(`Total Processing Time: ${totalProcessingTime} milliseconds`);
 }
 
 /**
@@ -131,7 +149,39 @@ function run() {
 function minify() {
 	const rawProgram = getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
-	sourceCodeAreaHandle.textContent = programTxt.join("");
+	syntaxHighlightSourceCode(programTxt);
+}
+
+/**
+ * Function to apply the syntax highlighting
+ */
+function syntaxHighlightSourceCode(rawProgram) {
+	let domHtmlText = "";
+	for(let i = 0; i &lt; rawProgram.length; i++) {
+		const char = rawProgram[i];
+		if(char == "+") {
+			domHtmlText += "&lt;span class=\"plus\">+&lt;/span>";
+		} else if(char == "-") {
+			domHtmlText += "&lt;span class=\"minus\">-&lt;/span>";
+		} else if(char == ">") {
+			domHtmlText += "&lt;span class=\"gt\">&amp;gt;&lt;/span>";
+		} else if(char == "&lt;") {
+			domHtmlText += "&lt;span class=\"lt\">&amp;lt;&lt;/span>";
+		} else if(char == "[") {
+			domHtmlText += "&lt;span class=\"lbrack\">[&lt;/span>";
+		} else if(char == "]") {
+			domHtmlText += "&lt;span class=\"rbrack\">]&lt;/span>";
+		} else if(char == ".") {
+			domHtmlText += "&lt;span class=\"dot\">.&lt;/span>";
+		} else if(char == ",") {
+			domHtmlText += "&lt;span class=\"comma\">,&lt;/span>";
+		} else if(char == "\n") {
+			domHtmlText += "&lt;br>\n&lt;/br>";
+		} else {
+			domHtmlText += char;
+		}
+	}
+	sourceCodeAreaHandle.innerHTML = domHtmlText;
 }
 
 
@@ -145,6 +195,7 @@ function setup() {
 
 	sourceCodeAreaHandle = document.getElementById("source-code-text");
 	inputTextAreaHandle = document.getElementById("input-text");
+	outputHandle = document.getElementById("output-text");
 
 	let runButton = createButton("Run", "value");
 	runButton.parent("run-button");
@@ -172,12 +223,12 @@ function draw() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#minify">minify</a></li><li><a href="global.html#optimiseProgramTxt">optimiseProgramTxt</a></li><li><a href="global.html#optimiseRLE">optimiseRLE</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Add.html">Add</a></li><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="LShiftN.html">LShiftN</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li><li><a href="RShiftN.html">RShiftN</a></li><li><a href="Sub.html">Sub</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#minify">minify</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#syntaxHighlightSourceCode">syntaxHighlightSourceCode</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Feb 09 2026 21:26:04 GMT-0800 (Pacific Standard Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Jun 12 2026 23:36:43 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

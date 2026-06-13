@@ -81,6 +81,8 @@ and the execution counter</div>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -106,8 +108,14 @@ and the execution counter</div>
             
 
             
+                <td class="default">
+                
+                    8
+                
+                </td>
+            
 
-            <td class="description last">The number of bits the architecture supports</td>
+            <td class="description last">The number of bits the architecture supports. Must be on of [8, 16, 32]</td>
         </tr>
 
     
@@ -128,6 +136,10 @@ and the execution counter</div>
 
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The program to execute</td>
@@ -152,6 +164,10 @@ and the execution counter</div>
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">The size of the allocated memory at start up</td>
         </tr>
@@ -174,6 +190,10 @@ and the execution counter</div>
 
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The ASCII char codes of the input string</td>
@@ -335,7 +355,7 @@ of the file.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line153">line 153</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line215">line 215</a>
     </li></ul></dd>
     
 
@@ -423,7 +443,7 @@ of the file.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line106">line 106</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line123">line 123</a>
     </li></ul></dd>
     
 
@@ -533,7 +553,7 @@ of the file.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line125">line 125</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line163">line 163</a>
     </li></ul></dd>
     
 
@@ -644,7 +664,7 @@ array if it is not Null terminated.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line84">line 84</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line102">line 102</a>
     </li></ul></dd>
     
 
@@ -756,7 +776,7 @@ execute counter.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line68">line 68</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line85">line 85</a>
     </li></ul></dd>
     
 
@@ -893,7 +913,7 @@ execute counter.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line96">line 96</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -1030,7 +1050,145 @@ execute counter.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line115">line 115</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line145">line 145</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setDataPtrWrapMode"><span class="type-signature"></span>setDataPtrWrapMode<span class="signature">(mode)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sets the data pointer mode to either wrap around or throw an error on
+overflow and underflow.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mode</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">True if wrap</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line133">line 133</a>
     </li></ul></dd>
     
 
@@ -1167,7 +1325,7 @@ execute counter.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line134">line 134</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -1255,7 +1413,7 @@ execute counter.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line142">line 142</a>
+        <a href="bf-interpreter.js.html">bf-interpreter.js</a>, <a href="bf-interpreter.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -1301,12 +1459,12 @@ execute counter.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#minify">minify</a></li><li><a href="global.html#optimiseProgramTxt">optimiseProgramTxt</a></li><li><a href="global.html#optimiseRLE">optimiseRLE</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Add.html">Add</a></li><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="LShiftN.html">LShiftN</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li><li><a href="RShiftN.html">RShiftN</a></li><li><a href="Sub.html">Sub</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#minify">minify</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#syntaxHighlightSourceCode">syntaxHighlightSourceCode</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Feb 09 2026 21:26:04 GMT-0800 (Pacific Standard Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Jun 12 2026 23:36:44 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

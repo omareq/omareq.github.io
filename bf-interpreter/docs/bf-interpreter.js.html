@@ -71,19 +71,36 @@ class BFCpu {
     /**
      * The constructor for the BF CPU
      *
-     * @param nbits {Number} - The number of bits the architecture supports
+     * @param nbits {Number} - The number of bits the architecture supports. Must be on of [8, 16, 32]
      * @param program {BFProgram} - The program to execute
      * @param memorySize {Number} - The size of the allocated memory at start up
      * @param inputCharCodes {Array&lt;Number>} - The ASCII char codes of the input string
      */
-    constructor(nbits, program, memorySize, inputCharCodes) {
+    constructor(nbits=8, program, memorySize, inputCharCodes, outputFunction) {
         this.nbits = nbits;
+        const allowedBits = [8, 16, 32];
+        if(!allowedBits.includes(this.nbits)) {
+            throw "BFCpu Architecture NBits must be one of [8, 16, 32]";
+        }
         this.program = program;
         this.memorySize = memorySize;
-        this.data = new Array(this.memorySize);
-        this.outputHandle = document.getElementById("output-text");
+        if(this.memorySize &lt; 1) {
+            throw "BFCpu Memory Size must be greater than 0";
+        }
+
+        if(this.nbits == 8) {
+            this.data = new Uint8Array(this.memorySize);
+        } else if(this.nbits == 16) {
+            this.data = new Uint16Array(this.memorySize);
+        } else if(this.nbits == 32) {
+            this.data = new Uint32Array(this.memorySize);
+        }
+
         this.inputBuffer = inputCharCodes;
         this.WATCH_DOG_COUNT = 1000000;
+        this.haltExecution = false;
+        this.outputFunction = outputFunction;
+        this.dataPtrWrap = true;
 
         this.reset();
     }
@@ -94,13 +111,14 @@ class BFCpu {
      * execute counter.
      */
     reset() {
-        this.outputHandle.textContent = "";
+        this.outputFunction("");
         this.data.fill(0);
         this.dataPtr = 0;
         this.instructionPtr = 0;
         this.executeCnt = 0;
         this.outputBuffer = [];
         this.inputPtr = 0;
+        this.haltExecution = false;
     }
 
     /**
@@ -122,7 +140,6 @@ class BFCpu {
      * @param value {Number} - The new cell value
      */
     setCurrentCell(value) {
-    // TODO: apply n bit overflow calculations
         this.data[this.dataPtr] = value;
     }
 
@@ -136,13 +153,34 @@ class BFCpu {
     }
 
     /**
+     * Sets the data pointer mode to either wrap around or throw an error on
+     * overflow and underflow.
+     *
+     * @param mode {Boolean} - True if wrap
+     */
+    setDataPtrWrapMode(mode) {
+        if(typeof mode != "boolean") {
+            throw "BFCpu data pointer wrap mode must be a boolean";
+        }
+        this.dataPtrWrap = mode;
+    }
+
+    /**
      * Set the data pointer to a new value
      *
      * @param value {Number} - The new data pointer location.
      */
     setDataPtr(value) {
-    // TODO: apply data overflow checks
-        this.dataPtr = value;
+        if(this.dataPtrWrap) {
+            this.dataPtr = (value % this.data.length + this.data.length) % this.data.length;
+        } else {
+            this.dataPtr = value;
+            if(this.dataPtr &lt; 0) {
+                throw "BFCpu Data Pointer Underflow: " + this.dataPtr;
+            } else if(this.dataPtr >= this.data.length) {
+                throw "BFCpu Data Pointer Overflow: " + this.dataPtr;
+            }
+        }
     }
 
     /**
@@ -160,7 +198,9 @@ class BFCpu {
      * @param value {Number} - The new instruction location
      */
     setInstructionPtr(value) {
-    //TODO: apply sanity checking
+        if(value &lt; 0 || value >= this.program.size) {
+            throw "BFCpu Instruction Pointer out of bounds";
+        }
         this.instructionPtr = value;
     }
 
@@ -168,8 +208,30 @@ class BFCpu {
      * Execute one instruction and increment the instruction pointer.
      */
     step() {
+        if(this.haltExecution) {
+            return;
+        }
+        if(this.instructionPtr >= this.program.size) {
+            // TODO: throw an error?
+            return;
+        }
         const instruction = this.program.instructionsList[this.instructionPtr];
-        instruction.operation(this);
+        if(instruction === undefined) {
+            console.error("Current instruction is undefined:", instruction);
+            this.haltExecution = true;
+        }
+
+        // instruction.operation(this);
+        try{
+            instruction.operation(this);
+        } catch (e) {
+            if (typeof window !== 'undefined') {
+                // this is browser
+                console.error(e);
+            }
+            this.haltExecution = true;
+            throw(e);
+        }
         this.instructionPtr++;
         this.executeCnt++;
     }
@@ -187,9 +249,18 @@ class BFCpu {
                     this.WATCH_DOG_COUNT + "\nPossible Infinite Loop");
                 break;
             }
+            if(this.haltExecution) {
+                console.warn("Halting Execution");
+                break;
+            }
         }
-        this.outputHandle.textContent = this.outputBuffer.join("");
+        this.outputFunction(this.outputBuffer.join(""));
     }
+}
+
+if (typeof window === 'undefined') {
+    module.exports = { BFCpu };
+    // this is node
 }
 
 </code></pre>
@@ -202,12 +273,12 @@ class BFCpu {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#minify">minify</a></li><li><a href="global.html#optimiseProgramTxt">optimiseProgramTxt</a></li><li><a href="global.html#optimiseRLE">optimiseRLE</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Add.html">Add</a></li><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="LShiftN.html">LShiftN</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li><li><a href="RShiftN.html">RShiftN</a></li><li><a href="Sub.html">Sub</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#minify">minify</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#syntaxHighlightSourceCode">syntaxHighlightSourceCode</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Feb 09 2026 21:26:04 GMT-0800 (Pacific Standard Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Jun 12 2026 23:36:43 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>

@@ -59,7 +59,7 @@
  *****************************************************************************/
 "use strict";
 
-// TODO: Think about 8/16/32/64/BIGINT bit instruction set
+// TODO: Think about un/signed 8/16/32/64/BIGINT bit instruction set
 
 /**
  * A class which is the interface for CPU Instructions.
@@ -99,62 +99,116 @@ class BFInstruction {
 }
 
 /**
+ * The Add instruction that increments the current data cell by N
+ */
+class Add extends BFInstruction {
+    /**
+     * Constructor for the add instruction
+     *
+     * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     * @param N {Number} - Positive Integer to add to current data cell
+     */
+    constructor(locationIndex, N) {
+        super(`__ADD_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N &lt; 0 ) {
+            throw new Error(`N should should be positive ${N}`);
+        }
+        this.N = N;
+    }
+
+    /**
+     * Applies the add N instruction to the cpu
+     *
+     * @param cpu {BFCpu} - The cpu to apply the operation on.
+     */
+    operation(cpu) {
+        cpu.setCurrentCell(cpu.getCurrentCell() + this.N);
+    }
+}
+
+/**
  * The plus instruction that increments the current data cell
  */
-class Plus extends BFInstruction {
+class Plus extends Add {
     /**
      * Constructor for the plus instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
      */
     constructor(locationIndex) {
-        super("+", locationIndex);
-    }
-
-    /**
-     * Applies the plus instruction to the cpu
-     *
-     * @param cpu {BFCpu} - The cpu to apply the operation on.
-     */
-    operation(cpu) {
-        cpu.setCurrentCell(cpu.getCurrentCell() + 1);
+        super(locationIndex, 1);
     }
 }
 
 /**
+ * The Add instruction that decrements the current data cell by N
+ */
+class Sub extends BFInstruction {
+    /**
+     * Constructor for the sub instruction
+     *
+     * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     * @param N {Number} - Positive Integer to sub from the current data cell
+     */
+    constructor(locationIndex, N) {
+        super(`__SUB_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N &lt; 0 ) {
+            throw new Error(`N should should be positive ${N}`);
+        }
+        this.N = N;
+    }
+
+    /**
+     * Applies the sub N instruction to the cpu
+     *
+     * @param cpu {BFCpu} - The cpu to apply the operation on.
+     */
+    operation(cpu) {
+        cpu.setCurrentCell(cpu.getCurrentCell() - this.N);
+    }
+}
+
+
+/**
  * The Minus instruction that decrements the current data cell
  */
-class Minus extends BFInstruction {
+class Minus extends Sub {
     /**
      * Constructor for the minus instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
      */
     constructor(locationIndex) {
-        super("-", locationIndex);
-    }
-
-    /**
-     * Applies the minus instruction to the cpu
-     *
-     * @param cpu {BFCpu} - The cpu to apply the operation on.
-     */
-    operation(cpu) {
-        cpu.setCurrentCell(cpu.getCurrentCell() - 1);
+        super(locationIndex, 1);
     }
 }
 
 /**
- * The left shift instruction that shifts the data pointer to the left
+ * The left shift instruction that shifts the data pointer to the left N cells
+ *
  */
-class LShift extends BFInstruction {
+class LShiftN extends BFInstruction {
     /**
      * Constructor for the Left Shift instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     * @param N {Number} - Positive Integer to shift data pointer to the left by
      */
-    constructor(locationIndex) {
-        super("&lt;", locationIndex);
+    constructor(locationIndex, N) {
+        super(`__L_SHIFT_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N &lt; 0 ) {
+            throw new Error(`N should should be positive ${N}`);
+        }
+        this.N = N;
     }
 
     /**
@@ -163,21 +217,45 @@ class LShift extends BFInstruction {
      * @param cpu {BFCpu} - The cpu to apply the operation on.
      */
     operation(cpu) {
-        cpu.setDataPtr(cpu.getDataPtr() - 1);
+        //TODO: Data ptr overflow/underflow error catch rethrow with line num
+        cpu.setDataPtr(cpu.getDataPtr() - this.N);
     }
 }
 
 /**
- * The right shift instruction that shifts the data pointer to the right
+ * The left shift instruction that shifts the data pointer to the left
  */
-class RShift extends BFInstruction {
+class LShift extends LShiftN {
     /**
-     * Constructor for the right shift instruction
+     * Constructor for the Left Shift instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
      */
     constructor(locationIndex) {
-        super(">", locationIndex);
+        super(locationIndex, 1);
+    }
+}
+
+/**
+ * The right shift instruction that shifts the data pointer to the right N cells
+ *
+ */
+class RShiftN extends BFInstruction {
+    /**
+     * Constructor for the Right Shift instruction
+     *
+     * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     * @param N {Number} - Positive Integer to shift data pointer to the right by
+     */
+    constructor(locationIndex, N) {
+        super(`__R_SHIFT_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N &lt; 0 ) {
+            throw new Error(`N should should be positive ${N}`);
+        }
+        this.N = N;
     }
 
     /**
@@ -186,7 +264,22 @@ class RShift extends BFInstruction {
      * @param cpu {BFCpu} - The cpu to apply the operation on.
      */
     operation(cpu) {
-        cpu.setDataPtr(cpu.getDataPtr() + 1);
+        //TODO: Data ptr overflow/underflow error catch rethrow with line num
+        cpu.setDataPtr(cpu.getDataPtr() + this.N);
+    }
+}
+
+/**
+ * The right shift instruction that shifts the data pointer to the right
+ */
+class RShift extends RShiftN {
+    /**
+     * Constructor for the right shift instruction
+     *
+     * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     */
+    constructor(locationIndex) {
+        super(locationIndex, 1);
     }
 }
 
@@ -210,7 +303,6 @@ class Input extends BFInstruction {
      * @param cpu {BFCpu} - The cpu to apply the operation on.
      */
     operation(cpu) {
-// TODO: Implement Input
         cpu.setCurrentCell(cpu.getNextInput());
     }
 }
@@ -373,7 +465,7 @@ function preProcess(rawProgramtext) {
  * @returns {Number} - Jump index location
  */
 function getJumpEnd(program, jumpStart) {
-    // TODO: throw on error
+    // TODO: throw on error finding jump end
     // TODO: Refactor get jump locations into one function with char params and dir
     // assert(jumpStart >= program.instructions &amp;&amp; jumpStart &lt; program.end);
     let i_ptr = jumpStart;
@@ -402,7 +494,7 @@ function getJumpEnd(program, jumpStart) {
  * @returns {Number} - Jump index location
  */
 function getJumpStart(program, jumpEnd) {
-    // TODO: throw on error
+    // TODO: throw on error finding jump start
     // assert(jumpEnd >= program.instructions &amp;&amp; jumpEnd &lt; program.end);
     let i_ptr = jumpEnd;
 
@@ -421,58 +513,6 @@ function getJumpStart(program, jumpEnd) {
         }
     }
     return i_ptr;
-}
-
-/**
- * Function to compress program using run length encoding for a given char.  If
- * a run of more than 1 character is found then the sequence of repeated chars
- * is replaced with the length of the sequence then the char.  EG
- *
- * optimiseRLE("++++", "+") -> Returns "4+""
- *
- * Note that the return type is now an array of strings not chars.
- *
- * @param program {Array&lt;Char>} - Array of source code characters
- * @param char {char} - The character to compress
- *
- * @returns {Array&lt;String>} - Returns array of RLE compressed source code
- */
-function optimiseRLE(program, char) {
-    let optimised = [];
-    let encodeChar = char;
-    for(let i = 0; i &lt; program.length; i++) {
-        if(program[i] == encodeChar &amp;&amp; program[i+1] == encodeChar) {
-            let charCount = 1;
-    // TODO: replace while loop with for loop ending at end of program
-            while(program[i + charCount] == encodeChar) {
-                charCount++;
-            }
-
-            optimised.push(charCount + encodeChar);
-            i += charCount -1;
-            continue;
-        }
-
-        optimised.push(program[i]);
-    }
-    // console.log("RLE: " + optimised);
-    return optimised;
-}
-
-/**
- * Applies optimisations to the source code of the program
- * Note that the return type is now an array of strings not chars.
- *
- * @param program {Array&lt;char>} - The pre processed source code with no comments
- *
- * @returns {Array&lt;String>} - The optimised source code
- */
-function optimiseProgramTxt(program) {
-    let optimised = optimiseRLE(program, "+");
-    optimised = optimiseRLE(optimised, "-");
-    optimised = optimiseRLE(optimised, "&lt;");
-    optimised = optimiseRLE(optimised, ">");
-    return optimised;
 }
 
 /**
@@ -496,9 +536,11 @@ function parse(programTxt) {
             instructionsList[i] = new RShift(i);
         } else if(programTxt[i] == "[") {
             const jumpEndIndex = getJumpEnd(programTxt, i);
+// TODO: error on unmatched bracket
             instructionsList[i] = new LBrack(i, jumpEndIndex);
         } else if(programTxt[i] == "]") {
             const jumpStartIndex = getJumpStart(programTxt, i);
+// TODO: error on unmatched bracket
             instructionsList[i] = new RBrack(i, jumpStartIndex);
         } else if(programTxt[i] == ".") {
             instructionsList[i] = new Output(i);
@@ -522,9 +564,88 @@ class BFProgram {
         this.instructionsList = instructionsList;
         this.size = instructionsList.length;
         this.length = instructionsList.length;
+
+        this.optimiseRLE("__ADD_1__", Add);
+        this.optimiseRLE("__SUB_1__", Sub);
+        this.optimiseRLE("__R_SHIFT_1__", RShiftN);
+        this.optimiseRLE("__L_SHIFT_1__", LShiftN);
+    }
+
+    /**
+     * Function to compress program using run length encoding for a given
+     * operation.  If a run of more than 1 operation is found then the sequence
+     * of repeated operations is replaced with the opReplacement with an
+     * additional parameter saying how many times it is to be repeated.  This
+     * function will also adjust the paired instructions to have the correct
+     * jump locations.
+     *
+     * this.instructionsList = ["__ADD_1__", "__ADD_1__","__ADD_1__"];
+     * this.optimiseRLE("__ADD_1__", Add);
+     * Updates this.instructionsList to ["__ADD_3__"];
+     *
+     * @param opSymbol {BFInstruction.symbol} - String of operation symbol
+     * @param opReplacement {char} - The character to compress
+     *
+     */
+    optimiseRLE(opSymbol, opReplacement) {
+        let optimised = [];
+        let program = this.instructionsList;
+
+        if(program.length &lt; 2) {
+            return;
+        }
+
+        for(let i = 0; i &lt; program.length; i++) {
+            if(program[i].symbol == opSymbol &amp;&amp; program[i+1].symbol == opSymbol) {
+                let charCount = 1;
+                for(let j = i; j &lt; program.length - 1; j++) {
+                    if(program[i + charCount].symbol == opSymbol) {
+                        charCount++;
+                    } else {
+                        break;
+                    }
+                }
+
+                const newOperation = new opReplacement(i, charCount);
+                optimised.push(newOperation);
+                i += charCount -1;
+                continue;
+            }
+
+            if(program[i] instanceof LBrack) {
+                const pairedIndex = program[i].pairedLocationIndex;
+                const optimisedLeftIndex = optimised.length;
+
+                // sanity check
+                if(program[pairedIndex] instanceof RBrack) {
+                    program[pairedIndex].pairedLocationIndex = optimisedLeftIndex;
+                } else {
+                    throw(`Optimise RLE ${opSymbol} matching RBRack not found`);
+                }
+            } else if(program[i] instanceof RBrack) {
+                const pairedIndex = program[i].pairedLocationIndex;
+                const optimisedRightIndex = optimised.length;
+
+                // sanity check
+                if(optimised[pairedIndex] instanceof LBrack) {
+                    optimised[pairedIndex].pairedLocationIndex = optimisedRightIndex;
+                } else {
+                    throw(`Optimise RLE ${opSymbol} matching LBRack not found`);
+                }
+            }
+            optimised.push(program[i]);
+        }
+
+        this.instructionsList = optimised;
+        this.size = this.instructionsList.length;
+        this.length = this.instructionsList.length;
     }
 }
 
+if (typeof window === 'undefined') {
+    module.exports = { parse, BFProgram, preProcess };
+    // this is node
+}
 </code></pre>
         </article>
     </section>
@@ -535,12 +656,12 @@ class BFProgram {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#minify">minify</a></li><li><a href="global.html#optimiseProgramTxt">optimiseProgramTxt</a></li><li><a href="global.html#optimiseRLE">optimiseRLE</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Add.html">Add</a></li><li><a href="BFCpu.html">BFCpu</a></li><li><a href="BFInstruction.html">BFInstruction</a></li><li><a href="BFProgram.html">BFProgram</a></li><li><a href="Input.html">Input</a></li><li><a href="LBrack.html">LBrack</a></li><li><a href="LShift.html">LShift</a></li><li><a href="LShiftN.html">LShiftN</a></li><li><a href="Minus.html">Minus</a></li><li><a href="Output.html">Output</a></li><li><a href="PairedInstruction.html">PairedInstruction</a></li><li><a href="Plus.html">Plus</a></li><li><a href="RBrack.html">RBrack</a></li><li><a href="RShift.html">RShift</a></li><li><a href="RShiftN.html">RShiftN</a></li><li><a href="Sub.html">Sub</a></li></ul><h3>Global</h3><ul><li><a href="global.html#draw">draw</a></li><li><a href="global.html#getCharCodes">getCharCodes</a></li><li><a href="global.html#getInputString">getInputString</a></li><li><a href="global.html#getJumpEnd">getJumpEnd</a></li><li><a href="global.html#getJumpStart">getJumpStart</a></li><li><a href="global.html#getRawProgramTxt">getRawProgramTxt</a></li><li><a href="global.html#minify">minify</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#preProcess">preProcess</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#setup">setup</a></li><li><a href="global.html#syntaxHighlightSourceCode">syntaxHighlightSourceCode</a></li></ul>
 </nav>
 
 <br class="clear">
 
-Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Feb 09 2026 21:26:04 GMT-0800 (Pacific Standard Time)
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Jun 12 2026 23:36:43 GMT-0700 (Pacific Daylight Time)
 <footer>
     <div class="links">
         <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
