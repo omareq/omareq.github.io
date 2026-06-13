@@ -3,7 +3,7 @@ const {parse, BFProgram, preProcess} = require("../bf-interpreter/bf-program.js"
 
 function output() {} // Inject empty dependency for the BF CPU
 
-QUnit.module.only("p_032", function (hooks) {
+QUnit.module("p_032", function (hooks) {
 
 QUnit.test("BF Interpreter: Hello Test", function(assert) {
     assert.ok(1 == "1", "Passed!" );

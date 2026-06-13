@@ -70,6 +70,7 @@ class BFCpu {
 
         this.inputBuffer = inputCharCodes;
         this.WATCH_DOG_COUNT = 1000000;
+        this.haltExecution = false;
         this.outputFunction = outputFunction;
         this.dataPtrWrap = true;
 
@@ -89,6 +90,7 @@ class BFCpu {
         this.executeCnt = 0;
         this.outputBuffer = [];
         this.inputPtr = 0;
+        this.haltExecution = false;
     }
 
     /**
@@ -178,12 +180,30 @@ class BFCpu {
      * Execute one instruction and increment the instruction pointer.
      */
     step() {
+        if(this.haltExecution) {
+            return;
+        }
         if(this.instructionPtr >= this.program.size) {
             // TODO: throw an error?
             return;
         }
         const instruction = this.program.instructionsList[this.instructionPtr];
-        instruction.operation(this);
+        if(instruction === undefined) {
+            console.error("Current instruction is undefined:", instruction);
+            this.haltExecution = true;
+        }
+
+        // instruction.operation(this);
+        try{
+            instruction.operation(this);
+        } catch (e) {
+            if (typeof window !== 'undefined') {
+                // this is browser
+                console.error(e);
+            }
+            this.haltExecution = true;
+            throw(e);
+        }
         this.instructionPtr++;
         this.executeCnt++;
     }
@@ -199,6 +219,10 @@ class BFCpu {
                 console.warn("BF CPU WATCHDOG Limit Reached: " + this.WATCH_DOG_COUNT);
                 alert("Brainfuck CPU WATCHDOG Limit Reached: " +
                     this.WATCH_DOG_COUNT + "\nPossible Infinite Loop");
+                break;
+            }
+            if(this.haltExecution) {
+                console.warn("Halting Execution");
                 break;
             }
         }

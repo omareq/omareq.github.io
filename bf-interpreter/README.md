@@ -10,7 +10,7 @@ Created using [p5.js](https://p5js.org/)
 
 ## To do
 
-- [ ] Include optimisations in refactored execution model
+- [x] Include RLE optimisations in refactored execution model
 
 - [ ] Run dynamic number of cycles so that frame is non blocking
 

@@ -86,7 +86,7 @@ class Add extends BFInstruction {
             throw new Error(`N Should be an integer: ${N}`);
         }
         if(N < 0 ) {
-            throw new Error(`N should should be positive ${N}`)
+            throw new Error(`N should should be positive ${N}`);
         }
         this.N = N;
     }
@@ -131,7 +131,7 @@ class Sub extends BFInstruction {
             throw new Error(`N Should be an integer: ${N}`);
         }
         if(N < 0 ) {
-            throw new Error(`N should should be positive ${N}`)
+            throw new Error(`N should should be positive ${N}`);
         }
         this.N = N;
     }
@@ -178,7 +178,7 @@ class LShiftN extends BFInstruction {
             throw new Error(`N Should be an integer: ${N}`);
         }
         if(N < 0 ) {
-            throw new Error(`N should should be positive ${N}`)
+            throw new Error(`N should should be positive ${N}`);
         }
         this.N = N;
     }
@@ -225,7 +225,7 @@ class RShiftN extends BFInstruction {
             throw new Error(`N Should be an integer: ${N}`);
         }
         if(N < 0 ) {
-            throw new Error(`N should should be positive ${N}`)
+            throw new Error(`N should should be positive ${N}`);
         }
         this.N = N;
     }
@@ -488,58 +488,6 @@ function getJumpStart(program, jumpEnd) {
 }
 
 /**
- * Function to compress program using run length encoding for a given char.  If
- * a run of more than 1 character is found then the sequence of repeated chars
- * is replaced with the length of the sequence then the char.  EG
- *
- * optimiseRLE("++++", "+") -> Returns "4+""
- *
- * Note that the return type is now an array of strings not chars.
- *
- * @param program {Array<Char>} - Array of source code characters
- * @param char {char} - The character to compress
- *
- * @returns {Array<String>} - Returns array of RLE compressed source code
- */
-function optimiseRLE(program, char) {
-    let optimised = [];
-    let encodeChar = char;
-    for(let i = 0; i < program.length; i++) {
-        if(program[i] == encodeChar && program[i+1] == encodeChar) {
-            let charCount = 1;
-    // TODO: replace while loop with for loop ending at end of program
-            while(program[i + charCount] == encodeChar) {
-                charCount++;
-            }
-
-            optimised.push(charCount + encodeChar);
-            i += charCount -1;
-            continue;
-        }
-
-        optimised.push(program[i]);
-    }
-    // console.log("RLE: " + optimised);
-    return optimised;
-}
-
-/**
- * Applies optimisations to the source code of the program
- * Note that the return type is now an array of strings not chars.
- *
- * @param program {Array<char>} - The pre processed source code with no comments
- *
- * @returns {Array<String>} - The optimised source code
- */
-function optimiseProgramTxt(program) {
-    let optimised = optimiseRLE(program, "+");
-    optimised = optimiseRLE(optimised, "-");
-    optimised = optimiseRLE(optimised, "<");
-    optimised = optimiseRLE(optimised, ">");
-    return optimised;
-}
-
-/**
  * A function to parse the optimised source code into BFInstruction objects
  *
  * @param programText {Array<char>} - The source code
@@ -588,6 +536,81 @@ class BFProgram {
         this.instructionsList = instructionsList;
         this.size = instructionsList.length;
         this.length = instructionsList.length;
+
+        this.optimiseRLE("__ADD_1__", Add);
+        this.optimiseRLE("__SUB_1__", Sub);
+        this.optimiseRLE("__R_SHIFT_1__", RShiftN);
+        this.optimiseRLE("__L_SHIFT_1__", LShiftN);
+    }
+
+    /**
+     * Function to compress program using run length encoding for a given
+     * operation.  If a run of more than 1 operation is found then the sequence
+     * of repeated operations is replaced with the opReplacement with an
+     * additional parameter saying how many times it is to be repeated.  This
+     * function will also adjust the paired instructions to have the correct
+     * jump locations.
+     *
+     * this.instructionsList = ["__ADD_1__", "__ADD_1__","__ADD_1__"];
+     * this.optimiseRLE("__ADD_1__", Add);
+     * Updates this.instructionsList to ["__ADD_3__"];
+     *
+     * @param opSymbol {BFInstruction.symbol} - String of operation symbol
+     * @param opReplacement {char} - The character to compress
+     *
+     */
+    optimiseRLE(opSymbol, opReplacement) {
+        let optimised = [];
+        let program = this.instructionsList;
+
+        if(program.length < 2) {
+            return;
+        }
+
+        for(let i = 0; i < program.length; i++) {
+            if(program[i].symbol == opSymbol && program[i+1].symbol == opSymbol) {
+                let charCount = 1;
+                for(let j = i; j < program.length - 1; j++) {
+                    if(program[i + charCount].symbol == opSymbol) {
+                        charCount++;
+                    } else {
+                        break;
+                    }
+                }
+
+                const newOperation = new opReplacement(i, charCount);
+                optimised.push(newOperation);
+                i += charCount -1;
+                continue;
+            }
+
+            if(program[i] instanceof LBrack) {
+                const pairedIndex = program[i].pairedLocationIndex;
+                const optimisedLeftIndex = optimised.length;
+
+                // sanity check
+                if(program[pairedIndex] instanceof RBrack) {
+                    program[pairedIndex].pairedLocationIndex = optimisedLeftIndex;
+                } else {
+                    throw(`Optimise RLE ${opSymbol} matching RBRack not found`);
+                }
+            } else if(program[i] instanceof RBrack) {
+                const pairedIndex = program[i].pairedLocationIndex;
+                const optimisedRightIndex = optimised.length;
+
+                // sanity check
+                if(optimised[pairedIndex] instanceof LBrack) {
+                    optimised[pairedIndex].pairedLocationIndex = optimisedRightIndex;
+                } else {
+                    throw(`Optimise RLE ${opSymbol} matching LBRack not found`);
+                }
+            }
+            optimised.push(program[i]);
+        }
+
+        this.instructionsList = optimised;
+        this.size = this.instructionsList.length;
+        this.length = this.instructionsList.length;
     }
 }
 
