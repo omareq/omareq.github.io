@@ -71,62 +71,116 @@ class BFInstruction {
 }
 
 /**
+ * The Add instruction that increments the current data cell by N
+ */
+class Add extends BFInstruction {
+    /**
+     * Constructor for the add instruction
+     *
+     * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     * @param N {Number} - Positive Integer to add to current data cell
+     */
+    constructor(locationIndex, N) {
+        super(`__ADD_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N < 0 ) {
+            throw new Error(`N should should be positive ${N}`)
+        }
+        this.N = N;
+    }
+
+    /**
+     * Applies the add N instruction to the cpu
+     *
+     * @param cpu {BFCpu} - The cpu to apply the operation on.
+     */
+    operation(cpu) {
+        cpu.setCurrentCell(cpu.getCurrentCell() + this.N);
+    }
+}
+
+/**
  * The plus instruction that increments the current data cell
  */
-class Plus extends BFInstruction {
+class Plus extends Add {
     /**
      * Constructor for the plus instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
      */
     constructor(locationIndex) {
-        super("+", locationIndex);
-    }
-
-    /**
-     * Applies the plus instruction to the cpu
-     *
-     * @param cpu {BFCpu} - The cpu to apply the operation on.
-     */
-    operation(cpu) {
-        cpu.setCurrentCell(cpu.getCurrentCell() + 1);
+        super(locationIndex, 1);
     }
 }
 
 /**
+ * The Add instruction that decrements the current data cell by N
+ */
+class Sub extends BFInstruction {
+    /**
+     * Constructor for the sub instruction
+     *
+     * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     * @param N {Number} - Positive Integer to sub from the current data cell
+     */
+    constructor(locationIndex, N) {
+        super(`__SUB_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N < 0 ) {
+            throw new Error(`N should should be positive ${N}`)
+        }
+        this.N = N;
+    }
+
+    /**
+     * Applies the sub N instruction to the cpu
+     *
+     * @param cpu {BFCpu} - The cpu to apply the operation on.
+     */
+    operation(cpu) {
+        cpu.setCurrentCell(cpu.getCurrentCell() - this.N);
+    }
+}
+
+
+/**
  * The Minus instruction that decrements the current data cell
  */
-class Minus extends BFInstruction {
+class Minus extends Sub {
     /**
      * Constructor for the minus instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
      */
     constructor(locationIndex) {
-        super("-", locationIndex);
-    }
-
-    /**
-     * Applies the minus instruction to the cpu
-     *
-     * @param cpu {BFCpu} - The cpu to apply the operation on.
-     */
-    operation(cpu) {
-        cpu.setCurrentCell(cpu.getCurrentCell() - 1);
+        super(locationIndex, 1);
     }
 }
 
 /**
- * The left shift instruction that shifts the data pointer to the left
+ * The left shift instruction that shifts the data pointer to the left N cells
+ *
  */
-class LShift extends BFInstruction {
+class LShiftN extends BFInstruction {
     /**
      * Constructor for the Left Shift instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     * @param N {Number} - Positive Integer to shift data pointer to the left by
      */
-    constructor(locationIndex) {
-        super("<", locationIndex);
+    constructor(locationIndex, N) {
+        super(`__L_SHIFT_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N < 0 ) {
+            throw new Error(`N should should be positive ${N}`)
+        }
+        this.N = N;
     }
 
     /**
@@ -136,21 +190,44 @@ class LShift extends BFInstruction {
      */
     operation(cpu) {
         //TODO: Data ptr overflow/underflow error catch rethrow with line num
-        cpu.setDataPtr(cpu.getDataPtr() - 1);
+        cpu.setDataPtr(cpu.getDataPtr() - this.N);
     }
 }
 
 /**
- * The right shift instruction that shifts the data pointer to the right
+ * The left shift instruction that shifts the data pointer to the left
  */
-class RShift extends BFInstruction {
+class LShift extends LShiftN {
     /**
-     * Constructor for the right shift instruction
+     * Constructor for the Left Shift instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
      */
     constructor(locationIndex) {
-        super(">", locationIndex);
+        super(locationIndex, 1);
+    }
+}
+
+/**
+ * The right shift instruction that shifts the data pointer to the right N cells
+ *
+ */
+class RShiftN extends BFInstruction {
+    /**
+     * Constructor for the Right Shift instruction
+     *
+     * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     * @param N {Number} - Positive Integer to shift data pointer to the right by
+     */
+    constructor(locationIndex, N) {
+        super(`__R_SHIFT_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N < 0 ) {
+            throw new Error(`N should should be positive ${N}`)
+        }
+        this.N = N;
     }
 
     /**
@@ -160,7 +237,21 @@ class RShift extends BFInstruction {
      */
     operation(cpu) {
         //TODO: Data ptr overflow/underflow error catch rethrow with line num
-        cpu.setDataPtr(cpu.getDataPtr() + 1);
+        cpu.setDataPtr(cpu.getDataPtr() + this.N);
+    }
+}
+
+/**
+ * The right shift instruction that shifts the data pointer to the right
+ */
+class RShift extends RShiftN {
+    /**
+     * Constructor for the right shift instruction
+     *
+     * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
+     */
+    constructor(locationIndex) {
+        super(locationIndex, 1);
     }
 }
 

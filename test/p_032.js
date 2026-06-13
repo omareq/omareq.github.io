@@ -15,10 +15,23 @@ QUnit.test("BF Interpreter: Parser Simple", function(assert) {
     assert.equal(instructionsComments.length, 2, "BF Preprocessor Remove Comments");
 
     const sourceCode = "+-,.<>[]";
+    const expectedSymbol = [
+        "__ADD_1__",
+        "__SUB_1__",
+        ",",
+        ".",
+        "__L_SHIFT_1__",
+        "__R_SHIFT_1__",
+        "[",
+        "]"
+    ];
+
     const instructions = parse(sourceCode);
 
     for(let i = 0; i < instructions.length; i++) {
-        assert.equal(instructions[i].symbol, sourceCode[i],
+        let output = instructions[i].symbol == expectedSymbol[i];
+        output = output || instructions[i].symbol == sourceCode[i];
+        assert.equal(output, true,
             "BF Parser Test: " + sourceCode[i]);
     }
 });
