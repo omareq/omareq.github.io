@@ -275,7 +275,7 @@ QUnit.test("BF Interpreter: Optimization RLE", function(assert) {
 			inputPrograms[i] + " ->  " + outputSymbols[i]);
 	}
 
-	const complexProgram = "+++---[<<<>>>],.";
+	const complexProgram = "+++---[<<<>>>],.+";
 	const complexOutputSymbols = [
 		"__ADD_3__",
 		"__SUB_3__",
@@ -284,7 +284,8 @@ QUnit.test("BF Interpreter: Optimization RLE", function(assert) {
 		"__R_SHIFT_3__",
 		"]",
 		",",
-		"."
+		".",
+		"__ADD_1__"
 	];
 	
 	let program = new BFProgram(parse(complexProgram), optimise=false);

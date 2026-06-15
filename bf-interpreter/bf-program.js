@@ -536,7 +536,7 @@ class BFProgram {
         this.instructionsList = instructionsList;
         this.size = instructionsList.length;
         this.length = instructionsList.length;
-        
+
 		if(optimise) {
 			this.optimise();
 		}
@@ -548,15 +548,16 @@ class BFProgram {
 	optimise() {
 		this.optimiseAllRLE();
 	}
-	
+
 	/**
 	 * Function to do all the run length encoding conraction
 	 */
 	optimiseAllRLE() {
-		this.optimiseRLE("__ADD_1__", AddN);	
-		this.optimiseRLE("__SUB_1__", SubN);	
-		this.optimiseRLE("__R_SHIFT_1__", RShiftN);	
-		this.optimiseRLE("__L_SHIFT_1__", LShiftN);	
+// TODO: Fix if one operation on it's own at the end of the instruction list
+		this.optimiseRLE("__ADD_1__", AddN);
+		this.optimiseRLE("__SUB_1__", SubN);
+		this.optimiseRLE("__R_SHIFT_1__", RShiftN);
+		this.optimiseRLE("__L_SHIFT_1__", LShiftN);
 	}
 
     /**
@@ -585,21 +586,24 @@ class BFProgram {
 
 // TODO: optimise RLE use old symbol eg '+'  as well as intermediate rep '__ADD_1__'
         for(let i = 0; i < program.length; i++) {
-            if(program[i].symbol == opSymbol && program[i+1].symbol == opSymbol) {
-                let charCount = 1;
-                for(let j = i; j < program.length - 1; j++) {
-                    if(program[i + charCount].symbol == opSymbol) {
-                        charCount++;
-                    } else {
-                        break;
-                    }
-                }
+			if(i != program.length -1) {
+// TODO: refactor optimseRLE lots of nested statements and control flow is getting messy
+				if(program[i].symbol == opSymbol && program[i+1].symbol == opSymbol) {
+					let charCount = 1;
+					for(let j = i; j < program.length - 1; j++) {
+						if(program[i + charCount].symbol == opSymbol) {
+							charCount++;
+						} else {
+							break;
+						}
+					}
 
-                const newOperation = new opReplacement(i, charCount);
-                optimised.push(newOperation);
-                i += charCount -1;
-                continue;
-            }
+					const newOperation = new opReplacement(i, charCount);
+					optimised.push(newOperation);
+					i += charCount -1;
+					continue;
+				}
+			}
 
             if(program[i] instanceof LBrack) {
                 const pairedIndex = program[i].pairedLocationIndex;
