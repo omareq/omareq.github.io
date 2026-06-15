@@ -243,5 +243,68 @@ QUnit.test("BF Interpreter: Speed Test", function(assert) {
     assert.ok(executionTime < expectedTime, errorMessage);
 });
 
+QUnit.test("BF Interpreter: Optimization RLE", function(assert) {
+	const inputPrograms = [
+		"+",
+		"++",
+		"+++",
+		"++++++++++",
+		"---",
+		">>>",
+		"<<<"
+	];
+	const outputSymbols = [
+		"__ADD_1__",
+		"__ADD_2__",
+		"__ADD_3__",
+		"__ADD_10__",
+		"__SUB_3__",
+		"__R_SHIFT_3__",
+		"__L_SHIFT_3__"
+	];
+	
+	for(let i = 0; i < inputPrograms.length; i++) {
+		let program = new BFProgram(parse(inputPrograms[i]), optimise=false);
+		program.optimiseAllRLE();
+		assert.equal(program.size, 1,
+			"BF Interpreter Test: Optimise RLE Instruction list length: " + 
+			inputPrograms[i] + " ->  " + outputSymbols[i]);
+
+		assert.equal(program.instructionsList[0].symbol, outputSymbols[i],
+			"BF Interpreter Test: Optimise RLE Instruction Symbol: " + 
+			inputPrograms[i] + " ->  " + outputSymbols[i]);
+	}
+
+	const complexProgram = "+++---[<<<>>>],.";
+	const complexOutputSymbols = [
+		"__ADD_3__",
+		"__SUB_3__",
+		"[",
+		"__L_SHIFT_3__",
+		"__R_SHIFT_3__",
+		"]",
+		",",
+		"."
+	];
+	
+	let program = new BFProgram(parse(complexProgram), optimise=false);
+	program.optimiseAllRLE();
+	assert.equal(
+		program.instructionsList[2].pairedLocationIndex,
+		5,
+		"BF Interpreter Test: Optimize RLE check that loops are accounted for lbrack -> rbrack");
+	assert.equal(
+		program.instructionsList[5].pairedLocationIndex,
+		2,
+		"BF Interpreter Test: Optimize RLE check that loops are accounted for rbrack -> lbrack");
+	
+	for(let i = 0; i < program.size; i++) {
+		assert.equal(
+			program.instructionsList[i].symbol,
+			complexOutputSymbols[i],
+			"BF Interpreter Test: Optimize RLE Complex is contracted incorrectly: ");
+	}
+});
+
 });
 

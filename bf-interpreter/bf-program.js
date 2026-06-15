@@ -73,7 +73,7 @@ class BFInstruction {
 /**
  * The Add instruction that increments the current data cell by N
  */
-class Add extends BFInstruction {
+class AddN extends BFInstruction {
     /**
      * Constructor for the add instruction
      *
@@ -104,7 +104,7 @@ class Add extends BFInstruction {
 /**
  * The plus instruction that increments the current data cell
  */
-class Plus extends Add {
+class Plus extends AddN {
     /**
      * Constructor for the plus instruction
      *
@@ -118,7 +118,7 @@ class Plus extends Add {
 /**
  * The Add instruction that decrements the current data cell by N
  */
-class Sub extends BFInstruction {
+class SubN extends BFInstruction {
     /**
      * Constructor for the sub instruction
      *
@@ -150,7 +150,7 @@ class Sub extends BFInstruction {
 /**
  * The Minus instruction that decrements the current data cell
  */
-class Minus extends Sub {
+class Minus extends SubN {
     /**
      * Constructor for the minus instruction
      *
@@ -532,16 +532,32 @@ class BFProgram {
      *
      * @param instructionsList {Array<BFInstructions>} - The instructions list
      */
-    constructor(instructionsList) {
+    constructor(instructionsList, optimise=true) {
         this.instructionsList = instructionsList;
         this.size = instructionsList.length;
         this.length = instructionsList.length;
-
-        this.optimiseRLE("__ADD_1__", Add);
-        this.optimiseRLE("__SUB_1__", Sub);
-        this.optimiseRLE("__R_SHIFT_1__", RShiftN);
-        this.optimiseRLE("__L_SHIFT_1__", LShiftN);
+        
+		if(optimise) {
+			this.optimise();
+		}
     }
+
+	/**
+	 * Function to do all optimisations on teh instructions list
+	 */
+	optimise() {
+		this.optimiseAllRLE();
+	}
+	
+	/**
+	 * Function to do all the run length encoding conraction
+	 */
+	optimiseAllRLE() {
+		this.optimiseRLE("__ADD_1__", AddN);	
+		this.optimiseRLE("__SUB_1__", SubN);	
+		this.optimiseRLE("__R_SHIFT_1__", RShiftN);	
+		this.optimiseRLE("__L_SHIFT_1__", LShiftN);	
+	}
 
     /**
      * Function to compress program using run length encoding for a given
