@@ -1,3 +1,4 @@
+// TODO: add unit test to make sure all example files are listed
 const bfExampleFiles = [
 	"./examples/add_example.bf",
 	"./examples/dbf2c.bf",

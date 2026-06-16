@@ -159,8 +159,8 @@ function syntaxHighlightSourceCode(rawProgram) {
 }
 
 function uiSetup(){
-	
-	//UI 
+
+	//UI
 	// TODO: refactor UI code
 	exampleCodeSelector = createSelect();
 	exampleCodeSelector.parent("example-code-selector");
