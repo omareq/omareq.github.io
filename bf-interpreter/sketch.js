@@ -36,6 +36,8 @@ let lastInput = undefined;
 let sourceCodeAreaHandle = undefined;
 let inputTextAreaHandle = undefined;
 let outputHandle = undefined;
+let exampleCodeSelector = undefined;
+let selectedExample = undefined;
 
 /**
  * Read the string in the source code text area and return it
@@ -156,6 +158,36 @@ function syntaxHighlightSourceCode(rawProgram) {
 	sourceCodeAreaHandle.innerHTML = domHtmlText;
 }
 
+function uiSetup(){
+	
+	//UI 
+	// TODO: refactor UI code
+	exampleCodeSelector = createSelect();
+	exampleCodeSelector.parent("example-code-selector");
+	for(let i =0; i < bfExampleFiles.length; i++) {
+		const currentExampleFile = bfExampleFiles[i].split("/")[2].split(".")[0];
+		exampleCodeSelector.option(currentExampleFile);
+	}
+	selectedExample = "hello";
+	exampleCodeSelector.selected(selectedExample);
+}
+
+function uiUpdate() {
+	if(exampleCodeSelector.selected() != selectedExample) {
+		selectedExample = exampleCodeSelector.selected();
+		console.log(`Change example code to: ${selectedExample}`);
+
+		fetch(`./examples/${selectedExample}.bf`)
+		.then(response => response.text())
+		.then(textString => {
+			//sourceCodeAreaHandle.textContent = textString;
+			syntaxHighlightSourceCode(textString.replace(/\n+/g, '\n'));
+		})
+		.catch(error => {
+			console.error('Error fetching the file:', error);
+		});
+	}
+}
 
 /**
  * p5.js setup function, creates canvas.
@@ -177,11 +209,14 @@ function setup() {
 	minifyButton.parent("minify-button");
 	minifyButton.mousePressed(minify);
 	background(255);
+
+	uiSetup();
 }
 
 /**
  * p5.js draw function, is run every frame to create the desired animation
  */
 function draw() {
+	uiUpdate();
 }
 
