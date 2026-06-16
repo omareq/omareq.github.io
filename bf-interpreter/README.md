@@ -36,6 +36,8 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] Parse and execute instructions in parallel to increase speed
 
+- [ ] Include mode for reverse fuck https://www.dcode.fr/reversefuck-language
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye (omareq08+githubio@gmail.com)
 
