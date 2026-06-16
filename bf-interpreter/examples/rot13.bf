@@ -1,11 +1,7 @@
-[-]
-[
-https://sampleprograms.ioprojects/rot13/brainfuck//
-]
 +>
 +[
     ,[
-        <[-]
+        <[-]>
         [
             >+>+<<-
         ]>
@@ -78,4 +74,10 @@ https://sampleprograms.ioprojects/rot13/brainfuck//
     ---------.
     ++++.
     [-]
-]>
+]
+
+[>]
+[-]
+[
+https://sampleprograms.io/projects/rot13/brainfuck/
+]
