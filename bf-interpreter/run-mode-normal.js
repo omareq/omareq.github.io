@@ -55,31 +55,31 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 
 		if(RunMode.lastProgram != undefined &&
 			programTxt.join("") == RunMode.lastProgram.join("") &&
-		RunMode.lastInput != undefined && input == RunMode.lastInput) {
-		console.log("Same program and input not running again.");
-		return;
+			RunMode.lastInput != undefined && input == RunMode.lastInput) {
+			
+			console.log("Same program and input not running again.");
+			return;
+		}
+
+		const asciiCodes = getCharCodes(input);
+
+		const program = new BFProgram(parse(programTxt));
+		let cpu = new BFCpu(8, program, 30000, asciiCodes, output);
+		const cpuStartTime = performance.now();
+		cpu.execute();
+		const endTime = performance.now();
+
+		RunMode.lastProgram = programTxt;
+		RunMode.lastInput = input;
+
+		const preProcessingTime = cpuStartTime - startTime;
+		const cpuExecutionTime = endTime - cpuStartTime;
+		const totalProcessingTime = endTime - startTime;
+
+		const preProcessingPercent = 100 * preProcessingTime / totalProcessingTime;
+		const cpuExecutionPercent = 100 * cpuExecutionTime / totalProcessingTime;
+		console.log(`Pre Processing Time: ${preProcessingTime} milliseconds ${preProcessingPercent}%`);
+		console.log(`Cpu Execution Time: ${cpuExecutionTime} milliseconds ${cpuExecutionPercent}%`);
+		console.log(`Total Processing Time: ${totalProcessingTime} milliseconds`);
 	}
-
-	const asciiCodes = getCharCodes(input);
-
-	const program = new BFProgram(parse(programTxt));
-	let cpu = new BFCpu(8, program, 30000, asciiCodes, output);
-	const cpuStartTime = performance.now();
-	cpu.execute();
-	const endTime = performance.now();
-
-	RunMode.lastProgram = programTxt;
-	RunMode.lastInput = input;
-
-	const preProcessingTime = cpuStartTime - startTime;
-	const cpuExecutionTime = endTime - cpuStartTime;
-	const totalProcessingTime = endTime - startTime;
-
-	const preProcessingPercent = 100 * preProcessingTime / totalProcessingTime;
-	const cpuExecutionPercent = 100 * cpuExecutionTime / totalProcessingTime;
-	console.log(`Pre Processing Time: ${preProcessingTime} milliseconds ${preProcessingPercent}%`);
-	console.log(`Cpu Execution Time: ${cpuExecutionTime} milliseconds ${cpuExecutionPercent}%`);
-	console.log(`Total Processing Time: ${totalProcessingTime} milliseconds`);
-	}
-
 };
