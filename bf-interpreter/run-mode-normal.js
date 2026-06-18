@@ -63,7 +63,8 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 
 		const asciiCodes = RunMode.getCharCodes(input);
 
-		const program = new BFProgram(parse(programTxt));
+		const optimisationFlag = false;
+		const program = new BFProgram(parse(programTxt), optimisationFlag);
 		let cpu = new BFCpu(8, program, 30000, asciiCodes, RunMode.output);
 		const cpuStartTime = performance.now();
 		cpu.execute();
