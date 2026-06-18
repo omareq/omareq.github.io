@@ -60,7 +60,7 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		this.cpuArchSelector.option("16 Bit");
 		this.cpuArchSelector.option("32 Bit");
 		this.cpuArchSelector.selected("8 Bit");
-		
+
 		// cpu mem cells selector
 		this.cpuMemSelector = createSelect();
 		this.cpuMemSelector.parent("run-mode-normal-mem-cells-selector");
