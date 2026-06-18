@@ -35,6 +35,7 @@ var RunMode = RunMode || {};
 
 RunMode.Mode = RunMode.Mode || {};
 
+RunMode.modesList.push("Normal");
 RunMode.Mode.Normal = class extends RunMode.ModeType {
 	constructor() {
 		super();

@@ -70,7 +70,7 @@ RunMode.setActiveModeByName = function(modeName) {
 		throw new Error(err);
 	}
 
-	const modeNamesList = keys(RunMode.Mode);
+	const modeNamesList = RunMode.modesList;
 	if(!modeNamesList.includes(modeName)) {
 		const err = `modeName: ${modeName} is not in list [${modeNamesList}]`;
 		throw new Error(err);
@@ -106,6 +106,14 @@ RunMode.globalUiSetup = function() {
 	}
 	RunMode.selectedExample = "hello";
 	RunMode.exampleCodeSelector.selected(RunMode.selectedExample);
+
+	RunMode.modeSelector = createSelect();
+	RunMode.modeSelector.parent("run-mode-selector");
+	const modes = RunMode.modesList;
+	for(let i=0; i < modes.length; i++) {
+		RunMode.modeSelector.option(modes[i]);
+	}
+	RunMode.modeSelector.selected("Normal");
 };
 
 RunMode.globalUiPoll = function() {
@@ -124,6 +132,10 @@ RunMode.globalUiPoll = function() {
 		.catch(error => {
 			console.error('Error fetching the file:', error);
 		});
+	}
+
+	if(RunMode.modeSelector.selected() != RunMode.activeMode.name) {
+		RunMode.setActiveModeByName(RunMode.modeSelector.selected());
 	}
 };
 
@@ -263,3 +275,6 @@ RunMode.Mode.Empty = class extends RunMode.ModeType {
 	update() {}
 
 };
+
+RunMode.modesList = [];
+RunMode.modesList.push("Empty");
