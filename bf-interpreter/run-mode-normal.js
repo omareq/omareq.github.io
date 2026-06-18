@@ -101,8 +101,6 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		const program = new BFProgram(parse(programTxt), optimisationFlag);
 		const arch = int(RunMode.activeMode.cpuArchSelector.selected().split(" ")[0]);
 		const mem = int(RunMode.activeMode.cpuMemSelector.selected().split(" ")[0]);
-		// TODO: run mode normal run() fix this.cpuArchSelector is undefined?
-		// const arch = int(this.cpuArchSelector.selected().split(" ")[0]);
 		let cpu = new BFCpu(arch, program, mem, asciiCodes, RunMode.output);
 		const cpuStartTime = performance.now();
 		cpu.execute();
