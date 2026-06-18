@@ -124,6 +124,38 @@ RunMode.getRawProgramTxt = function() {
 	return RunMode.sourceCodeAreaHandle.textContent;
 }
 
+
+
+RunMode.output = function(outputBuffer) {
+	RunMode.outputHandle.textContent = outputBuffer;
+}
+
+/**
+ * Read the string in the input text area and return it
+ *
+ * @returns {String} - The raw input string
+ */
+RunMode.getInputString = function() {
+	if(RunMode.inputTextAreaHandle == undefined) {
+		RunMode.inputTextAreaHandle = document.getElementById("input-text");
+	}
+	return RunMode.inputTextAreaHandle.textContent;
+}
+
+
+/**
+ * Convert a string to ASCII char codes
+ *
+ * @returns {Array<Number>} - The array of ASCII char codes
+ */
+RunMode.getCharCodes = function(inputString) {
+    let charCodeArr = new Array(inputString.length);
+    for (let i = 0; i < inputString.length; i++) {
+        charCodeArr[i] = inputString.charCodeAt(i);
+    }
+    return charCodeArr;
+}
+
 RunMode.syntaxHighlightSourceCode = function(rawProgram) {
 	let domHtmlText = "";
 	for(let i = 0; i < rawProgram.length; i++) {

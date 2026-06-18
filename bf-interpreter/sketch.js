@@ -31,37 +31,6 @@
  *****************************************************************************/
 "use strict";
 
-
-/**
- * Read the string in the input text area and return it
- *
- * @returns {String} - The raw input string
- */
-function getInputString() {
-	if(RunMode.inputTextAreaHandle == undefined) {
-		RunMode.inputTextAreaHandle = document.getElementById("input-text");
-	}
-	return RunMode.inputTextAreaHandle.textContent;
-}
-
-/**
- * Convert a string to ASCII char codes
- *
- * @returns {Array<Number>} - The array of ASCII char codes
- */
-function getCharCodes(inputString) {
-    let charCodeArr = new Array(inputString.length);
-    for (let i = 0; i < inputString.length; i++) {
-        charCodeArr[i] = inputString.charCodeAt(i);
-    }
-    return charCodeArr;
-}
-
-function output(outputBuffer) {
-	RunMode.outputHandle.textContent = outputBuffer;
-}
-
-
 /**
  * p5.js setup function, creates canvas.
  */

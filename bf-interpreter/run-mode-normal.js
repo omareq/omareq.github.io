@@ -51,7 +51,7 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		const startTime = performance.now();
 		const rawProgram = RunMode.getRawProgramTxt();
 		const programTxt = preProcess(rawProgram);
-		const input = getInputString();
+		const input = RunMode.getInputString();
 
 		if(RunMode.lastProgram != undefined &&
 			programTxt.join("") == RunMode.lastProgram.join("") &&
@@ -61,10 +61,10 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 			return;
 		}
 
-		const asciiCodes = getCharCodes(input);
+		const asciiCodes = RunMode.getCharCodes(input);
 
 		const program = new BFProgram(parse(programTxt));
-		let cpu = new BFCpu(8, program, 30000, asciiCodes, output);
+		let cpu = new BFCpu(8, program, 30000, asciiCodes, RunMode.output);
 		const cpuStartTime = performance.now();
 		cpu.execute();
 		const endTime = performance.now();
