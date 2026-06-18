@@ -47,6 +47,7 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		if(document.getElementById("run-mode-normal-run-button").children.length) {
 			document.getElementById("run-mode-normal-run-button").children[0].remove();
 			document.getElementById("run-mode-normal-cpu-arch-selector").children[0].remove();
+			document.getElementById("run-mode-mem-cells-selector").children[0].remove();
 		}
 		this.runButton = createButton("Run", "value");
 		this.runButton.parent("run-mode-normal-run-button");
@@ -59,7 +60,23 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		this.cpuArchSelector.option("16 Bit");
 		this.cpuArchSelector.option("32 Bit");
 		this.cpuArchSelector.selected("8 Bit");
-		console.log("ad ui els: " + this.cpuArchSelector);
+		
+		// cpu mem cells selector
+		this.cpuMemSelector = createSelect();
+		this.cpuMemSelector.parent("run-mode-normal-mem-cells-selector");
+		this.cpuMemSelector.option("500");
+		this.cpuMemSelector.option("1 k");
+		this.cpuMemSelector.option("2 k");
+		this.cpuMemSelector.option("4 k");
+		this.cpuMemSelector.option("8 k");
+		this.cpuMemSelector.option("16 k");
+		this.cpuMemSelector.option("32 k");
+		this.cpuMemSelector.option("64 k");
+		this.cpuMemSelector.option("128 k");
+		this.cpuMemSelector.option("256 k");
+		this.cpuMemSelector.option("512 k");
+		this.cpuMemSelector.option("1024 k");
+		this.cpuMemSelector.selected("32 k");
 	}
 
 	update() {}
@@ -83,9 +100,10 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		const optimisationFlag = false;
 		const program = new BFProgram(parse(programTxt), optimisationFlag);
 		const arch = int(RunMode.activeMode.cpuArchSelector.selected().split(" ")[0]);
+		const mem = int(RunMode.activeMode.cpuArchSelector.selected().split(" ")[0]);
 		// TODO: run mode normal run() fix this.cpuArchSelector is undefined?
 		// const arch = int(this.cpuArchSelector.selected().split(" ")[0]);
-		let cpu = new BFCpu(arch, program, 30000, asciiCodes, RunMode.output);
+		let cpu = new BFCpu(arch, program, mem, asciiCodes, RunMode.output);
 		const cpuStartTime = performance.now();
 		cpu.execute();
 		const endTime = performance.now();
