@@ -64,6 +64,21 @@ RunMode.update = function() {
 	RunMode.activeMode.update();
 };
 
+RunMode.setActiveModeByName = function(modeName) {
+	if(typeof(modeName) != "string") {
+		const err = "modeName must be a string";
+		throw new Error(err);
+	}
+
+	const modeNamesList = keys(RunMode.Mode);
+	if(!modeNamesList.includes(modeName)) {
+		const err = `modeName: ${modeName} is not in list [${modeNamesList}]`;
+		throw new Error(err);
+	}
+
+	RunMode.setActiveMode(new RunMode.Mode[modeName]());
+}
+
 RunMode.setActiveMode = function(newMode) {
 	if(!(newMode instanceof RunMode.ModeType)) {
 		const err = "New Run Mode must be of type RunMode.ModeType";
@@ -123,7 +138,6 @@ RunMode.getRawProgramTxt = function() {
 	}
 	return RunMode.sourceCodeAreaHandle.textContent;
 }
-
 
 
 RunMode.output = function(outputBuffer) {
