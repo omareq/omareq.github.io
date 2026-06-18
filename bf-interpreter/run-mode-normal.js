@@ -47,7 +47,7 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		if(document.getElementById("run-mode-normal-run-button").children.length) {
 			document.getElementById("run-mode-normal-run-button").children[0].remove();
 			document.getElementById("run-mode-normal-cpu-arch-selector").children[0].remove();
-			document.getElementById("run-mode-mem-cells-selector").children[0].remove();
+			document.getElementById("run-mode-normal-mem-cells-selector").children[0].remove();
 		}
 		this.runButton = createButton("Run", "value");
 		this.runButton.parent("run-mode-normal-run-button");
