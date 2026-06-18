@@ -39,10 +39,16 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 	constructor() {
 		super();
 		this.name = "Normal";
+		this.uiDiv = "run-mode-normal";
+	}
 
-		let runButton = createButton("Run", "value");
-		runButton.parent("run-button");
-		runButton.mousePressed(this.run);
+	addUiElements() {
+		if(document.getElementById("run-button").children.length) {
+			document.getElementById("run-button").children[0].remove();
+		}
+		this.runButton = createButton("Run", "value");
+		this.runButton.parent("run-button");
+		this.runButton.mousePressed(this.run);
 	}
 
 	update() {}

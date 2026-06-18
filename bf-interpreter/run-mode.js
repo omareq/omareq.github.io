@@ -92,6 +92,7 @@ RunMode.setActiveMode = function(newMode) {
 		RunMode.activeMode.hideUI();
 	}
 	RunMode.activeMode = newMode;
+	RunMode.activeMode.showUI();
 };
 
 RunMode.globalUiSetup = function() {
@@ -226,12 +227,30 @@ RunMode.ModeType = class {
 
 	}
 
-	showUI() {
+	addUiElements() {
 
 	}
 
-	hideUI() {
+	showUI() {
+		if(this.uiDiv == undefined) {
+			return;
+		}
+		if(this.uiPanel == undefined) {
+			this.uiPanel = document.getElementById(this.uiDiv);
+		}
 
+		this.addUiElements();
+		this.uiPanel.style.visibility = "visible";
+		this.uiPanel.style.display = "inline";
+	}
+
+	hideUI() {
+		if(this.uiPanel == undefined) {
+			return;
+		}
+
+		this.uiPanel.style.visibility = "hidden";
+		this.uiPanel.style.display = "none";
 	}
 };
 
