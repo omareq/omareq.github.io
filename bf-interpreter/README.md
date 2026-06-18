@@ -22,7 +22,7 @@ Created using [p5.js](https://p5js.org/)
 
 - [ ] Change clock frequency of debug mode
 
-- [ ] Example programs to choose from
+- [x] Example programs to choose from
 
 - [ ] Enable Watchdog - with UI slider for limit / disable enable checkbox
 
