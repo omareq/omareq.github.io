@@ -77,7 +77,7 @@ RunMode.setActiveModeByName = function(modeName) {
 	}
 
 	RunMode.setActiveMode(new RunMode.Mode[modeName]());
-}
+};
 
 RunMode.setActiveMode = function(newMode) {
 	if(!(newMode instanceof RunMode.ModeType)) {
@@ -92,7 +92,7 @@ RunMode.setActiveMode = function(newMode) {
 		RunMode.activeMode.hideUI();
 	}
 	RunMode.activeMode = newMode;
-}
+};
 
 RunMode.globalUiSetup = function() {
 	//UI
@@ -105,7 +105,7 @@ RunMode.globalUiSetup = function() {
 	}
 	RunMode.selectedExample = "hello";
 	RunMode.exampleCodeSelector.selected(RunMode.selectedExample);
-}
+};
 
 RunMode.globalUiPoll = function() {
 	RunMode.activeMode.uiPoll();
@@ -124,7 +124,7 @@ RunMode.globalUiPoll = function() {
 			console.error('Error fetching the file:', error);
 		});
 	}
-}
+};
 
 
 /**
@@ -137,12 +137,12 @@ RunMode.getRawProgramTxt = function() {
 		RunMode.sourceCodeAreaHandle = document.getElementById("source-code-text");
 	}
 	return RunMode.sourceCodeAreaHandle.textContent;
-}
+};
 
 
 RunMode.output = function(outputBuffer) {
 	RunMode.outputHandle.textContent = outputBuffer;
-}
+};
 
 /**
  * Read the string in the input text area and return it
@@ -154,7 +154,7 @@ RunMode.getInputString = function() {
 		RunMode.inputTextAreaHandle = document.getElementById("input-text");
 	}
 	return RunMode.inputTextAreaHandle.textContent;
-}
+};
 
 
 /**
@@ -168,7 +168,7 @@ RunMode.getCharCodes = function(inputString) {
         charCodeArr[i] = inputString.charCodeAt(i);
     }
     return charCodeArr;
-}
+};
 
 RunMode.syntaxHighlightSourceCode = function(rawProgram) {
 	let domHtmlText = "";
@@ -197,7 +197,7 @@ RunMode.syntaxHighlightSourceCode = function(rawProgram) {
 		}
 	}
 	RunMode.sourceCodeAreaHandle.innerHTML = domHtmlText;
-}
+};
 
 
 /**
@@ -207,7 +207,7 @@ RunMode.minify = function() {
 	const rawProgram = RunMode.getRawProgramTxt();
 	const programTxt = preProcess(rawProgram);
 	RunMode.syntaxHighlightSourceCode(programTxt);
-}
+};
 
 RunMode.ModeType = class {
 	constructor() {
@@ -240,7 +240,7 @@ RunMode.Mode.Empty = class extends RunMode.ModeType {
 		super();
 		this.name = "Empty";
 	}
-	
+
 	update() {}
 
 };

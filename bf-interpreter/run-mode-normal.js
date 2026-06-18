@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- *	@file run-mode-normal.js Normal bf interpreter operatin mode 
+ *	@file run-mode-normal.js Normal bf interpreter operatin mode
  *
  *	@author Omar Essilfie-Quaye <omareq08+githubio@gmail.com>
  *	@version 1.0
@@ -44,7 +44,7 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		runButton.parent("run-button");
 		runButton.mousePressed(this.run);
 	}
-	
+
 	update() {}
 
 	run() {
@@ -56,7 +56,7 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 		if(RunMode.lastProgram != undefined &&
 			programTxt.join("") == RunMode.lastProgram.join("") &&
 			RunMode.lastInput != undefined && input == RunMode.lastInput) {
-			
+
 			console.log("Same program and input not running again.");
 			return;
 		}
