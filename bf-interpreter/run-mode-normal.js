@@ -44,12 +44,22 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 	}
 
 	addUiElements() {
-		if(document.getElementById("run-button").children.length) {
-			document.getElementById("run-button").children[0].remove();
+		if(document.getElementById("run-mode-normal-run-button").children.length) {
+			document.getElementById("run-mode-normal-run-button").children[0].remove();
+			document.getElementById("run-mode-normal-cpu-arch-selector").children[0].remove();
 		}
 		this.runButton = createButton("Run", "value");
-		this.runButton.parent("run-button");
+		this.runButton.parent("run-mode-normal-run-button");
 		this.runButton.mousePressed(this.run);
+
+		// cpu arch selector
+		this.cpuArchSelector = createSelect();
+		this.cpuArchSelector.parent("run-mode-normal-cpu-arch-selector");
+		this.cpuArchSelector.option("8 Bit");
+		this.cpuArchSelector.option("16 Bit");
+		this.cpuArchSelector.option("32 Bit");
+		this.cpuArchSelector.selected("8 Bit");
+		console.log("ad ui els: " + this.cpuArchSelector);
 	}
 
 	update() {}
@@ -72,7 +82,10 @@ RunMode.Mode.Normal = class extends RunMode.ModeType {
 
 		const optimisationFlag = false;
 		const program = new BFProgram(parse(programTxt), optimisationFlag);
-		let cpu = new BFCpu(8, program, 30000, asciiCodes, RunMode.output);
+		const arch = int(RunMode.activeMode.cpuArchSelector.selected().split(" ")[0]);
+		// TODO: run mode normal run() fix this.cpuArchSelector is undefined?
+		// const arch = int(this.cpuArchSelector.selected().split(" ")[0]);
+		let cpu = new BFCpu(arch, program, 30000, asciiCodes, RunMode.output);
 		const cpuStartTime = performance.now();
 		cpu.execute();
 		const endTime = performance.now();
