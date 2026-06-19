@@ -283,22 +283,14 @@ class Input extends BFInstruction {
  * The output instruction that writes the output from the current cell.  Uses
  * ASCII formatting.
  */
-class OutputN extends BFInstruction {
+class Output extends BFInstruction {
     /**
      * Constructor for the output instruction
      *
      * @param locationIndex {Number} - The location of the instruction within the unoptimised source code
-	 * @param N {Number} - The repetition of the output char
      */
-    constructor(locationIndex, N) {
-        super(`__OUTPUT_${N}__`, locationIndex);
-        if(!Number.isInteger(N)) {
-            throw new Error(`N Should be an integer: ${N}`);
-        }
-        if(N < 0 ) {
-            throw new Error(`N should should be positive ${N}`);
-        }
-		this.N = N;
+    constructor(locationIndex) {
+        super(".", locationIndex);
     }
 
     /**
@@ -309,19 +301,8 @@ class OutputN extends BFInstruction {
     operation(cpu) {
         const char = cpu.getCurrentCell();
         const ascii = String.fromCharCode(char);
-        cpu.outputBuffer.push(ascii.repeat(this.N));
+        cpu.outputBuffer.push(ascii);
     }
-}
-
-class Output extends OutputN {
-	/**
-	 * Output single character to std out
-	 *
-	 * @param locationIndex {number} - The location of the operation in the instruction list
-	 */
-	constructor(locationIndex) {
-		super(locationIndex, 1);
-	}
 }
 
 /**
@@ -572,11 +553,11 @@ class BFProgram {
 	 * Function to do all the run length encoding conraction
 	 */
 	optimiseAllRLE() {
+// TODO: Fix if one operation on it's own at the end of the instruction list
 		this.optimiseRLE("__ADD_1__", AddN);
 		this.optimiseRLE("__SUB_1__", SubN);
 		this.optimiseRLE("__R_SHIFT_1__", RShiftN);
 		this.optimiseRLE("__L_SHIFT_1__", LShiftN);
-		this.optimiseRLE("__OUTPUT_1__", OutputN);
 	}
 
     /**
