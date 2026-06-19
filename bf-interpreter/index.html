@@ -64,9 +64,9 @@
 				<div id="run-mode-normal-mem-cells-selector" style="display:inline-block; overflow:hidden"></div>
 			</div>
 
-			<!-- OPTIMISED RUN MODE --!>
+			<!-- OPTIMIZED RUN MODE --!>
 			<div id="run-mode-optimised" style="visibility: hidden; display:none">
-				<p><u> Optimised Run Mode </u></p>
+				<p><u> Optimized Run Mode </u></p>
 				<div id="run-mode-optimised-run-button" style="margin: 1rem"></div>
 
 				<p style="display:inline-block">Cpu Arch: </p>
@@ -239,6 +239,42 @@
 
 
 
+	<br>
+    <section class="container">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> Optimization </h2>
+            <p>
+				Code optimization is a field of study that aims to improve some
+				aspect of the code, be that speed of operation, memory usage or
+				program size.  Here I will be focusing on increasing the runtime
+				performance of the interpreter.  The short term goal will be to 
+				look at the performance of 
+				<a href="https://esolangs.org/wiki/Brainfuck_speed_test">
+				speed_test.bf </a> and then expand into a series of more complex
+				programs to expand the diversity of optimizations needed.  The 
+				main intent here is to understand for myself some of the many 
+				optimizations a compiler can make on a simple programing language.
+			</p>
+			<p>
+				Of course a compiler can only do so much, when writing code using
+				sensible data structures and algorithms can remove large portions
+				of work increasing runtime performance.  Of course increasing 
+				runtime performance for the sake of it can lead to code that is
+				more complex than it needs to be, so be sensible profile your
+				code and see if it is even worth the developer hours to push for
+				that 50% reduction in execution time when the end user is already
+				running a pipeline that is 30x slower than your component.  However,
+				we are not here to be sensible we are here to learn so for those
+				interested in genreal <a href="https://www.agner.org/optimize/">
+				optimization techniques in C++</a> please visit the resources
+				compiled by Agner Fog.
+            </p>
+			<!--<h5> Measurement and Profiling </h5>--!>
+          </div>
+        </div>
+     </section>
+
     <section class="container">
         <div class="row text-left">
           <div class="col-sm-12">
@@ -251,13 +287,13 @@
             </p>
           </div>
         </div>
-      </section>
+    </section>
 
     <section class="container">
       <div class="row text-left">
           <div class="col-sm-6">
             <p><b>Optimization Techniques</b></p>
-            <p><a href="https://www.nayuki.io/page/optimizing-brainfuck-compiler">Nayuki.io - Optimising BF Compiler</a></p>
+            <p><a href="https://www.nayuki.io/page/optimizing-brainfuck-compiler">Nayuki.io - Optimizing BF Compiler</a></p>
             <p><a href="https://calmerthanyouare.org/2015/01/07/optimizing-brainfuck.html">Matslina: BF Optimization Strategies</a></p>
             <p><a href="https://www.wilfred.me.uk/blog/2015/08/29/an-optimising-bf-compiler/">Wilfred Hughes: An Optimizing BF Compiler</a></p>
             <p><a href="https://rodrigodd.github.io/2022/10/21/bf_compiler-part1.html"/>
