@@ -19,7 +19,7 @@ QUnit.test("BF Interpreter: Parser Simple", function(assert) {
         "__ADD_1__",
         "__SUB_1__",
         ",",
-        ".",
+        "__OUTPUT_1__",
         "__L_SHIFT_1__",
         "__R_SHIFT_1__",
         "[",
@@ -251,7 +251,8 @@ QUnit.test("BF Interpreter: Optimization RLE", function(assert) {
 		"++++++++++",
 		"---",
 		">>>",
-		"<<<"
+		"<<<",
+		"..."
 	];
 	const outputSymbols = [
 		"__ADD_1__",
@@ -260,7 +261,8 @@ QUnit.test("BF Interpreter: Optimization RLE", function(assert) {
 		"__ADD_10__",
 		"__SUB_3__",
 		"__R_SHIFT_3__",
-		"__L_SHIFT_3__"
+		"__L_SHIFT_3__",
+		"__OUTPUT_3__"
 	];
 	
 	for(let i = 0; i < inputPrograms.length; i++) {
@@ -284,7 +286,7 @@ QUnit.test("BF Interpreter: Optimization RLE", function(assert) {
 		"__R_SHIFT_3__",
 		"]",
 		",",
-		".",
+		"__OUTPUT_1__",
 		"__ADD_1__"
 	];
 	
