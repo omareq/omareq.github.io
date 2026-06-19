@@ -64,7 +64,6 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 		// cpu mem cells selector
 		this.cpuMemSelector = createSelect();
 		this.cpuMemSelector.parent("run-mode-optimised-mem-cells-selector");
-		this.cpuMemSelector.option("500");
 		this.cpuMemSelector.option("1 k");
 		this.cpuMemSelector.option("2 k");
 		this.cpuMemSelector.option("4 k");
@@ -92,7 +91,7 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 		const optimisationFlag = true;
 		const program = new BFProgram(parse(programTxt), optimisationFlag);
 		const arch = int(RunMode.activeMode.cpuArchSelector.selected().split(" ")[0]);
-		const mem = int(RunMode.activeMode.cpuMemSelector.selected().split(" ")[0]);
+		const mem = 1000*int(RunMode.activeMode.cpuMemSelector.selected().split(" ")[0]);
 		let cpu = new BFCpu(arch, program, mem, asciiCodes, RunMode.output);
 		const cpuStartTime = performance.now();
 		cpu.execute();
