@@ -91,7 +91,35 @@ class BFCpu {
         this.outputBuffer = [];
         this.inputPtr = 0;
         this.haltExecution = false;
+		this.profileData = {};
+		this.profile = false;
     }
+
+	pushProfileInfo(data) {
+		const indexLocation = data.index;
+		if(this.profileData[data.symbol] == undefined) {
+			this.profileData[data.symbol] = {
+				"count": 1, "index": {}
+			};
+			this.profileData[data.symbol].index[indexLocation] = 1;
+		} else {
+			this.profileData[data.symbol].count += 1;
+			if(this.profileData[data.symbol].index[indexLocation] == undefined) {
+				this.profileData[data.symbol].index[indexLocation] = 1;
+			} else {
+				this.profileData[data.symbol].index[indexLocation] += 1;
+			}
+		}
+	}
+
+	enableProfiling() {
+		this.profile = true;
+	}
+
+	disableProfiling() {
+		this.profile = false;
+	}
+
 
     /**
      * Get the next input from the input buffer.  Returns zero at the end of the
@@ -195,7 +223,11 @@ class BFCpu {
 
         // instruction.operation(this);
         try{
-            instruction.operation(this);
+			if(this.profile) {
+				instruction.operationProfiled(this);
+			} else {
+				instruction.operation(this);
+			}
         } catch (e) {
             if (typeof window !== 'undefined') {
                 // this is browser
@@ -227,6 +259,9 @@ class BFCpu {
             }
         }
         this.outputFunction(this.outputBuffer.join(""));
+		if(this.profile) {
+			console.log("Profile Data: ", this.profileData);
+		}
     }
 }
 

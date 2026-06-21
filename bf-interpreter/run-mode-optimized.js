@@ -93,6 +93,7 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 		const arch = int(RunMode.activeMode.cpuArchSelector.selected().split(" ")[0]);
 		const mem = 1000*int(RunMode.activeMode.cpuMemSelector.selected().split(" ")[0]);
 		let cpu = new BFCpu(arch, program, mem, asciiCodes, RunMode.output);
+		cpu.enableProfiling();
 		const cpuStartTime = performance.now();
 		cpu.execute();
 		const endTime = performance.now();

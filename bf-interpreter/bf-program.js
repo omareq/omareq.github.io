@@ -68,6 +68,16 @@ class BFInstruction {
     operation(cpu) {
         throw new Error("Method 'operation()' must be implemented.");
     }
+
+	/**
+	 * Applies the Instruction and saves measurement metrics to the cpu
+	 *
+     * @param cpu {BFCpu} - The cpu to apply the operation on.
+	 */
+	operationProfiled(cpu) {
+		cpu.pushProfileInfo({"symbol": this.symbol, "index":this.locationIndex});
+		this.operation(cpu);
+	}
 }
 
 /**
@@ -604,6 +614,7 @@ class BFProgram {
         }
 
 // TODO: optimise RLE use old symbol eg '+'  as well as intermediate rep '__ADD_1__'
+		let opCount = 0;
         for(let i = 0; i < program.length; i++) {
 			if(i != program.length -1) {
 // TODO: refactor optimseRLE lots of nested statements and control flow is getting messy
@@ -617,7 +628,7 @@ class BFProgram {
 						}
 					}
 
-					const newOperation = new opReplacement(i, charCount);
+					const newOperation = new opReplacement(opCount, charCount);
 					optimised.push(newOperation);
 					i += charCount -1;
 					continue;
@@ -645,7 +656,10 @@ class BFProgram {
                     throw(`Optimise RLE ${opSymbol} matching LBRack not found`);
                 }
             }
-            optimised.push(program[i]);
+			let nextOp = program[i];
+			nextOp.locationIndex = opCount;
+            optimised.push(nextOp);
+			opCount++;
         }
 
         this.instructionsList = optimised;
