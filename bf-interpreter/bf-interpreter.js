@@ -95,21 +95,27 @@ class BFCpu {
 		this.profile = false;
     }
 
-	pushProfileInfo(data) {
-		const indexLocation = data.index;
-		if(this.profileData[data.symbol] == undefined) {
-			this.profileData[data.symbol] = {
-				"count": 1, "index": {}
-			};
-			this.profileData[data.symbol].index[indexLocation] = 1;
-		} else {
-			this.profileData[data.symbol].count += 1;
-			if(this.profileData[data.symbol].index[indexLocation] == undefined) {
-				this.profileData[data.symbol].index[indexLocation] = 1;
+	makeProfileData() {
+		for(let i = 0; i < this.program.size; i++) {
+			const symbol = this.program.instructionsList[i].symbol;
+			const indexLocation = i;
+				
+			if(this.profileData[symbol] == undefined) {
+				this.profileData[symbol] = {
+					"count": 0, "index": {}
+				};
+				this.profileData[symbol].index[indexLocation] = 0;
 			} else {
-				this.profileData[data.symbol].index[indexLocation] += 1;
+				this.profileData[symbol].index[indexLocation] = 0;
+				
 			}
 		}
+	}
+
+	pushProfileInfo(data) {
+		const indexLocation = data.index;
+		this.profileData[data.symbol].count += 1;
+		this.profileData[data.symbol].index[indexLocation] += 1;
 	}
 
 	enableProfiling() {
@@ -245,6 +251,10 @@ class BFCpu {
      * of the file.
      */
     execute() {
+		if(this.profile) {
+			this.makeProfileData();
+		}
+
         while(this.instructionPtr < this.program.size) {
             this.step();
             if(this.executeCnt > this.WATCH_DOG_COUNT) {
@@ -259,9 +269,6 @@ class BFCpu {
             }
         }
         this.outputFunction(this.outputBuffer.join(""));
-		if(this.profile) {
-			console.log("Profile Data: ", this.profileData);
-		}
     }
 }
 

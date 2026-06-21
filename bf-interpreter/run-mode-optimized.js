@@ -97,6 +97,7 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 		const cpuStartTime = performance.now();
 		cpu.execute();
 		const endTime = performance.now();
+		console.log(cpu.profileData);
 
 		RunMode.lastProgram = programTxt;
 		RunMode.lastInput = input;

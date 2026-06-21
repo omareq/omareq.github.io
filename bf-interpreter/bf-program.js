@@ -56,6 +56,7 @@ class BFInstruction {
 
         this.symbol = symbol;
         this.locationIndex = locationIndex;
+		this.sourceIndex = locationIndex;
     }
 
     /**
@@ -629,6 +630,7 @@ class BFProgram {
 					}
 
 					const newOperation = new opReplacement(opCount, charCount);
+					newOperation.sourceIndex = program[i].sourceIndex;
 					optimised.push(newOperation);
 					i += charCount -1;
 					continue;
