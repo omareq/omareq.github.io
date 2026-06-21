@@ -633,6 +633,7 @@ class BFProgram {
 					newOperation.sourceIndex = program[i].sourceIndex;
 					optimised.push(newOperation);
 					i += charCount -1;
+					opCount++;
 					continue;
 				}
 			}

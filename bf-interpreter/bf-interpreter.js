@@ -98,15 +98,14 @@ class BFCpu {
 	makeProfileData() {
 		for(let i = 0; i < this.program.size; i++) {
 			const symbol = this.program.instructionsList[i].symbol;
-			const indexLocation = i;
 				
 			if(this.profileData[symbol] == undefined) {
 				this.profileData[symbol] = {
 					"count": 0, "index": {}
 				};
-				this.profileData[symbol].index[indexLocation] = 0;
+				this.profileData[symbol].index[i] = 0;
 			} else {
-				this.profileData[symbol].index[indexLocation] = 0;
+				this.profileData[symbol].index[i] = 0;
 				
 			}
 		}

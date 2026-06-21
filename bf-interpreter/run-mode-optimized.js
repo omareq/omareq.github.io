@@ -102,6 +102,8 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 		RunMode.lastProgram = programTxt;
 		RunMode.lastInput = input;
 
+		console.log(cpu);
+
 		const preProcessingTime = cpuStartTime - startTime;
 		const cpuExecutionTime = endTime - cpuStartTime;
 		const totalProcessingTime = endTime - startTime;
