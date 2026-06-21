@@ -79,6 +79,10 @@ class BFInstruction {
 		cpu.pushProfileInfo({"symbol": this.symbol, "index":this.locationIndex});
 		this.operation(cpu);
 	}
+
+	operationProfiledLoopEvents(cpu) {
+		this.operation(cpu);
+	}
 }
 
 /**
@@ -369,6 +373,11 @@ class PairedInstruction extends BFInstruction {
     jumpLocation() {
         return this.pairedLocationIndex;
     }
+	
+	operationProfiledLoopEvents(cpu) {
+		cpu.pushProfileInfo({"symbol": this.symbol, "index":this.locationIndex});
+		this.operation(cpu);
+	}
 }
 
 /**

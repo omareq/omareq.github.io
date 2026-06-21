@@ -31,6 +31,19 @@
  *****************************************************************************/
 "use strict";
 
+class ProfileMode {
+    static NONE = "NONE";
+    static FULL = "FULL";
+    static LOOPS = "LOOPS"; 
+
+    static isValid(mode) {
+        return Object.getOwnPropertyNames(ProfileMode)
+			.splice(4) // Removes length, name, prototype and isValid()
+			.includes(mode);
+    }
+}
+		
+
 /**
  * A class that stores the CPU model for the BF program execution.  This
  * includes the: data and instruction pointers, the instruction list, the memory
@@ -48,8 +61,11 @@ class BFCpu {
      * @param memorySize {Number} - The size of the allocated memory at start up
      * @param inputCharCodes {Array<Number>} - The ASCII char codes of the input string
      */
-    constructor(nbits=8, program, memorySize, inputCharCodes, outputFunction) {
-        this.nbits = nbits;
+    constructor(nbits=8, program, memorySize,
+		inputCharCodes, outputFunction,
+		profileMode=ProfileMode.NONE) {
+       
+		this.nbits = nbits;
         const allowedBits = [8, 16, 32];
         if(!allowedBits.includes(this.nbits)) {
             throw "BFCpu Architecture NBits must be one of [8, 16, 32]";
@@ -73,6 +89,12 @@ class BFCpu {
         this.haltExecution = false;
         this.outputFunction = outputFunction;
         this.dataPtrWrap = true;
+
+		if(!ProfileMode.isValid(profileMode)) {
+			throw(`Profile Mode ${profileMode} is invalid`);
+		} 
+		this.profileMode = profileMode;
+
 
         this.reset();
     }
@@ -118,11 +140,11 @@ class BFCpu {
 	}
 
 	enableProfiling() {
-		this.profile = true;
+		this.profileMode = ProfileMode.FULL;
 	}
 
 	disableProfiling() {
-		this.profile = false;
+		this.profileMode = ProfileMode.NONE;
 	}
 
 
@@ -228,7 +250,9 @@ class BFCpu {
 
         // instruction.operation(this);
         try{
-			if(this.profile) {
+			if(this.profileMode == ProfileMode.LOOPS) {
+				instruction.operationProfiledLoopEvents(this);
+			} else if(this.profileMode == ProfileMode.FULL) {
 				instruction.operationProfiled(this);
 			} else {
 				instruction.operation(this);
@@ -250,7 +274,7 @@ class BFCpu {
      * of the file.
      */
     execute() {
-		if(this.profile) {
+		if(this.profileMode != ProfileMode.NONE) {
 			this.makeProfileData();
 		}
 
