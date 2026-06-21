@@ -48,6 +48,7 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 			document.getElementById("run-mode-optimised-run-button").children[0].remove();
 			document.getElementById("run-mode-optimised-cpu-arch-selector").children[0].remove();
 			document.getElementById("run-mode-optimised-mem-cells-selector").children[0].remove();
+			document.getElementById("run-mode-optimised-profile-mode-selector").children[0].remove();
 		}
 		this.runButton = createButton("Run", "value");
 		this.runButton.parent("run-mode-optimised-run-button");
@@ -76,6 +77,14 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 		this.cpuMemSelector.option("512 k");
 		this.cpuMemSelector.option("1024 k");
 		this.cpuMemSelector.selected("32 k");
+
+		// profileMode selector
+		this.profileModeSelector = createSelect();
+		this.profileModeSelector.parent("run-mode-optimised-profile-mode-selector");
+		const modes = ProfileMode.getAllModes();
+		for(let i = 0; i < modes.length; i++) {
+			this.profileModeSelector.option(modes[i]);
+		}
 	}
 
 	update() {}
@@ -92,14 +101,16 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 		const program = new BFProgram(parse(programTxt), optimisationFlag);
 		const arch = int(RunMode.activeMode.cpuArchSelector.selected().split(" ")[0]);
 		const mem = 1000*int(RunMode.activeMode.cpuMemSelector.selected().split(" ")[0]);
-		const profileMode = ProfileMode.LOOPS;
+		const profileMode = RunMode.activeMode.profileModeSelector.selected();
 
 		let cpu = new BFCpu(arch, program, mem, asciiCodes, RunMode.output, profileMode);
 		
 		const cpuStartTime = performance.now();
 		cpu.execute();
 		const endTime = performance.now();
-		console.log(cpu.profileData);
+		if(profileMode != ProfileMode.NONE) {
+			console.log(cpu.profileData);
+		}
 
 		RunMode.lastProgram = programTxt;
 		RunMode.lastInput = input;

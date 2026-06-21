@@ -37,10 +37,14 @@ class ProfileMode {
     static LOOPS = "LOOPS"; 
 
     static isValid(mode) {
-        return Object.getOwnPropertyNames(ProfileMode)
-			.splice(4) // Removes length, name, prototype and isValid()
-			.includes(mode);
+        return ProfileMode.getAllModes().includes(mode);
     }
+
+	static getAllModes() {
+		// Splice removes the following properties
+		// length, name, property, isValid, getAllModes
+		return Object.getOwnPropertyNames(ProfileMode).splice(5);
+	}
 }
 		
 
@@ -132,6 +136,7 @@ class BFCpu {
 			}
 		}
 	}
+
 
 	pushProfileInfo(data) {
 		const indexLocation = data.index;
