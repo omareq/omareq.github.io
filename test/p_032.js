@@ -130,7 +130,7 @@ QUnit.test("BF Interpreter: Memory", function(assert) {
 
 QUnit.test("BF Interpreter: Basic Instructions", function(assert) {
     const inputAsciiCodes = [65];
-    const program = new BFProgram(parse("+-><,.[-]"));
+    const program = new BFProgram(parse("+-><,.[-]"), optimise=false);
     const memSize = 2;
     let cpu = new BFCpu(8, program, memSize, inputAsciiCodes, output);
     // console.log(cpu);
@@ -324,14 +324,50 @@ QUnit.test("BF Interpreter: Optimization Profiling", function(assert) {
 		const memSize = 30000;
 		let cpu1 = new BFCpu(8, program, memSize, inputAsciiCodes, output, "FULL");
 		cpu1.execute();
-		const profileDataFull = JSON.stringify(cpu1.profileData);
+		const profileDataFull = JSON.stringify(cpu1.profileData, Object.keys(cpu1.profileData).sort());
 		let cpu2 = new BFCpu(8, program, memSize, inputAsciiCodes, output, "LOOPS");
 		cpu2.execute();
 		cpu2.calculateLoopProfileData();
-		const profileDataLoops = JSON.stringify(cpu2.profileData);
+		const profileDataLoops = JSON.stringify(cpu2.profileData, Object.keys(cpu2.profileData).sort());
 		
 		assert.equal(profileDataFull, profileDataLoops,
 			`BF Interpreter Test: Optimisation Profiling Data Same for FULL and LOOPS for input Program:\n${inputPrograms[i]}`); 
+	}
+});
+
+QUnit.test("BF Interpreter: Optimization Clear Loop", function(assert) {
+	const inputPrograms = [
+		"[-]",
+		"[+]",
+		"++++[-]---[+]...[+>]++++",
+		"++++[-]---[+]...[+>]++++[-]",
+		"+++[->+++++[-]<]"
+	];
+
+	const outputLengths = [
+		1,
+		1,
+		20,
+		21,
+		14
+	];
+
+	for(let i = 0; i < inputPrograms.length; i++) {
+		let program = new BFProgram(parse(inputPrograms[i]), optimise=false);
+		program.optimiseClearLoop();
+		
+		assert.equal(program.size, outputLengths[i],
+			`BF Interpreter Test: Optimisation Clear Loop:\n${inputPrograms[i]}`); 
+		for(let j = 0; j < program.size; j++) {
+			if(program.instructionsList[j] == "["){
+				const pairedSymbol = program.instructionsList[j].symbol;
+				const pairedIndex = program.instructionsList[j].pairedLocationIndex;
+				assert.equal(pairedSymbol, "]",
+					`BF Interpreter Test: Optimisation Clear Loop - Jump Instructions not matched: \n${inputPrograms[i]}`);
+				assert.equal(program.instructionsList[pairedIndex].pairedLocationIndex, i,
+					`BF Interpreter Test: Optimisation Clear Loop - Jump Instructions PairedLocationIndex: \n${inputPrograms[i]}`);
+			}
+		}
 	}
 });
 
