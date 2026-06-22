@@ -50,7 +50,7 @@
 
 			<p style="display:inline-block"><em><u> Mode: </u></em></p>
 			<div id="run-mode-selector" style="display:inline-block; overflow:hidden"> </div>
-			
+
 			<!-- NORMAL RUN MODE --!>
 			<div id="run-mode-normal" style="visibility: hidden; display:none">
 				<p><u> Normal Run Mode </u></p>
@@ -58,7 +58,7 @@
 
 				<p style="display:inline-block">Cpu Arch: </p>
 				<div id="run-mode-normal-cpu-arch-selector" style="display:inline-block; overflow:hidden"></div>
-				
+
 				<div></div><!-- div to separate elements--!>
 				<p style="display:inline-block">Mem Cells: </p>
 				<div id="run-mode-normal-mem-cells-selector" style="display:inline-block; overflow:hidden"></div>
@@ -71,7 +71,7 @@
 
 				<p style="display:inline-block">Cpu Arch: </p>
 				<div id="run-mode-optimised-cpu-arch-selector" style="display:inline-block; overflow:hidden"></div>
-				
+
 				<div></div><!-- div to separate elements--!>
 				<p style="display:inline-block">Mem Cells: </p>
 				<div id="run-mode-optimised-mem-cells-selector" style="display:inline-block; overflow:hidden"></div>
@@ -252,18 +252,18 @@
 				Code optimization is a field of study that aims to improve some
 				aspect of the code, be that speed of operation, memory usage or
 				program size.  Here I will be focusing on increasing the runtime
-				performance of the interpreter.  The short term goal will be to 
-				look at the performance of 
+				performance of the interpreter.  The short term goal will be to
+				look at the performance of
 				<a href="https://esolangs.org/wiki/Brainfuck_speed_test">
 				speed_test.bf </a> and then expand into a series of more complex
-				programs to expand the diversity of optimizations needed.  The 
-				main intent here is to understand for myself some of the many 
+				programs to expand the diversity of optimizations needed.  The
+				main intent here is to understand for myself some of the many
 				optimizations a compiler can make on a simple programing language.
 			</p>
 			<p>
 				Of course a compiler can only do so much, when writing code using
 				sensible data structures and algorithms can remove large portions
-				of work increasing runtime performance.  Of course increasing 
+				of work increasing runtime performance.  Of course increasing
 				runtime performance for the sake of it can lead to code that is
 				more complex than it needs to be, so be sensible profile your
 				code and see if it is even worth the developer hours to push for
@@ -274,7 +274,71 @@
 				optimization techniques in C++</a> please visit the resources
 				compiled by Agner Fog.
             </p>
-			<!--<h5> Measurement and Profiling </h5>--!>
+            <!--
+                speedtest for profilers
+                CPU Info: 8bit Arch - 1k Mem
+                Optimisation: RLE - Clear Loop Only
+                Time: None 7.2ms, Loops 7.89ms, full 12.2m
+                Fastest of 25
+            --!>
+			<h5> Measurement and Profiling </h5>
+            <p>
+                Profiling is a form of analysis that measures the frequency and
+                duration of operations called from software.  This can be
+                achieved in a number of ways, I have chosen to add instrumentation
+                to the BF Interpreter so that it can record which operations are
+                run and how many times.  The main issue with instrumentation of
+                code comes with adding in extra instructions.
+            </p>
+            <p>
+                Instrumentation works by adding extra instructions somewhere in
+                the code, that can be in the source code, the assembely code or
+                by using hardware intterupts. Either way the cpu is doing extra
+                work to identify when something needs to be recorded.  This extra
+                work can ruin the estimated time spent running a particular section
+                of code and make trying to increase runtime performance hard.
+            </p>
+            <p>
+                Some work arounds involve only instrumenting part of the code or doing
+                a statisctical analysis of the instrumentation to try reduce the
+                effect the profiling tools have on the measurement. There have even
+                been interesting work in
+                <a href="https://github.com/plasma-umass/coz"> causal profiling </a>
+                which trys to negate some of these side effects.
+            </p>
+            <p>
+                I have implemented 2 different profiling tools into the BF Interpreter.
+                The first is a <b>FULL</b> profiler, it directly counts every single
+                operation and which index in the instructions list it comes from.
+                The second is a <b>LOOP</b> only profiler, this only counts the open and
+                close instructions in the loop and fills in the rest of the profile
+                information after the cpu has completed executing. The following
+                graph shows how much of an effect this can have on run time performance
+                when the interpreter runs the speed-test.bf program with the following
+                settings: 8bit cpu, 1k mem, RLE and Clear Loop optimizations.  The
+                fastest of 25 measurements is shown here.  Interestingly this is
+                dependent on the program which is run as the instrumentation can
+                only log events for things which happen, for example if a loop is skipped
+                no information on how long that loop could take is measured.
+            </p>
+            <img src="./imgs/BF-Interpreter-Profiler-Performance.webp"
+                 loading="lazy"
+                 alt="Graph showing that loop profiling adds 10% to runtime and full profiling adds 70% to runtime."
+                 style="max-width:100%">
+            <p>
+                It should be noted that even with this profiling information time is very
+                difficult to measure, this is due to the operating system doing
+                other operations and taking control of the processor whilst the
+                interpreter is running.  This can lead to wildly fluctuating
+                execution times. It is always best to take multiple readings and
+                get a feel for how long something actually takes to run.  This
+                can be seen in the histogram below, which shows the variability of the
+                same speed-test.bf program run 200 times with no profiling.
+            </p>
+            <img src="./imgs/variable-runtime.webp"
+                 loading="lazy"
+                 alt="Graph showing that loop profiling adds 10% to runtime and full profiling adds 70% to runtime."
+                 style="max-width:100%">
           </div>
         </div>
      </section>
