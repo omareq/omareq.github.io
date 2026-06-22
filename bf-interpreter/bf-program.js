@@ -104,7 +104,7 @@ class AddN extends BFInstruction {
             throw new Error(`N should should be positive ${N}`);
         }
         this.N = N;
-    }
+	}
 
     /**
      * Applies the add N instruction to the cpu
@@ -373,7 +373,7 @@ class PairedInstruction extends BFInstruction {
     jumpLocation() {
         return this.pairedLocationIndex;
     }
-	
+
 	operationProfiledLoopEvents(cpu) {
 		cpu.pushProfileInfo({"symbol": this.symbol, "index":this.locationIndex});
 		this.operation(cpu);

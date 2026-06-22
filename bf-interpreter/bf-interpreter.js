@@ -34,7 +34,7 @@
 class ProfileMode {
     static NONE = "NONE";
     static FULL = "FULL";
-    static LOOPS = "LOOPS"; 
+    static LOOPS = "LOOPS";
 
     static isValid(mode) {
         return ProfileMode.getAllModes().includes(mode);
@@ -46,7 +46,7 @@ class ProfileMode {
 		return Object.getOwnPropertyNames(ProfileMode).splice(5);
 	}
 }
-		
+
 
 /**
  * A class that stores the CPU model for the BF program execution.  This
@@ -68,7 +68,7 @@ class BFCpu {
     constructor(nbits=8, program, memorySize,
 		inputCharCodes, outputFunction,
 		profileMode=ProfileMode.NONE) {
-       
+
 		this.nbits = nbits;
         const allowedBits = [8, 16, 32];
         if(!allowedBits.includes(this.nbits)) {
@@ -96,7 +96,7 @@ class BFCpu {
 
 		if(!ProfileMode.isValid(profileMode)) {
 			throw(`Profile Mode ${profileMode} is invalid`);
-		} 
+		}
 		this.profileMode = profileMode;
 
 
@@ -124,7 +124,7 @@ class BFCpu {
 	makeProfileData() {
 		for(let i = 0; i < this.program.size; i++) {
 			const symbol = this.program.instructionsList[i].symbol;
-				
+
 			if(this.profileData[symbol] == undefined) {
 				this.profileData[symbol] = {
 					"count": 0, "index": {}
@@ -132,11 +132,31 @@ class BFCpu {
 				this.profileData[symbol].index[i] = 0;
 			} else {
 				this.profileData[symbol].index[i] = 0;
-				
 			}
 		}
 	}
 
+	calculateLoopProfileData() {
+		let stack = [1];
+		for(let i = 0; i < this.program.size; i++) {
+			const instruction = this.program.instructionsList[i];
+			const symbol = instruction.symbol;
+
+			let instExecCnt = stack.slice(-1)[0];
+			if (symbol == "[") {
+				const pairIndex = instruction.pairedLocationIndex;
+				const loopExecCount = this.profileData["]"].index[pairIndex];
+				stack.push(loopExecCount);
+				continue;
+			} else if (symbol == "]") {
+				stack.pop();
+				continue;
+			}
+
+			this.profileData[symbol].index[i] = instExecCnt;
+			this.profileData[symbol].count += instExecCnt;
+		}
+	}
 
 	pushProfileInfo(data) {
 		const indexLocation = data.index;
@@ -145,7 +165,7 @@ class BFCpu {
 	}
 
 	enableProfiling() {
-		this.profileMode = ProfileMode.FULL;
+		this.profileMode = ProfileMode.LOOPS;
 	}
 
 	disableProfiling() {

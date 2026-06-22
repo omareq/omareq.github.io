@@ -309,5 +309,31 @@ QUnit.test("BF Interpreter: Optimization RLE", function(assert) {
 	}
 });
 
+QUnit.test("BF Interpreter: Optimization Profiling", function(assert) {
+	const inputPrograms = [
+		"+",
+		"-",
+		"++++",
+		"+++[->+++++[-]<]",
+		"[-][.--..]++++++++[>+>++++<<-]>++>>+<[-[>>+<<-]+>>]>+[-<<<[->[+[-]+>++>>>-<<]<[<]>>++++++[<<+++++>>-]+<<++.[-]<<]>.>+[>>]>+][-][.]"
+	];
+
+	for(let i = 0; i < inputPrograms.length; i++) {
+		const program = new BFProgram(parse(inputPrograms[i]), optimise=true);
+		const inputAsciiCodes = [0];
+		const memSize = 30000;
+		let cpu1 = new BFCpu(8, program, memSize, inputAsciiCodes, output, "FULL");
+		cpu1.execute();
+		const profileDataFull = JSON.stringify(cpu1.profileData);
+		let cpu2 = new BFCpu(8, program, memSize, inputAsciiCodes, output, "LOOPS");
+		cpu2.execute();
+		cpu2.calculateLoopProfileData();
+		const profileDataLoops = JSON.stringify(cpu2.profileData);
+		
+		assert.equal(profileDataFull, profileDataLoops,
+			`BF Interpreter Test: Optimisation Profiling Data Same for FULL and LOOPS for input Program:\n${inputPrograms[i]}`); 
+	}
+});
+
 });
 

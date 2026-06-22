@@ -104,13 +104,18 @@ RunMode.Mode.Optimised = class extends RunMode.ModeType {
 		const profileMode = RunMode.activeMode.profileModeSelector.selected();
 
 		let cpu = new BFCpu(arch, program, mem, asciiCodes, RunMode.output, profileMode);
-		
+
 		const cpuStartTime = performance.now();
 		cpu.execute();
 		const endTime = performance.now();
+
+		if(profileMode == ProfileMode.LOOPS) {
+			cpu.calculateLoopProfileData();
+		}
 		if(profileMode != ProfileMode.NONE) {
 			console.log(cpu.profileData);
 		}
+
 
 		RunMode.lastProgram = programTxt;
 		RunMode.lastInput = input;
