@@ -269,7 +269,8 @@ class BFCpu {
         }
         const instruction = this.program.instructionsList[this.instructionPtr];
         if(instruction === undefined) {
-            console.error("Current instruction is undefined:", instruction);
+            console.error("Current instruction is undefined - Instruction Ptr: ",
+				this.instructionPtr);
             this.haltExecution = true;
         }
 

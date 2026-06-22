@@ -85,6 +85,29 @@ class BFInstruction {
 	}
 }
 
+class SetCell extends BFInstruction {
+	constructor(locationIndex, N) {
+		super(`__SET_CELL_${N}__`, locationIndex);
+        if(!Number.isInteger(N)) {
+            throw new Error(`N Should be an integer: ${N}`);
+        }
+        if(N < 0 ) {
+            throw new Error(`N should should be positive ${N}`);
+		}
+		this.N = N;
+	}
+
+	operation(cpu) {
+        cpu.setCurrentCell(this.N);
+	}
+}
+
+class ClearCell extends SetCell {
+	constructor(locationIndex) {
+		super(locationIndex, 0);
+	}
+}
+
 /**
  * The Add instruction that increments the current data cell by N
  */
@@ -586,6 +609,7 @@ class BFProgram {
 	 */
 	optimise() {
 		this.optimiseAllRLE();
+		this.optimiseClearLoop();
 	}
 
 	/**
@@ -678,6 +702,45 @@ class BFProgram {
         this.size = this.instructionsList.length;
         this.length = this.instructionsList.length;
     }
+
+	optimiseClearLoop() {
+		let optimised = [];
+		let offset = 0;
+		for(let i = 0; i < this.size; i++) {
+			let currentOp = this.instructionsList[i];
+			currentOp.locationIndex -= offset;
+			if(this.instructionsList[i].symbol != "[") {
+				optimised.push(currentOp);
+				if(currentOp.symbol == "]") {
+					const pairedIndex = currentOp.pairedLocationIndex;
+					optimised[pairedIndex].pairedLocationIndex = i - offset;
+				}
+				continue;
+			}
+
+			let pairedIndex = currentOp.pairedLocationIndex;
+			this.instructionsList[pairedIndex].pairedLocationIndex -= offset;
+			const middleSymbol = this.instructionsList[i+1].symbol;
+			if(!(middleSymbol == "__ADD_1__" || middleSymbol == "__SUB_1__")) {
+				optimised.push(currentOp);
+				continue;
+			}
+			const endSymbol = this.instructionsList[i+2].symbol;
+			if(endSymbol != "]") {
+				optimised.push(currentOp);
+				continue;
+			}
+			let clearOp = new ClearCell(i);
+			clearOp.sourceIndex = currentOp.sourceIndex;
+			optimised.push(clearOp);
+			offset += 2;
+			i+=2;
+		}
+		// console.log("Clear Loop - optimised: ", optimised);
+		this.instructionsList = optimised;
+		this.size = optimised.length;
+		this.length = this.size;
+	}
 }
 
 if (typeof window === 'undefined') {
