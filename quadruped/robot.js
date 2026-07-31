@@ -636,7 +636,7 @@ class Robot {
                     this.homeZ + staticZ];
         rb_start = [this.homeX + staticX,
                     -this.homeY + staticY,
-                    this.homeZ + staticZ]
+                    this.homeZ + staticZ];
 
         let rf_end, lb_end, lf_end, rb_end;
 
