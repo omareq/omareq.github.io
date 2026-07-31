@@ -369,7 +369,8 @@ class Robot {
         let theta2 = acos((alpha * alpha - fm * fm - tb * tb) / (-2 * fm * tb));
 
         let phi1 = atan2(r, (z + cx));
-        let phi2 = asin(sin(theta2) * tb / alpha);
+        // let phi2 = asin(sin(theta2) * tb / alpha); // OG calculation follow sine rule incorrectly
+        let phi2 = asin(sin(theta2) * fm / alpha);
         // let epsilon = 3 * HALF_PI - phi1 - phi2 - theta2;
 
         let theta3 = PI - phi1 - phi2;
