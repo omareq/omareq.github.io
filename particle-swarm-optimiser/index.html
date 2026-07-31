@@ -1,25 +1,31 @@
-<html>
+<html lang="eng-GB">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Omar Essilfie-Quaye">
   <meta property="og:title" content="Particle Swarm Optimiser">
-  <meta property="og:description" content="Simple particle swarm optimiser">
+  <meta property="og:description" content="Simple particle swarm optimiser.  This is a project created by Omar Essilfie-Quaye.">
+  <meta name="description" content="A simple particle swarm optimiser.  This is a project created by Omar Essilfie-Quaye.">
   <meta property="og:image" content="https://omareq.github.io/imgs/p_011.jpg">
   <meta property="og:url" content="https://omareq.github.io/particle-swarm-optimiser/">
   <meta property="og:site_name" content="Omar EQ Githubio">
+    <meta property="og:locale" content="en_GB" />
+
   <script language="javascript" type="text/javascript" src="../libraries/p5.js"></script>
   <script language="javascript" type="text/javascript" src="../libraries/p5.dom.js"></script>
-  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+  <script language="javascript" type="text/javascript" src="ui.js"></script>
   <script language="javascript" type="text/javascript" src="particle.js"></script>
   <script language="javascript" type="text/javascript" src="swarm.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
   <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
-  <meta charset="UTF-8">
+  <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script>
+  <script language="javascript" type="text/javascript" src="../libraries/run_prettify.js"></script>
 
   <link type="text/css" rel="stylesheet" href="../main.css">
 
-  <title>Particle Swam Optimiser</title>
+  <title>Particle Swarm Optimiser</title>
 </head>
 
 <body style="width:100%; text-align:center">
@@ -27,23 +33,112 @@
     <section class="jumbotron jumbotron-main">
       <div class="container">
         <div class="row text-center">
-          <h1>Particle Swam Optimiser</h1>
-          <h2>Archived</h2>
+          <h1>Particle Swarm Optimiser</h1>
+        </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
         </div>
       </div>
     </section>
 
-    <div id="sketch">
-    </div>
-  </div>
+    <section class="container">
+      <div class="row">
+
+        <div id="control-panel" class="col-sm-3" style="margin-bottom:10px; border: 2px solid purple; border-radius: 10px; visibility:hidden;">
+          <p style="font-weight: bold"> Control Panel <p>
+          <div id="reset-button" style="margin-bottom: 10px; margin-top: 10px"></div>
+
+          <div>
+            <p><b> Swarm </b></p>
+
+            <div id="num-particles-display"></div>
+            <div id="num-particles-slider"></div>
+
+            <div id="num-steps-display"></div>
+            <div id="num-steps-slider"></div>
+
+            <div id="num-steps-per-frame-display"></div>
+            <div id="num-steps-per-frame-slider"></div>
+
+            <!-- draw particles -->
+            <div>
+              <p> Swarm Particles </p>
+              <div id="show-particles-button" style="display: inline-block"> </div>
+              <div id="hide-particles-button" style="display: inline-block"> </div>
+            </div>
+
+            <!-- draw trail -->
+            <div>
+              <p> Swarm Trails </p>
+              <div id="show-trail-button" style="display: inline-block"> </div>
+              <div id="hide-trail-button" style="display: inline-block"> </div>
+            </div>
+
+            <!-- draw movement vector -->
+            <div>
+              <p> Swarm Vector </p>
+              <div id="show-vector-button" style="display: inline-block"> </div>
+              <div id="hide-vector-button" style="display: inline-block"> </div>
+            </div>
+
+            <!-- draw global best pos -->
+            <div>
+              <p> Swarm Best </p>
+              <div id="show-best-button" style="display: inline-block"> </div>
+              <div id="hide-best-button" style="display: inline-block"> </div>
+            </div>
+
+            <!-- trail colour -->
+            <!-- best pos colour -->
+
+          </div>
+
+        </div>
+
+        <div class="col-sm-6">
+         <div id="sketch"></div>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          Github Repo
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/particle-swarm-optimiser/">
+              <img src="../imgs/github-logo.png" alt="Link to github repository"
+                   style="max-width:75px">
+          </a>
+          Docs
+          <a href="./docs/" rel="nofollow">
+              <img src="../imgs/docs-logo.png" alt="Link to source code documentation"
+                   style="max-width:75px">
+          </a>
+        </div>
+      </div>
+    </section>
+
+   <section class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <a id="external_link" href="../projects.html" >
+                    <img src="../imgs/all-projects-button.jpg" style="max-width: 70%;" alt="Link to all projects page">
+                </a>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </section>
+
 
   <section class="container">
     <div class="row">
       <div class="col-sm-3">
         <div class="project-card" id="previous">
-           <h5 id="prev-title">Lissajous</h5>
-          <a id="prev-url" href="../lissajous" class="project-demo">
-            <img id="prev-img" src="../imgs/p_010.jpg">
+						<h5 id="prev-title">Lissajous</h5>
+						<a id="prev-url" href="../lissajous/" class="project-demo">
+							<img id="prev-img" src="../imgs/p_010.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
           </a>
         </div>
       </div>
@@ -52,9 +147,9 @@
 
       <div class="col-sm-3">
         <div class="project-card" id="next">
-          <h5 id="next-title">Towers of Hanoi</h5>
-          <a id="next-url" href="../towers-of-hanoi" class="project-demo">
-            <img id="next-img" src="../imgs/p_012.jpg">
+						<h5 id="next-title">Towers of Hanoi</h5>
+						<a id="next-url" href="../towers-of-hanoi/" class="project-demo">
+							<img id="next-img" src="../imgs/p_012.jpg" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'">
           </a>
         </div>
       </div>

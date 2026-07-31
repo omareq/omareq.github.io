@@ -1,0 +1,446 @@
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Omar Essilfie-Quaye">
+  <meta name="description" content="An Online Brain Fuck Optimizing Interpreter.  This is a project created by Omar Essilfie-Quaye on 07 February 2026.">
+  <meta property="og:title" content="Bf interpreter">
+  <meta property="og:description" content="A Brain Fuck Interpreter.  This is a project created by Omar Essilfie-Quaye on 07 February 2026.">
+  <meta property="og:image" content="https://omareq.github.io/imgs/p_032.jpg">
+  <meta property="og:url" content="https://omareq.github.io/bf-interpreter/">
+  <meta property="og:site_name" content="Omar EQ Githubio">
+  <meta property="og:locale" content="en_GB" />
+
+  <script type="text/javascript" id="MathJax-script" async src="../libraries/mathjax3-es5-tex-chtml.js"> </script>
+  <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="../libraries/bootstrap-4.0.0/css/bootstrap.min.css">
+  <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../libraries/run_prettify.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="../main.css">
+  <link type="text/css" rel="stylesheet" href="bf.css">
+
+  <title>Bf interpreter</title>
+
+</head>
+
+<body style="width:100%; text-align:center">
+  <div id="main">
+    <section class="jumbotron jumbotron-main">
+      <div class="container">
+        <div class="row text-center">
+          <h1>BF Interpreter</h1>
+        </div>
+        <div class="row text-center">
+          <h4><i>By Omar Essilfie-Quaye</i></h4>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="row">
+        <div class="col-sm-4" style="border: 2px solid purple; border-radius: 10px; margin-top: 10px">
+          <p style="font-weight: bold;"> Settings <p>
+          <div id="control-panel">
+			  <p> Example BF Code </p>
+			  <div id="example-code-selector" style="overflow: hidden"></div>
+
+            <p>Source Formatting</p>
+            <div id="minify-button" style="margin: 1rem"></div>
+
+			<p style="display:inline-block"><em><u> Mode: </u></em></p>
+			<div id="run-mode-selector" style="display:inline-block; overflow:hidden"> </div>
+
+			<!-- NORMAL RUN MODE --!>
+			<div id="run-mode-normal" style="visibility: hidden; display:none">
+				<p><u> Normal Run Mode </u></p>
+				<div id="run-mode-normal-run-button" style="margin: 1rem"></div>
+
+				<p style="display:inline-block">Cpu Arch: </p>
+				<div id="run-mode-normal-cpu-arch-selector" style="display:inline-block; overflow:hidden"></div>
+
+				<div></div><!-- div to separate elements--!>
+				<p style="display:inline-block">Mem Cells: </p>
+				<div id="run-mode-normal-mem-cells-selector" style="display:inline-block; overflow:hidden"></div>
+			</div>
+
+			<!-- OPTIMIZED RUN MODE --!>
+			<div id="run-mode-optimised" style="visibility: hidden; display:none">
+				<p><u> Optimized Run Mode </u></p>
+				<div id="run-mode-optimised-run-button" style="margin: 1rem"></div>
+
+				<p style="display:inline-block">Cpu Arch: </p>
+				<div id="run-mode-optimised-cpu-arch-selector" style="display:inline-block; overflow:hidden"></div>
+
+				<div></div><!-- div to separate elements--!>
+				<p style="display:inline-block">Mem Cells: </p>
+				<div id="run-mode-optimised-mem-cells-selector" style="display:inline-block; overflow:hidden"></div>
+
+				<div></div><!-- div to separate elements--!>
+				<p style="display:inline-block">Profile Mode: </p>
+				<div id="run-mode-optimised-profile-mode-selector" style="display:inline-block; overflow:hidden"></div>
+			</div>
+          </div>
+        </div>
+        <div class="col-sm-8 text-left">
+  	     <div id="sketch"></div>
+         <h2>Program</h2>
+                <div id="source-code-text" style="max-height: 70rem; overflow-y: scroll" class="textarea" contenteditable="true">
+                  <span class="plus"><span class="highlight">+</span>+++++++++</span>
+                  <span class="lbrack">[</span>
+                  <span class="gt">&gt;</span>
+                  <span class="plus">+</span>
+                  <span class="gt">&gt;</span>
+                  <span class="plus">+++</span>
+                  <span class="gt">&gt;</span>
+                  <span class="plus">+++++++</span>
+                  <span class="gt">&gt;</span>
+                  <span class="plus">++++++++++</span>
+                  <span class="lt">&lt;&lt;&lt;&lt;</span>
+                  <span class="minus">-</span>
+                  <span class="rbrack">]</span>
+                  <span class="gt">&gt;&gt;&gt;</span>
+                  <span class="plus">++</span>
+                  <span class="dot">.</span>
+                  <span class="gt">&gt;</span>
+                  <span class="plus">+</span>
+                  <span class="dot">.</span>
+                  <span class="plus">+++++++</span>
+                  <span class="dot">..</span>
+                  <span class="plus">+++</span>
+                  <span class="dot">.</span>
+                  <span class="lt">&lt;&lt;</span>
+                  <span class="plus">++</span>
+                  <span class="dot">.</span>
+                  <span class="gt">&gt;</span>
+                  <span class="plus">+++++++++++++++</span>
+                  <span class="dot">.</span>
+                  <span class="gt">&gt;</span>
+                  <span class="dot">.</span>
+                  <span class="plus">+++</span>
+                  <span class="dot">.</span>
+                  <span class="minus">------</span>
+                  <span class="dot">.</span>
+                  <span class="minus">--------</span>
+                  <span class="dot">.</span>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+        <div class="row text-left">
+            <div class="col-sm-12">
+
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="row text-left">
+            <div class="col-sm-12">
+              <h2>Input</h2>
+                <div id="input-text" class="textarea" contenteditable="true"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="row text-left">
+            <div class="col-sm-12">
+              <h2>Output</h2>
+                <textarea id="output-text" disabled></textarea>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="padding-top:10px">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          Github Repo
+          <a href="https://github.com/omareq/omareq.github.io/tree/master/bf-interpreter/">
+              <img src="../imgs/github-logo.png" loading="lazy" alt="Link to github repository"
+                   style="max-width:75px">
+          </a>
+          Docs
+          <a href="./docs/" rel="nofollow">
+              <img src="../imgs/docs-logo.png" loading="lazy" alt="Link to source code documentation"
+                   style="max-width:75px">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> Brainf**k (BF) - The language </h2>
+            <p>
+              BF is an <a href="https://esolangs.org/wiki/Main_Page">esoteric programming language</a> created by Urban
+              Müller to be extremely minimalistic.  It features only 8 commands
+              but despite this is a Turing complete programming language.
+              Whilst it is technically possible to write a program to solve a
+              large series of problems, in practicality it is very difficult to
+              write anything more than a toy.  Frankly there has been a small
+              wave of people implementing interpreters and compilers for the
+              language and very few people writing anything substantial.  Wilfred
+              Hughes has an interesting <a href="https://www.wilfred.me.uk/blog/2019/03/24/the-siren-song-of-little-languages/"> article </a> about this.
+              I shall, as always, endeavour to be part of the problem!
+            </p>
+
+            <h5> Memory </h5>
+            <p>
+            BF operates on a simple memory model which has a consecutive
+            series of cells that can store 8 bit numbers.This series of cells
+            is usually known as a tape as a nod to early computing machines
+            which used physical rolls of tape for memory.  A pointer starts at
+            the beginning of the tape and moves around according to the program
+            instructions.  The data at each cell location can be incremented or
+            decremented.
+            </p>
+
+            <p>
+            Usual implementations
+            have 30,000 cells in the tape.  There are a series of edge cases that
+            can be handled slightly differently depending on the implementation.
+            These include: integer overflow, integer underflow, buffer overflow,
+            buffer underflow.  These can be handled by wrapping data or pointers
+            back around to the beginning, infinitely expanding buffers or just
+            crashing the program.  The sensible choice depends on the features
+            used by a given program to do computations.
+            </p>
+
+            <h5> Loops </h5>
+            <p>
+              Loops have the ability to do two things at once: they act as a
+              means to repeat instructions, and they act as conditional checks.
+              In BF the open loop operator will go to the next instruction
+              if the value at the current data cell is not zero, otherwise the
+              execution jumps to the loop end.
+            </p>
+          </div>
+        </div>
+      </section>
+
+       <section class="container">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h5> Operators </h5>
+            <ul class="list-group">
+              <li class="list-group-item"> <span class="plus"><b>+</b></span> Increment Cell</li>
+              <li class="list-group-item"> <span class="minus"><b>-</b></span> Decrement Cell</li>
+              <li class="list-group-item"> <span class="gt"><b>></b></span> Move Pointer Right</li>
+              <li class="list-group-item"> <span class="lt"><b><</b></span> Move Pointer Left</li>
+              <li class="list-group-item"> <span class="lbrack"><b>[</b></span> Loop Start</li>
+              <li class="list-group-item"> <span class="rbrack"><b>]</b></span> Loop End</li>
+              <li class="list-group-item"> <span class="dot"><b>.</b></span> Output Cell (ASCII Char)</li>
+              <li class="list-group-item"> <span class="comma"><b>,</b></span> Input To Cell</li>
+            </li>
+          </ul>
+          </div>
+        </div>
+      </section>
+
+
+
+	<br>
+    <section class="container">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> Optimization </h2>
+            <p>
+				Code optimization is a field of study that aims to improve some
+				aspect of the code, be that speed of operation, memory usage or
+				program size.  Here I will be focusing on increasing the runtime
+				performance of the interpreter.  The short term goal will be to
+				look at the performance of
+				<a href="https://esolangs.org/wiki/Brainfuck_speed_test">
+				speed_test.bf </a> and then expand into a series of more complex
+				programs to expand the diversity of optimizations needed.  The
+				main intent here is to understand for myself some of the many
+				optimizations a compiler can make on a simple programing language.
+			</p>
+			<p>
+				Of course a compiler can only do so much, when writing code using
+				sensible data structures and algorithms can remove large portions
+				of work increasing runtime performance.  Of course increasing
+				runtime performance for the sake of it can lead to code that is
+				more complex than it needs to be, so be sensible profile your
+				code and see if it is even worth the developer hours to push for
+				that 50% reduction in execution time when the end user is already
+				running a pipeline that is 30x slower than your component.  However,
+				we are not here to be sensible we are here to learn so for those
+				interested in genreal <a href="https://www.agner.org/optimize/">
+				optimization techniques in C++</a> please visit the resources
+				compiled by Agner Fog.
+            </p>
+            <!--
+                speedtest for profilers
+                CPU Info: 8bit Arch - 1k Mem
+                Optimisation: RLE - Clear Loop Only
+                Time: None 7.2ms, Loops 7.89ms, full 12.2m
+                Fastest of 25
+            --!>
+			<h5> Measurement and Profiling </h5>
+            <p>
+                Profiling is a form of analysis that measures the frequency and
+                duration of operations called from software.  This can be
+                achieved in a number of ways, I have chosen to add instrumentation
+                to the BF Interpreter so that it can record which operations are
+                run and how many times.  The main issue with instrumentation of
+                code comes with adding in extra instructions.
+            </p>
+            <p>
+                Instrumentation works by adding extra instructions somewhere in
+                the code, that can be in the source code, the assembely code or
+                by using hardware intterupts. Either way the cpu is doing extra
+                work to identify when something needs to be recorded.  This extra
+                work can ruin the estimated time spent running a particular section
+                of code and make trying to increase runtime performance hard.
+            </p>
+            <p>
+                Some work arounds involve only instrumenting part of the code or doing
+                a statisctical analysis of the instrumentation to try reduce the
+                effect the profiling tools have on the measurement. There have even
+                been interesting work in
+                <a href="https://github.com/plasma-umass/coz"> causal profiling </a>
+                which trys to negate some of these side effects by understanding
+                how various sections of the code contribute to the total runtime.
+            </p>
+            <p>
+                I have implemented 2 different profiling tools into the BF Interpreter.
+                The first is a <b>FULL</b> profiler, it directly counts every single
+                operation and which index in the instructions list it comes from.
+                The second is a <b>LOOP</b> only profiler, this only counts the open and
+                close instructions in the loop and fills in the rest of the profile
+                information after the cpu has completed executing. The following
+                graph shows how much of an effect this can have on run time performance
+                when the interpreter runs the speed-test.bf program with the following
+                settings: 8bit cpu, 1k mem, RLE and Clear Loop optimizations.  The
+                fastest of 25 measurements is shown here.  Interestingly this is
+                dependent on the program which is run as the instrumentation can
+                only log events for things which happen, for example if a loop is skipped
+                no information on how long that loop could take is measured.
+            </p>
+            <img src="./imgs/BF-Interpreter-Profiler-Performance.webp"
+                 loading="lazy"
+                 alt="Graph showing that loop profiling adds 10% to runtime and full profiling adds 70% to runtime."
+                 style="max-width:100%">
+            <p>
+                It should be noted that even with this profiling information time is very
+                difficult to measure, this is due to the operating system doing
+                other operations and taking control of the processor whilst the
+                interpreter is running.  This can lead to wildly fluctuating
+                execution times. It is always best to take multiple readings and
+                get a feel for how long something actually takes to run.  This
+                can be seen in the histogram below, which shows the variability of the
+                same speed-test.bf program run 200 times with no profiling.
+            </p>
+            <img src="./imgs/variable-runtime.webp"
+                 loading="lazy"
+                 alt="Graph showing that loop profiling adds 10% to runtime and full profiling adds 70% to runtime."
+                 style="max-width:100%">
+          </div>
+        </div>
+     </section>
+
+    <section class="container">
+        <div class="row text-left">
+          <div class="col-sm-12">
+            <h2> See Also </h2>
+            <p>
+              Whilst looking for inspiration for this project I found a few cool
+              blog posts about other BF implementations online.  To make
+              it easier for other people to find good resources I have left a
+              few of the ones I really like linked below.
+            </p>
+          </div>
+        </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+          <div class="col-sm-6">
+            <p><b>Optimization Techniques</b></p>
+            <p><a href="https://www.nayuki.io/page/optimizing-brainfuck-compiler">Nayuki.io - Optimizing BF Compiler</a></p>
+            <p><a href="https://calmerthanyouare.org/2015/01/07/optimizing-brainfuck.html">Mats Linander: BF Optimization Strategies</a></p>
+            <p><a href="https://www.wilfred.me.uk/blog/2015/08/29/an-optimising-bf-compiler/">Wilfred Hughes: An Optimizing BF Compiler</a></p>
+            <p><a href="https://rodrigodd.github.io/2022/10/21/bf_compiler-part1.html"/>
+            Rodrigodd: BF Compiler Part 1</a></p>
+            <p><a href="https://esolangs.org/wiki/Brainfuck_speed_test"> EsoLangs BF Speed Test Page </a></p>
+          </div>
+           <div class="col-sm-6">
+            <p><b>Cool UI</b></p>
+            <p><a href="https://monocalc.com/tool/programming/brainfuck_interpreter"> Monocalc BF Interpreter</a></p>
+            <p><a href="https://brainfuck.rmjtromp.dev/">Rmjtromp.dev</a></p>
+            <p><a href="https://minond.xyz/brainfuck/">Marcos Minond: BF</a></p>
+          </div>
+        </div>
+    </section>
+
+    <section class="container">
+      <div class="row text-left">
+          <div class="col-sm-6">
+            <p><b>Implementation</b></p>
+            <p><a href="https://thelinuxcode.com/brainfuck-interpreter-in-java-a-practical-deep-dive-for-2026/">thelinuxcode: BF Interpreter in Java</a></p>
+          </div>
+        </div>
+      </section>
+
+    <section class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <a id="external_link" href="../projects.html" >
+                    <img src="../imgs/all-projects-button.jpg" loading="lazy" style="max-width: 70%;" alt="Link to all projects page">
+                </a>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </section>
+
+
+    <section class="container">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="project-card" id="previous">
+            <h5 id="prev-title">Dc702 ctf</h5>
+            <a id="prev-url" href="../dc702-ctf/" class="project-demo">
+              <img id="prev-img" src="../imgs/p_031.jpg" loading="lazy" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the previous project, /**PREV TITLE**/">
+            </a>
+          </div>
+        </div>
+
+        <div class="col-sm-6"></div>
+
+        <div class="col-sm-3">
+          <div class="project-card" id="next">
+            <h5 id="next-title">Snowman</h5>
+            <a id="next-url" href="../snowman/" class="project-demo">
+              <img id="next-img" src="../imgs/p_000.jpg" loading="lazy" onerror="this.onerror=null; this.src='../imgs/p_default.jpg'" alt="Image of the next project, /**NEXT TITLE**/">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye" rel="nofollow"><span>iamoquaye</span></a>
+    </div>
+  </footer>
+
+  <script language="javascript" type="text/javascript" src="../libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="../libraries/p5.dom.js"></script>
+  <script language="javascript" type="text/javascript" src="run-mode.js"></script>
+  <script language="javascript" type="text/javascript" src="run-mode-normal.js"></script>
+  <script language="javascript" type="text/javascript" src="run-mode-optimized.js"></script>
+  <script language="javascript" type="text/javascript" src="bf-examples.js"></script>
+  <script language="javascript" type="text/javascript" src="bf-program.js"></script>
+  <script language="javascript" type="text/javascript" src="bf-interpreter.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: world.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: world.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *  @file World.js A file with the classes for the World elements
+ *
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 12-February-2025
+ *  @link https://omareq.github.io/tanks/
+ *  @link https://omareq.github.io/tanks/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2025 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+"use strict";
+
+
+/**
+ * TankGame namespace object
+ */
+var TankGame = TankGame || {};
+
+TankGame.World = {};
+
+/**
+ * Class Terrain describes the terrain object that represents the ground. This
+ * is passed into the game engine and can be damaged by projectiles.
+ *
+ * @see TankGame.GameEngine
+ * @see TankGame.Projectile
+ */
+TankGame.World.Terrain = class {
+    /**
+     * constructor of the terrain
+     *
+     * @param {number} width - the width of the screen
+     * @param {number} minHeight - the minimum height of the ground in screen coordinates
+     * @param {number} maxHeight - the maximum height of the ground in screen coordinates
+     * @param {number} noiseDetail - used to scale the period of the perlin noise
+     */
+    constructor(width, minHeight, maxHeight, noiseDetail=1) {
+        this.width = width;
+        this.groundHeight = [];
+        const heightRange = maxHeight - minHeight;
+        for(let i = 0; i &lt; width; i++) {
+            let nextGroundHeight = heightRange * noise(i * noiseDetail) + minHeight;
+            this.groundHeight.push(nextGroundHeight);
+        }
+
+        this.color = color(155, 155, 155);
+        this.stepSize = 10;
+        this.drawRetro = true;
+    };
+
+    /**
+     * Function to add a crater in the ground where an explosion occurred.
+     *
+     * @param {p5.Vector} pos - position of the explosion
+     * @param {number} radius - radius of the explosion
+     *
+     * @throws {Error} param pos should be instance of p5.Vector
+     */
+    addCrater(pos, radius) {
+        if(!(pos instanceof p5.Vector)) {
+            let err = "pos is not an instance of p5.vector";
+            throw(err);
+        }
+
+        if(pos.x &lt; 0 || pos.x > width) {
+            let err = "Can't remove circle that is out of bounds: ";
+            err += " pos.x - " + pos.x;
+            console.warn(err);
+            return;
+        }
+//TODO: Checks that inputs are valid
+        const index = floor(pos.x);
+        const r = floor(radius);
+
+        for(let i = index - r; i &lt; index + r; i++) {
+            // (x - a) ^2 + (y - b) ^2 = r^2
+            // (y - b)^2 = r^2 - (x - a)^2
+            // y = \sqrt(r^2 - (x - a)^2) + b
+
+            const newY = sqrt(r**2 - (i - pos.x)**2) + pos.y;
+
+            if(this.groundHeight[i] &lt; newY) {
+                this.groundHeight[i] = newY;
+            }
+        }
+
+        return;
+    };
+
+    /**
+     * Draw triangular strips for the ground.  This creates a smoother appearance
+     * than rectangles but is more computationally intensive.
+     */
+    drawTriangleStrip() {
+        beginShape(TRIANGLE_STRIP);
+        vertex(0, height);
+        for(let i = 0; i &lt; this.groundHeight.length; i+= this.stepSize) {
+            vertex(i, this.groundHeight[i]);
+            vertex(i + this.stepSize / 2, height);
+        }
+        vertex(this.width, this.groundHeight[this.groundHeight.length - 1]);
+        vertex(this.width, height);
+
+        endShape();
+    };
+
+    /**
+     * Draw equal rectangles to represent the ground.  This creates a retro
+     * appearance which is desirable and is performance friendly.
+     */
+    drawRect() {
+        for(let i = 0; i &lt; this.groundHeight.length; i+= this.stepSize) {
+//TODO: Try dynamically assigning width of rectangle based on terrain gradient
+            rect(i, this.groundHeight[i], this.stepSize, height - this.groundHeight[i]);
+        }
+    };
+
+    /**
+     * Draw the ground using the desired method
+     */
+    draw() {
+        stroke(this.color);
+        fill(this.color);
+
+        if(this.drawRetro) {
+            this.drawRect();
+        } else {
+            this.drawTriangleStrip();
+        }
+    };
+};
+
+// wind</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TankGame.FrameData.html">FrameData</a></li><li><a href="TankGame.GameEngine.html">GameEngine</a></li><li><a href="TankGame.Mode.html">Mode</a></li><li><a href="TankGame.ModeList.BuyWeapons.html">BuyWeapons</a></li><li><a href="TankGame.ModeList.DebugEmpty.html">DebugEmpty</a></li><li><a href="TankGame.ModeList.DebugPlayer.html">DebugPlayer</a></li><li><a href="TankGame.ModeList.DebugProjectile.html">DebugProjectile</a></li><li><a href="TankGame.ModeList.DebugTank.html">DebugTank</a></li><li><a href="TankGame.ModeList.GamePlay.html">GamePlay</a></li><li><a href="TankGame.ModeList.PlayerSetup.html">PlayerSetup</a></li><li><a href="TankGame.Player.html">Player</a></li><li><a href="TankGame.Projectile.html">Projectile</a></li><li><a href="TankGame.Tank.html">Tank</a></li><li><a href="TankGame.World.Terrain.html">Terrain</a></li><li><a href="UI.Button.html">Button</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Struct">Struct</a></li><li><a href="global.html#TankGame">TankGame</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Oct 29 2025 23:51:01 GMT-0700 (Pacific Daylight Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

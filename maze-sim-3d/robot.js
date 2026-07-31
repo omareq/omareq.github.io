@@ -31,13 +31,14 @@
  *****************************************************************************/
 
 
-let speedUp = 10;
+var speedUp = 2;
 
 class RescueKit {
-    constructor(pos, kitSize) {
-        this.pos = pos;
+    constructor(worldPos, kitSize, gridPos=createVector(-1, -1)) {
+        this.pos = worldPos;
         this.kitSize = kitSize;
         this.kitNum = 1;
+        this.gridPos = gridPos;
     }
 
     incrementKitNum() {
@@ -46,6 +47,12 @@ class RescueKit {
     }
 
     show() {
+        if(this.gridPos.x >= 0 && this.gridPos.y >= 0) {
+            if(arena.grid[this.gridPos.x][this.gridPos.y].isCulled) {
+                return;
+            }
+        }
+
         push();
         fill(0, 255, 0);
         translate(this.pos.x, this.pos.y, 2);
@@ -61,6 +68,15 @@ class RescueKit {
     }
 }
 
+class RobotStats {
+    constructor() {
+        this.rightTurns = 0;
+        this.leftTurns = 0;
+        this.goForwards = 0;
+        this.droppedKits = 0;
+    }
+}
+
 class Robot {
     constructor(pos, gridSize) {
         this.pos = pos;
@@ -71,6 +87,8 @@ class Robot {
         this.rescueKits = [];
         this.robotChasis = loadModel("assets/robot-chasis.obj");
         this.scale = this.gridSize * 0.0027;
+
+        this.stats = new RobotStats();
     }
 
     setMaze(maze) {
@@ -287,6 +305,14 @@ class Robot {
         let endBearing = this.bearing - 90;
         let pError = 90;
         while(abs(this.bearing - endBearing) > 0.01) {
+            if(endSimulationFlag) {
+                console.debug("robot.turnLeft: endSimulationFlag");
+                return;
+            } else if(pauseSimulationFlag) {
+                console.debug("robot.turnLeft: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
+            }
             let error = this.bearing - endBearing;
             let kp = 0.8 * error;
             let kd = 0.15 * pError;
@@ -301,6 +327,7 @@ class Robot {
         if(this.bearing < 0) {
             this.bearing = 360 + this.bearing;
         }
+        this.stats.leftTurns++;
     }
 
     async turnRight() {
@@ -308,6 +335,14 @@ class Robot {
         let pError = 90;
 
         while(abs(this.bearing - endBearing) > 0.01) {
+            if(endSimulationFlag) {
+                console.debug("robot.turnRight: endSimulationFlag");
+                return;
+            } else if(pauseSimulationFlag) {
+                console.debug("robot.turnRight: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
+            }
             let error = this.bearing - endBearing;
             let kp = 0.8 * error;
             let kd = 0.15 * pError;
@@ -322,6 +357,7 @@ class Robot {
         if(this.bearing < 0) {
             this.bearing = 360 + this.bearing;
         }
+        this.stats.rightTurns++;
     }
 
     async moveForward() {
@@ -350,6 +386,14 @@ class Robot {
         }
 
         while(true) {
+            if(endSimulationFlag) {
+                console.debug("robot.moveForward: endSimulationFlag");
+                return;
+            } else if(pauseSimulationFlag) {
+                console.debug("robot.moveForward: pauseSimulationFlag");
+                await delay(pauseDelay);
+                continue;
+            }
             this.pos.add(this.posIncrement);
             let distance = dist(this.pos.x, this.pos.y, this.endPos.x, this.endPos.y);
             if(distance < 0.05) {
@@ -363,6 +407,7 @@ class Robot {
         this.pos.x = int(this.pos.x);
         this.pos.y = int(this.pos.y);
         await delay(250 / speedUp);
+        this.stats.goForwards++;
         return true;
     }
 
@@ -371,7 +416,6 @@ class Robot {
     }
 
     async dropRescueKit(direction) {
-        await delay(1500 / speedUp);
         let xOffset = 0;
         let yOffset = 0;
 
@@ -388,7 +432,8 @@ class Robot {
         let kitPos = createVector(this.pos.x * this.gridSize + xOffset,
             this.pos.y * this.gridSize + yOffset);
         let kitSize = this.gridSize / 8;
-        let newKit = new RescueKit(kitPos, kitSize);
+        const kitGridPos = createVector(this.pos.x, this.pos.y, 0);
+        let newKit = new RescueKit(kitPos, kitSize, kitGridPos);
 
         for(let i = 0; i < this.rescueKits.length; i++) {
             const xMatch = this.rescueKits[i].pos.x == newKit.pos.x;
@@ -402,6 +447,16 @@ class Robot {
 
         console.log("Dropped rescue kit: (" + str(this.pos.x) + ", " +
             str(this.pos.y) + ") " + direction);
+
+        const totalDelayTime = 1500 / speedUp;
+        for(let i = 0; i < totalDelayTime; i += 10) {
+            if(endSimulationFlag) {
+                console.debug("robot.dropRescueKit: endSimulationFlag");
+                return;
+            }
+            await delay(10);
+        }
+        this.stats.droppedKits++;
     }
 
     showRescueKits() {
@@ -427,7 +482,8 @@ class Robot {
         model(this.robotChasis);
         pop();
         stroke(10);
-        line(0,0,this.depth/2, 0, -this.breadth/2, this.depth/2);
+        line(-0.05*this.breadth, -0.12*this.breadth, 0.35*this.depth,
+             -0.05*this.breadth, -0.50*this.breadth, 0.35*this.depth);
         pop();
     }
 }

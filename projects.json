@@ -9,7 +9,7 @@
             "name": "Snowman",
             "next-id": "p_001",
             "pic-url": "imgs/p_000.jpg",
-            "prev-id": "p_023",
+            "prev-id": "p_032",
             "status": "active",
             "tags": [
                 "fun"
@@ -94,7 +94,9 @@
             "pic-url": "imgs/p_005.jpg",
             "prev-id": "p_004",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "learning"
+            ],
             "vid-url": "vids/p_005.mp4"
         },
         "p_006": {
@@ -158,17 +160,19 @@
             "pic-url": "imgs/p_009.jpg",
             "prev-id": "p_008",
             "status": "archived",
-            "tags": [],
+            "tags": [
+                "fun"
+            ],
             "vid-url": "vids/p_009.mp4"
         },
         "p_010": {
             "brief": "My concept of the classic Lissajous patterns",
             "demo-url": "/lissajous/",
             "docs-url": "/lissajous/docs/",
-            "gif-url": "imgs/p_010.gif",
+            "gif-url": "imgs/p_010.webp",
             "id": "p_010",
             "name": "Lissajous",
-            "next-id": "p_010",
+            "next-id": "p_011",
             "pic-url": "imgs/p_010.jpg",
             "prev-id": "p_009",
             "status": "active",
@@ -188,7 +192,7 @@
             "next-id": "p_012",
             "pic-url": "imgs/p_011.jpg",
             "prev-id": "p_010",
-            "status": "archived",
+            "status": "active",
             "tags": [
                 "science"
             ],
@@ -256,7 +260,8 @@
             "prev-id": "p_014",
             "status": "active",
             "tags": [
-                "algorithm"
+                "algorithm",
+                "learning"
             ],
             "vid-url": "vids/p_015.mp4"
         },
@@ -272,7 +277,8 @@
             "prev-id": "p_015",
             "status": "active",
             "tags": [
-                "algorithm"
+                "algorithm",
+                "learning"
             ],
             "vid-url": "vids/p_016.mp4"
         },
@@ -367,12 +373,159 @@
             "gif-url": "imgs/p_023.gif",
             "id": "p_023",
             "name": "Maze sim 3d",
-            "next-id": "p_000",
+            "next-id": "p_025",
             "pic-url": "imgs/p_023.jpg",
             "prev-id": "p_022",
             "status": "active",
-            "tags": [],
+            "tags": [
+                "robot",
+                "science"
+            ],
             "vid-url": "vids/p_023.mp4"
+        },
+        "p_024": {
+            "brief": "Basic fluid dynamics simulation of objects in a laminar flow",
+            "demo-url": "/fluid-dynamics/",
+            "docs-url": "/fluid-dynamics/docs/",
+            "gif-url": "imgs/p_024.gif",
+            "id": "p_024",
+            "name": "Fluid dynamics",
+            "next-id": "p_025",
+            "pic-url": "imgs/p_024.jpg",
+            "prev-id": "p_023",
+            "status": "archived",
+            "tags": [
+                "physics",
+                "science"
+            ],
+            "vid-url": "vids/p_024.mp4"
+        },
+        "p_025": {
+            "brief": "A script to generate the mandelbrot-set",
+            "demo-url": "/mandelbrot-set/",
+            "docs-url": "/mandelbrot-set/docs/",
+            "gif-url": "imgs/p_025.gif",
+            "id": "p_025",
+            "name": "Mandelbrot set",
+            "next-id": "p_026",
+            "pic-url": "imgs/p_025.jpg",
+            "prev-id": "p_023",
+            "status": "active",
+            "tags": [
+                "maths",
+                "science"
+            ],
+            "vid-url": "vids/p_025.mp4"
+        },
+        "p_026": {
+            "brief": "My take of on the classic hang man word guessing game",
+            "demo-url": "/hang-man/",
+            "docs-url": "/hang-man/docs/",
+            "gif-url": "imgs/p_026.gif",
+            "id": "p_026",
+            "name": "Hang man",
+            "next-id": "p_027",
+            "pic-url": "imgs/p_026.jpg",
+            "prev-id": "p_025",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_026.mp4"
+        },
+        "p_027": {
+            "brief": "A simulation to model a line following robot",
+            "demo-url": "/line-sim-3d/",
+            "docs-url": "/line-sim-3d/docs/",
+            "gif-url": "imgs/p_027.gif",
+            "id": "p_027",
+            "name": "Line sim 3d",
+            "next-id": "p_028",
+            "pic-url": "imgs/p_027.jpg",
+            "prev-id": "p_026",
+            "status": "active",
+            "tags": [
+                "robot",
+                "science"
+            ],
+            "vid-url": "vids/p_027.mp4"
+        },
+        "p_028": {
+            "brief": "A quick simulation to test elasticity",
+            "demo-url": "/elastic-string/",
+            "docs-url": "/elastic-string/docs/",
+            "gif-url": "imgs/p_028.gif",
+            "id": "p_028",
+            "name": "Elastic string",
+            "next-id": "p_029",
+            "pic-url": "imgs/p_028.jpg",
+            "prev-id": "p_027",
+            "status": "active",
+            "tags": [
+                "science",
+                "physics"
+            ],
+            "vid-url": "vids/p_028.mp4"
+        },
+        "p_029": {
+            "brief": "A quick and dirty snake game",
+            "demo-url": "/snake-game/",
+            "docs-url": "/snake-game/docs/",
+            "gif-url": "imgs/p_029.gif",
+            "id": "p_029",
+            "name": "Snake game",
+            "next-id": "p_030",
+            "pic-url": "imgs/p_029.webp",
+            "prev-id": "p_028",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_029.mp4"
+        },
+        "p_030": {
+            "brief": "A take on the classic tanks multiplayer game",
+            "demo-url": "/tanks/",
+            "docs-url": "/tanks/docs/",
+            "gif-url": "imgs/p_030.gif",
+            "id": "p_030",
+            "name": "Tanks",
+            "next-id": "p_031",
+            "pic-url": "imgs/p_030.jpg",
+            "prev-id": "p_029",
+            "status": "active",
+            "tags": [
+                "game"
+            ],
+            "vid-url": "vids/p_030.mp4"
+        },
+        "p_031": {
+            "brief": "A Brief write up of some fun CTF challenges at a DC702 CTF",
+            "demo-url": "/dc702-ctf/",
+            "docs-url": "/dc702-ctf/docs/",
+            "gif-url": "imgs/p_031.gif",
+            "id": "p_031",
+            "name": "Dc702 ctf",
+            "next-id": "p_032",
+            "pic-url": "imgs/p_031.jpg",
+            "prev-id": "p_030",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_031.mp4"
+        },
+        "p_032": {
+            "brief": "A Brain Fuck Interpreter",
+            "demo-url": "/bf-interpreter/",
+            "docs-url": "/bf-interpreter/docs/",
+            "gif-url": "imgs/p_032.gif",
+            "id": "p_032",
+            "name": "Bf interpreter",
+            "next-id": "p_000",
+            "pic-url": "imgs/p_032.jpg",
+            "prev-id": "p_031",
+            "status": "active",
+            "tags": [],
+            "vid-url": "vids/p_032.mp4"
         }
     }
 }

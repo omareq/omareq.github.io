@@ -33,7 +33,47 @@ class Ball {
 	}
 
 	/**
+	 * Sets the x position of the ball.
+	 *
+	 * @param {number} newX - The new x value of the ball.
+	 */
+	setX(newX) {
+		this.x = newX;
+	}
+
+	/**
+	 * Sets the y position of the ball.
+	 *
+	 * @param {number} newY - The new y value of the ball.
+	 */
+	setY(newY) {
+		this.y = newY;
+	}
+
+	/**
+	 * Sets the x velocity of the ball.
+	 *
+	 * @param {number} newVelX - The new x velocity of the ball.
+	 */
+	setVelX(newVelX) {
+		this.vx = newVelX;
+	}
+
+	/**
+	 * Sets the y velocity of the ball.
+	 *
+	 * @param {number} newVelY - The new y velocity of the ball.
+	 */
+	setVelY(newVelY) {
+		this.vy = newVelY;
+	}
+
+	/**
 	*	Applies a single force to the Ball.
+	*
+	*	@param {number} fx  - The x component of the force.
+	*	@param {number} fy  - The y component of the force.
+	*	@param {number} dt  - The time step.
 	*/
 	applyForce(fx, fy, dt) {
 		let ax = fx/this.m;
@@ -49,31 +89,99 @@ class Ball {
 	*	Checks to see if the Ball has left the boundaries of the canvas. If
 	*	they have the ball will bounce back with 90% of it's original speed.
 	*/
-	checkEdges() {
+	checkEdges(ballWallPseudoCOR) {
+		const cor = constrain(ballWallPseudoCOR, 0, 1);
 		if(this.x + this.r > width) {
 			this.x = width - this.r;
-			this.vx *= -0.9;
+			this.vx *= -cor;
 			this.colour = color(255, 0, 0);
 		}
 		if(this.y + this.r > height) {
 			this.y = height - this.r;
-			this.vy *= -0.9;
+			this.vy *= -cor;
 			this.colour = color(0, 255, 0);
 		}
 		if(this.x - this.r < 0) {
 			this.x = this.r;
-			this.vx *= -0.9;
+			this.vx *= -cor;
 			this.colour = color(0, 0, 255);
 		}
 		if(this.y - this.r < 0) {
 			this.y = this.r;
-			this.vy *= -0.9;
-			if(random() <= 0.25) {
-				this.vy += 3.0;
-				this.vy *= 1.2;
-			}
+			this.vy *= -cor;
 			this.colour = color(255, 255, 255);
 		}
+	}
+
+	/**
+	*	Checks to see if the given ball collides with this ball.
+	*
+	*	@param {number} ball - The ball to check the collision against.
+	*/
+	hits(ball) {
+		let distSqr = (this.x - ball.x)**2 + (this.y - ball.y)**2;
+		if(distSqr <= (this.r + ball.r)**2	) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	*	Applies physics for elastic collision between balls.
+	*
+	*	@param {number} ball - The ball to do the collision against.
+	*/
+	collidePhysics(ball) {
+		let distSqr = abs(this.x - ball.x)**2 + abs(this.y - ball.y)**2;
+		let crossoverLen = this.r - (sqrt(distSqr) - ball.r);
+		let normalX = ball.x - this.x;
+		let normalY = ball.y - this.y;
+		let normalisationConst = 1.0 / sqrt(normalX**2 + normalY**2);
+		normalX *= normalisationConst;
+		normalY *= normalisationConst;
+
+		// let tangentX = -normalY;
+		// let tangentY = normalX;
+
+		this.x -= 0.5 * crossoverLen * normalX;
+		this.y -= 0.5 * crossoverLen * normalY;
+		ball.setX(ball.x + 0.5 * crossoverLen * normalX);
+		ball.setY(ball.y + 0.5 * crossoverLen * normalY);
+
+		// let collisionPointX = this.x + normalX * this.r;
+		// let collisionPointY = this.y + normalY * this.r;
+
+		let kebefore = 0.5 * this.m * (this.vx**2 + this.vy**2);
+		kebefore += 0.5 + ball.m * (ball.vx**2 + ball.vy**2);
+
+
+		let m1Reduced = 2.0 * ball.m / (this.m + ball.m);
+		let inner12 = (this.vx - ball.vx) * (this.x - ball.x);
+		inner12 += (this.vy - ball.vy) * (this.y - ball.y);
+
+		let d12Recip = 1.0 / (this.r + ball.r)**2;
+		// let d12Recip = 1.0 / ((this.x - ball.x)**2 + (this.y - ball.y)**2);
+
+		this.vx -= m1Reduced * inner12 * d12Recip * (this.x - ball.x);
+		this.vy -= m1Reduced * inner12 * d12Recip * (this.y - ball.y);
+
+
+		let m2Reduced = 2.0 * ball.m / (this.m + ball.m);
+		let inner21 = (ball.vx - this.vx) * (ball.x - this.x);
+		inner21 += (ball.vy - this.vy) * (ball.y - this.y);
+
+		let d21Recip = 1.0 / (this.r + ball.r)**2;
+		// let d21Recip = 1.0 / ((ball.x - this.x)**2 + (ball.y - this.y)**2);
+
+		ball.setVelX(ball.vx -
+			m2Reduced * inner21 * d21Recip * (ball.x - this.x));
+		ball.setVelY(ball.vy -
+			m2Reduced * inner21 * d21Recip * (ball.y - this.y));
+
+		let keafter = 0.5 * this.m * (this.vx**2 + this.vy**2);
+		keafter += 0.5 + ball.m * (ball.vx**2 + ball.vy**2);
+
+		console.log("KE Before: ", kebefore, " KE After: ", keafter);
 	}
 
 	/**

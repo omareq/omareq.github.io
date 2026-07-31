@@ -175,7 +175,8 @@ def sketch_js(name, description):
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.\n\
  *\n "
         + "*" * 77
-        + "/\n\n"
+        + "/\n"
+        + "\"use strict\";\n\n"
     )
 
     f.write(
@@ -316,7 +317,7 @@ def replace_prev_project_in(project_id, new_prev_id):
                 newline = (
                     '\t\t\t\t\t\t\t<img id="prev-img" src="../imgs/'
                     + new_prev_id
-                    + '.jpg" onerror="this.onerror=null; this.src=\'../imgs/p_default.jpg\'">\n'
+                    + '.jpg" loading="lazy" onerror="this.onerror=null; this.src=\'../imgs/p_default.jpg\'">\n'
                 )
 
             new_index.write(newline)
@@ -349,7 +350,7 @@ def replace_next_project_in(project_id, new_next_id):
                 newline = (
                     '\t\t\t\t\t\t\t<img id="next-img" src="../imgs/'
                     + new_next_id
-                    + '.jpg" onerror="this.onerror=null; this.src=\'../imgs/p_default.jpg\'">\n'
+                    + '.jpg" loading="lazy" onerror="this.onerror=null; this.src=\'../imgs/p_default.jpg\'">\n'
                 )
 
             new_index.write(newline)

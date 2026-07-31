@@ -9,6 +9,21 @@ Check out the [Docs](https://omareq.github.io/bouncing-ball/docs)
 
 Created using [p5.js](https://p5js.org/)
 
+TODO
+----
+
+- [ ]   Collision detection and resolution discrete/continuous
+
+- [ ]   Sweep and Prune Algorithm
+
+- [ ]   Grid Pattern Partition
+
+- [ ]   KD Trees
+
+- [ ]   Bounding Volume Hierarchies
+
+- [ ]   Graphs showing ball statistics min/max/mean, vel/mv/Ke/PE/temp/entropy
+
 ## License
 
 This repository is protected under the [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html) license.

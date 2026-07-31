@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: simulation-mode-debug.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: simulation-mode-debug.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*******************************************************************************
+ *
+ *  @file simulation-mode-debug.js Implementation of debug mode
+ *
+ *  @author Omar Essilfie-Quaye &lt;omareq08+githubio@gmail.com>
+ *  @version 1.0
+ *  @date 23-August-2024
+ *  @link https://omareq.github.io/line-sim-3d/
+ *  @link https://omareq.github.io/line-sim-3d/docs/
+ *
+ *******************************************************************************
+ *
+ *                   GNU General Public License V3.0
+ *                   --------------------------------
+ *
+ *   Copyright (C) 2024 Omar Essilfie-Quaye
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+"use strict";
+
+/**
+ * Simulation namespace object
+ */
+var Simulation = Simulation || {};
+
+/**
+ * Simulation Mode nested namespace object
+ */
+Simulation.Mode = Simulation.Mode || {};
+
+
+
+/**
+ * Class Simulation.Mode.Debug is a simulation mode that allows for all other
+ * debug simulation modes to be displayed
+ *
+ * @see Simulation.Mode.ModeType
+ */
+Simulation.Mode.Debug = class extends Simulation.Mode.ModeType {
+    static staticName = "Debug";
+
+    /**
+     * The constructor that sets up the simulation variables
+     */
+    constructor() {
+        super();
+        this.name = "Debug";
+        this.uiDivID = "simulation-mode-debug";
+        this.setupUI();
+
+        this.activeMode = new Simulation.Mode.DebugStaticTile();
+        this.addNewUIElements();
+    }
+
+    /**
+     * Adds the UI elements that control the static tile mode simulation
+     * mode.  This code currently has an inefficiency that deletes DOM elements
+     * for the inputs if they already exist.  It would be preferable if a handle
+     * could be saved and reused for these elements.
+     */
+    addNewUIElements() {
+        // TODO: save handles when switching simulation mode
+        if(document.getElementById("sm-debug-selector").children.length) {
+            document.getElementById("sm-debug-selector").children[0].remove();
+        }
+
+        this.modeSelect = createSelect();
+        this.modeSelect.parent("sm-debug-selector");
+
+        this.modeSelect.option(Simulation.Mode.Empty.staticName);
+
+        for(let i = 0; i &lt; Simulation.Mode.ModeList.length; i++) {
+            const name = Simulation.Mode.ModeList[i].staticName;
+            if(!name.startsWith("Debug")) {
+                continue;
+            }
+            if(name == "Debug") {
+                continue;
+            }
+            this.modeSelect.option(Simulation.Mode.ModeList[i].staticName);
+        }
+        this.modeSelect.selected(this.activeMode.name);
+    }
+
+    /**
+     * Sets the active debug mode.
+     *
+     * @param newMode {Simulation.Mode.ModeType} - The new simulation mode
+     */
+    setActiveMode(newMode) {
+        // TODO: add param type check
+        this.activeMode.hideUI();
+        this.activeMode = newMode;
+        Simulation.pauseFlagUnset();
+    }
+
+    /**
+     * Sets the active mode by name. If invalid the mode is changed to the empty
+     * mode.
+     *
+     * @param modeName {string} - The name of the new mode
+     */
+    setModeByName(modeName) {
+        for(let i = 0; i &lt; Simulation.Mode.ModeList.length; i++) {
+            // TODO: figure out how to do this without for loop
+            if(Simulation.Mode.ModeList[i].staticName == modeName) {
+                this.setActiveMode(new Simulation.Mode.ModeList[i]());
+                return;
+            }
+        }
+
+        console.warn("Can't set Simulation Debug mode to: ", modeName);
+        this.setActiveMode(new Simulation.Mode.Empty());
+    }
+
+    /**
+     * Checks if this.UIPanel is defined and hides the panel if it is.  This is
+     * done by setting the visibility to "hidden" and the display style to
+     * "none".
+     */
+    hideUI() {
+        super.hideUI();
+        this.activeMode.hideUI();
+    }
+
+
+    /**
+     * Polls the moving tile mode specific UI elements
+     */
+    UIPoll() {
+        const modeName = this.modeSelect.selected();
+
+        if(this.activeMode.name != modeName) {
+            console.log("Simulation Mode Debug uiPoll: debug mode selector has changed to new debug mode: ",
+                    modeName);
+            this.setModeByName(modeName);
+        }
+
+        this.activeMode.UIPoll();
+    }
+
+    /**
+     * Resets the currently active debug mode.
+     */
+    reset() {
+        this.setModeByName(this.activeMode.name);
+    }
+
+    /**
+     * Update function that updates the state of the simulation
+     */
+    update() {
+        this.activeMode.update();
+    }
+};
+
+Simulation.Mode.ModeList.push(Simulation.Mode.Debug);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Robot.Algorithm.CurveLeft.html">CurveLeft</a></li><li><a href="Robot.Algorithm.CurveRight.html">CurveRight</a></li><li><a href="Robot.Algorithm.Empty.html">Empty</a></li><li><a href="Robot.Algorithm.LineFollow.html">LineFollow</a></li><li><a href="Robot.Algorithm.OneSensorFollow.html">OneSensorFollow</a></li><li><a href="Robot.Algorithm.StraightLine.html">StraightLine</a></li><li><a href="Robot.Algorithm.TwoSensorFollow.html">TwoSensorFollow</a></li><li><a href="Robot.AnalogLightSensor.html">AnalogLightSensor</a></li><li><a href="Robot.DigitalLightSensor.html">DigitalLightSensor</a></li><li><a href="Robot.LightSensorArray.html">LightSensorArray</a></li><li><a href="Robot.MovementCommands.html">MovementCommands</a></li><li><a href="Robot.Robot.html">Robot</a></li><li><a href="Robot.RobotTelemetryData.html">RobotTelemetryData</a></li><li><a href="Simulation.FrameData.html">FrameData</a></li><li><a href="Simulation.Mode.Debug.html">Debug</a></li><li><a href="Simulation.Mode.DebugLightSensorArray.html">DebugLightSensorArray</a></li><li><a href="Simulation.Mode.DebugLineDistanceCheck.html">DebugLineDistanceCheck</a></li><li><a href="Simulation.Mode.DebugMovingTile.html">DebugMovingTile</a></li><li><a href="Simulation.Mode.DebugRobot.html">DebugRobot</a></li><li><a href="Simulation.Mode.DebugRoom.html">DebugRoom</a></li><li><a href="Simulation.Mode.DebugShowAllTiles.html">DebugShowAllTiles</a></li><li><a href="Simulation.Mode.DebugStaticTile.html">DebugStaticTile</a></li><li><a href="Simulation.Mode.Empty.html">Empty</a></li><li><a href="Simulation.Mode.LineFollowOneSensor.html">LineFollowOneSensor</a></li><li><a href="Simulation.Mode.LineFollowTwoSensor.html">LineFollowTwoSensor</a></li><li><a href="Simulation.Mode.MapEditor.html">MapEditor</a></li><li><a href="Simulation.Mode.MapEditor.EditCommand.html">EditCommand</a></li><li><a href="Simulation.Mode.ModeType.html">ModeType</a></li><li><a href="World.Line.html">Line</a></li><li><a href="World.Room.html">Room</a></li><li><a href="World.Tile.html">Tile</a></li><li><a href="World.Tile.Proxy.html">Proxy</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FSM">FSM</a></li><li><a href="global.html#Robot">Robot</a></li><li><a href="global.html#Simulation">Simulation</a></li><li><a href="global.html#UI">UI</a></li><li><a href="global.html#World">World</a></li><li><a href="global.html#draw">draw</a></li><li><a href="global.html#setup">setup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Aug 30 2024 16:12:53 GMT-0600 (Mountain Daylight Time)
+<footer>
+    <div class="links">
+        <a href="https://github.com/omareq/" class="github-profile"><span>Github Profile</span></a>
+        <a href="../../" class="githubio"><span>Github.io Home</span></a>
+        <a href="http://iamoquaye.ga/" class="iamoquaye"><span>iamoquaye</span></a>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
