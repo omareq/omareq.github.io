@@ -135,6 +135,7 @@ qunit
 - [ ]	Tetris
 - [ ]	Tic Tac Toe
 - [ ]	Turtle Draw Program
+- [ ]   Lightning Simulation
 
 ## License
 
