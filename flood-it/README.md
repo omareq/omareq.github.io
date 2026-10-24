@@ -8,6 +8,14 @@ Check out the [Docs](https://omareq.github.io/flood-it/docs).
 
 Created using [p5.js](https://p5js.org/)
 
+## TODO
+
+[ ] add button to show or hide the outline of the filled area
+
+[ ] add button to show internal filled area lines
+
+[ ]  add functionality to make filled area have darker numbers
+
 ## Contact Details
 __Programmer:__ Omar Essilfie-Quaye [omareq08+githubio@gmail.com](mailto:omareq08+githubio@gmail.com?subject=Omar%20EQ%20Github%20Pages%20-%20Flood%20It%20Game)
 
