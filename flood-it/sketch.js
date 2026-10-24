@@ -53,6 +53,20 @@ let numbersButton = undefined;
 let showNumbers = false;
 
 /**
+ * Handler for the show external boundary of filled area button
+ *
+ * @type       {p5.element}
+ */
+let showExternalButton = true;
+
+/**
+ * Handler for the show internal boundary of filled area button
+ *
+ * @type       {p5.element}
+ */
+let showInternalButton = false;
+
+/**
  * Stores the number of clicks the player has taken on their way to the final
  * state
  *
@@ -107,6 +121,32 @@ function numberToggle() {
 
     grid.toggleShowNumbers();
     showNumbers = !showNumbers;
+}
+
+/**
+ * Show / Hide external boundary event handler
+ */
+function showExternalToggle() {
+    if(grid.showOutline == true) {
+        showExternalButton.elt.textContent = "Show Boundary";
+    } else {
+        showExternalButton.elt.textContent = "Hide Boundary";
+    }
+
+    grid.toggleShowOutline();
+}
+
+/**
+ * Show / Hide internal boundary event handler
+ */
+function showInternalToggle() {
+    if(grid.showAllInsideAreaLines == true) {
+        showInternalButton.elt.textContent = "Show Grid";
+    } else {
+        showInternalButton.elt.textContent = "Hide Grid";
+    }
+
+    grid.toggleShowGrid();
 }
 
 /**
@@ -187,6 +227,14 @@ function setup() {
 
     numbersButton.parent("numbers-button");
     numbersButton.mousePressed(numberToggle);
+
+    showExternalButton = createButton("Hide Boundary", "value");
+    showExternalButton.parent("show-external-button");
+    showExternalButton.mousePressed(showExternalToggle);
+
+    showInternalButton = createButton("Show Grid", "value");
+    showInternalButton.parent("show-internal-button");
+    showInternalButton.mousePressed(showInternalToggle);
 
     resetButton = createButton("Reset", "value");
     resetButton.parent("reset-button");

@@ -10,10 +10,6 @@ Created using [p5.js](https://p5js.org/)
 
 ## TODO
 
-[ ] add button to show or hide the outline of the filled area
-
-[ ] add button to show internal filled area lines
-
 [ ]  add functionality to make filled area have darker numbers
 
 ## Contact Details

@@ -366,6 +366,20 @@ class Grid {
     }
 
     /**
+     * Toggle the  state of the show external outline flag
+     */
+    toggleShowOutline() {
+        this.showOutline = !this.showOutline;
+    }
+
+    /**
+     * Toggle the  state of the show internal lines flag
+     */
+    toggleShowGrid() {
+        this.showAllInsideAreaLines = !this.showAllInsideAreaLines;
+    }
+
+    /**
      * Method that draws the grid in the given position at the given dimensions
      */
     draw() {
