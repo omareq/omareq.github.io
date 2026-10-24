@@ -422,6 +422,9 @@ class Grid {
                 const colourVal = this.grid[row][col];
                 const hue = 100 * colourVal / this.numColours;
                 fill(hue, 100, 100);
+                if(this.isBoxInsideArea(row, col)) {
+                    fill(hue, 200, 250);
+                }
                 rect(xPos, yPos, this.boxSize, this.boxSize);
 
                 if(this.showNumbers) {
