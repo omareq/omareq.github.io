@@ -330,6 +330,21 @@ class Grid {
     }
 
     /**
+     * Check if a box is inside the filled area
+     *
+     * @param {Integer} row  the row of the box
+     * @param {Integer} col  the col of the box
+     */
+    isBoxInsideArea(row, col) {
+        for(let i = 0; i < this.insideArea.length; i++) {
+            if(this.insideArea[i][0] == row && this.insideArea[i][1] == col) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Method that randomly selects colours for each tile in the grid
      */
     randomiseGrid() {
@@ -412,6 +427,9 @@ class Grid {
                 if(this.showNumbers) {
                     push();
                     fill(hue, 25, 75);
+                    if(this.isBoxInsideArea(row, col)) {
+                        fill(0,0,0);
+                    }
                     text(colourVal, xPos + halfBoxSize, yPos + halfBoxSize);
                     pop();
                 }
