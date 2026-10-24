@@ -110,7 +110,7 @@ function floodFill(startNode, targetColor, newColor) {
         //
         // using the array as a stack and getting the last element of the array
         // makes the flood fill act like a depth first search
-        let nextNode = a.shift(); // Gets first element (BFS)
+        let nextNode = frontierNodes.shift(); // Gets first element (BFS)
 
         if(nextNode.color == targetColor) {
             nextNode.color = newColor;
