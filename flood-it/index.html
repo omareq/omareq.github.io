@@ -12,6 +12,7 @@
   <script language="javascript" type="text/javascript" src="../libraries/jquery-3.3.1.min.js"></script>
   <script src="../libraries/bootstrap-4.0.0/js/bootstrap.min.js"></script>
   <link type="text/css" rel="stylesheet" href="../main.css">
+  <script language="javascript" type="text/javascript" src="../libraries/run_prettify.js"></script>
 
   <title>Flood-it</title>
 
@@ -79,9 +80,46 @@
                 unixpapa</a>.
                 Good Luck!!!
                 </p>
+                <h2> Flood Fill Algorithm </h2>
+                <p>
+                The flood fill algorithm starts from a seed location and spreads
+                to find all the areas connected to the starting point.  The
+                algorithm takes three parameters: the starting point, a target
+                color and a replacement color.  The algorithm makes the following
+                steps:
+                </p>
             </div>
         </div>
     </section>
+
+  <section class="container">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <pre>
+          <code class="prettyprint lang-js">
+// JS Pseudo Code for the flood fill algorithm
+
+function floodFill(startNode, targetColor, newColor) {
+    if(startNode.color != targetColor) { return; }
+    let frontierNodes = [startNode];
+    while(frontierNodes.length > 0) {
+        // get the first element of the array this acts like a breadth first
+        // search
+        // if you get the last element of the array the behaviour will act like
+        // a depth first search
+        let nextNode = a.shift();
+
+        if(nextNode.color == targetColor) {
+            nextNode.color = newColor;
+            frontierNodes.push(nextNode.neighbors);
+        }
+    }
+};
+          </code>
+        </pre>
+      </div>
+    </div>
+  </section>
 
   <section class="container">
         <div class="row">
