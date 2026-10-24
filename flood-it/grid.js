@@ -53,7 +53,7 @@ class Grid {
         this.visited = [];
         this.frontier = [[0, 0]];
         this.maxclick = 50.0 * this.gridSize * this.numColours;
-        this.maxclick = Math.floor(this.maxclick / 168) + 1;
+        this.maxclick = Math.floor(this.maxclick / 168) + 2;
 
         this.grid = [];
         for(let row = 0; row < this.gridSize; ++row) {
