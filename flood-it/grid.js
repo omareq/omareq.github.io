@@ -43,6 +43,10 @@ class Grid {
         this.sizePixels = sizePixels;
         this.boxSize = this.sizePixels / this.gridSize;
         this.showNumbers = showNumbers;
+        this.showOutline = true;
+        this.showAllInsideAreaLines = false;
+        this.outlineWeight = 0.08 * this.boxSize;
+        this.insideArea = [[0, 0]];
 
         this.lastRow = -1;
         this.lastCol = -1;
@@ -62,6 +66,7 @@ class Grid {
         if(randomise) {
             this.randomiseGrid();
         }
+        this.calculateInsideArea();
     }
 
     /**
@@ -161,7 +166,7 @@ class Grid {
         const rowIndex = tileIndex[0];
         const colIndex = tileIndex[1];
 
-        for(let i = 0; i < this.visited.length; ++i) {
+        for(let i = 0; i < this.visited.length; i++) {
             if(tileIndex[0] == this.visited[i][0] && tileIndex[1] == this.visited[i][1]) {
                 return false;
             }
@@ -230,7 +235,7 @@ class Grid {
             if(watchdog > 100) {
                 break;
             }
-            console.log("\nLOOP COUNT: ", watchdog, "\n");
+            //console.log("\nLOOP COUNT: ", watchdog, "\n");
 
             this.neighbours = [];
             for(let i = this.frontier.length - 1; i >= 0; --i) {
@@ -250,17 +255,77 @@ class Grid {
 
                 this.neighbours = this.neighbours.concat(finalNeighbours);
 
-                this.visited.push(this.frontier.splice(i, 1));
+                this.visited.push(this.frontier.splice(i, 1)[0]);
                 this.visited = [...new Set(this.visited)];
             }
-            console.log("Visited: ", this.visited);
-            console.log("Neighbours: ", this.neighbours);
+            //console.log("Visited: ", this.visited);
+            //console.log("Neighbours: ", this.neighbours);
 
             this.frontier = [];
             this.frontier = this.frontier.concat(this.neighbours);
-            console.log("New Frontier: ", this.frontier);
+            //console.log("New Frontier: ", this.frontier);
         }
-        console.log("Exit");
+        this.calculateInsideArea();
+        //console.log("Exit");
+        return 0;
+    }
+
+    /**
+    * A method to calculate all of the boxes that are currently inside the
+    * filled area.  This needs to be explicitly calculated separetely to
+    * the filling algorithm because if there are boxes which are adjacent
+    * to the fill area with the correct color this fill algorithm will
+    * ignore them to prevent visiting unecessary boxes.
+    */
+    calculateInsideArea() {
+        this.wantedColours = [this.grid[0][0]];
+        let boundColourFilter = this.tileHasColour.bind(this);
+        let boundVisitFilter = this.notBeenVisited.bind(this);
+        let boundNeighbourFilter = this.notBeenNeighbour.bind(this);
+        this.frontier = [[0,0]];
+        this.visited = [];
+        this.insdeArea = [];
+        let insideAreaSet = new Set();
+
+        let watchdog = 0;
+        while(this.frontier.length) {
+            watchdog++;
+            if(watchdog > 100) {
+                break;
+            }
+            this.neighbours = [];
+            for(let i = this.frontier.length - 1; i >= 0; --i) {
+                const frontierRow = this.frontier[i][0];
+                const frontierCol = this.frontier[i][1];
+                const currentColour = this.grid[frontierRow][frontierCol];
+                insideAreaSet.add(str(frontierRow) + "," + str(frontierCol));
+
+                if(! this.notBeenVisited(this.frontier[i])) {
+                    console.log("ASSERT Weird: calculateInsideArea(): tile "
+                        + this.frontier[i] + "has been visited - skipping");
+                    continue;
+                }
+
+                let currentNeighbours = this.getNeighbours(this.frontier[i]);
+                let colourFilter = currentNeighbours.filter(boundColourFilter);
+                let visitFilter = colourFilter.filter(boundVisitFilter);
+                let finalNeighbours = visitFilter.filter(boundNeighbourFilter);
+
+                this.neighbours = this.neighbours.concat(finalNeighbours);
+
+                this.visited.push(this.frontier.splice(i, 1)[0]);
+                this.visited = [...new Set(this.visited)];
+            }
+            this.frontier = [];
+            this.frontier = this.frontier.concat(this.neighbours);
+        }
+
+
+        this.insideArea = [... insideAreaSet];
+        for(let i = 0; i < this.insideArea.length; i++) {
+            const splitStr = this.insideArea[i].split(",");
+            this.insideArea[i] = [parseInt(splitStr[0]), parseInt(splitStr[1])];
+        }
         return 0;
     }
 
@@ -330,6 +395,115 @@ class Grid {
                     text(colourVal, xPos + halfBoxSize, yPos + halfBoxSize);
                     pop();
                 }
+            }
+        }
+        pop();
+        if(this.showOutline) {
+            this.drawOutline();
+        }
+    }
+
+     /**
+     * Method that draws a line above the given box coordinates
+     *
+     * @param      {Float}  xPos  x pixel coordinate of the top left of the box
+     * @param      {Float}  yPos  y pixel coordinate of the top left of the box
+     */
+    drawLineUp(xPos, yPos) {
+        strokeWeight(this.outlineWeight);
+        if(yPos == 0) {
+            strokeWeight(this.outlineWeight * 2);
+        }
+        line(xPos, yPos, xPos + this.boxSize, yPos);
+    }
+
+    /**
+     * Method that draws a line to the right of the given box coordinates
+     *
+     * @param      {Float}  xPos  x pixel coordinate of the top left of the box
+     * @param      {Float}  yPos  y pixel coordinate of the top left of the box
+     */
+    drawLineRight(xPos, yPos) {
+        strokeWeight(this.outlineWeight);
+        if(xPos == this.gridSize - 1) {
+            strokeWeight(this.outlineWeight * 2);
+        }
+        line(xPos + this.boxSize, yPos, xPos + this.boxSize, yPos + this.boxSize);
+    }
+
+    /**
+     * Method that draws a line below the given box coordinates
+     *
+     * @param      {Float}  xPos  x pixel coordinate of the top left of the box
+     * @param      {Float}  yPos  y pixel coordinate of the top left of the box
+     */
+    drawLineDown(xPos, yPos) {
+        strokeWeight(this.outlineWeight);
+        if(yPos == this.gridSize - 1) {
+            strokeWeight(this.outlineWeight * 2);
+        }
+        line(xPos, yPos + this.boxSize, xPos + this.boxSize, yPos + this.boxSize);
+    }
+
+    /**
+     * Method that draws a line to the left of the given box coordinates
+     *
+     * @param      {Float}  xPos  x pixel coordinate of the top left of the box
+     * @param      {Float}  yPos  y pixel coordinate of the top left of the box
+     */
+    drawLineLeft(xPos, yPos) {
+        strokeWeight(this.outlineWeight);
+        if(xPos == 0) {
+            strokeWeight(this.outlineWeight * 2);
+        }
+        line(xPos, yPos, xPos, yPos + this.boxSize);
+    }
+
+    /**
+     * Method that draws a boundary line around all of the boxes within the
+     * filled area
+     */
+    drawOutline() {
+        push();
+        const startCol = this.grid[0][0];
+
+        stroke(0);
+        strokeCap(SQUARE);
+
+        for(let i = 0; i < this.insideArea.length; i++) {
+            const yPos = this.y + this.insideArea[i][0] * this.boxSize;
+            const xPos = this.x + this.insideArea[i][1] * this.boxSize;
+
+            if(this.showAllInsideAreaLines) {
+                this.drawLineUp(xPos, yPos);
+                this.drawLineDown(xPos, yPos);
+                this.drawLineLeft(xPos, yPos);
+                this.drawLineRight(xPos, yPos);
+                continue;
+            }
+
+            if(this.insideArea[i][0] == 0) {
+                this.drawLineUp(xPos, yPos);
+            } else if (this.grid[this.insideArea[i][0] - 1][this.insideArea[i][1]] != startCol) {
+                this.drawLineUp(xPos, yPos);
+            }
+
+            if(this.insideArea[i][0] == this.gridSize - 1) {
+                this.drawLineDown(xPos, yPos);
+            } else if (this.grid[this.insideArea[i][0] + 1][this.insideArea[i][1]] != startCol) {
+                this.drawLineDown(xPos, yPos);
+            }
+
+            if(this.insideArea[i][1] == 0) {
+                this.drawLineLeft(xPos, yPos);
+            } else if (this.grid[this.insideArea[i][0]][this.insideArea[i][1] - 1] != startCol) {
+                this.drawLineLeft(xPos, yPos);
+            }
+
+            if(this.insideArea[i][1] == this.gridSize - 1) {
+                this.drawLineRight(xPos, yPos);
+            } else if (this.grid[this.insideArea[i][0]][this.insideArea[i][1] + 1] != startCol) {
+                this.drawLineRight(xPos, yPos);
             }
         }
         pop();
