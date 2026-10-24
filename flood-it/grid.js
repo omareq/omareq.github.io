@@ -370,6 +370,9 @@ class Grid {
      */
     toggleShowOutline() {
         this.showOutline = !this.showOutline;
+        if(!this.showOutline) {
+            this.showAllInsideAreaLines = false;
+        }
     }
 
     /**
@@ -377,6 +380,9 @@ class Grid {
      */
     toggleShowGrid() {
         this.showAllInsideAreaLines = !this.showAllInsideAreaLines;
+        if(this.showAllInsideAreaLines && !this.showOutline) {
+            this.showOutline = true;
+        }
     }
 
     /**

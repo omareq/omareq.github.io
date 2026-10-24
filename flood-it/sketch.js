@@ -129,6 +129,7 @@ function numberToggle() {
 function showExternalToggle() {
     if(grid.showOutline == true) {
         showExternalButton.elt.textContent = "Show Boundary";
+        showInternalButton.elt.textContent = "Show Grid";
     } else {
         showExternalButton.elt.textContent = "Hide Boundary";
     }
@@ -144,6 +145,7 @@ function showInternalToggle() {
         showInternalButton.elt.textContent = "Show Grid";
     } else {
         showInternalButton.elt.textContent = "Hide Grid";
+        showExternalButton.elt.textContent = "Hide Boundary";
     }
 
     grid.toggleShowGrid();
