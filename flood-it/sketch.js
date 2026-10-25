@@ -110,6 +110,13 @@ let coloursSlider = undefined;
 let coloursDisplay = undefined;
 
 /**
+ * Game state state machine variable
+ *
+ * @type        {String} Current game state - "PLAY" "WON" "LOST"
+ */
+let gameState = "PLAY";
+
+/**
  * Show / Hide numbers event handler
  */
 function numberToggle() {
@@ -162,20 +169,27 @@ function mousePressed() {
     if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
         return;
     }
-    const selectedColour = grid.colourAt(mouseX, mouseY);
-    const failState = grid.fill(selectedColour);
-    if(!failState) {
-        clicks++;
-        clicksDisplay.elt.innerText = clicks + "/" + grid.maxclick + " clicks";
-        if (grid.winState()) {
-            // game over through win
-            console.log("Congratulations You Won The Game\n");
-            reset();
-        } else if(clicks >= grid.maxclick) {
-            // game over through loss
-            console.log("Unfortunately You Lost The Game\n");
-            reset();
+
+    if(gameState == "PLAY") {
+        const selectedColour = grid.colourAt(mouseX, mouseY);
+        const failState = grid.fill(selectedColour);
+        if(!failState) {
+            clicks++;
+            clicksDisplay.elt.innerText = clicks + "/" + grid.maxclick + " clicks";
+            if (grid.winState()) {
+                // game over through win
+                console.log("Congratulations You Won The Game\n");
+                gameState = "WON";
+                reset();
+            } else if(clicks >= grid.maxclick) {
+                // game over through loss
+                console.log("Unfortunately You Lost The Game\n");
+                gameState = "LOST";
+                reset();
+            }
         }
+    } else {
+        gameState = "PLAY";
     }
 }
 
@@ -264,6 +278,34 @@ function draw() {
         reset();
     }
 
-    grid.draw();
+    if(gameState == "PLAY") {
+        grid.draw();
+    } else if(gameState == "WON" || gameState == "LOST") {
+        drawEndGameScreen();
+    } else {
+        gameState = "PLAY"; // sanity check in case of any typos
+    }
 }
 
+/**
+ * Draw end game screen showing win or lost to the user
+ */
+function drawEndGameScreen() {
+    push();
+    fill(255);
+    textSize(0.08 * height);
+    textAlign(CENTER, CENTER);
+
+    if(gameState == "WON") {
+        background(0, 200, 0);
+        text("Congratulations You Won!!!", 0.5 * width, 0.5 * height);
+    } else if(gameState == "LOST") {
+        background(200, 0, 0);
+        text("Unfortunately You Lost!!!", 0.5 * width, 0.5 * height);
+    }
+
+    textSize(0.06 * height);
+    text("Click Anywhere to Continue", 0.5 * width, 0.75 * height);
+    pop();
+
+}
