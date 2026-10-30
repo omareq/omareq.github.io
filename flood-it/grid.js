@@ -54,6 +54,7 @@ class Grid {
         this.frontier = [[0, 0]];
         this.maxclick = 50.0 * this.gridSize * this.numColours;
         this.maxclick = Math.floor(this.maxclick / 168) + 2;
+        this.hasBeenUpdated = true;
 
         this.grid = [];
         for(let row = 0; row < this.gridSize; ++row) {
@@ -222,6 +223,7 @@ class Grid {
         if(selectedColour == prevColour) {
             return -1;
         }
+        this.hasBeenUpdated = true;
         this.wantedColours = [selectedColour, prevColour];
         let boundColourFilter = this.tileHasColour.bind(this);
         let boundVisitFilter = this.notBeenVisited.bind(this);
@@ -378,6 +380,7 @@ class Grid {
      */
     toggleShowNumbers() {
         this.showNumbers = !this.showNumbers;
+        this.hasBeenUpdated = true;
     }
 
     /**
@@ -388,6 +391,7 @@ class Grid {
         if(!this.showOutline) {
             this.showAllInsideAreaLines = false;
         }
+        this.hasBeenUpdated = true;
     }
 
     /**
@@ -398,12 +402,14 @@ class Grid {
         if(this.showAllInsideAreaLines && !this.showOutline) {
             this.showOutline = true;
         }
+        this.hasBeenUpdated = true;
     }
 
     /**
      * Method that draws the grid in the given position at the given dimensions
      */
     draw() {
+        this.hasBeenUpdated = false;
         const halfBoxSize = 0.5 * this.boxSize;
 
         if(this.showNumbers) {

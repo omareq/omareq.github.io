@@ -264,7 +264,6 @@ function setup() {
  *   Invokes grid drawing method.
  */
 function draw() {
-	background(255);
     let sliderVal = gridSizeSlider.value();
     if(sliderVal != gridSize) {
         gridSize = sliderVal;
@@ -280,7 +279,9 @@ function draw() {
     }
 
     if(gameState == "PLAY") {
-        grid.draw();
+        if(grid.hasBeenUpdated) {
+            grid.draw();
+        }
     } else if(gameState == "WON" || gameState == "LOST") {
         drawEndGameScreen();
     } else {
