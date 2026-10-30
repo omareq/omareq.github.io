@@ -8,6 +8,7 @@
  *	@date 30-September-2019
  *
 *******************************************************************************/
+p5.disableFriendlyErrors = true;
 
 /**
  * The current number of cols and rows in the grid
